@@ -19,7 +19,7 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
-        initViewPager()
+//        initViewPager()
     }
 
     private fun initViewPager() {
@@ -43,28 +43,39 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>() {
 //        searchList = arguments?.getSerializable("searchList") as ArrayList<SearchListResponse.Body.SearchUser>
 //        selectedPos = arguments?.getInt("selectedPos")
 
+        selectedArrayList.add(Color.parseColor("#10C7DF"))
+        unSelectedArrayList.add(Color.parseColor("#FFFFFF"))
+
+        binding.viewPagerIndicator.itemsCount = 3
+        binding.viewPagerIndicator.itemType = PagerItemType.OVAL
+        binding.viewPagerIndicator.itemSelectedColors = selectedArrayList
+        binding.viewPagerIndicator.itemsUnselectedColors = unSelectedArrayList
+        binding.viewPagerIndicator.itemElevation = 1
+        binding.viewPagerIndicator.itemWidth = 9
+        binding.viewPagerIndicator.itemHeight = 9
+        binding.viewPagerIndicator.itemMargin = 6
+        binding.viewPagerIndicator.setBackgroundColor(Color.TRANSPARENT)
+
         walkList?.add(WalkThroughModel(R.drawable.img_three))
         walkList?.add(WalkThroughModel(R.drawable.img_four))
         walkList?.add(WalkThroughModel(R.drawable.img_two))
 
-        val adapter = WalkThroughAdapter(walkList!!)
-        binding.rvWalkThrough.adapter = adapter
+        binding.rvWalkThrough.adapter = WalkThroughAdapter(walkList!!)
 //        adapter.searchInterface = this
 
         binding.rvWalkThrough.set3DItem(true)
         binding.rvWalkThrough.setInfinite(true)
         binding.rvWalkThrough.setAlpha(true)
         binding.rvWalkThrough.setFlat(false)
-        binding.rvWalkThrough.setIntervalRatio(0.8F)
+        binding.rvWalkThrough.setIntervalRatio(0.6F)
 //        binding.rvWalkThrough.scrollToPosition(selectedPos!!)
 //        val carouselLayoutManager = binding.rvWalkThrough.getCarouselLayoutManager()
 //        val currentlyCenterPosition = binding.rvWalkThrough.getSelectedPosition()
 
-
-        val pagerSnapHelper = PagerSnapHelper()
-
-
-        pagerSnapHelper.attachToRecyclerView(binding.rvWalkThrough)
+//        val pagerSnapHelper = PagerSnapHelper()
+//
+//
+//        pagerSnapHelper.attachToRecyclerView(binding.rvWalkThrough)
 
 // chooseCircleIndicator.attachToRecyclerView(carouselRecyclerview, pagerSnapHelper)
 

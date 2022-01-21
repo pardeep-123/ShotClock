@@ -17,15 +17,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
         android:id="@+id/rvWalkThrough"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_250sdp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/_10sdp"
-        app:layout_constraintTop_toBottomOf="@+id/ivAppLogo"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="@dimen/_20sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivAppLogo" />
 
     <info.jeovani.viewpagerindicator.ViewPagerIndicator
         android:id="@+id/viewPagerIndicator"
@@ -35,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvWalkThrough"
         app:vpi_item_type="oval"
-        app:vpi_view_pager="@+id/viewPager" />
+        app:vpi_view_pager="@+id/rvWalkThrough" />
 
     <TextView
         android:id="@+id/tvSignInWith"
@@ -51,7 +50,7 @@
 
     <ImageView
         android:id="@+id/ivFacebook"
-        android:layout_width="@dimen/_190sdp"
+        android:layout_width="@dimen/_205sdp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_20sdp"
         android:src="@drawable/btn_facebook"
@@ -62,7 +61,7 @@
 
     <ImageView
         android:id="@+id/ivGoogle"
-        android:layout_width="@dimen/_180sdp"
+        android:layout_width="@dimen/_200sdp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_6sdp"
         android:src="@drawable/btn_google"
@@ -73,7 +72,7 @@
 
     <ImageView
         android:id="@+id/ivEmail"
-        android:layout_width="@dimen/_180sdp"
+        android:layout_width="@dimen/_200sdp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_6sdp"
         android:src="@drawable/btn_email"
@@ -84,7 +83,7 @@
 
     <ImageView
         android:id="@+id/ivPhone"
-        android:layout_width="@dimen/_180sdp"
+        android:layout_width="@dimen/_200sdp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_6sdp"
         android:src="@drawable/btn_phone"
