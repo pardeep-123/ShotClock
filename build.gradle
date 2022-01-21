@@ -1,0 +1,39 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext.kotlin_version = "1.4.32"
+    ext.Rx_GSON_Converter_version='2.1.0'
+    ext.retrofit2_version = "2.6.2"
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.4"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
+//        classpath 'com.google.gms:google-services:4.3.10'
+        def nav_version = "2.4.0-alpha02"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+//allprojects {
+//    repositories {
+//        google()
+//        mavenCentral()
+//        maven { url "https://jitpack.io" }
+//        maven {
+//            url "https://oss.sonatype.org/content/repositories/snapshots"
+//        }
+//    }
+//}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
