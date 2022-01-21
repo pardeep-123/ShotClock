@@ -18,5 +18,16 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="are_you_sure_you_want_to_log_out">Are you sure you \n want to logout</string>
+    <string name="sign_in_with">Sign In With</string>
+    <string name="login_with_facebook">Login with facebook</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="email">Email</string>
+    <string name="jamesjackon_gmail_com">jamesjackon@gmail.com</string>
+    <string name="password">Password</string>
+    <string name="stars">**********</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_password">Forgot Password ?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="not_a_member_sign_up">Not a member? <u>Sign Up</u></string>
 
 </resources>

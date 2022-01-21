@@ -5,30 +5,27 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.databinding.FragmentSplashBinding
 
-class SplashFragment : BaseFragment() {
+class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
-    override fun getLayoutRes(): Int {
-        return R.layout.fragment_splash
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         Handler(Looper.getMainLooper()).postDelayed({
             lifecycleScope.launchWhenResumed {
-
+                view.findNavController().navigate(R.id.action_splashFragment_to_walkThroughFragment)
             }
-        },2000)
+        }, 3000)
     }
 
-//    Handler(Looper.getMainLooper()).postDelayed({
-//        lifecycleScope.launchWhenResumed {
-//            view.findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
-//        }
-//    },3000)
+    override fun getViewBinding(): FragmentSplashBinding {
+     return FragmentSplashBinding.inflate(layoutInflater)
+    }
 
 
 }

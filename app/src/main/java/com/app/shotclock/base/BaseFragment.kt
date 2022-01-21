@@ -5,16 +5,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import dagger.android.support.AndroidSupportInjection
 
-abstract class BaseFragment : Fragment() {
-    var baseView: View? = null
-    var isLoaded = false
+abstract class BaseFragment<VB : ViewBinding>() : Fragment() {
 
-    @LayoutRes
-    protected abstract fun getLayoutRes(): Int
+    var baseView: View? = null
+    private var _binding: VB? = null
+    val binding get() = _binding!!
+    var isLoaded = false
+//    lateinit var binding: VB
+
+//    @LayoutRes
+//    protected abstract fun getLayoutRes(): Int
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -25,18 +29,27 @@ abstract class BaseFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+//        binding = DataBindingUtil.inflate(inflater, getLayoutRes(), container, false)
+//        return binding.root
+//        _binding = inflate.invoke(inflater, container, false)
+//        return binding.root
 
-        return inflater.inflate(getLayoutRes(), container, false)
+        _binding = getViewBinding()
+        return binding.root
+//        binding = DataBindingUtil.inflate.invoke(inflater, getLayoutRes(),container, false)
+//        return binding.root
+
+
     }
 
     override fun onResume() {
         super.onResume()
         isLoaded = true
     }
+
+    abstract fun getViewBinding(): VB
 
 //    fun showError(message: String) {
 //        showToast(message)
