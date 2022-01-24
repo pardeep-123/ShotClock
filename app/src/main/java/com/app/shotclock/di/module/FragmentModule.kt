@@ -1,8 +1,6 @@
 package com.app.shotclock.di.module
 
-import com.app.shotclock.fragments.LoginFragment
-import com.app.shotclock.fragments.SplashFragment
-import com.app.shotclock.fragments.WalkThroughFragment
+import com.app.shotclock.fragments.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -18,5 +16,25 @@ abstract class FragmentModule {
     @ContributesAndroidInjector
     internal abstract fun loginFragment(): LoginFragment
 
+    @ContributesAndroidInjector
+    internal abstract fun loginPhoneFragment(): LoginPhoneFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun forgotPassFragment(): ForgotPasswordFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun otpFragment(): OtpFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun signUpFragment(): SignUpFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun completeProfileFragment(): CompleteProfileFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun homeFragment(): HomeFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun profileFragment(): ProfileFragment
 
 }

@@ -29,5 +29,52 @@
     <string name="forgot_password">Forgot Password ?</string>
     <string name="sign_in">Sign In</string>
     <string name="not_a_member_sign_up">Not a member? <u>Sign Up</u></string>
+    <string name="enter_your_mobile_number_to_login">Enter your mobile number\n to login!</string>
+    <string name="mobile">Mobile</string>
+    <string name="_32548566855">2548566855</string>
+    <string name="submit">Submit</string>
+    <string name="forgot_password_">Forgot Password</string>
+    <string name="please_enter_your_email_address_to_request_a_password_reset">Please enter your email address \n to request a password reset</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_otp_sent_to_your_mobile_phone">Enter otp sent to your \n mobile phone!</string>
+    <string name="resend_otp"><u>resend otp</u></string>
+    <string name="complete_your_profile">Complete your profile</string>
+    <string name="name">Name</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="james_jackson">James Jackson</string>
+    <string name="vjames_gmail_com">VJames@gmail.com</string>
+    <string name="phone">Phone</string>
+    <string name="_1255336588">-1255336588</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="i_accept_terms_conditions">I accept terms &amp; conditions</string>
+    <string name="next">Next</string>
+    <string name="already_a_member_sign_in">Already a member? <u>Sign in</u></string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="select">Select</string>
+    <string name="gender">Gender</string>
+    <string name="height">Height</string>
+    <string name="qualification">Qualification</string>
+    <string name="location">Location</string>
+    <string name="interested_in">Interested in</string>
+    <string name="add_shot_bio">Add Shot Bio</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="your_profile_has_been_submitted_successfully">Your profile has been submitted successfully</string>
+    <string name="done">Done</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="my_requests">My Requests</string>
+    <string name="notification">Notification</string>
+    <string name="messages">Messages</string>
+    <string name="change_password">Change Password</string>
+    <string name="terms_conditions">Terms &amp; Conditions</string>
+    <string name="about_us">About Us</string>
+    <string name="logout">Logout</string>
+
+
+    <string-array name="selectGender">
+        <item>Select</item>
+        <item>Female</item>
+        <item>Male</item>
+    </string-array>
 
 </resources>

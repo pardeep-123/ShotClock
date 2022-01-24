@@ -3,7 +3,7 @@ package com.app.shotclock.fragments
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.adapters.WalkThroughAdapter
 import com.app.shotclock.base.BaseFragment
@@ -12,14 +12,26 @@ import com.app.shotclock.models.WalkThroughModel
 import info.jeovani.viewpagerindicator.constants.PagerItemType
 
 class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>() {
-   private var walkList : ArrayList<WalkThroughModel>? = ArrayList()
+    private var walkList: ArrayList<WalkThroughModel>? = ArrayList()
     private var selectedArrayList = ArrayList<Int>()
     private var unSelectedArrayList = ArrayList<Int>()
+
+    override fun getViewBinding(): FragmentWalkThroughBinding {
+        return FragmentWalkThroughBinding.inflate(layoutInflater)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
 //        initViewPager()
+
+          binding.ivEmail.setOnClickListener {
+              this.findNavController().navigate(R.id.action_walkThroughFragment_to_loginFragment)
+          }
+
+        binding.ivPhone.setOnClickListener {
+            this.findNavController().navigate(R.id.action_walkThroughFragment_to_loginPhoneFragment)
+        }
     }
 
     private fun initViewPager() {
@@ -67,7 +79,7 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>() {
         binding.rvWalkThrough.setInfinite(true)
         binding.rvWalkThrough.setAlpha(true)
         binding.rvWalkThrough.setFlat(false)
-        binding.rvWalkThrough.setIntervalRatio(0.6F)
+        binding.rvWalkThrough.setIntervalRatio(0.5F)
 //        binding.rvWalkThrough.scrollToPosition(selectedPos!!)
 //        val carouselLayoutManager = binding.rvWalkThrough.getCarouselLayoutManager()
 //        val currentlyCenterPosition = binding.rvWalkThrough.getSelectedPosition()
@@ -79,10 +91,6 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>() {
 
 // chooseCircleIndicator.attachToRecyclerView(carouselRecyclerview, pagerSnapHelper)
 
-    }
-
-    override fun getViewBinding(): FragmentWalkThroughBinding {
-        return FragmentWalkThroughBinding.inflate(layoutInflater)
     }
 
 

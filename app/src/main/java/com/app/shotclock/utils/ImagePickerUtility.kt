@@ -32,6 +32,7 @@ import androidx.fragment.app.FragmentTransitionImpl
 import androidx.viewbinding.ViewBinding
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.databinding.FragmentCompleteProfileBinding
 import com.intuit.sdp.BuildConfig.APPLICATION_ID
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -41,7 +42,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-abstract class ImagePickerUtility : BaseFragment<ViewBinding>() {
+abstract class ImagePickerUtility : BaseFragment<FragmentCompleteProfileBinding>() {
 
     val REQUEST_CODE = 100
     private val GALLERY_PIC_REQUEST_CODE = 101

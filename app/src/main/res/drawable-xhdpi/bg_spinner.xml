@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Activated state is the selected item -->
+    <item android:drawable="@color/white" android:state_activated="true">
+
+    </item>
+    <!-- The rest of the items -->
+    <item android:drawable="@color/white" />
+
+</selector>

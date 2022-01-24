@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/homeFragment"
+            android:title="@string/home" />
+
+        <item
+            android:id="@+id/profileFragment"
+            android:title="@string/profile" />
+
+        <item
+            android:id="@+id/myrequests_fragment"
+            android:title="@string/my_requests" />
+        <item
+            android:id="@+id/notifications_fragment"
+            android:title="@string/notification" />
+
+        <item
+            android:id="@+id/messages_fragment"
+            android:title="@string/messages" />
+
+        <item
+            android:id="@+id/changepassword_fragment"
+            android:title="@string/change_password" />
+
+        <item
+            android:id="@+id/termsconditions_fragment"
+            android:title="@string/terms_conditions" />
+
+        <item
+            android:id="@+id/aboutus_fragment"
+            android:title="@string/about_us" />
+
+        <item
+            android:id="@+id/logout"
+            android:title="@string/logout" />
+
+    </group>
+</menu>

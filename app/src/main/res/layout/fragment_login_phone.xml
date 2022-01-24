@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_app_bg"
+    tools:context=".fragments.LoginPhoneFragment">
+
+    <ImageView
+        android:id="@+id/ivAppLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:src="@drawable/ic_app_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivBack" />
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:src="@drawable/ic_back"
+        android:padding="@dimen/_5sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvEnterYour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:fontFamily="@font/proxima_semibold"
+        android:gravity="center"
+        android:text="@string/enter_your_mobile_number_to_login"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16ssp"
+        app:layout_constraintTop_toBottomOf="@+id/ivAppLogo" />
+
+    <TextView
+        android:id="@+id/tvMobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_22sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:fontFamily="@font/proxima_regular"
+        android:text="@string/mobile"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvEnterYour" />
+
+    <RelativeLayout
+        android:id="@+id/rlEnterNo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:background="@drawable/bg_whiteline_round_corners"
+        app:layout_constraintTop_toBottomOf="@id/tvMobile">
+
+        <ImageView
+            android:id="@+id/ivCall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_call"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"/>
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/ccp"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_40sdp"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_toEndOf="@id/ivCall"
+            app:ccpDialog_backgroundColor="@color/white"
+            app:ccpDialog_textColor="@color/black"
+            app:ccp_arrowColor="@color/white"
+            app:ccp_arrowSize="@dimen/_20ssp"
+            app:ccp_contentColor="@color/white"
+            app:ccp_flagBorderColor="@color/white"
+            app:ccp_showArrow="false"
+            app:ccp_showFlag="false"
+            app:ccp_showNameCode="false"
+            app:ccp_textSize="@dimen/_12ssp"/>
+
+        <EditText
+            android:id="@+id/etMobile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/ccp"
+            android:fontFamily="@font/proxima_regular"
+            android:hint="@string/_32548566855"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLength="16"
+            android:maxLines="1"
+            android:background="@null"
+            android:paddingEnd="@dimen/_5sdp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/_12ssp" />
+
+    </RelativeLayout>
+
+<com.google.android.material.button.MaterialButton
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/submit"
+    android:textAllCaps="false"
+    android:id="@+id/btSubmit"
+    android:background="@drawable/bg_white_round_corners"
+    app:backgroundTint="@null"
+    android:textColor="@color/black"
+    android:textSize="@dimen/_12ssp"
+    android:fontFamily="@font/proxima_regular"
+    android:layout_marginTop="@dimen/_20sdp"
+    android:layout_marginHorizontal="@dimen/_20sdp"
+    app:layout_constraintTop_toBottomOf="@id/rlEnterNo"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
