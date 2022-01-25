@@ -176,7 +176,6 @@
 
             </RelativeLayout>
 
-
             <TextView
                 android:id="@+id/tvPassword"
                 android:layout_width="wrap_content"
@@ -289,5 +288,4 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

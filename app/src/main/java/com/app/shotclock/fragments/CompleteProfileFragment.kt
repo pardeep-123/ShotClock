@@ -35,6 +35,7 @@ class CompleteProfileFragment : BaseFragment<FragmentCompleteProfileBinding>() {
 
         val toolbar: Toolbar = view.findViewById(R.id.toolbar)
         val ivBack: ImageView = toolbar.findViewById(R.id.ivBack)
+
         ivBack.setOnClickListener {
             activity?.onBackPressed()
         }
@@ -69,15 +70,12 @@ class CompleteProfileFragment : BaseFragment<FragmentCompleteProfileBinding>() {
         // complete profile images adapter
         binding.rvUserImages.adapter = CompleteProfileImagesAdapter()
 
-
         binding.btSubmit.setOnClickListener {
             val dialog = Dialog(requireContext())
             with(dialog) {
                 setCancelable(false)
                 setContentView(R.layout.alert_dialog_submitted)
-
                 val btDone: MaterialButton = findViewById(R.id.btDone)
-
                 btDone.setOnClickListener {
                     findNavController().navigate(R.id.action_completeProfileFragment_to_homeActivity)
                     dismiss()

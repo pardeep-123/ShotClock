@@ -8,8 +8,7 @@ import com.app.shotclock.databinding.ItemsCompleteProfileImagesBinding
 class CompleteProfileImagesAdapter :
     RecyclerView.Adapter<CompleteProfileImagesAdapter.ImageHolder>() {
 
-    class ImageHolder(itemsView: ItemsCompleteProfileImagesBinding) :
-        RecyclerView.ViewHolder(itemsView.root) {
+    class ImageHolder(itemView: ItemsCompleteProfileImagesBinding) : RecyclerView.ViewHolder(itemView.root) {
 
     }
 

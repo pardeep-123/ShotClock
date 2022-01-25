@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/img_app_bg"
+    tools:context=".fragments.EditProfileFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/rivUser"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_250sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_profile"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_corner_radius="@dimen/_5sdp" />
+
+            <ImageView
+                android:id="@+id/ivCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_edit_camera"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="-20dp"
+                android:padding="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="@id/rivUser"
+                app:layout_constraintBottom_toBottomOf="@id/rivUser"/>
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_22sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rivUser" />
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:background="@drawable/bg_whiteline_round_corners"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/james_jackson"
+                android:maxLines="1"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:inputType="textPersonName"
+                android:drawableStart="@drawable/ic_name"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/email"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@+id/tvName"
+                app:layout_constraintTop_toBottomOf="@id/etName" />
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/bg_whiteline_round_corners"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/vjames_gmail_com"
+                android:maxLines="1"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:inputType="textEmailAddress"
+                android:drawableStart="@drawable/ic_email"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="@id/etName"
+                app:layout_constraintStart_toStartOf="@id/etName"
+                app:layout_constraintTop_toBottomOf="@id/tvEmail" />
+
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                android:fontFamily="@font/proxima_regular"
+                app:layout_constraintTop_toBottomOf="@id/etEmail"
+                app:layout_constraintStart_toStartOf="@id/tvEmail"
+                android:layout_marginTop="@dimen/_15sdp"/>
+
+            <RelativeLayout
+                android:id="@+id/rlPhone"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@+id/etEmail"
+                app:layout_constraintEnd_toEndOf="@+id/etEmail"
+                android:background="@drawable/bg_whiteline_round_corners"
+                app:layout_constraintTop_toBottomOf="@id/tvPhone">
+
+                <ImageView
+                    android:id="@+id/ivCall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_call"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"/>
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_toEndOf="@id/ivCall"
+                    app:ccpDialog_backgroundColor="@color/white"
+                    app:ccpDialog_textColor="@color/black"
+                    app:ccp_arrowColor="@color/white"
+                    app:ccp_arrowSize="@dimen/_20ssp"
+                    app:ccp_contentColor="@color/white"
+                    app:ccp_flagBorderColor="@color/white"
+                    app:ccp_showArrow="false"
+                    app:ccp_showFlag="false"
+                    app:ccp_showNameCode="false"
+                    app:ccp_textSize="@dimen/_12ssp"/>
+
+                <EditText
+                    android:id="@+id/etMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@id/ccp"
+                    android:fontFamily="@font/proxima_regular"
+                    android:hint="@string/_1255336588"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="16"
+                    android:background="@null"
+                    android:maxLines="1"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+            </RelativeLayout>
+
+              <TextView
+                android:id="@+id/tvDOB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date_of_birth"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                app:layout_constraintTop_toBottomOf="@id/rlPhone"
+                android:layout_marginStart="@dimen/_22sdp"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <EditText
+                android:id="@+id/etDOB"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@id/tvDOB"
+                android:background="@drawable/bg_whiteline_round_corners"
+                android:hint="@string/select"
+                android:maxLines="1"
+                android:clickable="false"
+                android:longClickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:inputType="date"
+                android:paddingStart="@dimen/_15sdp"
+                android:textColor="@color/white"
+                android:paddingEnd="@dimen/_8sdp"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="@font/proxima_regular"
+                android:textColorHint="@color/white"/>
+
+            <TextView
+                android:id="@+id/tvGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/gender"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/tvDOB"
+                app:layout_constraintTop_toBottomOf="@id/etDOB" />
+
+            <LinearLayout
+                android:id="@+id/llGender"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@id/etDOB"
+                app:layout_constraintEnd_toEndOf="@id/etDOB"
+                android:background="@drawable/bg_whiteline_round_corners"
+                app:layout_constraintTop_toBottomOf="@+id/tvGender">
+
+                <Spinner
+                    android:id="@+id/spGender"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/hintcolor"
+                    android:contextClickable="true"
+                    android:elevation="10dp"
+                    android:paddingEnd="@dimen/_2sdp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:popupBackground="#988AE8"
+                    android:textSize="15sp"
+                    tools:listitem="@layout/items_spinner_list" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvHeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/height"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/tvDOB"
+                app:layout_constraintTop_toBottomOf="@id/llGender" />
+
+            <EditText
+                android:id="@+id/etHeight"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/bg_whiteline_round_corners"
+                android:fontFamily="@font/proxima_regular"
+                android:hint="@string/select"
+                android:maxLines="1"
+                android:inputType="numberDecimal"
+                android:drawableEnd="@drawable/ic_arrowdown"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="@id/llGender"
+                app:layout_constraintStart_toStartOf="@id/llGender"
+                app:layout_constraintTop_toBottomOf="@id/tvHeight" />
+
+            <TextView
+                android:id="@+id/tvQualification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/qualification"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/tvHeight"
+                app:layout_constraintTop_toBottomOf="@id/etHeight" />
+
+            <EditText
+                android:id="@+id/etQualification"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/bg_whiteline_round_corners"
+                android:fontFamily="@font/proxima_regular"
+                android:hint="@string/select"
+                android:maxLines="1"
+                android:inputType="textPersonName"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="@id/etHeight"
+                app:layout_constraintStart_toStartOf="@id/etHeight"
+                app:layout_constraintTop_toBottomOf="@id/tvQualification" />
+
+            <TextView
+                android:id="@+id/tvLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/location"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/tvQualification"
+                app:layout_constraintTop_toBottomOf="@id/etQualification" />
+
+            <EditText
+                android:id="@+id/etLocation"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/bg_whiteline_round_corners"
+                android:fontFamily="@font/proxima_regular"
+                android:hint="@string/select"
+                android:maxLines="1"
+                android:inputType="textPersonName"
+                android:drawableEnd="@drawable/ic_location"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="@id/etQualification"
+                app:layout_constraintStart_toStartOf="@id/etQualification"
+                app:layout_constraintTop_toBottomOf="@id/tvLocation" />
+
+            <TextView
+                android:id="@+id/tvInterestedIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/interested_in"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/tvLocation"
+                app:layout_constraintTop_toBottomOf="@id/etLocation" />
+
+            <LinearLayout
+                android:id="@+id/llInterestedIn"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:layout_constraintEnd_toEndOf="@id/etLocation"
+                android:background="@drawable/bg_whiteline_round_corners"
+                app:layout_constraintTop_toBottomOf="@+id/tvInterestedIn">
+
+                <Spinner
+                    android:id="@+id/spInterestedIn"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/hintcolor"
+                    android:contextClickable="true"
+                    android:elevation="10dp"
+                    android:paddingEnd="@dimen/_2sdp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:popupBackground="#988AE8"
+                    android:textSize="15sp"
+                    tools:listitem="@layout/items_spinner_list" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvSexualOrientation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/sexual_orientation"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/tvInterestedIn"
+                app:layout_constraintTop_toBottomOf="@id/llInterestedIn" />
+
+            <LinearLayout
+                android:id="@+id/llSexualOrientation"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:layout_constraintEnd_toEndOf="@id/etLocation"
+                android:background="@drawable/bg_whiteline_round_corners"
+                app:layout_constraintTop_toBottomOf="@+id/tvSexualOrientation">
+
+                <Spinner
+                    android:id="@+id/spSexualOrientation"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/hintcolor"
+                    android:contextClickable="true"
+                    android:elevation="10dp"
+                    android:paddingEnd="@dimen/_2sdp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:popupBackground="#988AE8"
+                    android:textSize="15sp"
+                    tools:listitem="@layout/items_spinner_list" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvAstrologicalSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/astrological_sign"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/tvSexualOrientation"
+                app:layout_constraintTop_toBottomOf="@id/llSexualOrientation" />
+
+            <LinearLayout
+                android:id="@+id/llAstrologicalSign"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:layout_constraintEnd_toEndOf="@id/etLocation"
+                android:background="@drawable/bg_whiteline_round_corners"
+                app:layout_constraintTop_toBottomOf="@+id/tvAstrologicalSign">
+
+                <Spinner
+                    android:id="@+id/spAstrologicalSign"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/hintcolor"
+                    android:contextClickable="true"
+                    android:elevation="10dp"
+                    android:paddingEnd="@dimen/_2sdp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:popupBackground="#988AE8"
+                    android:textSize="15sp"
+                    tools:listitem="@layout/items_spinner_list" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvSmoking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/smoking"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/tvAstrologicalSign"
+                app:layout_constraintTop_toBottomOf="@id/llAstrologicalSign" />
+
+            <LinearLayout
+                android:id="@+id/llSmoking"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:layout_constraintEnd_toEndOf="@id/etLocation"
+                android:background="@drawable/bg_whiteline_round_corners"
+                app:layout_constraintTop_toBottomOf="@+id/tvSmoking">
+
+                <Spinner
+                    android:id="@+id/spSmoking"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/hintcolor"
+                    android:contextClickable="true"
+                    android:elevation="10dp"
+                    android:paddingEnd="@dimen/_2sdp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:popupBackground="#988AE8"
+                    android:textSize="15sp"
+                    tools:listitem="@layout/items_spinner_list" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvDrinking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/drinking"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/tvSmoking"
+                app:layout_constraintTop_toBottomOf="@id/llSmoking" />
+
+            <LinearLayout
+                android:id="@+id/llDrinking"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:layout_constraintEnd_toEndOf="@id/etLocation"
+                android:background="@drawable/bg_whiteline_round_corners"
+                app:layout_constraintTop_toBottomOf="@+id/tvDrinking">
+
+                <Spinner
+                    android:id="@+id/spDrinking"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/hintcolor"
+                    android:contextClickable="true"
+                    android:elevation="10dp"
+                    android:paddingEnd="@dimen/_2sdp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:popupBackground="#988AE8"
+                    android:textSize="15sp"
+                    tools:listitem="@layout/items_spinner_list" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvPets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/pets"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/tvSmoking"
+                app:layout_constraintTop_toBottomOf="@id/llDrinking" />
+
+            <LinearLayout
+                android:id="@+id/llPets"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:layout_constraintEnd_toEndOf="@id/etLocation"
+                android:background="@drawable/bg_whiteline_round_corners"
+                app:layout_constraintTop_toBottomOf="@+id/tvPets">
+
+                <Spinner
+                    android:id="@+id/spPets"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/hintcolor"
+                    android:contextClickable="true"
+                    android:elevation="10dp"
+                    android:paddingEnd="@dimen/_2sdp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:popupBackground="#988AE8"
+                    android:textSize="15sp"
+                    tools:listitem="@layout/items_spinner_list" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvAddBio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/add_shot_bio"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="@id/tvPets"
+                app:layout_constraintTop_toBottomOf="@id/llPets"/>
+
+            <EditText
+                android:id="@+id/etAddBio"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_90sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:hint="@string/add_shot_bio"
+                android:inputType="textMultiLine"
+                android:maxHeight="@dimen/_170sdp"
+                android:paddingStart="@dimen/_15sdp"
+                android:background="@drawable/bg_whiteline_round_corners"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_12ssp"
+                android:gravity="start"
+                android:paddingBottom="@dimen/_5sdp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintEnd_toEndOf="@id/llInterestedIn"
+                app:layout_constraintStart_toStartOf="@id/llInterestedIn"
+                app:layout_constraintTop_toBottomOf="@id/tvAddBio"/>
+
+            <TextView
+                android:id="@+id/tvAddPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_photo"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                app:layout_constraintTop_toBottomOf="@id/etAddBio"
+                app:layout_constraintStart_toStartOf="@id/tvAddBio"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvEditProfile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="@+id/etAddBio"
+                app:layout_constraintEnd_toEndOf="@+id/etAddBio"
+                tools:listitem="@layout/items_complete_profile_images"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddPhoto"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btUpdate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/update"
+                android:background="@drawable/bg_white_round_corners"
+                app:backgroundTint="@null"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                android:textAllCaps="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/etAddBio"
+                app:layout_constraintStart_toStartOf="@id/etAddBio"
+                app:layout_constraintTop_toBottomOf="@id/rvEditProfile"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

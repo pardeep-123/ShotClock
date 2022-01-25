@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/_30sdp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/civUser"
@@ -16,15 +17,17 @@
 
 <TextView
     android:id="@+id/tvUserName"
-    android:layout_width="wrap_content"
+    android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:text="@string/james_jackson"
     android:textSize="@dimen/_12ssp"
+    android:layout_marginTop="@dimen/_5sdp"
     android:textColor="@color/white"
+    android:gravity="center"
     android:fontFamily="@font/proxima_semibold"
     app:layout_constraintTop_toBottomOf="@id/civUser"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    android:paddingHorizontal="@dimen/_10sdp"/>
+    android:layout_marginHorizontal="@dimen/_10sdp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

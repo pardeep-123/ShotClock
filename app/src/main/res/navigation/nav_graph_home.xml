@@ -14,7 +14,26 @@
         android:id="@+id/profileFragment"
         android:name="com.app.shotclock.fragments.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.app.shotclock.fragments.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/myRequestsFragment"
+        android:name="com.app.shotclock.fragments.MyRequestsFragment"
+        android:label="fragment_my_requests"
+        tools:layout="@layout/fragment_my_requests" />
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.app.shotclock.fragments.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" />
 
 
 </navigation>

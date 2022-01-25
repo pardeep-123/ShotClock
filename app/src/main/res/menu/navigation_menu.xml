@@ -10,10 +10,10 @@
             android:title="@string/profile" />
 
         <item
-            android:id="@+id/myrequests_fragment"
+            android:id="@+id/myRequestsFragment"
             android:title="@string/my_requests" />
         <item
-            android:id="@+id/notifications_fragment"
+            android:id="@+id/notificationFragment"
             android:title="@string/notification" />
 
         <item
@@ -23,6 +23,21 @@
         <item
             android:id="@+id/changepassword_fragment"
             android:title="@string/change_password" />
+
+        <item
+            android:id="@+id/cookiepolicy_fragment"
+            android:title="@string/cookie_policy" />
+
+        <item
+            android:id="@+id/copyrights_fragment"
+            android:title="@string/copyrights_notice" />
+
+        <item
+            android:id="@+id/privacypolicy_fragment"
+            android:title="@string/privacy_policy" />
+
+        <item android:id="@+id/safedatingpolicy_fragment"
+            android:title="@string/safe_dating_policy"/>
 
         <item
             android:id="@+id/termsconditions_fragment"

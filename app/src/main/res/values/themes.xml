@@ -23,10 +23,10 @@
 
     <!--      for naivgation -->
     <style name="NavigationTextStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/proxima_regular</item>
+        <item name="android:fontFamily">@font/proxima_semibold</item>
         <item name="android:textSize">@dimen/_12ssp</item>
         <item name="android:textColor">@color/white</item>
-        <item name="fontFamily">@font/proxima_regular</item>
+        <item name="fontFamily">@font/proxima_semibold</item>
     </style>
 
 </resources>

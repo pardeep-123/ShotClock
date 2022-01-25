@@ -245,6 +245,206 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tvSexualOrientation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/sexual_orientation"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/tvInterestedIn"
+                app:layout_constraintTop_toBottomOf="@id/llInterestedIn" />
+
+            <LinearLayout
+                android:id="@+id/llSexualOrientation"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:layout_constraintEnd_toEndOf="@id/etLocation"
+                android:background="@drawable/bg_whiteline_round_corners"
+                app:layout_constraintTop_toBottomOf="@+id/tvSexualOrientation">
+
+                <Spinner
+                    android:id="@+id/spSexualOrientation"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/hintcolor"
+                    android:contextClickable="true"
+                    android:elevation="10dp"
+                    android:paddingEnd="@dimen/_2sdp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:popupBackground="#988AE8"
+                    android:textSize="15sp"
+                    tools:listitem="@layout/items_spinner_list" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvAstrologicalSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/astrological_sign"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/tvSexualOrientation"
+                app:layout_constraintTop_toBottomOf="@id/llSexualOrientation" />
+
+            <LinearLayout
+                android:id="@+id/llAstrologicalSign"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:layout_constraintEnd_toEndOf="@id/etLocation"
+                android:background="@drawable/bg_whiteline_round_corners"
+                app:layout_constraintTop_toBottomOf="@+id/tvAstrologicalSign">
+
+                <Spinner
+                    android:id="@+id/spAstrologicalSign"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/hintcolor"
+                    android:contextClickable="true"
+                    android:elevation="10dp"
+                    android:paddingEnd="@dimen/_2sdp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:popupBackground="#988AE8"
+                    android:textSize="15sp"
+                    tools:listitem="@layout/items_spinner_list" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvSmoking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/smoking"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/tvAstrologicalSign"
+                app:layout_constraintTop_toBottomOf="@id/llAstrologicalSign" />
+
+            <LinearLayout
+                android:id="@+id/llSmoking"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:layout_constraintEnd_toEndOf="@id/etLocation"
+                android:background="@drawable/bg_whiteline_round_corners"
+                app:layout_constraintTop_toBottomOf="@+id/tvSmoking">
+
+                <Spinner
+                    android:id="@+id/spSmoking"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/hintcolor"
+                    android:contextClickable="true"
+                    android:elevation="10dp"
+                    android:paddingEnd="@dimen/_2sdp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:popupBackground="#988AE8"
+                    android:textSize="15sp"
+                    tools:listitem="@layout/items_spinner_list" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvDrinking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/drinking"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/tvSmoking"
+                app:layout_constraintTop_toBottomOf="@id/llSmoking" />
+
+            <LinearLayout
+                android:id="@+id/llDrinking"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:layout_constraintEnd_toEndOf="@id/etLocation"
+                android:background="@drawable/bg_whiteline_round_corners"
+                app:layout_constraintTop_toBottomOf="@+id/tvDrinking">
+
+                <Spinner
+                    android:id="@+id/spDrinking"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/hintcolor"
+                    android:contextClickable="true"
+                    android:elevation="10dp"
+                    android:paddingEnd="@dimen/_2sdp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:popupBackground="#988AE8"
+                    android:textSize="15sp"
+                    tools:listitem="@layout/items_spinner_list" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvPets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/pets"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@id/tvSmoking"
+                app:layout_constraintTop_toBottomOf="@id/llDrinking" />
+
+            <LinearLayout
+                android:id="@+id/llPets"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:layout_constraintEnd_toEndOf="@id/etLocation"
+                android:background="@drawable/bg_whiteline_round_corners"
+                app:layout_constraintTop_toBottomOf="@+id/tvPets">
+
+                <Spinner
+                    android:id="@+id/spPets"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/hintcolor"
+                    android:contextClickable="true"
+                    android:elevation="10dp"
+                    android:paddingEnd="@dimen/_2sdp"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:popupBackground="#988AE8"
+                    android:textSize="15sp"
+                    tools:listitem="@layout/items_spinner_list" />
+
+            </LinearLayout>
+
+            <TextView
                 android:id="@+id/tvAddBio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -253,8 +453,8 @@
                 android:text="@string/add_shot_bio"
                 android:textSize="@dimen/_12ssp"
                 android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="@id/tvInterestedIn"
-                app:layout_constraintTop_toBottomOf="@id/llInterestedIn"/>
+                app:layout_constraintStart_toStartOf="@id/tvPets"
+                app:layout_constraintTop_toBottomOf="@id/llPets"/>
 
             <EditText
                 android:id="@+id/etAddBio"
@@ -296,9 +496,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="@+id/etAddBio"
+                app:layout_constraintEnd_toEndOf="@+id/etAddBio"
                 tools:listitem="@layout/items_complete_profile_images"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="@id/etAddBio"
                 app:layout_constraintTop_toBottomOf="@+id/tvAddPhoto"/>
 
             <com.google.android.material.button.MaterialButton

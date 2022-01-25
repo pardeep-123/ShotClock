@@ -20,8 +20,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
         val toolbar :Toolbar = view.findViewById(R.id.toolbar)
         val ivBack : ImageView = toolbar.findViewById(R.id.ivBack)
-
-
         ivBack.setOnClickListener {
             activity?.onBackPressed()
         }
