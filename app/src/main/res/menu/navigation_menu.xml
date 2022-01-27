@@ -17,23 +17,23 @@
             android:title="@string/notification" />
 
         <item
-            android:id="@+id/messages_fragment"
+            android:id="@+id/messageFragment"
             android:title="@string/messages" />
 
         <item
-            android:id="@+id/changepassword_fragment"
+            android:id="@+id/changePasswordFragment"
             android:title="@string/change_password" />
 
         <item
-            android:id="@+id/cookiepolicy_fragment"
+            android:id="@+id/cookiePolicyFragment"
             android:title="@string/cookie_policy" />
 
         <item
-            android:id="@+id/copyrights_fragment"
+            android:id="@+id/copyrightPolicyFragment"
             android:title="@string/copyrights_notice" />
 
         <item
-            android:id="@+id/privacypolicy_fragment"
+            android:id="@+id/privacyPolicyFragment"
             android:title="@string/privacy_policy" />
 
         <item android:id="@+id/safedatingpolicy_fragment"

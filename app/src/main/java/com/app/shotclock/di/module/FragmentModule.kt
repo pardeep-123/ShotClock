@@ -41,9 +41,27 @@ abstract class FragmentModule {
     internal abstract fun editProfileFragment(): EditProfileFragment
 
     @ContributesAndroidInjector
-    internal abstract fun myRequestFragment() : MyRequestsFragment
+    internal abstract fun myRequestFragment(): MyRequestsFragment
 
     @ContributesAndroidInjector
     internal abstract fun notificationFragment(): NotificationFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun messageFragment(): MessageFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun chatFragment(): ChatFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun changePasswordFragment(): ChangePasswordFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun cookiePolicyFragment(): CookiePolicyFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun copyrightPolicyFragment(): CopyrightPolicyFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun privacyPolicyFragment(): PrivacyPolicyFragment
 
 }

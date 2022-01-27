@@ -9,7 +9,6 @@
     tools:context=".activities.HomeActivity"
     tools:openDrawer="end">
 
-
     <include layout="@layout/app_toolbar"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout

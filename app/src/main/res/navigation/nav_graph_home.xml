@@ -34,6 +34,40 @@
         android:name="com.app.shotclock.fragments.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/messageFragment"
+        android:name="com.app.shotclock.fragments.MessageFragment"
+        android:label="fragment_message"
+        tools:layout="@layout/fragment_message" >
+        <action
+            android:id="@+id/action_messageFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.app.shotclock.fragments.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.app.shotclock.fragments.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" />
+    <fragment
+        android:id="@+id/cookiePolicyFragment"
+        android:name="com.app.shotclock.fragments.CookiePolicyFragment"
+        android:label="fragment_cookie_policy"
+        tools:layout="@layout/fragment_cookie_policy" />
+    <fragment
+        android:id="@+id/copyrightPolicyFragment"
+        android:name="com.app.shotclock.fragments.CopyrightPolicyFragment"
+        android:label="fragment_copyright_policy"
+        tools:layout="@layout/fragment_copyright_policy" />
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.app.shotclock.fragments.PrivacyPolicyFragment"
+        android:label="fragment_privcay_policy"
+        tools:layout="@layout/fragment_privcay_policy" />
 
 
 </navigation>
