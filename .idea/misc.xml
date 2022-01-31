@@ -8,7 +8,7 @@
         <entry key="app/src/main/res/drawable/bg_whiteline_round_corners.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/remeberme_checkbox.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/fragment_walk_through.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_walk_through.xml" value="0.18" />
         <entry key="app/src/main/res/layout/items_walkthrough.xml" value="0.18489583333333334" />
       </map>
     </option>
