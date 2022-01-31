@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_black_circle_corners">
+
+    <TextView
+        android:id="@+id/tvFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/filter"
+        android:textColor="@color/white"
+        android:fontFamily="@font/proxima_semibold"
+        android:textSize="@dimen/_14ssp"
+        android:layout_margin="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+<ImageView
+    android:id="@+id/ivClose"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/ic_cross"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_margin="@dimen/_8sdp"
+    android:padding="@dimen/_5sdp"/>
+
+    <TextView
+        android:id="@+id/tvGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gender"
+        app:layout_constraintTop_toBottomOf="@id/tvFilter"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/proxima_regular"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_15sdp"/>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tvGender">
+
+        <RadioButton
+            android:id="@+id/rbMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/male"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/proxima_regular"/>
+
+        <RadioButton
+            android:id="@+id/rbFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/female"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/proxima_regular"/>
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/tvHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/height"
+        app:layout_constraintTop_toBottomOf="@id/radioGroup"
+        app:layout_constraintStart_toStartOf="@id/tvGender"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/proxima_regular"/>
+
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/rsHeight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:valueFrom="10"
+        android:valueTo="70"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        app:labelBehavior="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeight"
+        app:thumbColor="@color/white"
+        app:thumbElevation="5dp"
+        app:thumbRadius="9dp"
+        app:thumbStrokeColor="@color/white"
+        app:thumbStrokeWidth="6dp"
+        app:trackColorActive="@color/white"
+        app:trackColorInactive="@color/hintcolor"
+        app:trackHeight="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:values="@array/initial_range_slider_values" />
+
+    <TextView
+        android:id="@+id/tvAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/age"
+        app:layout_constraintTop_toBottomOf="@id/rsHeight"
+        app:layout_constraintStart_toStartOf="@id/tvGender"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/proxima_regular"/>
+
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/rsAge"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:valueFrom="10"
+        android:valueTo="70"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        app:labelBehavior="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAge"
+        app:thumbColor="@color/white"
+        app:thumbElevation="5dp"
+        app:thumbRadius="9dp"
+        app:thumbStrokeColor="@color/white"
+        app:thumbStrokeWidth="6dp"
+        app:trackColorActive="@color/white"
+        app:trackColorInactive="@color/hintcolor"
+        app:trackHeight="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:values="@array/initial_range_slider_values" />
+
+
+    <TextView
+        android:id="@+id/tvDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/distance"
+        app:layout_constraintTop_toBottomOf="@id/rsAge"
+        app:layout_constraintStart_toStartOf="@id/tvGender"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/proxima_regular"/>
+
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/rsDistance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:valueFrom="10"
+        android:valueTo="70"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        app:labelBehavior="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDistance"
+        app:thumbColor="@color/white"
+        app:thumbElevation="5dp"
+        app:thumbRadius="9dp"
+        app:thumbStrokeColor="@color/white"
+        app:thumbStrokeWidth="6dp"
+        app:trackColorActive="@color/white"
+        app:trackColorInactive="@color/hintcolor"
+        app:trackHeight="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:values="@array/initial_range_slider_values" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

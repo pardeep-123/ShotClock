@@ -11,6 +11,7 @@ import com.app.shotclock.databinding.FragmentHomeBinding
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.slider.RangeSlider
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
@@ -57,6 +58,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
 
     }
+
+/*    // for Age range set
+    private fun ageSlider() {
+        binding.sliderAge.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
+            override fun onStartTrackingTouch(slider: RangeSlider) {
+            }
+
+            override fun onStopTrackingTouch(slider: RangeSlider) {
+            }
+
+        })
+    }*/
 
 
 }
