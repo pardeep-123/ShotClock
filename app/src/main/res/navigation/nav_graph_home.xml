@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_home"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.app.shotclock.fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.app.shotclock.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.app.shotclock.fragments.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/myRequestsFragment"
+        android:name="com.app.shotclock.fragments.MyRequestsFragment"
+        android:label="fragment_my_requests"
+        tools:layout="@layout/fragment_my_requests" />
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.app.shotclock.fragments.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/messageFragment"
+        android:name="com.app.shotclock.fragments.MessageFragment"
+        android:label="fragment_message"
+        tools:layout="@layout/fragment_message" >
+        <action
+            android:id="@+id/action_messageFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.app.shotclock.fragments.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.app.shotclock.fragments.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" />
+    <fragment
+        android:id="@+id/cookiePolicyFragment"
+        android:name="com.app.shotclock.fragments.CookiePolicyFragment"
+        android:label="fragment_cookie_policy"
+        tools:layout="@layout/fragment_cookie_policy" />
+    <fragment
+        android:id="@+id/copyrightPolicyFragment"
+        android:name="com.app.shotclock.fragments.CopyrightPolicyFragment"
+        android:label="fragment_copyright_policy"
+        tools:layout="@layout/fragment_copyright_policy" />
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.app.shotclock.fragments.PrivacyPolicyFragment"
+        android:label="fragment_privcay_policy"
+        tools:layout="@layout/fragment_privcay_policy" />
+    <fragment
+        android:id="@+id/safeDatingPolicyFragment"
+        android:name="com.app.shotclock.fragments.SafeDatingPolicyFragment"
+        android:label="fragment_safe_dating_policy"
+        tools:layout="@layout/fragment_safe_dating_policy" />
+    <fragment
+        android:id="@+id/termsConditionsFragment"
+        android:name="com.app.shotclock.fragments.TermsConditionsFragment"
+        android:label="fragment_terms_conditions"
+        tools:layout="@layout/fragment_terms_conditions" />
+
+
+</navigation>

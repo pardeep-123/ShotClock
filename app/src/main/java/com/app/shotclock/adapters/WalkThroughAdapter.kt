@@ -11,6 +11,7 @@ class WalkThroughAdapter(private var list : ArrayList<WalkThroughModel>) : Recyc
 
     class WalkHolder(itemView: ItemsWalkthroughBinding) : RecyclerView.ViewHolder(itemView.root) {
         val itemBinding: ItemsWalkthroughBinding = itemView
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalkHolder {

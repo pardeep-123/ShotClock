@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_app_bg"
+    tools:context=".fragments.MyRequestsFragment">
+
+    <TextView
+        android:id="@+id/tvMyRequests"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:fontFamily="@font/proxima_semibold"
+        android:gravity="center"
+        android:text="@string/my_requests"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16ssp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCurrent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/current"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
+        android:gravity="center"
+        android:paddingVertical="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_2sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        android:fontFamily="@font/proxima_regular"
+        app:layout_constraintEnd_toStartOf="@+id/tvPast"
+        android:background="@drawable/bg_white_round_corners"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMyRequests" />
+
+    <TextView
+        android:id="@+id/tvPast"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/past"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
+        android:gravity="center"
+        android:paddingVertical="@dimen/_8sdp"
+        android:layout_marginStart="2sp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        app:layout_constraintStart_toEndOf="@id/tvCurrent"
+        android:fontFamily="@font/proxima_regular"
+        android:background="@drawable/bg_white_round_corners"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMyRequests" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clSpeedDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:background="@drawable/bg_white_round_corners"
+        app:layout_constraintTop_toBottomOf="@id/tvCurrent">
+
+        <TextView
+            android:id="@+id/tvSpeedDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/speed_date_session"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:fontFamily="@font/proxima_semibold"
+            android:layout_marginStart="@dimen/_10sdp"/>
+
+        <TextView
+            android:id="@+id/tvHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cqlsys_technologies"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10ssp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:ellipsize="end"
+            app:layout_constraintTop_toBottomOf="@id/tvSpeedDate"
+            app:layout_constraintStart_toStartOf="@id/tvSpeedDate"
+            android:fontFamily="@font/proxima_regular"
+            android:layout_marginStart="@dimen/_20sdp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMyRequests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvHeading"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/items_myrequests"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@drawable/img_app_bg"
     tools:context=".fragments.WalkThroughFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/ivAppLogo"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:src="@drawable/ic_app_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,19 +25,22 @@
     <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
         android:id="@+id/rvWalkThrough"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_250sdp"
+        android:layout_height="@dimen/_210sdp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        tools:listitem="@layout/items_walkthrough"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivAppLogo" />
 
-    <info.jeovani.viewpagerindicator.ViewPagerIndicator
+    <me.relex.circleindicator.CircleIndicator2
         android:id="@+id/viewPagerIndicator"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_35sdp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:ci_width="@dimen/_8sdp"
+        app:ci_height="@dimen/_3sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvWalkThrough"
+        app:layout_constraintTop_toBottomOf="@id/rvWalkThrough"
         app:vpi_item_type="oval"
         app:vpi_view_pager="@+id/rvWalkThrough" />
 
@@ -44,6 +52,7 @@
         android:text="@string/sign_in_with"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
+        android:fontFamily="@font/proxima_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewPagerIndicator" />
@@ -88,9 +97,10 @@
         android:layout_marginTop="@dimen/_6sdp"
         android:src="@drawable/btn_phone"
         android:scaleType="fitXY"
+        android:layout_marginBottom="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivEmail" />
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

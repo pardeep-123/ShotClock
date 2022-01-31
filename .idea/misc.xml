@@ -3,13 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable-xhdpi/bg_spinner.xml" value="0.20104166666666667" />
+        <entry key="app/src/main/res/drawable-xhdpi/cursor_shape.xml" value="0.20104166666666667" />
+        <entry key="app/src/main/res/drawable/bg_app_color_gradient.xml" value="0.20104166666666667" />
+        <entry key="app/src/main/res/drawable/bg_black_circle_corners.xml" value="0.20104166666666667" />
+        <entry key="app/src/main/res/drawable/bg_chat_white.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_fb_round_corners.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_white_round_corners.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_whiteline_round_corners.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/remeberme_checkbox.xml" value="0.20104166666666667" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/app_toolbar.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_message.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_privcay_policy.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_safe_dating_policy.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_terms_conditions.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_walk_through.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/items_chat.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/items_complete_profile_images.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/items_navigation_header.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/items_walkthrough.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.18489583333333334" />
       </map>
     </option>
   </component>

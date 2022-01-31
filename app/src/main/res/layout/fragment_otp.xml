@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_app_bg"
+    tools:context=".fragments.OtpFragment">
+
+    <ImageView
+        android:id="@+id/ivBackOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:src="@drawable/ic_back"
+        android:padding="@dimen/_5sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivAppIcon"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:src="@drawable/ic_app_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivBackOtp" />
+
+    <TextView
+        android:id="@+id/tvEnterOtp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:fontFamily="@font/proxima_semibold"
+        android:gravity="center"
+        android:text="@string/enter_otp_sent_to_your_mobile_phone"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16ssp"
+        app:layout_constraintTop_toBottomOf="@id/ivAppIcon" />
+
+    <com.chaos.view.PinView
+        android:id="@+id/pinViewOtp"
+        style="@style/PinWidget.PinView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:fontFamily="@font/proxima_regular"
+        android:gravity="center"
+        android:inputType="number"
+        android:textColor="@color/white"
+        android:textColorHint="@color/hintcolor"
+        android:textSelectHandle="@drawable/cursor_shape"
+        android:textSize="@dimen/_12ssp"
+        app:itemCount="4"
+        app:itemHeight="@dimen/_40sdp"
+        app:itemRadius="@dimen/_5sdp"
+        app:itemSpacing="@dimen/_10sdp"
+        app:itemWidth="@dimen/_40sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvEnterOtp"
+        app:lineWidth="@dimen/_1sdp"
+        app:viewType="rectangle" />
+
+    <TextView
+        android:id="@+id/tvResendOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resend_otp"
+        android:textSize="@dimen/_11ssp"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/proxima_regular"
+        app:layout_constraintTop_toBottomOf="@id/pinViewOtp"
+        app:layout_constraintStart_toStartOf="@id/pinViewOtp"
+        app:layout_constraintEnd_toEndOf="@id/pinViewOtp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/bg_white_round_corners"
+        android:fontFamily="@font/proxima_regular"
+        android:text="@string/submit"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@id/tvResendOtp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

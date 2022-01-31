@@ -10,5 +10,7 @@
     <color name="hintcolor">#585858</color>
     <color name="whtiegrey">#A4FFFFFF</color>
     <color name="red">#FF0000</color>
-    <color name="lighblack">#585858</color>
+    <color name="light_black">#585858</color>
+    <color name="pink_light">#f5646d</color>
+    <color name="pink">#f43c83</color>
 </resources>

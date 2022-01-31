@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/img_app_bg"
+    tools:context=".fragments.ProfileFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/rivUser"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_250sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_profile"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_corner_radius="@dimen/_5sdp" />
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_bold"
+                android:text="@string/james_jackson"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rivUser" />
+
+            <TextView
+                android:id="@+id/tvDetails"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/james_jackson_description"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:textSize="@dimen/_12ssp"
+                android:gravity="start"
+                android:textColor="@color/white"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:fontFamily="@font/proxima_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvUserName"
+                app:layout_constraintTop_toBottomOf="@+id/tvUserName"/>
+
+            <TextView
+                android:id="@+id/tvMail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/james_gmail_com"
+                app:layout_constraintTop_toBottomOf="@+id/tvDetails"
+                app:layout_constraintStart_toStartOf="@id/tvDetails"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/proxima_regular"
+                android:textSize="@dimen/_12ssp"
+                android:drawablePadding="@dimen/_15sdp"
+                android:drawableStart="@drawable/ic_email"/>
+
+            <TextView
+                android:id="@+id/tvPhoneNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_213485996688"
+                app:layout_constraintTop_toBottomOf="@+id/tvMail"
+                app:layout_constraintStart_toStartOf="@id/tvMail"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/proxima_regular"
+                android:textSize="@dimen/_12ssp"
+                android:drawablePadding="@dimen/_15sdp"
+                android:drawableStart="@drawable/ic_call"/>
+
+            <TextView
+                android:id="@+id/tvDOB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_20_jan_1996"
+                app:layout_constraintTop_toBottomOf="@+id/tvPhoneNo"
+                app:layout_constraintStart_toStartOf="@id/tvPhoneNo"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/proxima_regular"
+                android:textSize="@dimen/_12ssp"
+                android:drawablePadding="@dimen/_15sdp"
+                android:drawableStart="@drawable/ic_calander"/>
+
+            <TextView
+                android:id="@+id/tvGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/male"
+                app:layout_constraintTop_toBottomOf="@+id/tvDOB"
+                app:layout_constraintStart_toStartOf="@id/tvDOB"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/proxima_regular"
+                android:textSize="@dimen/_12ssp"
+                android:drawablePadding="@dimen/_15sdp"
+                android:drawableStart="@drawable/ic_gender"/>
+
+            <TextView
+                android:id="@+id/tvHeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_6ft_1_inch"
+                app:layout_constraintTop_toBottomOf="@+id/tvGender"
+                app:layout_constraintStart_toStartOf="@id/tvGender"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/proxima_regular"
+                android:textSize="@dimen/_12ssp"
+                android:drawablePadding="@dimen/_15sdp"
+                android:drawableStart="@drawable/ic_height"/>
+
+            <TextView
+                android:id="@+id/tvGraduation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/graduation"
+                app:layout_constraintTop_toBottomOf="@+id/tvHeight"
+                app:layout_constraintStart_toStartOf="@id/tvHeight"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/proxima_regular"
+                android:textSize="@dimen/_12ssp"
+                android:drawablePadding="@dimen/_13sdp"
+                android:drawableStart="@drawable/ic_education"/>
+
+            <TextView
+                android:id="@+id/tvLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/new_york_city"
+                app:layout_constraintTop_toBottomOf="@+id/tvGraduation"
+                app:layout_constraintStart_toStartOf="@id/tvGraduation"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/proxima_regular"
+                android:textSize="@dimen/_12ssp"
+                android:drawablePadding="@dimen/_15sdp"
+                android:drawableStart="@drawable/ic_location"/>
+
+            <TextView
+                android:id="@+id/tvInterestedIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/womens"
+                app:layout_constraintTop_toBottomOf="@+id/tvLocation"
+                app:layout_constraintStart_toStartOf="@id/tvLocation"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/proxima_regular"
+                android:textSize="@dimen/_12ssp"
+                android:drawablePadding="@dimen/_15sdp"
+                android:drawableStart="@drawable/ic_women"/>
+
+            <TextView
+                android:id="@+id/tvSexualOrientation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gay"
+                app:layout_constraintTop_toBottomOf="@+id/tvInterestedIn"
+                app:layout_constraintStart_toStartOf="@id/tvInterestedIn"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/proxima_regular"
+                android:textSize="@dimen/_12ssp"
+                android:drawablePadding="@dimen/_15sdp"
+                android:drawableStart="@drawable/ic_women"/>
+
+            <TextView
+                android:id="@+id/tvAstrologicalSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pisces"
+                app:layout_constraintTop_toBottomOf="@+id/tvSexualOrientation"
+                app:layout_constraintStart_toStartOf="@id/tvSexualOrientation"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/proxima_regular"
+                android:textSize="@dimen/_12ssp"
+                android:drawablePadding="@dimen/_15sdp"
+                android:drawableStart="@drawable/ic_women"/>
+
+            <TextView
+                android:id="@+id/tvSmoking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yes"
+                app:layout_constraintTop_toBottomOf="@+id/tvAstrologicalSign"
+                app:layout_constraintStart_toStartOf="@id/tvAstrologicalSign"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/proxima_regular"
+                android:textSize="@dimen/_12ssp"
+                android:drawablePadding="@dimen/_15sdp"
+                android:drawableStart="@drawable/ic_women"/>
+
+            <TextView
+                android:id="@+id/tvDrinking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yes"
+                app:layout_constraintTop_toBottomOf="@+id/tvSmoking"
+                app:layout_constraintStart_toStartOf="@id/tvSmoking"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/proxima_regular"
+                android:textSize="@dimen/_12ssp"
+                android:drawablePadding="@dimen/_15sdp"
+                android:drawableStart="@drawable/ic_women"/>
+
+            <TextView
+                android:id="@+id/tvPets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yes"
+                app:layout_constraintTop_toBottomOf="@+id/tvDrinking"
+                app:layout_constraintStart_toStartOf="@id/tvDrinking"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/proxima_regular"
+                android:textSize="@dimen/_12ssp"
+                android:drawablePadding="@dimen/_15sdp"
+                android:drawableStart="@drawable/ic_women"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_marginVertical="@dimen/_20sdp"
+                android:background="@drawable/bg_white_round_corners"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/edit"
+                app:backgroundTint="@null"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPets" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

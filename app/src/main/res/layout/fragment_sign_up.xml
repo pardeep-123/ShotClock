@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_app_bg"
+    tools:context=".fragments.SignUpFragment">
+
+    <include layout="@layout/app_toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:fontFamily="@font/proxima_semibold"
+                android:gravity="center"
+                android:text="@string/sign_up"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civUser"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:src="@drawable/img_signup"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="@dimen/_2sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvSignUp" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_22sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/civUser" />
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:background="@drawable/bg_whiteline_round_corners"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/enter_name"
+                android:maxLines="1"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:inputType="textPersonName"
+                android:drawableStart="@drawable/ic_name"
+                android:paddingStart="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:paddingEnd="@dimen/_8sdp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/email"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@+id/tvName"
+                app:layout_constraintTop_toBottomOf="@id/etName" />
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/bg_whiteline_round_corners"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/enter_email"
+                android:maxLines="1"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:inputType="textEmailAddress"
+                android:drawableStart="@drawable/ic_email"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="@id/etName"
+                app:layout_constraintStart_toStartOf="@id/etName"
+                app:layout_constraintTop_toBottomOf="@id/tvEmail" />
+
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                android:fontFamily="@font/proxima_regular"
+                app:layout_constraintTop_toBottomOf="@id/etEmail"
+                app:layout_constraintStart_toStartOf="@id/tvEmail"
+                android:layout_marginTop="@dimen/_15sdp"/>
+
+            <RelativeLayout
+                android:id="@+id/rlPhone"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@+id/etEmail"
+                app:layout_constraintEnd_toEndOf="@+id/etEmail"
+                android:background="@drawable/bg_whiteline_round_corners"
+                app:layout_constraintTop_toBottomOf="@id/tvPhone">
+
+                <ImageView
+                    android:id="@+id/ivCall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_call"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"/>
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_toEndOf="@id/ivCall"
+                    android:gravity="center"
+                    app:ccpDialog_backgroundColor="@color/white"
+                    app:ccpDialog_textColor="@color/black"
+                    app:ccp_arrowColor="@color/white"
+                    app:ccp_arrowSize="@dimen/_20ssp"
+                    app:ccp_contentColor="@color/white"
+                    app:ccp_flagBorderColor="@color/white"
+                    app:ccp_showArrow="false"
+                    app:ccp_showFlag="false"
+                    app:ccp_showNameCode="false"
+                    app:ccp_textSize="@dimen/_12ssp" />
+
+                <EditText
+                    android:id="@+id/etMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@id/ccp"
+                    android:background="@null"
+                    android:fontFamily="@font/proxima_regular"
+                    android:hint="@string/enter_phone_number"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="16"
+                    android:maxLines="1"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/password"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@+id/tvPhone"
+                app:layout_constraintTop_toBottomOf="@id/rlPhone" />
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/bg_whiteline_round_corners"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/enter_password"
+                android:maxLines="1"
+                android:fontFamily="@font/proxima_regular"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:inputType="textPassword"
+                android:drawableStart="@drawable/ic_lock"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="@id/rlPhone"
+                app:layout_constraintStart_toStartOf="@id/rlPhone"
+                app:layout_constraintTop_toBottomOf="@id/tvPassword" />
+
+            <TextView
+                android:id="@+id/tvConfirmPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/confirm_password"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintStart_toStartOf="@+id/tvPassword"
+                app:layout_constraintTop_toBottomOf="@id/etPassword" />
+
+            <EditText
+                android:id="@+id/etConfirmPassword"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/bg_whiteline_round_corners"
+                android:drawablePadding="@dimen/_10sdp"
+                android:hint="@string/enter_confirm_password"
+                android:maxLines="1"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:inputType="textPassword"
+                android:drawableStart="@drawable/ic_lock"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="@id/etPassword"
+                app:layout_constraintStart_toStartOf="@id/etPassword"
+                app:layout_constraintTop_toBottomOf="@id/tvConfirmPassword" />
+
+            <CheckBox
+                android:id="@+id/cbTermsConditions"
+                android:layout_width="@dimen/_170sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:button="@drawable/remeberme_checkbox"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:text="@string/i_accept_terms_conditions"
+                android:fontFamily="@font/proxima_regular"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintStart_toStartOf="@+id/etConfirmPassword"
+                app:layout_constraintTop_toBottomOf="@+id/etConfirmPassword" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btNext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/bg_white_round_corners"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/next"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp"
+                app:backgroundTint="@null"
+                app:layout_constraintEnd_toEndOf="@id/etConfirmPassword"
+                app:layout_constraintStart_toStartOf="@id/etConfirmPassword"
+                app:layout_constraintTop_toBottomOf="@id/cbTermsConditions" />
+
+            <TextView
+                android:id="@+id/tvSignIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:fontFamily="@font/proxima_regular"
+                android:text="@string/already_a_member_sign_in"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/btNext"
+                app:layout_constraintStart_toStartOf="@id/btNext"
+                app:layout_constraintTop_toBottomOf="@id/btNext" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
