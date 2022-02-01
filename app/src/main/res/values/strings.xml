@@ -142,6 +142,11 @@
     <string name="connect_with_your_matches">Connect with your matches!</string>
     <string name="buy">Buy</string>
     <string name="_5_99">$5.99</string>
+    <string name="for_1_day">for 1 Day</string>
+    <string name="connect_with_your_matches_for_1_day">connect with your matches for 1 day</string>
+    <string name="skip">Skip</string>
+    <string name="_4_49">4:49</string>
+    <string name="icebreaker_questions">Icebreaker questions</string>
 
 
     <string-array name="selectGender">

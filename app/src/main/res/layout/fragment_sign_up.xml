@@ -37,7 +37,7 @@
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_70sdp"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:src="@drawable/img_signup"
+                android:src="@drawable/ic_signup_camera"
                 app:civ_border_color="@color/white"
                 app:civ_border_width="@dimen/_2sdp"
                 app:layout_constraintEnd_toEndOf="parent"

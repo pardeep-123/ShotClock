@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:padding="@dimen/_5sdp"
-        android:src="@drawable/ic_back" />
+        android:src="@drawable/img_camera" />
 
     <ImageView
         android:id="@+id/ivAppLogo"
