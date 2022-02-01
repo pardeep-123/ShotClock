@@ -129,6 +129,19 @@
     <string name="female">Female</string>
     <string name="age">Age</string>
     <string name="distance">Distance</string>
+    <string name="_6ft">6ft</string>
+    <string name="_7_ft_above">7 Ft Above</string>
+    <string name="_18_years">18 Years</string>
+    <string name="_40_above">40 Above</string>
+    <string name="_0_miles">0 Miles</string>
+    <string name="_200_miles">200 Miles</string>
+    <string name="apply">Apply</string>
+    <string name="start">Start</string>
+    <string name="completed">Completed</string>
+    <string name="_24_feb_2020">24 Feb 2020</string>
+    <string name="connect_with_your_matches">Connect with your matches!</string>
+    <string name="buy">Buy</string>
+    <string name="_5_99">$5.99</string>
 
 
     <string-array name="selectGender">

@@ -70,4 +70,7 @@ abstract class FragmentModule {
     @ContributesAndroidInjector
     internal abstract fun termsConditionsFragment(): TermsConditionsFragment
 
+    @ContributesAndroidInjector
+    internal abstract fun subscriptionFragment(): SubscriptionFragment
+
 }

@@ -43,10 +43,12 @@
 
     <RadioGroup
         android:id="@+id/radioGroup"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
         android:orientation="horizontal"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvGender">
 
         <RadioButton
@@ -104,11 +106,35 @@
         app:values="@array/initial_range_slider_values" />
 
     <TextView
+        android:id="@+id/tvSixFeet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/rsHeight"
+        app:layout_constraintStart_toStartOf="@id/rsHeight"
+        android:text="@string/_6ft"
+        android:fontFamily="@font/proxima_regular"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10ssp"/>
+
+    <TextView
+        android:id="@+id/tvSevenFtAbove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/rsHeight"
+        app:layout_constraintEnd_toEndOf="@id/rsHeight"
+        android:text="@string/_7_ft_above"
+        android:fontFamily="@font/proxima_regular"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10ssp"/>
+
+    <TextView
         android:id="@+id/tvAge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/age"
-        app:layout_constraintTop_toBottomOf="@id/rsHeight"
+        app:layout_constraintTop_toBottomOf="@id/tvSixFeet"
         app:layout_constraintStart_toStartOf="@id/tvGender"
         android:textSize="@dimen/_12ssp"
         android:textColor="@color/white"
@@ -137,13 +163,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:values="@array/initial_range_slider_values" />
 
+    <TextView
+        android:id="@+id/tvEighteenYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/rsAge"
+        app:layout_constraintStart_toStartOf="@id/rsHeight"
+        android:text="@string/_18_years"
+        android:fontFamily="@font/proxima_regular"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10ssp"/>
+
+    <TextView
+        android:id="@+id/tvFortyAbove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/rsAge"
+        app:layout_constraintEnd_toEndOf="@id/rsHeight"
+        android:text="@string/_40_above"
+        android:fontFamily="@font/proxima_regular"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10ssp"/>
 
     <TextView
         android:id="@+id/tvDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/distance"
-        app:layout_constraintTop_toBottomOf="@id/rsAge"
+        app:layout_constraintTop_toBottomOf="@id/tvEighteenYear"
         app:layout_constraintStart_toStartOf="@id/tvGender"
         android:textSize="@dimen/_12ssp"
         android:textColor="@color/white"
@@ -172,5 +221,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:values="@array/initial_range_slider_values" />
 
+    <TextView
+        android:id="@+id/tvZeroMiles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/rsDistance"
+        app:layout_constraintStart_toStartOf="@id/rsHeight"
+        android:text="@string/_0_miles"
+        android:fontFamily="@font/proxima_regular"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10ssp"/>
+
+    <TextView
+        android:id="@+id/tvTwoHundredMiles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/rsDistance"
+        app:layout_constraintEnd_toEndOf="@id/rsHeight"
+        android:text="@string/_200_miles"
+        android:fontFamily="@font/proxima_regular"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10ssp"/>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btApply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:background="@drawable/bg_white_round_corners"
+        android:fontFamily="@font/proxima_regular"
+        android:text="@string/apply"
+        android:textAllCaps="false"
+        android:layout_marginHorizontal="@dimen/_30sdp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

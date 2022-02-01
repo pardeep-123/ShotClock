@@ -170,6 +170,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="subscriptionFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="782" />
+                            <option name="y" value="302" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="termsConditionsFragment">
                     <value>
                       <LayoutPositions>
