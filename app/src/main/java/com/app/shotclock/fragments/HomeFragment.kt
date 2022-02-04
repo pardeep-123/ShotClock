@@ -3,19 +3,20 @@ package com.app.shotclock.fragments
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.app.shotclock.R
+import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.adapters.HomeAdapter
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.FragmentHomeBinding
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.slider.RangeSlider
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
-
-    private lateinit var toolbar: Toolbar
+    private var isbottom = false
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
     override fun getViewBinding(): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(layoutInflater)
@@ -24,10 +25,43 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        toolbar = view.findViewById(R.id.toolbarHome)
+        handleClickListeners()
 
 
         binding.rvHome.adapter = HomeAdapter()
+
+    }
+
+/*    // for Age range set
+    private fun ageSlider() {
+        binding.sliderAge.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
+            override fun onStartTrackingTouch(slider: RangeSlider) {
+            }
+
+            override fun onStopTrackingTouch(slider: RangeSlider) {
+            }
+
+        })
+    }*/
+
+
+    private fun handleClickListeners() {
+
+        binding.tb.ivMenu.isVisible()
+        binding.tb.ivAppLogo.isVisible()
+        binding.tb.ivFilter.isVisible()
+
+        binding.tb.ivMenu.setOnClickListener {
+            (activity as HomeActivity).openClose()
+        }
+
+        // for open bottom sheet
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetDialog.bottomSheet)
+        bottomBehave()
+
+        binding.tb.ivFilter.setOnClickListener {
+            bottomOpen()
+        }
 
         binding.ivPlus.setOnClickListener {
 //            if (binding.ivPlus.visibility == View.VISIBLE) {
@@ -40,6 +74,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 //            }else{
 //
 //            }
+
+
+            // bottom sheet press close icon
+            binding.bottomSheetDialog.ivClose.setOnClickListener {
+                if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_COLLAPSED) {
+                    isbottom = true
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED)
+                } else {
+                    isbottom = false
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
+                }
+            }
 
 
             binding.btDone.setOnClickListener {
@@ -56,20 +102,44 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
             }
         }
-
     }
 
-/*    // for Age range set
-    private fun ageSlider() {
-        binding.sliderAge.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
-            override fun onStartTrackingTouch(slider: RangeSlider) {
+    private fun bottomOpen() {
+        if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
+            isbottom = true
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
+        } else {
+            isbottom = false
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED)
+        }
+    }
+
+    private fun bottomBehave() {
+        bottomSheetBehavior.setBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+// React to state change
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                    }
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                    }
+                    BottomSheetBehavior.STATE_SETTLING -> {
+                    }
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+
+                    }
+                }
             }
 
-            override fun onStopTrackingTouch(slider: RangeSlider) {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+// React to dragging events
             }
-
         })
-    }*/
-
+    }
 
 }

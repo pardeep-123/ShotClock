@@ -12,17 +12,24 @@
         <entry key="app/src/main/res/drawable/bg_black_rectangle.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_chat_white.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_fb_round_corners.xml" value="0.20104166666666667" />
+        <entry key="app/src/main/res/drawable/bg_filter.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_white_round_corners.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_whiteline_round_corners.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/remeberme_checkbox.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/app_toolbar.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/app_toolbar.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_blank2.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_complete_profile.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_cookie_policy.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_copyright_policy.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_message.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_my_requests.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_privcay_policy.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_safe_dating_policy.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.18489583333333334" />
@@ -35,7 +42,9 @@
         <entry key="app/src/main/res/layout/items_filters.xml" value="0.2" />
         <entry key="app/src/main/res/layout/items_myrequests.xml" value="0.25" />
         <entry key="app/src/main/res/layout/items_navigation_header.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/items_notifications.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/items_walkthrough.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/test.xml" value="0.2" />
         <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.18489583333333334" />
       </map>
     </option>

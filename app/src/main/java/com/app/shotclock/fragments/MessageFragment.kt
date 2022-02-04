@@ -7,6 +7,7 @@ import com.app.shotclock.R
 import com.app.shotclock.adapters.MessagesAdapter
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.FragmentMessageBinding
+import com.app.shotclock.utils.isVisible
 
 
 class MessageFragment : BaseFragment<FragmentMessageBinding>(),MessagesAdapter.ClickMessage {
@@ -17,6 +18,13 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(),MessagesAdapter.C
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.tb.ivBack.isVisible()
+        binding.tb.ivAppLogo.isVisible()
+
+        binding.tb.ivBack.setOnClickListener {
+            activity?.onBackPressed()
+        }
 
         binding.rvMessages.adapter = MessagesAdapter(this@MessageFragment)
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,12 @@
     android:background="@drawable/img_app_bg"
     tools:context=".fragments.HomeFragment">
 
-<!--    <include layout="@layout/app_toolbar"/>-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <include layout="@layout/app_toolbar"
+        android:id="@+id/tb"/>
 
 <!--    <androidx.appcompat.widget.Toolbar-->
 <!--        android:id="@+id/toolbarHome"-->
@@ -60,11 +65,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/discover"
-                app:layout_constraintTop_toTopOf="parent"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_16ssp"
                 android:fontFamily="@font/proxima_semibold"
                 android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/tb"
                 android:layout_marginTop="@dimen/_20sdp"/>
 
             <TextView
@@ -145,7 +150,10 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <include layout="@layout/items_filters"
+        android:id="@+id/bottomSheetDialog"/>
 <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 <!--    </androidx.core.widget.NestedScrollView>-->
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

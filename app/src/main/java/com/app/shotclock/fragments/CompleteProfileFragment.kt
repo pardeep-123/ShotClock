@@ -16,6 +16,7 @@ import com.app.shotclock.R
 import com.app.shotclock.adapters.CompleteProfileImagesAdapter
 import com.app.shotclock.databinding.FragmentCompleteProfileBinding
 import com.app.shotclock.utils.ImagePickerUtility1
+import com.app.shotclock.utils.isVisible
 import com.app.shotclock.utils.longToDate
 import com.google.android.material.button.MaterialButton
 import java.util.*
@@ -44,6 +45,7 @@ class CompleteProfileFragment : ImagePickerUtility1() {
         super.onViewCreated(view, savedInstanceState)
 
 
+
         clicksHandle(view)
 
         genderSpinner()
@@ -64,9 +66,9 @@ class CompleteProfileFragment : ImagePickerUtility1() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun clicksHandle(view: View) {
-        val toolbar: Toolbar = view.findViewById(R.id.toolbar)
-        val ivBack: ImageView = toolbar.findViewById(R.id.ivBack)
-        ivBack.setOnClickListener {
+        binding.tb.ivBack.isVisible()
+        binding.tb.ivAppLogo.isVisible()
+        binding.tb.ivBack.setOnClickListener {
             activity?.onBackPressed()
         }
 

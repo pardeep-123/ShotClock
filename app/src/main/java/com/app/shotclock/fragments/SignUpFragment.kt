@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.FragmentSignUpBinding
+import com.app.shotclock.utils.isVisible
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
@@ -18,9 +19,10 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val toolbar :Toolbar = view.findViewById(R.id.toolbar)
-        val ivBack : ImageView = toolbar.findViewById(R.id.ivBack)
-        ivBack.setOnClickListener {
+        binding.tb.ivBack.isVisible()
+        binding.tb.ivAppLogo.isVisible()
+
+        binding.tb.ivBack.setOnClickListener {
             activity?.onBackPressed()
         }
 
