@@ -61,6 +61,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         binding.tb.ivFilter.setOnClickListener {
             bottomOpen()
+
         }
 
         binding.ivPlus.setOnClickListener {
@@ -78,15 +79,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
             // bottom sheet press close icon
             binding.bottomSheetDialog.ivClose.setOnClickListener {
-                if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_COLLAPSED) {
-                    isbottom = true
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED)
-                } else {
-                    isbottom = false
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
-                }
+             activity?.onBackPressed()
             }
 
+            binding.bottomSheetDialog.btApply.setOnClickListener {
+                activity?.onBackPressed()
+            }
 
             binding.btDone.setOnClickListener {
                 val dialog = Dialog(requireContext())
@@ -115,7 +113,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun bottomBehave() {
-        bottomSheetBehavior.setBottomSheetCallback(object :
+        bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
 // React to state change

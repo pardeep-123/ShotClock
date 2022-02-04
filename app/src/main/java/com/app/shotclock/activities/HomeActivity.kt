@@ -2,21 +2,14 @@ package com.app.shotclock.activities
 
 import android.os.Bundle
 import android.view.Gravity
-import androidx.appcompat.app.ActionBar
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseActivity
 import com.app.shotclock.databinding.ActivityHomeBinding
-
-
 
 
 class HomeActivity : BaseActivity() {
