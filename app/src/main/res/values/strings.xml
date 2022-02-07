@@ -143,10 +143,15 @@
     <string name="buy">Buy</string>
     <string name="_5_99">$5.99</string>
     <string name="for_1_day">for 1 Day</string>
-    <string name="connect_with_your_matches_for_1_day">connect with your matches for 1 day</string>
+    <string name="connect_with_your_matches_for_1_day">connect with your \n matches for 1 day</string>
     <string name="skip">Skip</string>
     <string name="_4_49">4:49</string>
     <string name="icebreaker_questions">Icebreaker questions</string>
+    <string name="q">Q.</string>
+    <string name="QuestionDescription">Good icebreaker questions are also the perfect compliment?</string>
+    <string name="a">A.</string>
+    <string name="AnswerDescription">These check in questions are relaxed, fun and simple but will also encourage your employees to give meaningful answers. Icebreakers are great for starting everything from meetings to events</string>
+    <string name="are_you_sure_you_want_to_cancel_call">Are you sure you want to cancel \n the call?</string>
 
 
     <string-array name="selectGender">

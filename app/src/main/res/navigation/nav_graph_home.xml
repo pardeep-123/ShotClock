@@ -83,6 +83,20 @@
         android:name="com.app.shotclock.fragments.SubscriptionFragment"
         android:label="fragment_subscription"
         tools:layout="@layout/fragment_subscription" />
+    <fragment
+        android:id="@+id/videoCallFragment"
+        android:name="com.app.shotclock.fragments.VideoCallFragment"
+        android:label="fragment_video_call"
+        tools:layout="@layout/fragment_video_call" >
+        <action
+            android:id="@+id/action_videoCallFragment_to_icebreakerQuestionsFragment"
+            app:destination="@id/icebreakerQuestionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/icebreakerQuestionsFragment"
+        android:name="com.app.shotclock.fragments.IcebreakerQuestionsFragment"
+        android:label="fragment_icebraker_questions"
+        tools:layout="@layout/fragment_icebraker_questions" />
 
 
 </navigation>

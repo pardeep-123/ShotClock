@@ -15,40 +15,6 @@
     <include layout="@layout/app_toolbar"
         android:id="@+id/tb"/>
 
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/toolbarHome"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="?android:attr/actionBarSize"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        android:background="#00000000">-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/ivMenu"-->
-<!--            android:layout_width="@dimen/_30sdp"-->
-<!--            android:layout_height="@dimen/_30sdp"-->
-<!--            android:layout_gravity="start"-->
-<!--            android:padding="@dimen/_5sdp"-->
-<!--            android:src="@drawable/ic_menu" />-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/ivAppLogo"-->
-<!--            android:layout_width="@dimen/_40sdp"-->
-<!--            android:layout_height="@dimen/_40sdp"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:padding="@dimen/_3sdp"-->
-<!--            android:src="@drawable/ic_app_logo" />-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/ivFilter"-->
-<!--            android:layout_width="@dimen/_40sdp"-->
-<!--            android:layout_height="@dimen/_40sdp"-->
-<!--            android:layout_gravity="end"-->
-<!--            android:padding="@dimen/_5sdp"-->
-<!--            android:layout_marginEnd="@dimen/_5sdp"-->
-<!--            android:src="@drawable/ic_filter" />-->
-
-<!--    </androidx.appcompat.widget.Toolbar>-->
-
 <!--    <androidx.core.widget.NestedScrollView-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="0dp"-->

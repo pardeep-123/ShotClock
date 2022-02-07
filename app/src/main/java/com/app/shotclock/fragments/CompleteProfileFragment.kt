@@ -5,12 +5,12 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ImageView
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.adapters.CompleteProfileImagesAdapter
@@ -19,6 +19,7 @@ import com.app.shotclock.utils.ImagePickerUtility1
 import com.app.shotclock.utils.isVisible
 import com.app.shotclock.utils.longToDate
 import com.google.android.material.button.MaterialButton
+import org.jetbrains.anko.matchParent
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -27,6 +28,7 @@ class CompleteProfileFragment : ImagePickerUtility1() {
     private val myCalendar = Calendar.getInstance()
     lateinit var date: DatePickerDialog.OnDateSetListener
     private var imageList = ArrayList<String>()
+    private var myPopupWindow: PopupWindow? = null
     private lateinit var completeProfileImagesAdapter: CompleteProfileImagesAdapter
 
     override fun selectedImage(imagePath: String?, code: Int) {
@@ -48,7 +50,13 @@ class CompleteProfileFragment : ImagePickerUtility1() {
 
         clicksHandle(view)
 
-        genderSpinner()
+        binding.spGender.setOnClickListener {
+            myPopupWindow?.showAsDropDown(it)
+        }
+
+        setPopUpWindow()
+
+//        genderSpinner()
         interestedInSpinner()
         completeProfileImageAdapter()
     }
@@ -126,10 +134,10 @@ class CompleteProfileFragment : ImagePickerUtility1() {
     }
 
     // set Gender spinner
-    private fun genderSpinner() {
-        val superHero = resources.getStringArray(R.array.selectGender)
+    /*private fun genderSpinner() {
+        val selectGender = resources.getStringArray(R.array.selectGender)
 //        val superHero = arrayOf<String?>("Batman", "SuperMan", "Flash", "AquaMan", "Shazam")
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.items_spinner_list, superHero)
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.items_spinner_list, selectGender)
         arrayAdapter.setDropDownViewResource(R.layout.items_spinner_list)
         binding.spGender.adapter = arrayAdapter
 
@@ -158,17 +166,17 @@ class CompleteProfileFragment : ImagePickerUtility1() {
             }
 
         }
-    }
+    }*/
 
     // set Interested in spinner
     private fun interestedInSpinner() {
-        val superHero = resources.getStringArray(R.array.selectGender)
+        val selectInterests = resources.getStringArray(R.array.selectGender)
 //        val superHero = arrayOf<String?>("Batman", "SuperMan", "Flash", "AquaMan", "Shazam")
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.items_spinner_list, superHero)
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.items_spinner_list, selectInterests)
         arrayAdapter.setDropDownViewResource(R.layout.items_spinner_list)
-        binding.spInterestedIn?.adapter = arrayAdapter
+        binding.spInterestedIn.adapter = arrayAdapter
 
-        binding.spGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener,
+        binding.spInterestedIn.onItemSelectedListener = object : AdapterView.OnItemSelectedListener,
             AdapterView.OnItemClickListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -194,4 +202,27 @@ class CompleteProfileFragment : ImagePickerUtility1() {
 
         }
     }
+
+
+    private fun setPopUpWindow() {
+        val inflater =
+            activity?.applicationContext?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.custom_spinners, null)
+
+        val tvMale : TextView = view.findViewById(R.id.tvMale)
+        val tvFemale: TextView = view.findViewById(R.id.tvFemale)
+
+        tvMale.setOnClickListener {
+            binding.spGender.setText("Male")
+            myPopupWindow?.dismiss()
+        }
+
+        tvFemale.setOnClickListener {
+            binding.spGender.setText("Female")
+            myPopupWindow?.dismiss()
+        }
+        myPopupWindow = PopupWindow(view, matchParent, ConstraintLayout.LayoutParams.WRAP_CONTENT, true)
+    }
+
+
 }

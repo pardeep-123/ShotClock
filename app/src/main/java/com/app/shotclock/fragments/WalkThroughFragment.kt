@@ -90,12 +90,12 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>() {
 //        val currentlyCenterPosition = binding.rvWalkThrough.getSelectedPosition()
 
         val pagerSnapHelper = PagerSnapHelper()
-
-
+        
         pagerSnapHelper.attachToRecyclerView(binding.rvWalkThrough)
 
-        val indicator: CircleIndicator2 = view!!.findViewById(R.id.viewPagerIndicator)
-        indicator.attachToRecyclerView(binding.rvWalkThrough, pagerSnapHelper)
+//        val indicator: CircleIndicator2 = view!!.findViewById(R.id.viewPagerIndicator)
+
+        binding.viewPagerIndicator.attachToRecyclerView(binding.rvWalkThrough, pagerSnapHelper)
 
     }
 

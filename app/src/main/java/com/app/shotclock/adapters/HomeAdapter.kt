@@ -18,6 +18,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
+
     }
 
     override fun getItemCount(): Int {
