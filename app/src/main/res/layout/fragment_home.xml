@@ -118,8 +118,7 @@
 </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <include layout="@layout/items_filters"
-        android:id="@+id/bottomSheetDialog"/>
+    <include layout="@layout/items_filters" />
 <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 <!--    </androidx.core.widget.NestedScrollView>-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

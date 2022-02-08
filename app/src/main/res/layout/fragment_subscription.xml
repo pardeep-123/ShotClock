@@ -27,16 +27,18 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_200sdp"
         android:layout_marginTop="@dimen/_20sdp"
+        app:layout_constraintTop_toBottomOf="@id/tvConnectMatches"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvConnectMatches"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <me.relex.circleindicator.CircleIndicator
         android:id="@+id/viewPagerIndicator"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_35sdp"
-        app:ci_height="@dimen/_4sdp"
-        app:ci_width="@dimen/_4sdp"
+        app:ci_drawable="@drawable/viewpager_indicator_color"
+        app:ci_drawable_unselected="@drawable/viewpager_indicator_color"
+        app:ci_height="@dimen/_6sdp"
+        app:ci_width="@dimen/_6sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/viewPager"

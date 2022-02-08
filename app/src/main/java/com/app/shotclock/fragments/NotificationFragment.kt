@@ -2,6 +2,7 @@ package com.app.shotclock.fragments
 
 import android.os.Bundle
 import android.view.View
+import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.adapters.NotificationsAdapter
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.FragmentNotificationBinding
@@ -17,14 +18,17 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tb.ivBack.isVisible()
-        binding.tb.ivAppLogo.isVisible()
-
-        binding.tb.ivBack.setOnClickListener {
-            activity?.onBackPressed()
-        }
+        handleClicks()
 
         binding.rvNotification.adapter = NotificationsAdapter()
 
+    }
+
+    private fun handleClicks() {
+        binding.tb.ivAppLogo.isVisible()
+        binding.tb.ivMenu.isVisible()
+        binding.tb.ivMenu.setOnClickListener {
+            (activity as HomeActivity).openClose()
+        }
     }
 }

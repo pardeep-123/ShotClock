@@ -10,6 +10,7 @@ import com.app.shotclock.R
 import com.app.shotclock.adapters.EditProfileImagesAdapter
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.FragmentEditProfileBinding
+import com.app.shotclock.utils.isVisible
 import com.app.shotclock.utils.longToDate
 import java.util.*
 
@@ -24,6 +25,19 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        handleClicks()
+
+        genderSpinner()
+        interestedInSpinner()
+
+    }
+
+    private fun handleClicks() {
+        binding.tb.ivBack.isVisible()
+        binding.tb.ivBack.setOnClickListener {
+            activity?.onBackPressed()
+        }
 
         binding.etDOB.setOnClickListener {
             date = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
@@ -44,8 +58,6 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
             activity?.onBackPressed()
         }
 
-        genderSpinner()
-        interestedInSpinner()
 
     }
 

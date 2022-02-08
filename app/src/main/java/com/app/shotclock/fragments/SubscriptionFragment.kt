@@ -28,10 +28,11 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             activity?.onBackPressed()
         }
 
-
-       binding.viewPager.adapter = SubscriptionViewPager(requireContext(),list)
-        list.add(SubscriptionModel("$5.99","for 1 Day","connect with your matches for 1 day"))
-        list.add(SubscriptionModel("$9.99","for 1 Month","connect with your matches for 1 month"))
+        list.add(SubscriptionModel("$5.99", "for 1 Day", "connect with your matches for 1 day"))
+        list.add(SubscriptionModel("$9.99", "for 1 Month", "connect with your matches for 1 month"))
+        list.add(SubscriptionModel("$100.99", "for 1 Year", "connect with your matches for 1 year"))
+        binding.viewPager.adapter = SubscriptionViewPager(requireContext(), list)
+        binding.viewPagerIndicator.setViewPager(binding.viewPager)
 
 //        binding.viewPagerIndicator.attachToRecyclerView(binding.rvWalkThrough, pagerSnapHelper)
     }

@@ -3,11 +3,13 @@ package com.app.shotclock.fragments
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.app.shotclock.R
 import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.adapters.HomeAdapter
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentHomeBinding
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
@@ -24,11 +26,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        CacheConstants.Current = "home"
         handleClickListeners()
 
+        val bottomSheet: ConstraintLayout = view.findViewById(R.id.bottom_sheet)
+        val ivClose: ImageView = view.findViewById(R.id.ivClose)
+        val btApply: MaterialButton = view.findViewById(R.id.btApply)
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        bottomBehave()
 
         binding.rvHome.adapter = HomeAdapter()
+
+        // bottom sheet press close icon
+        ivClose.setOnClickListener {
+            bottomOpen()
+        }
+
+        btApply.setOnClickListener {
+            bottomOpen()
+        }
+
 
     }
 
@@ -56,12 +73,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
 
         // for open bottom sheet
-        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetDialog.bottomSheet)
-        bottomBehave()
+//        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetDialog.bottomSheet)
 
         binding.tb.ivFilter.setOnClickListener {
             bottomOpen()
-
         }
 
         binding.ivPlus.setOnClickListener {
@@ -77,14 +92,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 //            }
 
 
-            // bottom sheet press close icon
-            binding.bottomSheetDialog.ivClose.setOnClickListener {
-             activity?.onBackPressed()
-            }
-
-            binding.bottomSheetDialog.btApply.setOnClickListener {
-                activity?.onBackPressed()
-            }
+//            binding.bottomSheetDialog.btApply.setOnClickListener {
+//                activity?.onBackPressed()
+//            }
 
             binding.btDone.setOnClickListener {
                 val dialog = Dialog(requireContext())
@@ -112,7 +122,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun bottomBehave() {
-        bottomSheetBehavior.addBottomSheetCallback(object :
+        bottomSheetBehavior.setBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
 // React to state change

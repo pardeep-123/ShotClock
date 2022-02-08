@@ -12,6 +12,7 @@ import com.app.shotclock.databinding.FragmentWalkThroughBinding
 import com.app.shotclock.models.WalkThroughModel
 import info.jeovani.viewpagerindicator.constants.PagerItemType
 import me.relex.circleindicator.CircleIndicator2
+import okhttp3.internal.notify
 
 
 class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>() {
@@ -72,7 +73,7 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>() {
 //        binding.viewPagerIndicator.setBackgroundColor(Color.TRANSPARENT)
 
 
-
+        walkList?.clear()
         walkList?.add(WalkThroughModel(R.drawable.img_four))
         walkList?.add(WalkThroughModel(R.drawable.img_three))
         walkList?.add(WalkThroughModel(R.drawable.img_two))

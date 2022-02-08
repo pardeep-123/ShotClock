@@ -85,19 +85,19 @@
             <LinearLayout
                 android:id="@+id/llGender"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_35sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="@id/etDOB"
                 app:layout_constraintEnd_toEndOf="@id/etDOB"
                 android:background="@drawable/bg_whiteline_round_corners"
                 app:layout_constraintTop_toBottomOf="@+id/tvGender">
 
-                <EditText
+                <TextView
                     android:id="@+id/spGender"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
                     android:backgroundTint="@color/hintcolor"
                     android:contextClickable="true"
                     android:elevation="10dp"
@@ -111,6 +111,12 @@
                     tools:listitem="@layout/items_spinner_list" />
 
             </LinearLayout>
+
+<!--            <View-->
+<!--                android:id="@+id/viewGender"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="@dimen/_20sdp"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/llGender"/>-->
 
             <TextView
                 android:id="@+id/tvHeight"

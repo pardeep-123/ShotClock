@@ -14,4 +14,5 @@
     <color name="pink_light">#f5646d</color>
     <color name="pink">#f43c83</color>
     <color name="green">#5a9e3a</color>
+    <color name="status">#434343</color>
 </resources>

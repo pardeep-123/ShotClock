@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -51,7 +52,7 @@ class CompleteProfileFragment : ImagePickerUtility1() {
         clicksHandle(view)
 
         binding.spGender.setOnClickListener {
-            myPopupWindow?.showAsDropDown(it)
+            myPopupWindow?.showAsDropDown(it,0,0)
         }
 
         setPopUpWindow()
@@ -213,12 +214,12 @@ class CompleteProfileFragment : ImagePickerUtility1() {
         val tvFemale: TextView = view.findViewById(R.id.tvFemale)
 
         tvMale.setOnClickListener {
-            binding.spGender.setText("Male")
+            binding.spGender.text = "Male"
             myPopupWindow?.dismiss()
         }
 
         tvFemale.setOnClickListener {
-            binding.spGender.setText("Female")
+            binding.spGender.text = "Female"
             myPopupWindow?.dismiss()
         }
         myPopupWindow = PopupWindow(view, matchParent, ConstraintLayout.LayoutParams.WRAP_CONTENT, true)

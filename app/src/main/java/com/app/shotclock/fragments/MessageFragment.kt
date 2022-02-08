@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
+import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.adapters.MessagesAdapter
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.FragmentMessageBinding
@@ -19,19 +20,21 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(),MessagesAdapter.C
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tb.ivBack.isVisible()
-        binding.tb.ivAppLogo.isVisible()
-
-        binding.tb.ivBack.setOnClickListener {
-            activity?.onBackPressed()
-        }
-
+        handleClicks()
         binding.rvMessages.adapter = MessagesAdapter(this@MessageFragment)
     }
 
     // message interface
     override fun onClick() {
         this.findNavController().navigate(R.id.action_messageFragment_to_chatFragment)
+    }
+
+    private fun handleClicks() {
+        binding.tb.ivAppLogo.isVisible()
+        binding.tb.ivMenu.isVisible()
+        binding.tb.ivMenu.setOnClickListener {
+            (activity as HomeActivity).openClose()
+        }
     }
 
 }
