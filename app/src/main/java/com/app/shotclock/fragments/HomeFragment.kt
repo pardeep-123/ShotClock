@@ -35,7 +35,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         CacheConstants.Current = "home"
         handleClickListeners()
 
-        // for back press in fragment
+//        // for back press in fragment
         requireActivity().onBackPressedDispatcher
             .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
@@ -52,6 +52,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomBehave()
 
+        // range slider for height
 //        rsHeight?.addOnChangeListener { _, value, _ ->
 //            tvSixFeet.text = value.toInt().toString() + " ft"
 //            // for api
@@ -82,6 +83,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             override fun onStopTrackingTouch(slider: RangeSlider) {
             }
         })
+
     }
 
 

@@ -81,11 +81,11 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>() {
         binding.rvWalkThrough.adapter = WalkThroughAdapter(walkList!!)
 //        adapter.searchInterface = this
 
-        binding.rvWalkThrough.set3DItem(true)
-        binding.rvWalkThrough.setInfinite(true)
-        binding.rvWalkThrough.setAlpha(true)
+        binding.rvWalkThrough.set3DItem(false)
+        binding.rvWalkThrough.setInfinite(false)
+        binding.rvWalkThrough.setAlpha(false)
         binding.rvWalkThrough.setFlat(false)
-        binding.rvWalkThrough.setIntervalRatio(0.5F)
+        binding.rvWalkThrough.setIntervalRatio(0.6F)
 //        binding.rvWalkThrough.scrollToPosition(selectedPos!!)
 //        val carouselLayoutManager = binding.rvWalkThrough.getCarouselLayoutManager()
 //        val currentlyCenterPosition = binding.rvWalkThrough.getSelectedPosition()

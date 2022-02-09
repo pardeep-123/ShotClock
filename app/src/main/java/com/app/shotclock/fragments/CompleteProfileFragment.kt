@@ -19,6 +19,7 @@ import com.app.shotclock.databinding.FragmentCompleteProfileBinding
 import com.app.shotclock.utils.ImagePickerUtility1
 import com.app.shotclock.utils.isVisible
 import com.app.shotclock.utils.longToDate
+import com.app.shotclock.utils.setPopUpWindow
 import com.google.android.material.button.MaterialButton
 import org.jetbrains.anko.matchParent
 import java.util.*
@@ -48,17 +49,19 @@ class CompleteProfileFragment : ImagePickerUtility1() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
         clicksHandle(view)
 
-        binding.spGender.setOnClickListener {
-            myPopupWindow?.showAsDropDown(it,0,0)
+        binding.tvGenderSelect.setOnClickListener {
+
+//            myPopupWindow?.showAsDropDown(it,0,0)
+            setPopUpWindow(it,requireContext(),"Male","Female")
         }
 
-        setPopUpWindow()
+
+//        setPopUpWindow()
 
 //        genderSpinner()
-        interestedInSpinner()
+//        interestedInSpinner()
         completeProfileImageAdapter()
     }
 
@@ -81,13 +84,13 @@ class CompleteProfileFragment : ImagePickerUtility1() {
             activity?.onBackPressed()
         }
 
-        binding.etDOB.setOnClickListener {
+        binding.tvDOBSelect.setOnClickListener {
             date = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                 myCalendar.set(Calendar.YEAR, year)
                 myCalendar.set(Calendar.MONTH, month)
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                binding.etDOB.setText(longToDate(myCalendar.timeInMillis, "dd/MM/yy"))
+                binding.tvDOBSelect.setText(longToDate(myCalendar.timeInMillis, "dd/MM/yy"))
 //                    edtIssuedOnDate.setText(AppUtils.longToDate(myCalendar.timeInMillis))
             }
             datePicker(requireContext())
@@ -170,7 +173,7 @@ class CompleteProfileFragment : ImagePickerUtility1() {
     }*/
 
     // set Interested in spinner
-    private fun interestedInSpinner() {
+/*    private fun interestedInSpinner() {
         val selectInterests = resources.getStringArray(R.array.selectGender)
 //        val superHero = arrayOf<String?>("Batman", "SuperMan", "Flash", "AquaMan", "Shazam")
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.items_spinner_list, selectInterests)
@@ -202,28 +205,8 @@ class CompleteProfileFragment : ImagePickerUtility1() {
             }
 
         }
-    }
+    }*/
 
-
-    private fun setPopUpWindow() {
-        val inflater =
-            activity?.applicationContext?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.custom_spinners, null)
-
-        val tvMale : TextView = view.findViewById(R.id.tvMale)
-        val tvFemale: TextView = view.findViewById(R.id.tvFemale)
-
-        tvMale.setOnClickListener {
-            binding.spGender.text = "Male"
-            myPopupWindow?.dismiss()
-        }
-
-        tvFemale.setOnClickListener {
-            binding.spGender.text = "Female"
-            myPopupWindow?.dismiss()
-        }
-        myPopupWindow = PopupWindow(view, matchParent, ConstraintLayout.LayoutParams.WRAP_CONTENT, true)
-    }
 
 
 }

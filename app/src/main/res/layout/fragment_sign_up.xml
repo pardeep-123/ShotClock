@@ -171,6 +171,7 @@
                     android:inputType="number"
                     android:maxLength="16"
                     android:maxLines="1"
+                    android:gravity="center"
                     android:paddingEnd="@dimen/_5sdp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"

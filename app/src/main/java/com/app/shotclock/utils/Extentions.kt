@@ -426,3 +426,29 @@ fun longToDate(timeInMillis: Long,format:String): String {
     val sdf = SimpleDateFormat(format, Locale.getDefault())
     return sdf.format(timeInMillis)
 }
+
+
+
+ fun setPopUpWindow(view: View,ctx: Context,male: String,female: String) {
+    val inflater =
+        ctx.applicationContext?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    val view = inflater.inflate(R.layout.custom_spinners, null)
+
+    val myPopupWindow = PopupWindow(view,ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT, true)
+     myPopupWindow.showAtLocation(view,Gravity.CENTER,0,0)
+
+     val tvMale : TextView = view.findViewById(R.id.tvMale)
+     val tvFemale: TextView = view.findViewById(R.id.tvFemale)
+
+
+     tvMale.setOnClickListener {
+        tvMale.text = "Male"
+        myPopupWindow.dismiss()
+    }
+
+    tvFemale.setOnClickListener {
+        tvFemale.text = "Female"
+        myPopupWindow.dismiss()
+    }
+
+}

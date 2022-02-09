@@ -26,6 +26,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import com.app.shotclock.BuildConfig
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseFragment

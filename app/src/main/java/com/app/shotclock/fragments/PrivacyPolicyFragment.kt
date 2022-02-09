@@ -21,7 +21,7 @@ class PrivacyPolicyFragment : BaseFragment<FragmentPrivcayPolicyBinding>() {
 
     private fun clickHandle() {
         binding.tb.ivMenu.isVisible()
-        binding.tb.ivAppLogo.isVisible()
+        binding.tb.ivAppLogo2.isVisible()
         binding.tb.ivMenu.setOnClickListener {
             (activity as HomeActivity).openClose()
         }

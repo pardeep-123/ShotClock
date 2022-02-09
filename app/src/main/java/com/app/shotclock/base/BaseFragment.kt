@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import dagger.android.support.AndroidSupportInjection
 
-abstract class BaseFragment<VB : ViewBinding>() : Fragment() {
+abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     var baseView: View? = null
     private var _binding: VB? = null
@@ -55,4 +55,10 @@ abstract class BaseFragment<VB : ViewBinding>() : Fragment() {
 //        showToast(message)
 //
 //    }
+override fun onDestroyView() {
+    super.onDestroyView()
+    _binding = null
+}
+
+
 }

@@ -56,7 +56,7 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/_15sdp"
                 tools:listitem="@layout/items_homes"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/clBottomBtn"
                 app:layout_constraintTop_toBottomOf="@id/tvPlsSelect"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 

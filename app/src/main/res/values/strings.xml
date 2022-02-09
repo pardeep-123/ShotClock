@@ -152,6 +152,7 @@
     <string name="a">A.</string>
     <string name="AnswerDescription">These check in questions are relaxed, fun and simple but will also encourage your employees to give meaningful answers. Icebreakers are great for starting everything from meetings to events</string>
     <string name="are_you_sure_you_want_to_cancel_call">Are you sure you want to cancel \n the call?</string>
+    <string name="you_have_successfully_selected">You have successfully selected</string>
 
 
     <string-array name="selectGender">
