@@ -10,7 +10,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseActivity
-import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.ActivityHomeBinding
 import com.app.shotclock.utils.myAlert
 
@@ -44,6 +43,8 @@ class HomeActivity : BaseActivity() {
                 "Ok",
                 "Cancel"
             )
+
+            binding.navigationView.setCheckedItem(R.id.homeFragment)
 //            if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
 //                drawer_layout.closeDrawer(GravityCompat.START)
 //            }
@@ -75,15 +76,23 @@ class HomeActivity : BaseActivity() {
         }
     }
 
-//    override fun onBackPressed() {
-//    drawerLayout.isDrawerOpen(GravityCompat.START) -> drawerLayout.closeDrawer(Gravity.LEFT)
-//            if(CacheConstants.Current == "home") {
-//                finishAffinity()
-//            }else {
-//                super.onBackPressed()
-//            }
-//
-//    }
-
+    override fun onBackPressed() {
+        when {
+            binding.drawerLayout.isDrawerOpen(GravityCompat.START) -> binding.drawerLayout.closeDrawer(
+                Gravity.LEFT
+            )
+            else -> {
+                super.onBackPressed()
+//                when (CacheConstants.Current) {
+//                    "home" -> {
+//                        finishAffinity()
+//                    }
+//                    else -> {
+//                        super.onBackPressed()
+//                    }
+//                }
+            }
+        }
+    }
 
 }

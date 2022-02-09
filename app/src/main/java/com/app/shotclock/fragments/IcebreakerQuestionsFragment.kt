@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.app.shotclock.adapters.IcebreakerAdapter
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentIcebrakerQuestionsBinding
 import com.app.shotclock.utils.isVisible
 
@@ -16,7 +17,6 @@ class IcebreakerQuestionsFragment : BaseFragment<FragmentIcebrakerQuestionsBindi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         handleClicks()
 
         binding.rvIcebreaker.adapter = IcebreakerAdapter()

@@ -115,7 +115,7 @@
             app:trackColorActive="@color/white"
             app:trackColorInactive="@color/hintcolor"
             app:trackHeight="5dp"
-            app:values="@array/initial_range_slider_values" />
+            app:values="@array/range_slider_height" />
 
         <TextView
             android:id="@+id/tvSixFeet"
@@ -173,7 +173,7 @@
             app:trackColorActive="@color/white"
             app:trackColorInactive="@color/hintcolor"
             app:trackHeight="5dp"
-            app:values="@array/initial_range_slider_values" />
+            app:values="@array/range_slider_age" />
 
         <TextView
             android:id="@+id/tvEighteenYear"
@@ -231,7 +231,7 @@
             app:trackColorActive="@color/white"
             app:trackColorInactive="@color/hintcolor"
             app:trackHeight="5dp"
-            app:values="@array/initial_range_slider_values" />
+            app:values="@array/range_slider_distance" />
 
         <TextView
             android:id="@+id/tvZeroMiles"

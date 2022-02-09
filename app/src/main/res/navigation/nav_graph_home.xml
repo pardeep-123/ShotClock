@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_subscriptionFragment"
             app:destination="@id/subscriptionFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_myRequestsFragment"
+            app:destination="@id/myRequestsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"

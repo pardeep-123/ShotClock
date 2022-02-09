@@ -8,7 +8,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CommonMetods {
+class CommonMethods {
 
     fun time_to_timestamp(str_date: String?, pattren: String?): Long {
         var time_stamp: Long = 0
@@ -29,7 +29,7 @@ class CommonMetods {
     fun hideKeyboard(view: View, activity: Activity){
         val imm =
             activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        imm!!.hideSoftInputFromWindow(view?.windowToken, 0)
+        imm!!.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
 }

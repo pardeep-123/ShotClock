@@ -6,6 +6,7 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentVideoCallBinding
 import com.app.shotclock.utils.isVisible
 import com.google.android.material.button.MaterialButton
@@ -19,7 +20,6 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         handleClicks()
 
     }

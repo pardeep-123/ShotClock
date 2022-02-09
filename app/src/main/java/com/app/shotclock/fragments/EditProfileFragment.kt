@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import com.app.shotclock.R
 import com.app.shotclock.adapters.EditProfileImagesAdapter
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentEditProfileBinding
 import com.app.shotclock.utils.isVisible
 import com.app.shotclock.utils.longToDate
@@ -25,7 +26,6 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         handleClicks()
 
         genderSpinner()

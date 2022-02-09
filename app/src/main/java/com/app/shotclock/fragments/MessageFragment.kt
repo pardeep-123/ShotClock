@@ -8,6 +8,7 @@ import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.adapters.MessagesAdapter
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.FragmentMessageBinding
+import com.app.shotclock.utils.hideKeyboard
 import com.app.shotclock.utils.isVisible
 
 
@@ -34,6 +35,7 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(),MessagesAdapter.C
         binding.tb.ivMenu.isVisible()
         binding.tb.ivMenu.setOnClickListener {
             (activity as HomeActivity).openClose()
+            hideKeyboard(it,requireActivity())
         }
     }
 
