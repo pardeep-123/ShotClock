@@ -14,6 +14,7 @@ import com.app.shotclock.adapters.HomeAdapter
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentHomeBinding
+import com.app.shotclock.utils.Constants
 import com.app.shotclock.utils.hideKeyboard
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
@@ -21,10 +22,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.RangeSlider
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick {
     private var isbottom = false
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private var rsHeight: RangeSlider? = null
+   private var adapter: HomeAdapter?=null
 
     override fun getViewBinding(): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(layoutInflater)
@@ -52,16 +54,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomBehave()
 
-        // range slider for height
-//        rsHeight?.addOnChangeListener { _, value, _ ->
-//            tvSixFeet.text = value.toInt().toString() + " ft"
-//            // for api
-////            distance = value.toInt().toString()
-//
-//            // Responds to when slider's value is changed
-//        }
-
-        binding.rvHome.adapter = HomeAdapter()
+        adapter = HomeAdapter(this)
+        binding.rvHome.adapter = adapter
 
         // bottom sheet press close icon
         ivClose.setOnClickListener {
@@ -105,12 +99,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         binding.ivPlus.setOnClickListener {
 //            if (binding.ivPlus.visibility == View.VISIBLE) {
+         Constants.isPlus = true
             binding.ivPlus.isGone()
             binding.clBottomBtn.isVisible()
-
+            adapter?.notifyDataSetChanged()
+        }
             binding.btCancel.setOnClickListener {
+                Constants.isPlus = false
                 binding.clBottomBtn.isGone()
                 binding.ivPlus.isVisible()
+                adapter?.notifyDataSetChanged()
             }
 //                binding.btDone.isGone()
 //                binding.btCancel.isGone()
@@ -136,7 +134,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     show()
                 }
             }
-        }
+
     }
 
     private fun bottomOpen() {

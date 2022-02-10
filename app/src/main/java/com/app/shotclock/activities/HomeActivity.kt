@@ -40,7 +40,7 @@ class HomeActivity : BaseActivity() {
                 this,
                 getString(R.string.are_you_sure_you_want_to_log_out),
                 { clickLogout() },
-                "Ok",
+                "Log Out",
                 "Cancel"
             )
 

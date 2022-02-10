@@ -2,15 +2,16 @@ package com.app.shotclock.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
-import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.FragmentSignUpBinding
+import com.app.shotclock.utils.ImagePickerUtility1
 import com.app.shotclock.utils.isVisible
+import com.bumptech.glide.Glide
 
-class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
+class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>() {
+    private var imageResultPath = ""
+
 
     override fun getViewBinding(): FragmentSignUpBinding {
         return FragmentSignUpBinding.inflate(layoutInflater)
@@ -34,5 +35,16 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             this.findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
         }
 
+        binding.civUser.setOnClickListener {
+            getImage(requireActivity(), 0, false)
+        }
+
+    }
+
+    override fun selectedImage(imagePath: String?, code: Int) {
+        if (!imagePath.isNullOrEmpty()) {
+            imageResultPath = imagePath
+            Glide.with(context!!).load(imageResultPath).into(binding.civUser)
+        }
     }
 }

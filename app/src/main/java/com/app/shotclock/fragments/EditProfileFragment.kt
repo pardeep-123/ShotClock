@@ -8,17 +8,21 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.app.shotclock.R
 import com.app.shotclock.adapters.EditProfileImagesAdapter
-import com.app.shotclock.base.BaseFragment
-import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentEditProfileBinding
+import com.app.shotclock.utils.ImagePickerUtility1
 import com.app.shotclock.utils.isVisible
 import com.app.shotclock.utils.longToDate
+import com.bumptech.glide.Glide
 import java.util.*
+import kotlin.collections.ArrayList
 
 
-class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
+class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>() {
     private val myCalendar = Calendar.getInstance()
     lateinit var date: DatePickerDialog.OnDateSetListener
+    private var imageResultPath = ""
+    private var imageList = ArrayList<String>()
+    private lateinit var imagesAdapter: EditProfileImagesAdapter
 
     override fun getViewBinding(): FragmentEditProfileBinding {
         return FragmentEditProfileBinding.inflate(layoutInflater)
@@ -52,10 +56,18 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
         }
 
         // edit profile images adapter
-        binding.rvEditProfile.adapter = EditProfileImagesAdapter()
+        imagesAdapter = EditProfileImagesAdapter(requireContext(), imageList)
+        binding.rvEditProfile.adapter = imagesAdapter
+        imagesAdapter.onItemClickListener = {
+            getImage(requireActivity(), 1, false)
+        }
 
         binding.btUpdate.setOnClickListener {
             activity?.onBackPressed()
+        }
+
+        binding.ivCamera.setOnClickListener {
+            getImage(requireActivity(), 0, false)
         }
 
 
@@ -137,6 +149,20 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>() {
 
 //                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#000000"))
             }
+
+        }
+    }
+
+    override fun selectedImage(imagePath: String?, code: Int) {
+        if (!imagePath.isNullOrEmpty()) {
+            if (code == 0) {
+                imageResultPath = imagePath
+                Glide.with(context!!).load(imageResultPath).into(binding.rivUser)
+            } else {
+                imageList.add(imagePath)
+                imagesAdapter.notifyDataSetChanged()
+            }
+
 
         }
     }

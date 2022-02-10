@@ -23,7 +23,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
         //   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
         super.onAttach(context)
 
     }
@@ -40,7 +39,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         return binding.root
 //        binding = DataBindingUtil.inflate.invoke(inflater, getLayoutRes(),container, false)
 //        return binding.root
-
 
     }
 

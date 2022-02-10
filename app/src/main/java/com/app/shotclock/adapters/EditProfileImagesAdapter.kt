@@ -1,13 +1,19 @@
 package com.app.shotclock.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.databinding.ItemsCompleteProfileImagesBinding
+import com.bumptech.glide.Glide
 
-class EditProfileImagesAdapter : RecyclerView.Adapter<EditProfileImagesAdapter.EditHolder>() {
+class EditProfileImagesAdapter(private var ctx: Context,private val imageList: ArrayList<String>) :
+    RecyclerView.Adapter<EditProfileImagesAdapter.EditHolder>() {
 
-    class EditHolder(itemsView: ItemsCompleteProfileImagesBinding) : RecyclerView.ViewHolder(itemsView.root) {
+    var onItemClickListener: ((pos: Int) -> Unit)? = null
+
+    class EditHolder(itemsView: ItemsCompleteProfileImagesBinding) :
+        RecyclerView.ViewHolder(itemsView.root) {
         val itemBinding: ItemsCompleteProfileImagesBinding = itemsView
     }
 
@@ -18,10 +24,15 @@ class EditProfileImagesAdapter : RecyclerView.Adapter<EditProfileImagesAdapter.E
     }
 
     override fun onBindViewHolder(holder: EditHolder, position: Int) {
-
+       if (position != imageList.size){
+           Glide.with(ctx).load(imageList[position]).into(holder.itemBinding.rivUser)
+       }
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.invoke(position)
+        }
     }
 
     override fun getItemCount(): Int {
-        return 1
+        return imageList.size+1
     }
 }

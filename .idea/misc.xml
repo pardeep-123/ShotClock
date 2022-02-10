@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable-v24/bg_grey_cornerline.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable-xhdpi/bg_spinner.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable-xhdpi/cursor_shape.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_app_color.xml" value="0.20104166666666667" />
@@ -13,8 +14,10 @@
         <entry key="app/src/main/res/drawable/bg_chat_white.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_fb_round_corners.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_filter.xml" value="0.20104166666666667" />
+        <entry key="app/src/main/res/drawable/bg_grey.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_white_round_corners.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_whiteline_round_corners.xml" value="0.20104166666666667" />
+        <entry key="app/src/main/res/drawable/checkbox_tick_home.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/custome_spinner_dialog.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/items_icebreaker_question.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/remeberme_checkbox.xml" value="0.20104166666666667" />
@@ -27,6 +30,7 @@
         <entry key="app/src/main/res/layout/alert_dialog_submitted.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/app_toolbar.xml" value="0.2" />
         <entry key="app/src/main/res/layout/custom_spinners.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/custom_text_layout.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_blank2.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.18489583333333334" />
@@ -54,11 +58,13 @@
         <entry key="app/src/main/res/layout/items_chat.xml" value="0.22" />
         <entry key="app/src/main/res/layout/items_complete_profile_images.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/items_filters.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/items_height_popup.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/items_homes.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/items_icebreaker_question.xml" value="0.22" />
         <entry key="app/src/main/res/layout/items_myrequests.xml" value="0.25" />
         <entry key="app/src/main/res/layout/items_navigation_header.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/items_notifications.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/items_sexualorientation.xml" value="0.33" />
         <entry key="app/src/main/res/layout/items_spinner_list.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/items_subscription_viewpager.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/items_walkthrough.xml" value="0.18489583333333334" />

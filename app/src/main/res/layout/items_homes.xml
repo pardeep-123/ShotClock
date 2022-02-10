@@ -40,13 +40,16 @@
         app:layout_constraintTop_toTopOf="@id/tvUserName"
         app:layout_constraintBottom_toBottomOf="@id/tvUserName"/>
 
-    <ImageView
+
+
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/ivTick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_tick_home"
-        android:layout_marginEnd="@dimen/_4sdp"
-        android:visibility="invisible"
+        android:visibility="gone"
+        android:button="@null"
+        android:foreground="@drawable/checkbox_tick_home"
+        android:foregroundGravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tvUserName"
         app:layout_constraintBottom_toBottomOf="@id/tvUserName"/>

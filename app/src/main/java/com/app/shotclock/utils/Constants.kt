@@ -10,7 +10,7 @@ class Constants {
         var fromNoti = false
         var SCREEN_TYPE = "screen_type"
         var TYPE = "type"
-        var fromSkip = false
+        var isPlus = false
         var fromEdit = false
         var OnMessageScreen = false
         var GetServices  = "getSeriveces"

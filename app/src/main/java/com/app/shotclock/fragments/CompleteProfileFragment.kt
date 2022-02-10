@@ -5,13 +5,9 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.widget.*
-import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.adapters.CompleteProfileImagesAdapter
@@ -21,16 +17,14 @@ import com.app.shotclock.utils.isVisible
 import com.app.shotclock.utils.longToDate
 import com.app.shotclock.utils.setPopUpWindow
 import com.google.android.material.button.MaterialButton
-import org.jetbrains.anko.matchParent
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CompleteProfileFragment : ImagePickerUtility1() {
+class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBinding>() {
 
     private val myCalendar = Calendar.getInstance()
     lateinit var date: DatePickerDialog.OnDateSetListener
     private var imageList = ArrayList<String>()
-    private var myPopupWindow: PopupWindow? = null
     private lateinit var completeProfileImagesAdapter: CompleteProfileImagesAdapter
 
     override fun selectedImage(imagePath: String?, code: Int) {
@@ -48,33 +42,19 @@ class CompleteProfileFragment : ImagePickerUtility1() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         clicksHandle(view)
-
-        binding.tvGenderSelect.setOnClickListener {
-
-//            myPopupWindow?.showAsDropDown(it,0,0)
-            setPopUpWindow(it,requireContext(),"Male","Female")
-        }
-
-
-//        setPopUpWindow()
-
-//        genderSpinner()
-//        interestedInSpinner()
         completeProfileImageAdapter()
     }
 
+    // complete profile images adapter
     private fun completeProfileImageAdapter() {
-        // complete profile images adapter
-        completeProfileImagesAdapter = CompleteProfileImagesAdapter(imageList)
+        completeProfileImagesAdapter = CompleteProfileImagesAdapter(requireContext(), imageList)
         binding.rvUserImages.adapter = completeProfileImagesAdapter
 
         completeProfileImagesAdapter.onItemCLickListener = {
             getImage(requireActivity(), 0, false)
         }
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     private fun clicksHandle(view: View) {
@@ -90,7 +70,7 @@ class CompleteProfileFragment : ImagePickerUtility1() {
                 myCalendar.set(Calendar.MONTH, month)
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                binding.tvDOBSelect.setText(longToDate(myCalendar.timeInMillis, "dd/MM/yy"))
+                binding.tvDOBSelect.text = longToDate(myCalendar.timeInMillis, "dd/MM/yy")
 //                    edtIssuedOnDate.setText(AppUtils.longToDate(myCalendar.timeInMillis))
             }
             datePicker(requireContext())
@@ -125,6 +105,69 @@ class CompleteProfileFragment : ImagePickerUtility1() {
                 show()
             }
         }
+
+        binding.tvGenderSelect.setOnClickListener {
+            val list = ArrayList<String>()
+            list.add("Male")
+            list.add("Female")
+            setPopUpWindow(binding.tvGenderSelect, requireContext(), list)
+        }
+        binding.tvSmokingSelect.setOnClickListener {
+            val list = ArrayList<String>()
+            val yesNoList =resources.getStringArray(R.array.yesNoList)
+            list.addAll(yesNoList)
+            setPopUpWindow(binding.tvSmokingSelect, requireContext(), list)
+        }
+        binding.tvDrinkingSelect.setOnClickListener {
+            val list = ArrayList<String>()
+            val yesNoList =resources.getStringArray(R.array.yesNoList)
+            list.addAll(yesNoList)
+            setPopUpWindow(binding.tvDrinkingSelect, requireContext(), list)
+        }
+        binding.tvPetsSelect.setOnClickListener {
+            val list = ArrayList<String>()
+            val yesNoList =resources.getStringArray(R.array.yesNoList)
+            list.addAll(yesNoList)
+            setPopUpWindow(binding.tvPetsSelect, requireContext(), list)
+        }
+        binding.tvHeightSelect.setOnClickListener {
+            val list = ArrayList<String>()
+            val heights = resources.getStringArray(R.array.heights)
+            list.addAll(heights)
+            setPopUpWindow(binding.tvHeightSelect, requireContext(), list)
+        }
+
+        binding.tvQualificatSelect.setOnClickListener {
+            val list = ArrayList<String>()
+            list.add("High School")
+            list.add("Bachelor's Degree")
+            list.add("Master's Degree")
+            list.add("Doctorate Degree")
+            list.add("Other")
+            setPopUpWindow(binding.tvQualificatSelect, requireContext(), list)
+        }
+
+        binding.tvInterestSelect.setOnClickListener {
+            val list = ArrayList<String>()
+            val interests = resources.getStringArray(R.array.interests)
+            list.addAll(interests)
+            setPopUpWindow(binding.tvInterestSelect, requireContext(), list)
+        }
+
+        binding.tvSexualOrientationSelect.setOnClickListener {
+            val list = ArrayList<String>()
+            val sexualOrientation = resources.getStringArray(R.array.sexualOrientation)
+            list.addAll(sexualOrientation)
+            setPopUpWindow(binding.tvInterestSelect, requireContext(), list)
+        }
+
+        binding.tvAstrologicalSignSelect.setOnClickListener {
+            val list = ArrayList<String>()
+            val astrological = resources.getStringArray(R.array.astrologicalSign)
+            list.addAll(astrological)
+            setPopUpWindow(binding.tvAstrologicalSignSelect, requireContext(), list)
+        }
+
     }
 
     private fun datePicker(context: Context) {
@@ -136,76 +179,6 @@ class CompleteProfileFragment : ImagePickerUtility1() {
             myCalendar[Calendar.DAY_OF_MONTH]
         ).show()
     }
-
-    // set Gender spinner
-    /*private fun genderSpinner() {
-        val selectGender = resources.getStringArray(R.array.selectGender)
-//        val superHero = arrayOf<String?>("Batman", "SuperMan", "Flash", "AquaMan", "Shazam")
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.items_spinner_list, selectGender)
-        arrayAdapter.setDropDownViewResource(R.layout.items_spinner_list)
-        binding.spGender.adapter = arrayAdapter
-
-        binding.spGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener,
-            AdapterView.OnItemClickListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-//                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#000000"))
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemClick(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-
-//                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#000000"))
-            }
-
-        }
-    }*/
-
-    // set Interested in spinner
-/*    private fun interestedInSpinner() {
-        val selectInterests = resources.getStringArray(R.array.selectGender)
-//        val superHero = arrayOf<String?>("Batman", "SuperMan", "Flash", "AquaMan", "Shazam")
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.items_spinner_list, selectInterests)
-        arrayAdapter.setDropDownViewResource(R.layout.items_spinner_list)
-        binding.spInterestedIn.adapter = arrayAdapter
-
-        binding.spInterestedIn.onItemSelectedListener = object : AdapterView.OnItemSelectedListener,
-            AdapterView.OnItemClickListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-//                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#000000"))
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemClick(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-
-//                (parent?.getChildAt(0) as TextView).setTextColor(Color.parseColor("#000000"))
-            }
-
-        }
-    }*/
 
 
 

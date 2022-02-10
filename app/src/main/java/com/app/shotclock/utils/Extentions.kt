@@ -14,7 +14,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.R
+import com.app.shotclock.adapters.HeightPopupAdapter
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -44,7 +46,7 @@ fun myAlert(ctx: Context, messageRes: String, onClick: () -> Unit, yes: String, 
 
     val tvYes: TextView = popUp.findViewById(R.id.tvNo)
     tvYes.text = yes
-    dialogtext11.setText(messageRes)
+    dialogtext11.text = messageRes
     tvNo.setOnClickListener {
         popUpWindowReport.dismiss()
 
@@ -422,33 +424,49 @@ fun getchatListTime(zuluTime: String): Long {
 //    return listOfPattern
 //}
 //------------------------Return Date in String------------------//
-fun longToDate(timeInMillis: Long,format:String): String {
+fun longToDate(timeInMillis: Long, format: String): String {
     val sdf = SimpleDateFormat(format, Locale.getDefault())
     return sdf.format(timeInMillis)
 }
 
 
+fun setPopUpWindow(
+    textView: TextView,
+    ctx: Context,
+    list: ArrayList<String>
+) {
+    val inflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    val view: View = inflater.inflate(R.layout.custom_spinners, null)
 
- fun setPopUpWindow(view: View,ctx: Context,male: String,female: String) {
-    val inflater =
-        ctx.applicationContext?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    val view = inflater.inflate(R.layout.custom_spinners, null)
+    val myPopupWindow = PopupWindow(
+        view,
+        930,
+        ConstraintLayout.LayoutParams.WRAP_CONTENT, true
+    )
+//     myPopupWindow.showAtLocation(text, Gravity.CENTER, 0, 20)
+    myPopupWindow.showAsDropDown(textView)
+    //  val tvMale: TextView = view.findViewById(R.id.tvMale)
+    val rvTextList: RecyclerView = view.findViewById(R.id.rvTextList)
+    rvTextList.adapter = HeightPopupAdapter(list, object : HeightPopupAdapter.TextClick {
+        override fun clickText(pos: Int) {
+            textView.text = list[pos]
+            myPopupWindow.dismiss()
+        }
 
-    val myPopupWindow = PopupWindow(view,ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT, true)
-     myPopupWindow.showAtLocation(view,Gravity.CENTER,0,0)
+    })
 
-     val tvMale : TextView = view.findViewById(R.id.tvMale)
-     val tvFemale: TextView = view.findViewById(R.id.tvFemale)
+    //  tvMale.text = male
+    // tvFemale.text = female
 
+    /*tvMale.setOnClickListener {
 
-     tvMale.setOnClickListener {
-        tvMale.text = "Male"
+        text.text = male
         myPopupWindow.dismiss()
     }
 
     tvFemale.setOnClickListener {
-        tvFemale.text = "Female"
+        text.text = female
         myPopupWindow.dismiss()
-    }
+    }*/
 
 }

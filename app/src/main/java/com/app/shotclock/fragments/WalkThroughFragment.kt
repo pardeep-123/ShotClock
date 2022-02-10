@@ -1,6 +1,5 @@
 package com.app.shotclock.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
@@ -10,9 +9,6 @@ import com.app.shotclock.adapters.WalkThroughAdapter
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.FragmentWalkThroughBinding
 import com.app.shotclock.models.WalkThroughModel
-import info.jeovani.viewpagerindicator.constants.PagerItemType
-import me.relex.circleindicator.CircleIndicator2
-import okhttp3.internal.notify
 
 
 class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>() {
