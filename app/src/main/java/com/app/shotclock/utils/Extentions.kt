@@ -40,19 +40,19 @@ fun myAlert(ctx: Context, messageRes: String, onClick: () -> Unit, yes: String, 
 
         popUpWindowReport.elevation = 10f
     }
-    val tvNo: TextView = popUp.findViewById(R.id.tvYes)
-    tvNo.text = no
+    val tvLogout: TextView = popUp.findViewById(R.id.tvLogout)
+    tvLogout.text = no
     val dialogtext11: TextView = popUp.findViewById(R.id.tvAreYouSure)
 
-    val tvYes: TextView = popUp.findViewById(R.id.tvNo)
-    tvYes.text = yes
+    val tvCancel: TextView = popUp.findViewById(R.id.tvCancel)
+    tvCancel.text = yes
     dialogtext11.text = messageRes
-    tvNo.setOnClickListener {
+    tvLogout.setOnClickListener {
+        onClick()
         popUpWindowReport.dismiss()
 
     }
-    tvYes.setOnClickListener {
-        onClick()
+    tvCancel.setOnClickListener {
         popUpWindowReport.dismiss()
     }
 }

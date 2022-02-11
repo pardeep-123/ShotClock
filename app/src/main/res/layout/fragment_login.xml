@@ -133,7 +133,7 @@
         android:background="@drawable/bg_white_round_corners"
         android:text="@string/sign_in"
         android:textAllCaps="false"
-        android:fontFamily="@font/proxima_semibold"
+        android:fontFamily="@font/proxima_bold"
         android:textColor="@color/black"
         android:textSize="@dimen/_12ssp"
         app:backgroundTint="@null"

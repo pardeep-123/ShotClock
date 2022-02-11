@@ -87,6 +87,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
                 app:backgroundTint="@null"
+                android:fontFamily="@font/proxima_bold"
                 android:textAllCaps="false"
                 android:layout_marginVertical="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_2sdp"
@@ -107,6 +108,7 @@
                 android:textSize="@dimen/_12ssp"
                 app:backgroundTint="@null"
                 android:textAllCaps="false"
+                android:fontFamily="@font/proxima_bold"
                 android:layout_marginVertical="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_marginStart="@dimen/_2sdp"
@@ -119,6 +121,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include layout="@layout/items_filters" />
+    <include layout="@layout/items_height_bottomsheet"/>
 <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 <!--    </androidx.core.widget.NestedScrollView>-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

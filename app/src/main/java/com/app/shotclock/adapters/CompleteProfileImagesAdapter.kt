@@ -15,14 +15,13 @@ class CompleteProfileImagesAdapter(private var ctx : Context,private val imageLi
 
     inner class ImageHolder(val binding: ItemsCompleteProfileImagesBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bind(pos: Int) {
-
-            if (pos != imageList.size)
-                Glide.with(binding.rivUser).load(imageList[pos]).into(binding.rivUser)
+            if (pos != 0)
+                Glide.with(binding.rivUser).load(imageList[pos - 1]).into(binding.rivUser)
 
             itemView.setOnClickListener {
-                onItemCLickListener?.invoke(pos)
+                if (pos == 0)
+                    onItemCLickListener?.invoke(pos)
             }
 
         }

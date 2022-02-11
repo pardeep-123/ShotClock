@@ -7,7 +7,7 @@ class Constants {
         var CategoryList = "categoryList"
         var AvailabilityList = "availabilityList"
         var USERROLE = "userrole"
-        var fromNoti = false
+        var BottomSheet = false
         var SCREEN_TYPE = "screen_type"
         var TYPE = "type"
         var isPlus = false

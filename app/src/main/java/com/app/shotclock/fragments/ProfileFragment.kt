@@ -6,12 +6,16 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.activities.HomeActivity
+import com.app.shotclock.adapters.ProfilePagerAdapter
+import com.app.shotclock.adapters.SubscriptionViewPager
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.FragmentProfileBinding
+import com.app.shotclock.models.ProfileImagesModel
 import com.app.shotclock.utils.isVisible
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
+    private var imageList= ArrayList<ProfileImagesModel>()
     override fun getViewBinding(): FragmentProfileBinding {
         return FragmentProfileBinding.inflate(layoutInflater)
     }
@@ -20,7 +24,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         clickHandle()
-
 
     }
 
@@ -33,6 +36,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         binding.btEdit.setOnClickListener {
             this.findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
         }
+
+        imageList.add(ProfileImagesModel(R.drawable.img_two))
+        imageList.add(ProfileImagesModel(R.drawable.img_two))
+        imageList.add(ProfileImagesModel(R.drawable.img_two))
+        binding.viewPager.adapter = ProfilePagerAdapter(requireContext(), imageList)
+
+//        binding.viewPagerIndicator.setViewPager(binding.viewPager)
 
     }
 }

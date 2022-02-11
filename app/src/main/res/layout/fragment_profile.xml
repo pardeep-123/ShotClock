@@ -7,30 +7,27 @@
     android:background="@drawable/img_app_bg"
     tools:context=".fragments.ProfileFragment">
 
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <include
+        android:id="@+id/tb"
+        layout="@layout/app_toolbar" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/viewPager">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/rivUser"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_250sdp"
-                android:scaleType="fitXY"
-                android:src="@drawable/img_profile"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:riv_corner_radius="@dimen/_5sdp" />
-
-            <include
-                android:id="@+id/tb"
-                layout="@layout/app_toolbar" />
 
             <TextView
                 android:id="@+id/tvUserName"
@@ -42,7 +39,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rivUser" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvDetails"
@@ -248,7 +245,7 @@
                 android:layout_marginHorizontal="@dimen/_20sdp"
                 android:layout_marginVertical="@dimen/_20sdp"
                 android:background="@drawable/bg_white_round_corners"
-                android:fontFamily="@font/proxima_regular"
+                android:fontFamily="@font/proxima_bold"
                 android:text="@string/edit"
                 app:backgroundTint="@null"
                 android:textAllCaps="false"

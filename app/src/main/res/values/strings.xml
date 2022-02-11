@@ -17,7 +17,7 @@
     <string name="shotclock">ShotClock</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="are_you_sure_you_want_to_log_out">Are you sure you \n want to logout</string>
+    <string name="are_you_sure_you_want_to_log_out">Are you sure you want to logout</string>
     <string name="sign_in_with">Sign In With</string>
     <string name="login_with_facebook">Login with facebook</string>
     <string name="welcome_back">Welcome Back!</string>
@@ -58,6 +58,7 @@
     <string name="interested_in">Interested in</string>
     <string name="add_shot_bio">Add Shot Bio</string>
     <string name="add_photo">Add Photo</string>
+    <string name="edit_photo">Edit Photo</string>
     <string name="your_profile_has_been_submitted_successfully">Your profile has been submitted successfully</string>
     <string name="done">Done</string>
     <string name="home">Home</string>
@@ -155,6 +156,12 @@
     <string name="you_have_successfully_selected">You have successfully selected</string>
     <string name="clear">Clear</string>
     <string name="straight">Straight</string>
+    <string name="smoke">Smoke</string>
+    <string name="drink">Drink</string>
+    <string name="education">Education</string>
+    <string name="_4_1">4.1</string>
+    <string name="log_out">Log Out?</string>
+    <string name="no_data_found">No data found</string>
 
 
     <string-array name="selectGender">

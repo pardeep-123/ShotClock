@@ -24,15 +24,16 @@ class EditProfileImagesAdapter(private var ctx: Context,private val imageList: A
     }
 
     override fun onBindViewHolder(holder: EditHolder, position: Int) {
-       if (position != imageList.size){
-           Glide.with(ctx).load(imageList[position]).into(holder.itemBinding.rivUser)
-       }
+        if (position != 0) {
+            Glide.with(ctx).load(imageList[position - 1]).into(holder.itemBinding.rivUser)
+        }
         holder.itemView.setOnClickListener {
-            onItemClickListener?.invoke(position)
+            if (position == 0)
+                onItemClickListener?.invoke(position)
         }
     }
 
     override fun getItemCount(): Int {
-        return imageList.size+1
+        return imageList.size + 1
     }
 }

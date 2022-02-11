@@ -41,7 +41,7 @@
         app:ci_height="@dimen/_3sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvWalkThrough"
-        app:vpi_item_type="oval"
+        app:vpi_item_type="rectangle"
         app:vpi_view_pager="@+id/rvWalkThrough" />
 
     <TextView
@@ -97,6 +97,7 @@
         android:layout_marginTop="@dimen/_6sdp"
         android:src="@drawable/btn_phone"
         android:scaleType="fitXY"
+        android:visibility="gone"
         android:layout_marginBottom="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

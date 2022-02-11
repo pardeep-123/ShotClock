@@ -43,14 +43,14 @@
 
         <EditText
             android:id="@+id/etSendMsg"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:fontFamily="@font/proxima_regular"
             android:hint="@string/type_here"
             android:inputType="textMultiLine"
             android:maxHeight="@dimen/_120sdp"
             android:paddingStart="@dimen/_15sdp"
-            android:paddingEnd="@dimen/_25sdp"
+            android:paddingEnd="@dimen/_10sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toStartOf="@id/ivAttachment"

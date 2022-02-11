@@ -15,4 +15,6 @@
     <color name="pink">#f43c83</color>
     <color name="green">#5a9e3a</color>
     <color name="status">#434343</color>
+    <color name="dark_grey">#2C2C2C</color>
+    <color name="blue">#4A7EDD</color>
 </resources>

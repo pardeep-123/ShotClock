@@ -81,17 +81,6 @@
                 app:layout_constraintStart_toStartOf="@id/tvDOB"
                 app:layout_constraintTop_toBottomOf="@id/tvDOBSelect" />
 
-<!--            <LinearLayout-->
-<!--                android:id="@+id/llGender"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/_10sdp"-->
-<!--                android:orientation="vertical"-->
-<!--                app:layout_constraintStart_toStartOf="@id/etDOB"-->
-<!--                app:layout_constraintEnd_toEndOf="@id/etDOB"-->
-<!--                android:background="@drawable/bg_whiteline_round_corners"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/tvGender">-->
-
                 <TextView
                     android:id="@+id/tvGenderSelect"
                     android:layout_width="0dp"
@@ -112,15 +101,6 @@
                     android:background="@drawable/bg_whiteline_round_corners"
                     app:layout_constraintTop_toBottomOf="@+id/tvGender"
                     android:drawableEnd="@drawable/ic_arrowdown" />
-<!--            tools:listitem="@layout/items_spinner_list"-->
-
-<!--            </LinearLayout>-->
-
-<!--            <View-->
-<!--                android:id="@+id/viewGender"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="@dimen/_20sdp"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/llGender"/>-->
 
             <TextView
                 android:id="@+id/tvHeight"
@@ -177,6 +157,7 @@
                 android:fontFamily="@font/proxima_regular"
                 android:hint="@string/select"
                 android:maxLines="1"
+                android:drawableEnd="@drawable/ic_arrowdown"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/_15sdp"
                 android:paddingEnd="@dimen/_8sdp"
@@ -231,16 +212,6 @@
                 app:layout_constraintStart_toStartOf="@id/tvLocation"
                 app:layout_constraintTop_toBottomOf="@id/etLocation" />
 
-<!--            <LinearLayout-->
-<!--                android:id="@+id/llInterestedIn"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="@dimen/_35sdp"-->
-<!--                android:layout_marginTop="@dimen/_10sdp"-->
-<!--                app:layout_constraintStart_toStartOf="@id/etLocation"-->
-<!--                app:layout_constraintEnd_toEndOf="@id/etLocation"-->
-<!--                android:background="@drawable/bg_whiteline_round_corners"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/tvInterestedIn">-->
-
                 <TextView
                     android:id="@+id/tvInterestSelect"
                     android:layout_width="0dp"
@@ -264,8 +235,6 @@
                     android:background="@drawable/bg_whiteline_round_corners"
                     app:layout_constraintTop_toBottomOf="@+id/tvInterestedIn"/>
 
-<!--            </LinearLayout>-->
-
             <TextView
                 android:id="@+id/tvSexualOrientation"
                 android:layout_width="wrap_content"
@@ -278,16 +247,6 @@
                 app:layout_constraintStart_toStartOf="@id/tvInterestedIn"
                 app:layout_constraintTop_toBottomOf="@id/tvInterestSelect" />
 
-<!--            <LinearLayout-->
-<!--                android:id="@+id/llSexualOrientation"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="@dimen/_35sdp"-->
-<!--                android:layout_marginTop="@dimen/_10sdp"-->
-<!--                app:layout_constraintStart_toStartOf="@id/etLocation"-->
-<!--                app:layout_constraintEnd_toEndOf="@id/etLocation"-->
-<!--                android:background="@drawable/bg_whiteline_round_corners"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/tvSexualOrientation">-->
-
                 <TextView
                     android:id="@+id/tvSexualOrientationSelect"
                     android:layout_width="0dp"
@@ -296,6 +255,7 @@
                     android:contextClickable="true"
                     android:paddingEnd="@dimen/_10sdp"
                     android:hint="@string/select"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:textColorHint="@color/white"
                     android:gravity="center_vertical"
                     android:drawableEnd="@drawable/ic_arrowdown"
@@ -308,8 +268,6 @@
                     android:background="@drawable/bg_whiteline_round_corners"
                     app:layout_constraintTop_toBottomOf="@+id/tvSexualOrientation"/>
 
-<!--            </LinearLayout>-->
-
             <TextView
                 android:id="@+id/tvAstrologicalSign"
                 android:layout_width="wrap_content"
@@ -321,16 +279,6 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="@id/tvSexualOrientation"
                 app:layout_constraintTop_toBottomOf="@id/tvSexualOrientationSelect" />
-
-<!--            <LinearLayout-->
-<!--                android:id="@+id/llAstrologicalSign"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="@dimen/_35sdp"-->
-<!--                android:layout_marginTop="@dimen/_10sdp"-->
-<!--                app:layout_constraintStart_toStartOf="@id/etLocation"-->
-<!--                app:layout_constraintEnd_toEndOf="@id/etLocation"-->
-<!--                android:background="@drawable/bg_whiteline_round_corners"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/tvAstrologicalSign">-->
 
             <TextView
                 android:id="@+id/tvAstrologicalSignSelect"
@@ -353,8 +301,6 @@
                 app:layout_constraintStart_toStartOf="@id/etLocation"
                 app:layout_constraintTop_toBottomOf="@+id/tvAstrologicalSign" />
 
-            <!--            </LinearLayout>-->
-
             <TextView
                 android:id="@+id/tvSmoking"
                 android:layout_width="wrap_content"
@@ -366,16 +312,6 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="@id/tvAstrologicalSign"
                 app:layout_constraintTop_toBottomOf="@id/tvAstrologicalSignSelect" />
-
-<!--            <LinearLayout-->
-<!--                android:id="@+id/llSmoking"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="@dimen/_35sdp"-->
-<!--                android:layout_marginTop="@dimen/_10sdp"-->
-<!--                app:layout_constraintStart_toStartOf="@id/etLocation"-->
-<!--                app:layout_constraintEnd_toEndOf="@id/etLocation"-->
-<!--                android:background="@drawable/bg_whiteline_round_corners"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/tvSmoking">-->
 
             <TextView
                 android:id="@+id/tvSmokingSelect"
@@ -398,8 +334,6 @@
                 app:layout_constraintStart_toStartOf="@id/etLocation"
                 app:layout_constraintTop_toBottomOf="@+id/tvSmoking" />
 
-<!--            </LinearLayout>-->
-
             <TextView
                 android:id="@+id/tvDrinking"
                 android:layout_width="wrap_content"
@@ -411,16 +345,6 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="@id/tvSmoking"
                 app:layout_constraintTop_toBottomOf="@id/tvSmokingSelect" />
-
-<!--            <LinearLayout-->
-<!--                android:id="@+id/llDrinking"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="@dimen/_35sdp"-->
-<!--                android:layout_marginTop="@dimen/_10sdp"-->
-<!--                app:layout_constraintStart_toStartOf="@id/etLocation"-->
-<!--                app:layout_constraintEnd_toEndOf="@id/etLocation"-->
-<!--                android:background="@drawable/bg_whiteline_round_corners"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/tvDrinking">-->
 
             <TextView
                 android:id="@+id/tvDrinkingSelect"
@@ -443,8 +367,6 @@
                 app:layout_constraintStart_toStartOf="@id/etLocation"
                 app:layout_constraintTop_toBottomOf="@+id/tvDrinking" />
 
-            <!--            </LinearLayout>-->
-
             <TextView
                 android:id="@+id/tvPets"
                 android:layout_width="wrap_content"
@@ -456,16 +378,6 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="@id/tvSmoking"
                 app:layout_constraintTop_toBottomOf="@id/tvDrinkingSelect" />
-
-<!--            <LinearLayout-->
-<!--                android:id="@+id/llPets"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="@dimen/_35sdp"-->
-<!--                android:layout_marginTop="@dimen/_10sdp"-->
-<!--                app:layout_constraintStart_toStartOf="@id/etLocation"-->
-<!--                app:layout_constraintEnd_toEndOf="@id/etLocation"-->
-<!--                android:background="@drawable/bg_whiteline_round_corners"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/tvPets">-->
 
             <TextView
                 android:id="@+id/tvPetsSelect"
@@ -488,8 +400,6 @@
                 app:layout_constraintEnd_toEndOf="@id/etLocation"
                 app:layout_constraintStart_toStartOf="@id/etLocation"
                 app:layout_constraintTop_toBottomOf="@+id/tvPets" />
-
-            <!--            </LinearLayout>-->
 
             <TextView
                 android:id="@+id/tvAddBio"
@@ -555,7 +465,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
-                android:fontFamily="@font/proxima_regular"
+                android:fontFamily="@font/proxima_bold"
                 android:text="@string/submit"
                 android:background="@drawable/bg_white_round_corners"
                 app:backgroundTint="@null"
