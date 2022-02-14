@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="initial_range_slider_values">
-        <item>20</item>
-        <item>50</item>
+    <array name="range_slider_height">
+        <item>10</item>
+        <item>70</item>
+    </array>
+    <array name="range_slider_age">
+        <item>10</item>
+        <item>70</item>
+    </array>
+    <array name="range_slider_distance">
+        <item>10</item>
+        <item>70</item>
     </array>
 </resources>

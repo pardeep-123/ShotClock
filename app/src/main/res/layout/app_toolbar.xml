@@ -3,7 +3,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/actionBarSize"
-    android:background="#00000000">
+    android:background="@android:color/transparent">
 
     <ImageView
         android:id="@+id/ivBack"
@@ -11,6 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:padding="@dimen/_5sdp"
+
+        android:visibility="gone"
         android:src="@drawable/ic_back" />
 
     <ImageView
@@ -32,6 +34,15 @@
         android:src="@drawable/ic_app_logo" />
 
     <ImageView
+        android:id="@+id/ivAppLogo2"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:padding="@dimen/_3sdp"
+        android:visibility="gone"
+        android:src="@drawable/ic_app_logo2" />
+
+    <ImageView
         android:id="@+id/ivFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,5 +51,15 @@
         android:layout_marginEnd="@dimen/_8sdp"
         android:padding="@dimen/_5sdp"
         android:src="@drawable/ic_filter" />
+
+    <ImageView
+        android:id="@+id/ivVideoCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:padding="@dimen/_5sdp"
+        android:visibility="gone"
+        android:src="@drawable/ic_videocall" />
 
 </androidx.appcompat.widget.Toolbar>

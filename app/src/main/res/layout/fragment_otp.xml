@@ -83,13 +83,12 @@
         android:layout_marginHorizontal="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:background="@drawable/bg_white_round_corners"
-        android:fontFamily="@font/proxima_regular"
+        android:fontFamily="@font/proxima_bold"
         android:text="@string/submit"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="@dimen/_12ssp"
         app:backgroundTint="@null"
         app:layout_constraintTop_toBottomOf="@id/tvResendOtp" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,13 @@
 package com.app.shotclock.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.databinding.ItemsCompleteProfileImagesBinding
 import com.bumptech.glide.Glide
 
-class CompleteProfileImagesAdapter(val imageList: ArrayList<String>) :
+class CompleteProfileImagesAdapter(private var ctx : Context,private val imageList: ArrayList<String>) :
     RecyclerView.Adapter<CompleteProfileImagesAdapter.ImageHolder>() {
 
 
@@ -14,14 +15,13 @@ class CompleteProfileImagesAdapter(val imageList: ArrayList<String>) :
 
     inner class ImageHolder(val binding: ItemsCompleteProfileImagesBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bind(pos: Int) {
-
-            if (pos != imageList.size)
-                Glide.with(binding.rivUser).load(imageList[pos]).into(binding.rivUser)
+            if (pos != 0)
+                Glide.with(binding.rivUser).load(imageList[pos - 1]).into(binding.rivUser)
 
             itemView.setOnClickListener {
-                onItemCLickListener?.invoke(pos)
+                if (pos == 0)
+                    onItemCLickListener?.invoke(pos)
             }
 
         }
@@ -35,7 +35,6 @@ class CompleteProfileImagesAdapter(val imageList: ArrayList<String>) :
 
     override fun onBindViewHolder(holder: ImageHolder, position: Int) {
         holder.bind(position)
-
     }
 
     override fun getItemCount(): Int {

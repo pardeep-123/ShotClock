@@ -7,7 +7,8 @@
     android:background="@color/black"
     tools:context=".fragments.CookiePolicyFragment">
 
-    <include layout="@layout/app_toolbar" />
+    <include layout="@layout/app_toolbar"
+        android:id="@+id/tb"/>
 
     <TextView
         android:id="@+id/tvCookiePolicy"
@@ -18,7 +19,7 @@
         android:text="@string/cookie_policy_small"
         android:textColor="@color/white"
         android:textSize="@dimen/_16ssp"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/tb" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

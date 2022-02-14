@@ -1,27 +1,28 @@
 package com.app.shotclock.activities
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.widget.Toolbar
+import android.view.Gravity
+import android.view.View
+import android.widget.TextView
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseActivity
 import com.app.shotclock.databinding.ActivityHomeBinding
+import com.app.shotclock.utils.myAlert
+import de.hdodenhof.circleimageview.CircleImageView
+
 
 class HomeActivity : BaseActivity() {
 
-//    NavigationView.OnNavigationItemSelectedListener
-
     private lateinit var binding: ActivityHomeBinding
     private lateinit var navController: NavController
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var drawableLayout: DrawerLayout
-    private var toolbar: Toolbar? = null
     private lateinit var listener: NavController.OnDestinationChangedListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,67 +30,72 @@ class HomeActivity : BaseActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
         navController = findNavController(R.id.fragment)
         drawableLayout = findViewById(R.id.drawerLayout)
         binding.navigationView.setupWithNavController(navController)
+        val headerView : View = binding.navigationView.getHeaderView(0)
+        val civUser : CircleImageView = headerView.findViewById(R.id.civUser)
+        val tvUserName : TextView = headerView.findViewById(R.id.tvUserName)
 
-        appBarConfiguration = AppBarConfiguration(navController.graph, drawableLayout)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        civUser.setOnClickListener {
+          val options = NavOptions.Builder().setPopUpTo(R.id.fragment,false).build()
+            findNavController(R.id.fragment).navigate(R.id.profileFragment,null,options)
+            openClose()
+        }
+        // logout click
+        binding.navigationView.menu.findItem(R.id.logout).setOnMenuItemClickListener {
+            //write your implementation here
+            //to close the navigation drawer
+            myAlert(
+                this,
+                getString(R.string.are_you_sure_you_want_to_log_out),
+                { clickLogout() },
+                "Cancel",
+                "Log Out"
+            )
 
-        listener =
-            NavController.OnDestinationChangedListener { controller, destination, arguments ->
-                if (destination.id == R.id.homeFragment) {
+            binding.navigationView.setCheckedItem(R.id.homeFragment)
+            true
+        }
 
-                }
+//        listener = NavController.OnDestinationChangedListener { controller, destination, arguments ->
+//                if (destination.id == R.id.logout) {
+//                }
+//            }
+
+    }
+
+    private fun clickLogout() {
+        val intent = Intent(this@HomeActivity, InitialActivity::class.java)
+        intent.putExtra("logout", true)
+        startActivity(intent)
+        finishAffinity()
+
+    }
+
+    fun openClose() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(Gravity.LEFT)
+        } else {
+            binding.drawerLayout.openDrawer(Gravity.LEFT)
+        }
+    }
+
+    override fun onBackPressed() {
+        when {
+            binding.drawerLayout.isDrawerOpen(GravityCompat.START) -> binding.drawerLayout.closeDrawer(Gravity.LEFT)
+            else -> {
+                super.onBackPressed()
+//                when (CacheConstants.Current) {
+//                    "home" -> {
+//                        finishAffinity()
+//                    }
+//                    else -> {
+//                        super.onBackPressed()
+//                    }
+//                }
             }
-
-
-//        val navHostFragment = (supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment)
-//        val inflater = navHostFragment.navController.navInflater
-//        //
-//        val navController = navHostFragment.navController
-//        findViewById<NavigationView>(R.id.navigationView)
-//            .setupWithNavController(navController)
-//        findViewById<NavigationView>(R.id.navigationView).setupWithNavController(navController)
-//        //
-//
-//        navController.addOnDestinationChangedListener()
-//
-//        val graph = inflater.inflate(R.navigation.nav_graph_home)
-//
-//        navHostFragment.navController.graph = graph
-
-
+        }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.fragment)
-        return navController.navigateUp(appBarConfiguration)
-                || return super.onSupportNavigateUp()
-    }
-
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        val navController = findNavController(R.id.nav_graph_home)
-//        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
-//    }
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.navigation_menu, menu)
-//        return true
-//    }
-//
-//
-//    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-//
-//        return true
-//    }
-//}
-//
-//private fun NavController.addOnDestinationChangedListener() {
-//    if (R.id.homeFragment == R.id.home_fragment){
-//
-//    }
 }

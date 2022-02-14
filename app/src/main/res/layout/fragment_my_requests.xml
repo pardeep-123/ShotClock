@@ -7,6 +7,9 @@
     android:background="@drawable/img_app_bg"
     tools:context=".fragments.MyRequestsFragment">
 
+    <include layout="@layout/app_toolbar"
+        android:id="@+id/tb"/>
+
     <TextView
         android:id="@+id/tvMyRequests"
         android:layout_width="match_parent"
@@ -17,7 +20,7 @@
         android:text="@string/my_requests"
         android:textColor="@color/white"
         android:textSize="@dimen/_16ssp"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tb" />
 
     <TextView
         android:id="@+id/tvCurrent"
@@ -32,7 +35,7 @@
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_20sdp"
         app:layout_constraintHorizontal_chainStyle="spread"
-        android:fontFamily="@font/proxima_regular"
+        android:fontFamily="@font/proxima_semibold"
         app:layout_constraintEnd_toStartOf="@+id/tvPast"
         android:background="@drawable/bg_white_round_corners"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +54,7 @@
         android:layout_marginEnd="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_20sdp"
         app:layout_constraintStart_toEndOf="@id/tvCurrent"
-        android:fontFamily="@font/proxima_regular"
+        android:fontFamily="@font/proxima_semibold"
         android:background="@drawable/bg_white_round_corners"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvMyRequests" />
@@ -101,5 +104,16 @@
             tools:listitem="@layout/items_myrequests"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tvNoDataFound"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/no_data_found"
+        android:textSize="@dimen/_14ssp"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:fontFamily="@font/proxima_semibold"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

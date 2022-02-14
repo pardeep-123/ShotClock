@@ -13,12 +13,16 @@ import android.database.Cursor
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.MediaStore.Images
 import android.provider.Settings
 import android.util.Log
 import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,30 +30,53 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import com.app.shotclock.BuildConfig
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.FragmentCompleteProfileBinding
+import dagger.android.support.AndroidSupportInjection
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-abstract class ImagePickerUtility1 : BaseFragment<FragmentCompleteProfileBinding>() {
+abstract class ImagePickerUtility1<VB : ViewBinding> :Fragment() {
 
     private var mActivity: Activity? = null
     var mVideoDialog: Boolean = false
     private var mCode = 0
     private lateinit var mImageFile: File
 
+    var baseView: View? = null
+    private var _binding: VB? = null
+    val binding get() = _binding!!
+    var isLoaded = false
 
     private val permissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.CAMERA
     )
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        //   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        super.onAttach(context)
 
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+
+        _binding = getViewBinding()
+        return binding.root
+
+
+    }
+    abstract fun getViewBinding(): VB
     private val requestMultiplePermissions =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
 

@@ -9,12 +9,21 @@
         android:id="@+id/homeFragment"
         android:name="com.app.shotclock.fragments.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_subscriptionFragment"
+            app:destination="@id/subscriptionFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_myRequestsFragment"
+            app:destination="@id/myRequestsFragment"
+            app:popUpToInclusive="false"
+            app:popUpTo="@id/homeFragment"/>
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.app.shotclock.fragments.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
@@ -83,6 +92,20 @@
         android:name="com.app.shotclock.fragments.SubscriptionFragment"
         android:label="fragment_subscription"
         tools:layout="@layout/fragment_subscription" />
+    <fragment
+        android:id="@+id/videoCallFragment"
+        android:name="com.app.shotclock.fragments.VideoCallFragment"
+        android:label="fragment_video_call"
+        tools:layout="@layout/fragment_video_call" >
+        <action
+            android:id="@+id/action_videoCallFragment_to_icebreakerQuestionsFragment"
+            app:destination="@id/icebreakerQuestionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/icebreakerQuestionsFragment"
+        android:name="com.app.shotclock.fragments.IcebreakerQuestionsFragment"
+        android:label="fragment_icebraker_questions"
+        tools:layout="@layout/fragment_icebraker_questions" />
 
 
 </navigation>

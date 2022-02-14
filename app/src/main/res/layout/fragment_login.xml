@@ -97,14 +97,14 @@
         android:textSize="@dimen/_12ssp"
         app:layout_constraintTop_toBottomOf="@id/tvPassword" />
 
-    <CheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/cbRememberMe"
-        android:layout_width="@dimen/_170sdp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
-        android:button="@drawable/remeberme_checkbox"
         android:paddingStart="@dimen/_5sdp"
         android:paddingEnd="@dimen/_5sdp"
+        android:button="@drawable/remeberme_checkbox"
         android:text="@string/remember_me"
         android:fontFamily="@font/proxima_regular"
         android:textColor="@color/white"
@@ -133,7 +133,7 @@
         android:background="@drawable/bg_white_round_corners"
         android:text="@string/sign_in"
         android:textAllCaps="false"
-        android:fontFamily="@font/proxima_regular"
+        android:fontFamily="@font/proxima_bold"
         android:textColor="@color/black"
         android:textSize="@dimen/_12ssp"
         app:backgroundTint="@null"

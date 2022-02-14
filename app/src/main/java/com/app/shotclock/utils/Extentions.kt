@@ -14,7 +14,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.R
+import com.app.shotclock.adapters.HeightPopupAdapter
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -38,19 +40,19 @@ fun myAlert(ctx: Context, messageRes: String, onClick: () -> Unit, yes: String, 
 
         popUpWindowReport.elevation = 10f
     }
-    val tvNo: TextView = popUp.findViewById(R.id.tvYes)
-    tvNo.text = no
+    val tvLogout: TextView = popUp.findViewById(R.id.tvLogout)
+    tvLogout.text = no
     val dialogtext11: TextView = popUp.findViewById(R.id.tvAreYouSure)
 
-    val tvYes: TextView = popUp.findViewById(R.id.tvNo)
-    tvYes.text = yes
-    dialogtext11.setText(messageRes)
-    tvNo.setOnClickListener {
+    val tvCancel: TextView = popUp.findViewById(R.id.tvCancel)
+    tvCancel.text = yes
+    dialogtext11.text = messageRes
+    tvLogout.setOnClickListener {
+        onClick()
         popUpWindowReport.dismiss()
 
     }
-    tvYes.setOnClickListener {
-        onClick()
+    tvCancel.setOnClickListener {
         popUpWindowReport.dismiss()
     }
 }
@@ -115,7 +117,7 @@ fun myAlert(ctx: Context, messageRes: String, onClick: () -> Unit, yes: String, 
 fun hideKeyboard(view: View, activity: Activity){
     val imm =
         activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-    imm!!.hideSoftInputFromWindow(view?.windowToken, 0)
+    imm!!.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
 // for showTaost
@@ -422,7 +424,49 @@ fun getchatListTime(zuluTime: String): Long {
 //    return listOfPattern
 //}
 //------------------------Return Date in String------------------//
-fun longToDate(timeInMillis: Long,format:String): String {
+fun longToDate(timeInMillis: Long, format: String): String {
     val sdf = SimpleDateFormat(format, Locale.getDefault())
     return sdf.format(timeInMillis)
+}
+
+
+fun setPopUpWindow(
+    textView: TextView,
+    ctx: Context,
+    list: ArrayList<String>
+) {
+    val inflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    val view: View = inflater.inflate(R.layout.custom_spinners, null)
+
+    val myPopupWindow = PopupWindow(
+        view,
+        930,
+        ConstraintLayout.LayoutParams.WRAP_CONTENT, true
+    )
+//     myPopupWindow.showAtLocation(text, Gravity.CENTER, 0, 20)
+    myPopupWindow.showAsDropDown(textView)
+    //  val tvMale: TextView = view.findViewById(R.id.tvMale)
+    val rvTextList: RecyclerView = view.findViewById(R.id.rvTextList)
+    rvTextList.adapter = HeightPopupAdapter(list, object : HeightPopupAdapter.TextClick {
+        override fun clickText(pos: Int) {
+            textView.text = list[pos]
+            myPopupWindow.dismiss()
+        }
+
+    })
+
+    //  tvMale.text = male
+    // tvFemale.text = female
+
+    /*tvMale.setOnClickListener {
+
+        text.text = male
+        myPopupWindow.dismiss()
+    }
+
+    tvFemale.setOnClickListener {
+        text.text = female
+        myPopupWindow.dismiss()
+    }*/
+
 }

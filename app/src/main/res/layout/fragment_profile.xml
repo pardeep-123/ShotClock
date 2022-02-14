@@ -7,26 +7,41 @@
     android:background="@drawable/img_app_bg"
     tools:context=".fragments.ProfileFragment">
 
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/circleIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_5sdp"
+        app:ci_height="@dimen/_3sdp"
+        app:ci_width="@dimen/_3sdp"
+        app:layout_constraintBottom_toBottomOf="@id/viewPager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:vpi_item_type="oval"
+        app:vpi_view_pager="@+id/viewPager" />
+
+    <include
+        android:id="@+id/tb"
+        layout="@layout/app_toolbar" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/viewPager">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/rivUser"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_250sdp"
-                android:scaleType="fitXY"
-                android:src="@drawable/img_profile"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:riv_corner_radius="@dimen/_5sdp" />
 
             <TextView
                 android:id="@+id/tvUserName"
@@ -38,7 +53,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rivUser" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvDetails"
@@ -179,7 +194,7 @@
                 android:fontFamily="@font/proxima_regular"
                 android:textSize="@dimen/_12ssp"
                 android:drawablePadding="@dimen/_15sdp"
-                android:drawableStart="@drawable/ic_women"/>
+                android:drawableStart="@drawable/ic_gender2" />
 
             <TextView
                 android:id="@+id/tvAstrologicalSign"
@@ -193,7 +208,7 @@
                 android:fontFamily="@font/proxima_regular"
                 android:textSize="@dimen/_12ssp"
                 android:drawablePadding="@dimen/_15sdp"
-                android:drawableStart="@drawable/ic_women"/>
+                android:drawableStart="@drawable/ic_astro" />
 
             <TextView
                 android:id="@+id/tvSmoking"
@@ -207,7 +222,7 @@
                 android:fontFamily="@font/proxima_regular"
                 android:textSize="@dimen/_12ssp"
                 android:drawablePadding="@dimen/_15sdp"
-                android:drawableStart="@drawable/ic_women"/>
+                android:drawableStart="@drawable/ic_smoking" />
 
             <TextView
                 android:id="@+id/tvDrinking"
@@ -221,7 +236,7 @@
                 android:fontFamily="@font/proxima_regular"
                 android:textSize="@dimen/_12ssp"
                 android:drawablePadding="@dimen/_15sdp"
-                android:drawableStart="@drawable/ic_women"/>
+                android:drawableStart="@drawable/ic_cocktail" />
 
             <TextView
                 android:id="@+id/tvPets"
@@ -235,7 +250,7 @@
                 android:fontFamily="@font/proxima_regular"
                 android:textSize="@dimen/_12ssp"
                 android:drawablePadding="@dimen/_15sdp"
-                android:drawableStart="@drawable/ic_women"/>
+                android:drawableStart="@drawable/ic_pet" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btEdit"
@@ -244,7 +259,7 @@
                 android:layout_marginHorizontal="@dimen/_20sdp"
                 android:layout_marginVertical="@dimen/_20sdp"
                 android:background="@drawable/bg_white_round_corners"
-                android:fontFamily="@font/proxima_regular"
+                android:fontFamily="@font/proxima_bold"
                 android:text="@string/edit"
                 app:backgroundTint="@null"
                 android:textAllCaps="false"
@@ -252,8 +267,6 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvPets" />
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,42 +8,17 @@
     android:background="@drawable/img_app_bg"
     tools:context=".fragments.HomeFragment">
 
+
     <include layout="@layout/app_toolbar"
         android:id="@+id/toolbarHome"/>
 
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/toolbarHome"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="?android:attr/actionBarSize"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        android:background="#00000000">-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-<!--        <ImageView-->
-<!--            android:id="@+id/ivMenu"-->
-<!--            android:layout_width="@dimen/_30sdp"-->
-<!--            android:layout_height="@dimen/_30sdp"-->
-<!--            android:layout_gravity="start"-->
-<!--            android:padding="@dimen/_5sdp"-->
-<!--            android:src="@drawable/ic_menu" />-->
 
-<!--        <ImageView-->
-<!--            android:id="@+id/ivAppLogo"-->
-<!--            android:layout_width="@dimen/_40sdp"-->
-<!--            android:layout_height="@dimen/_40sdp"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:padding="@dimen/_3sdp"-->
-<!--            android:src="@drawable/ic_app_logo" />-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/ivFilter"-->
-<!--            android:layout_width="@dimen/_40sdp"-->
-<!--            android:layout_height="@dimen/_40sdp"-->
-<!--            android:layout_gravity="end"-->
-<!--            android:padding="@dimen/_5sdp"-->
-<!--            android:layout_marginEnd="@dimen/_5sdp"-->
-<!--            android:src="@drawable/ic_filter" />-->
-
-<!--    </androidx.appcompat.widget.Toolbar>-->
+    <include layout="@layout/app_toolbar"
+        android:id="@+id/tb"/>
 
 <!--    <androidx.core.widget.NestedScrollView-->
 <!--        android:layout_width="match_parent"-->
@@ -61,11 +36,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/discover"
-                app:layout_constraintTop_toTopOf="parent"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_16ssp"
                 android:fontFamily="@font/proxima_semibold"
                 android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/tb"
                 android:layout_marginTop="@dimen/_20sdp"/>
 
             <TextView
@@ -86,7 +61,7 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/_15sdp"
                 tools:listitem="@layout/items_homes"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/clBottomBtn"
                 app:layout_constraintTop_toBottomOf="@id/tvPlsSelect"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
@@ -117,6 +92,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
                 app:backgroundTint="@null"
+                android:fontFamily="@font/proxima_bold"
                 android:textAllCaps="false"
                 android:layout_marginVertical="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_2sdp"
@@ -137,6 +113,7 @@
                 android:textSize="@dimen/_12ssp"
                 app:backgroundTint="@null"
                 android:textAllCaps="false"
+                android:fontFamily="@font/proxima_bold"
                 android:layout_marginVertical="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:layout_marginStart="@dimen/_2sdp"
@@ -146,7 +123,10 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <include layout="@layout/items_filters" />
+    <include layout="@layout/items_height_bottomsheet"/>
 <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 <!--    </androidx.core.widget.NestedScrollView>-->
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

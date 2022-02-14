@@ -7,14 +7,15 @@
     android:background="@drawable/img_app_bg"
     tools:context=".fragments.SignUpFragment">
 
-    <include layout="@layout/app_toolbar" />
+    <include layout="@layout/app_toolbar"
+        android:id="@+id/tb"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/tb">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -165,11 +166,13 @@
                     android:layout_toEndOf="@id/ccp"
                     android:background="@null"
                     android:fontFamily="@font/proxima_regular"
+                    android:gravity="center_vertical"
                     android:hint="@string/enter_phone_number"
                     android:imeOptions="actionDone"
                     android:inputType="number"
                     android:maxLength="16"
                     android:maxLines="1"
+                    android:paddingStart="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
@@ -243,9 +246,9 @@
                 app:layout_constraintStart_toStartOf="@id/etPassword"
                 app:layout_constraintTop_toBottomOf="@id/tvConfirmPassword" />
 
-            <CheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/cbTermsConditions"
-                android:layout_width="@dimen/_170sdp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:button="@drawable/remeberme_checkbox"
@@ -264,7 +267,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/bg_white_round_corners"
-                android:fontFamily="@font/proxima_regular"
+                android:fontFamily="@font/proxima_bold"
                 android:text="@string/next"
                 android:textAllCaps="false"
                 android:textColor="@color/black"

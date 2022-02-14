@@ -1,6 +1,5 @@
 package com.app.shotclock.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
@@ -10,8 +9,6 @@ import com.app.shotclock.adapters.WalkThroughAdapter
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.FragmentWalkThroughBinding
 import com.app.shotclock.models.WalkThroughModel
-import info.jeovani.viewpagerindicator.constants.PagerItemType
-import me.relex.circleindicator.CircleIndicator2
 
 
 class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>() {
@@ -72,7 +69,7 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>() {
 //        binding.viewPagerIndicator.setBackgroundColor(Color.TRANSPARENT)
 
 
-
+        walkList?.clear()
         walkList?.add(WalkThroughModel(R.drawable.img_four))
         walkList?.add(WalkThroughModel(R.drawable.img_three))
         walkList?.add(WalkThroughModel(R.drawable.img_two))
@@ -80,22 +77,22 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>() {
         binding.rvWalkThrough.adapter = WalkThroughAdapter(walkList!!)
 //        adapter.searchInterface = this
 
-        binding.rvWalkThrough.set3DItem(true)
-        binding.rvWalkThrough.setInfinite(true)
-        binding.rvWalkThrough.setAlpha(true)
+        binding.rvWalkThrough.set3DItem(false)
+        binding.rvWalkThrough.setInfinite(false)
+        binding.rvWalkThrough.setAlpha(false)
         binding.rvWalkThrough.setFlat(false)
-        binding.rvWalkThrough.setIntervalRatio(0.5F)
+        binding.rvWalkThrough.setIntervalRatio(0.6F)
 //        binding.rvWalkThrough.scrollToPosition(selectedPos!!)
 //        val carouselLayoutManager = binding.rvWalkThrough.getCarouselLayoutManager()
 //        val currentlyCenterPosition = binding.rvWalkThrough.getSelectedPosition()
 
         val pagerSnapHelper = PagerSnapHelper()
-
-
+        
         pagerSnapHelper.attachToRecyclerView(binding.rvWalkThrough)
 
-        val indicator: CircleIndicator2 = view!!.findViewById(R.id.viewPagerIndicator)
-        indicator.attachToRecyclerView(binding.rvWalkThrough, pagerSnapHelper)
+//        val indicator: CircleIndicator2 = view!!.findViewById(R.id.viewPagerIndicator)
+
+        binding.viewPagerIndicator.attachToRecyclerView(binding.rvWalkThrough, pagerSnapHelper)
 
     }
 

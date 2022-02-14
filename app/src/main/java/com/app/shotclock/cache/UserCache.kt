@@ -2,8 +2,8 @@ package com.app.shotclock.cache
 
 import android.content.Context
 import com.app.shotclock.constants.CacheConstants
+import com.app.shotclock.models.Body
 import com.app.shotclock.utils.Prefs
-import retrofit2.http.Body
 
 fun getUser(context: Context): Body? {
     return Prefs.with(context).getObject(CacheConstants.USER_DATA, Body::class.java)

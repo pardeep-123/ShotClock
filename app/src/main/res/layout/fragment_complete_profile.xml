@@ -7,14 +7,15 @@
     android:background="@drawable/img_app_bg"
     tools:context=".fragments.CompleteProfileFragment">
 
-    <include layout="@layout/app_toolbar" />
+    <include layout="@layout/app_toolbar"
+        android:id="@+id/tb"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/tb">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -45,29 +46,28 @@
                 android:layout_marginStart="@dimen/_22sdp"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <EditText
-                android:id="@+id/etDOB"
+            <TextView
+                android:id="@+id/tvDOBSelect"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginHorizontal="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@id/tvDOB"
                 android:background="@drawable/bg_whiteline_round_corners"
-                android:hint="@string/select"
-                android:maxLines="1"
-                android:clickable="false"
-                android:longClickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:inputType="date"
-                android:paddingStart="@dimen/_15sdp"
-                android:textColor="@color/white"
-                android:paddingEnd="@dimen/_8sdp"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:fontFamily="@font/proxima_regular"
-                android:textColorHint="@color/white"/>
+                android:hint="@string/select"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:longClickable="false"
+                android:maxLines="1"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDOB" />
 
             <TextView
                 android:id="@+id/tvGender"
@@ -79,35 +79,28 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="@id/tvDOB"
-                app:layout_constraintTop_toBottomOf="@id/etDOB" />
+                app:layout_constraintTop_toBottomOf="@id/tvDOBSelect" />
 
-            <LinearLayout
-                android:id="@+id/llGender"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="@id/etDOB"
-                app:layout_constraintEnd_toEndOf="@id/etDOB"
-                android:background="@drawable/bg_whiteline_round_corners"
-                app:layout_constraintTop_toBottomOf="@+id/tvGender">
-
-                <Spinner
-                    android:id="@+id/spGender"
+                <TextView
+                    android:id="@+id/tvGenderSelect"
                     android:layout_width="0dp"
-                    android:layout_height="45dp"
+                    android:layout_height="@dimen/_35sdp"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/hintcolor"
                     android:contextClickable="true"
-                    android:elevation="10dp"
-                    android:paddingEnd="@dimen/_2sdp"
+                    android:hint="@string/select"
+                    android:textColorHint="@color/white"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/_10sdp"
-                    android:popupBackground="#988AE8"
-                    android:textSize="15sp"
-                    tools:listitem="@layout/items_spinner_list" />
-
-            </LinearLayout>
+                    android:textSize="@dimen/_12ssp"
+                    android:fontFamily="@font/proxima_regular"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:layout_constraintStart_toStartOf="@id/tvDOBSelect"
+                    app:layout_constraintEnd_toEndOf="@id/tvDOBSelect"
+                    android:background="@drawable/bg_whiteline_round_corners"
+                    app:layout_constraintTop_toBottomOf="@+id/tvGender"
+                    android:drawableEnd="@drawable/ic_arrowdown" />
 
             <TextView
                 android:id="@+id/tvHeight"
@@ -119,26 +112,26 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="@id/tvDOB"
-                app:layout_constraintTop_toBottomOf="@id/llGender" />
+                app:layout_constraintTop_toBottomOf="@id/tvGenderSelect" />
 
-            <EditText
-                android:id="@+id/etHeight"
+            <TextView
+                android:id="@+id/tvHeightSelect"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/bg_whiteline_round_corners"
-                android:fontFamily="@font/proxima_regular"
-                android:hint="@string/select"
-                android:maxLines="1"
-                android:inputType="numberDecimal"
+                android:contextClickable="true"
                 android:drawableEnd="@drawable/ic_arrowdown"
+                android:fontFamily="@font/proxima_regular"
+                android:gravity="center_vertical"
+                android:hint="@string/select"
                 android:paddingStart="@dimen/_15sdp"
                 android:paddingEnd="@dimen/_8sdp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:textSize="@dimen/_12ssp"
-                app:layout_constraintEnd_toEndOf="@id/llGender"
-                app:layout_constraintStart_toStartOf="@id/llGender"
+                app:layout_constraintEnd_toEndOf="@id/tvGenderSelect"
+                app:layout_constraintStart_toStartOf="@id/tvGenderSelect"
                 app:layout_constraintTop_toBottomOf="@id/tvHeight" />
 
             <TextView
@@ -151,25 +144,28 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="@id/tvHeight"
-                app:layout_constraintTop_toBottomOf="@id/etHeight" />
+                app:layout_constraintTop_toBottomOf="@id/tvHeightSelect" />
 
-            <EditText
-                android:id="@+id/etQualification"
+            <TextView
+                android:id="@+id/tvQualificatSelect"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/bg_whiteline_round_corners"
+                android:clickable="true"
+                android:focusable="true"
                 android:fontFamily="@font/proxima_regular"
                 android:hint="@string/select"
                 android:maxLines="1"
-                android:inputType="textPersonName"
+                android:drawableEnd="@drawable/ic_arrowdown"
+                android:gravity="center_vertical"
                 android:paddingStart="@dimen/_15sdp"
                 android:paddingEnd="@dimen/_8sdp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:textSize="@dimen/_12ssp"
-                app:layout_constraintEnd_toEndOf="@id/etHeight"
-                app:layout_constraintStart_toStartOf="@id/etHeight"
+                app:layout_constraintEnd_toEndOf="@id/tvHeightSelect"
+                app:layout_constraintStart_toStartOf="@id/tvHeightSelect"
                 app:layout_constraintTop_toBottomOf="@id/tvQualification" />
 
             <TextView
@@ -182,7 +178,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="@id/tvQualification"
-                app:layout_constraintTop_toBottomOf="@id/etQualification" />
+                app:layout_constraintTop_toBottomOf="@id/tvQualificatSelect" />
 
             <EditText
                 android:id="@+id/etLocation"
@@ -200,8 +196,8 @@
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:textSize="@dimen/_12ssp"
-                app:layout_constraintEnd_toEndOf="@id/etQualification"
-                app:layout_constraintStart_toStartOf="@id/etQualification"
+                app:layout_constraintEnd_toEndOf="@id/tvQualificatSelect"
+                app:layout_constraintStart_toStartOf="@id/tvQualificatSelect"
                 app:layout_constraintTop_toBottomOf="@id/tvLocation" />
 
             <TextView
@@ -216,33 +212,28 @@
                 app:layout_constraintStart_toStartOf="@id/tvLocation"
                 app:layout_constraintTop_toBottomOf="@id/etLocation" />
 
-            <LinearLayout
-                android:id="@+id/llInterestedIn"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="@id/etLocation"
-                app:layout_constraintEnd_toEndOf="@id/etLocation"
-                android:background="@drawable/bg_whiteline_round_corners"
-                app:layout_constraintTop_toBottomOf="@+id/tvInterestedIn">
-
-                <Spinner
-                    android:id="@+id/spInterestedIn"
+                <TextView
+                    android:id="@+id/tvInterestSelect"
                     android:layout_width="0dp"
-                    android:layout_height="45dp"
+                    android:layout_height="@dimen/_35sdp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/hintcolor"
                     android:contextClickable="true"
-                    android:elevation="10dp"
-                    android:paddingEnd="@dimen/_2sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/_10sdp"
                     android:popupBackground="#988AE8"
                     android:textSize="15sp"
-                    tools:listitem="@layout/items_spinner_list" />
-
-            </LinearLayout>
+                    android:fontFamily="@font/proxima_regular"
+                    android:hint="@string/select"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:drawableEnd="@drawable/ic_arrowdown"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:layout_constraintStart_toStartOf="@id/etLocation"
+                    app:layout_constraintEnd_toEndOf="@id/etLocation"
+                    android:background="@drawable/bg_whiteline_round_corners"
+                    app:layout_constraintTop_toBottomOf="@+id/tvInterestedIn"/>
 
             <TextView
                 android:id="@+id/tvSexualOrientation"
@@ -254,35 +245,28 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="@id/tvInterestedIn"
-                app:layout_constraintTop_toBottomOf="@id/llInterestedIn" />
+                app:layout_constraintTop_toBottomOf="@id/tvInterestSelect" />
 
-            <LinearLayout
-                android:id="@+id/llSexualOrientation"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="@id/etLocation"
-                app:layout_constraintEnd_toEndOf="@id/etLocation"
-                android:background="@drawable/bg_whiteline_round_corners"
-                app:layout_constraintTop_toBottomOf="@+id/tvSexualOrientation">
-
-                <Spinner
-                    android:id="@+id/spSexualOrientation"
+                <TextView
+                    android:id="@+id/tvSexualOrientationSelect"
                     android:layout_width="0dp"
-                    android:layout_height="45dp"
+                    android:layout_height="@dimen/_35sdp"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/hintcolor"
                     android:contextClickable="true"
-                    android:elevation="10dp"
-                    android:paddingEnd="@dimen/_2sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:hint="@string/select"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColorHint="@color/white"
                     android:gravity="center_vertical"
+                    android:drawableEnd="@drawable/ic_arrowdown"
                     android:paddingStart="@dimen/_10sdp"
-                    android:popupBackground="#988AE8"
-                    android:textSize="15sp"
-                    tools:listitem="@layout/items_spinner_list" />
-
-            </LinearLayout>
+                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/proxima_regular"
+                    app:layout_constraintStart_toStartOf="@id/etLocation"
+                    app:layout_constraintEnd_toEndOf="@id/etLocation"
+                    android:background="@drawable/bg_whiteline_round_corners"
+                    app:layout_constraintTop_toBottomOf="@+id/tvSexualOrientation"/>
 
             <TextView
                 android:id="@+id/tvAstrologicalSign"
@@ -294,35 +278,28 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="@id/tvSexualOrientation"
-                app:layout_constraintTop_toBottomOf="@id/llSexualOrientation" />
+                app:layout_constraintTop_toBottomOf="@id/tvSexualOrientationSelect" />
 
-            <LinearLayout
-                android:id="@+id/llAstrologicalSign"
+            <TextView
+                android:id="@+id/tvAstrologicalSignSelect"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_35sdp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="@id/etLocation"
-                app:layout_constraintEnd_toEndOf="@id/etLocation"
                 android:background="@drawable/bg_whiteline_round_corners"
-                app:layout_constraintTop_toBottomOf="@+id/tvAstrologicalSign">
-
-                <Spinner
-                    android:id="@+id/spAstrologicalSign"
-                    android:layout_width="0dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/hintcolor"
-                    android:contextClickable="true"
-                    android:elevation="10dp"
-                    android:paddingEnd="@dimen/_2sdp"
-                    android:gravity="center_vertical"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:popupBackground="#988AE8"
-                    android:textSize="15sp"
-                    tools:listitem="@layout/items_spinner_list" />
-
-            </LinearLayout>
+                android:contextClickable="true"
+                android:drawableEnd="@drawable/ic_arrowdown"
+                android:fontFamily="@font/proxima_regular"
+                android:gravity="center_vertical"
+                android:hint="@string/select"
+                android:textColor="@color/white"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="@id/etLocation"
+                app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:layout_constraintTop_toBottomOf="@+id/tvAstrologicalSign" />
 
             <TextView
                 android:id="@+id/tvSmoking"
@@ -334,35 +311,28 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="@id/tvAstrologicalSign"
-                app:layout_constraintTop_toBottomOf="@id/llAstrologicalSign" />
+                app:layout_constraintTop_toBottomOf="@id/tvAstrologicalSignSelect" />
 
-            <LinearLayout
-                android:id="@+id/llSmoking"
+            <TextView
+                android:id="@+id/tvSmokingSelect"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_35sdp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="@id/etLocation"
-                app:layout_constraintEnd_toEndOf="@id/etLocation"
                 android:background="@drawable/bg_whiteline_round_corners"
-                app:layout_constraintTop_toBottomOf="@+id/tvSmoking">
-
-                <Spinner
-                    android:id="@+id/spSmoking"
-                    android:layout_width="0dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/hintcolor"
-                    android:contextClickable="true"
-                    android:elevation="10dp"
-                    android:paddingEnd="@dimen/_2sdp"
-                    android:gravity="center_vertical"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:popupBackground="#988AE8"
-                    android:textSize="15sp"
-                    tools:listitem="@layout/items_spinner_list" />
-
-            </LinearLayout>
+                android:contextClickable="true"
+                android:hint="@string/select"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:drawableEnd="@drawable/ic_arrowdown"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:textSize="@dimen/_12ssp"
+                android:fontFamily="@font/proxima_regular"
+                app:layout_constraintEnd_toEndOf="@id/etLocation"
+                app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:layout_constraintTop_toBottomOf="@+id/tvSmoking" />
 
             <TextView
                 android:id="@+id/tvDrinking"
@@ -374,35 +344,28 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="@id/tvSmoking"
-                app:layout_constraintTop_toBottomOf="@id/llSmoking" />
+                app:layout_constraintTop_toBottomOf="@id/tvSmokingSelect" />
 
-            <LinearLayout
-                android:id="@+id/llDrinking"
+            <TextView
+                android:id="@+id/tvDrinkingSelect"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_35sdp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="@id/etLocation"
-                app:layout_constraintEnd_toEndOf="@id/etLocation"
                 android:background="@drawable/bg_whiteline_round_corners"
-                app:layout_constraintTop_toBottomOf="@+id/tvDrinking">
-
-                <Spinner
-                    android:id="@+id/spDrinking"
-                    android:layout_width="0dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/hintcolor"
-                    android:contextClickable="true"
-                    android:elevation="10dp"
-                    android:paddingEnd="@dimen/_2sdp"
-                    android:gravity="center_vertical"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:popupBackground="#988AE8"
-                    android:textSize="15sp"
-                    tools:listitem="@layout/items_spinner_list" />
-
-            </LinearLayout>
+                android:contextClickable="true"
+                android:drawableEnd="@drawable/ic_arrowdown"
+                android:fontFamily="@font/proxima_regular"
+                android:gravity="center_vertical"
+                android:hint="@string/select"
+                android:textColor="@color/white"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="@id/etLocation"
+                app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:layout_constraintTop_toBottomOf="@+id/tvDrinking" />
 
             <TextView
                 android:id="@+id/tvPets"
@@ -414,35 +377,29 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="@id/tvSmoking"
-                app:layout_constraintTop_toBottomOf="@id/llDrinking" />
+                app:layout_constraintTop_toBottomOf="@id/tvDrinkingSelect" />
 
-            <LinearLayout
-                android:id="@+id/llPets"
+            <TextView
+                android:id="@+id/tvPetsSelect"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_35sdp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="@id/etLocation"
-                app:layout_constraintEnd_toEndOf="@id/etLocation"
                 android:background="@drawable/bg_whiteline_round_corners"
-                app:layout_constraintTop_toBottomOf="@+id/tvPets">
-
-                <Spinner
-                    android:id="@+id/spPets"
-                    android:layout_width="0dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/hintcolor"
-                    android:contextClickable="true"
-                    android:elevation="10dp"
-                    android:paddingEnd="@dimen/_2sdp"
-                    android:gravity="center_vertical"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:popupBackground="#988AE8"
-                    android:textSize="15sp"
-                    tools:listitem="@layout/items_spinner_list" />
-
-            </LinearLayout>
+                android:contextClickable="true"
+                android:drawableEnd="@drawable/ic_arrowdown"
+                android:elevation="10dp"
+                android:fontFamily="@font/proxima_regular"
+                android:gravity="center_vertical"
+                android:hint="@string/select"
+                android:textColor="@color/white"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="@id/etLocation"
+                app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:layout_constraintTop_toBottomOf="@+id/tvPets" />
 
             <TextView
                 android:id="@+id/tvAddBio"
@@ -454,7 +411,7 @@
                 android:textSize="@dimen/_12ssp"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="@id/tvPets"
-                app:layout_constraintTop_toBottomOf="@id/llPets"/>
+                app:layout_constraintTop_toBottomOf="@id/tvPetsSelect"/>
 
             <EditText
                 android:id="@+id/etAddBio"
@@ -474,8 +431,8 @@
                 android:gravity="start"
                 android:paddingBottom="@dimen/_5sdp"
                 android:nestedScrollingEnabled="false"
-                app:layout_constraintEnd_toEndOf="@id/llInterestedIn"
-                app:layout_constraintStart_toStartOf="@id/llInterestedIn"
+                app:layout_constraintEnd_toEndOf="@id/tvInterestSelect"
+                app:layout_constraintStart_toStartOf="@id/tvInterestSelect"
                 app:layout_constraintTop_toBottomOf="@id/tvAddBio"/>
 
             <TextView
@@ -508,7 +465,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginBottom="@dimen/_20sdp"
-                android:fontFamily="@font/proxima_regular"
+                android:fontFamily="@font/proxima_bold"
                 android:text="@string/submit"
                 android:background="@drawable/bg_white_round_corners"
                 app:backgroundTint="@null"

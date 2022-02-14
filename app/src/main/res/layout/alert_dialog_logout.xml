@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_14sdp"
-                android:text="@string/shotclock"
+                android:text="@string/log_out"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16ssp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -45,34 +45,34 @@
                 app:layout_constraintTop_toBottomOf="@id/tvAppoinMe" />
 
             <TextView
-                android:id="@+id/tvNo"
+                android:id="@+id/tvCancel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:gravity="center"
                 android:padding="@dimen/_8sdp"
-                android:text="@string/no"
-                android:textColor="@color/black"
+                android:text="@string/cancel"
+                android:background="@drawable/bg_grey_cornerline"
+                android:textColor="@color/blue"
                 android:textSize="@dimen/_14ssp"
-                app:layout_constraintEnd_toStartOf="@id/tvYes"
+                app:layout_constraintEnd_toStartOf="@id/tvLogout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvAreYouSure" />
 
             <TextView
-                android:id="@+id/tvYes"
+                android:id="@+id/tvLogout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:background="@drawable/bg_grey_cornerline"
                 android:gravity="center"
                 android:padding="@dimen/_8sdp"
-                android:text="@string/yes"
-                android:textColor="@color/black"
+                android:text="@string/logout"
+                android:textColor="@color/red"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tvNo"
+                app:layout_constraintStart_toEndOf="@id/tvCancel"
                 app:layout_constraintTop_toBottomOf="@id/tvAreYouSure" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

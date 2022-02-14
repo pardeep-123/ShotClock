@@ -8,7 +8,8 @@
     tools:context=".activities.HomeActivity"
     tools:openDrawer="end">
 
-    <include layout="@layout/app_toolbar"/>
+    <include layout="@layout/app_toolbar"
+        android:id="@+id/tb"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

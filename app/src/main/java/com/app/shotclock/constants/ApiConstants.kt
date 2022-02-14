@@ -2,7 +2,8 @@ package com.app.shotclock.constants
 
 object ApiConstants {
 
-    val BASE_URL = "http://3.143.51.118:7711/api/"
+    val BASE_URL = "http://202.164.42.227:3020/api/"
+//    val BASE_URL = "http://3.143.51.118:7711/api/"
     const val PARTNER_BASE_URL = "http://3.143.51.118:7711/apis/"
 
     //    val BASE_URL = "http://192.168.1.122:7711/api/"

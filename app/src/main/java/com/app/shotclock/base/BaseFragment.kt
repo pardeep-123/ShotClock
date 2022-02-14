@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import dagger.android.support.AndroidSupportInjection
 
-abstract class BaseFragment<VB : ViewBinding>() : Fragment() {
+abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     var baseView: View? = null
     private var _binding: VB? = null
@@ -23,7 +23,6 @@ abstract class BaseFragment<VB : ViewBinding>() : Fragment() {
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
         //   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
         super.onAttach(context)
 
     }
@@ -41,7 +40,6 @@ abstract class BaseFragment<VB : ViewBinding>() : Fragment() {
 //        binding = DataBindingUtil.inflate.invoke(inflater, getLayoutRes(),container, false)
 //        return binding.root
 
-
     }
 
     override fun onResume() {
@@ -55,4 +53,10 @@ abstract class BaseFragment<VB : ViewBinding>() : Fragment() {
 //        showToast(message)
 //
 //    }
+override fun onDestroyView() {
+    super.onDestroyView()
+    _binding = null
+}
+
+
 }
