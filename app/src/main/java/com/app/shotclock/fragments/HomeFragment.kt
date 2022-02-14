@@ -3,6 +3,7 @@ package com.app.shotclock.fragments
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import com.app.shotclock.R
 import com.app.shotclock.adapters.HomeAdapter
@@ -15,8 +16,6 @@ import com.google.android.material.slider.RangeSlider
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    private lateinit var toolbar: Toolbar
-
     override fun getViewBinding(): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(layoutInflater)
     }
@@ -24,7 +23,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        toolbar = view.findViewById(R.id.toolbarHome)
+
+        binding.toolbarHome.ivFilter.isVisible()
+
+        binding.toolbarHome.ivFilter.setOnClickListener {
+
+
+        }
 
 
         binding.rvHome.adapter = HomeAdapter()
