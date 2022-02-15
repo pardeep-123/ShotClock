@@ -1,9 +1,13 @@
 package com.app.shotclock.di.module
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.app.shotclock.di.key.ViewModelKey
 import com.app.shotclock.di.viewmodelprovider.ViewModelFactory
+import com.app.shotclock.viewmodels.LoginSignUpViewModel
 import dagger.Binds
 import dagger.Module
+import dagger.multibindings.IntoMap
 
 
 @Module
@@ -20,10 +24,11 @@ internal abstract class ViewModelModule {
      *
      * */
 
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(LoginSignUpViewModel::class)
-//    protected abstract fun loginSignUpViewModel(loginSignUpViewModel: LoginSignUpViewModel): ViewModel
+    @Binds
+    @IntoMap
+    @ViewModelKey(LoginSignUpViewModel::class)
+    protected abstract fun loginSignUpViewModel(loginSignUpViewModel: LoginSignUpViewModel):ViewModel
+
 //
 //    @Binds
 //    @IntoMap

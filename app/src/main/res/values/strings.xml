@@ -162,6 +162,7 @@
     <string name="_4_1">4.1</string>
     <string name="log_out">Log Out?</string>
     <string name="no_data_found">No data found</string>
+    <string name="loading_data_please_wait">Loading please wait a moment</string>
 
 
     <string-array name="selectGender">

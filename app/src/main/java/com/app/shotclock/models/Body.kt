@@ -62,7 +62,7 @@ data class Body(
     val typeofHome: String,
     val updatedAt: String,
     val userType: Int,
-    val user_images: List<UserImage>,
+    val user_images: ArrayList<UserImage>,
     val username: String,
     val wallet: Int,
     val whyLoveThis: String,

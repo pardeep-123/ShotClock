@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.app.shotclock.utils.showToast
 import dagger.android.support.AndroidSupportInjection
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
@@ -49,14 +50,17 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     abstract fun getViewBinding(): VB
 
-//    fun showError(message: String) {
+    //    fun showError(message: String) {
 //        showToast(message)
 //
 //    }
-override fun onDestroyView() {
-    super.onDestroyView()
-    _binding = null
-}
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
+    fun showError(message: String) {
+        showToast(message)
+    }
 
 }

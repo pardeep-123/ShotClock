@@ -4,10 +4,18 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.media.AudioManager
 import android.preference.PreferenceManager
+import com.app.shotclock.constants.ApiConstants
+import com.app.shotclock.retrofit.ApiService
+import com.app.shotclock.retrofit.AppInterceptor
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 
@@ -34,40 +42,40 @@ class AppModule() {
     }
 
 
-//    @Provides
-//    @Singleton
-//    fun providerInterceptor(context: Context): AppInterceptor {
-//        return AppInterceptor(context)
-//    }
+    @Provides
+    @Singleton
+    fun providerInterceptor(context: Context): AppInterceptor {
+        return AppInterceptor(context)
+    }
 
-//    @Provides
-//    @Singleton
-//    internal fun provideOkHttpClient(interceptor: AppInterceptor): OkHttpClient {
-//
-//        val okHttpClient = OkHttpClient.Builder()
-//        okHttpClient.connectTimeout(ApiConstants.CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
-//        okHttpClient.readTimeout(ApiConstants.READ_TIMEOUT, TimeUnit.MILLISECONDS)
-//        okHttpClient.writeTimeout(ApiConstants.WRITE_TIMEOUT, TimeUnit.MILLISECONDS)
-//        val logInterceptor = HttpLoggingInterceptor()
-//        logInterceptor.level = (HttpLoggingInterceptor.Level.BODY)
-//        okHttpClient.addInterceptor(interceptor)
-//        okHttpClient.addInterceptor(logInterceptor)
-//        return okHttpClient.build()
-//    }
+    @Provides
+    @Singleton
+    internal fun provideOkHttpClient(interceptor: AppInterceptor): OkHttpClient {
 
-//    @Singleton
-//    @Provides
-//    fun provideRetrofit(okHttpClient: OkHttpClient): ApiService {
-//        val retrofit = Retrofit.Builder()
-//            .baseUrl(ApiConstants.BASE_URL)
-//            .addConverterFactory(GsonConverterFactory.create())
-////            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//            .client(okHttpClient)
-//            .build()
-//
-//        return retrofit.create(ApiService::class.java)
-//
-//    }
+        val okHttpClient = OkHttpClient.Builder()
+        okHttpClient.connectTimeout(ApiConstants.CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
+        okHttpClient.readTimeout(ApiConstants.READ_TIMEOUT, TimeUnit.MILLISECONDS)
+        okHttpClient.writeTimeout(ApiConstants.WRITE_TIMEOUT, TimeUnit.MILLISECONDS)
+        val logInterceptor = HttpLoggingInterceptor()
+        logInterceptor.level = (HttpLoggingInterceptor.Level.BODY)
+        okHttpClient.addInterceptor(interceptor)
+        okHttpClient.addInterceptor(logInterceptor)
+        return okHttpClient.build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(okHttpClient: OkHttpClient): ApiService {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(ApiConstants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+//            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(okHttpClient)
+            .build()
+
+        return retrofit.create(ApiService::class.java)
+
+    }
 
     @Singleton
     @Provides

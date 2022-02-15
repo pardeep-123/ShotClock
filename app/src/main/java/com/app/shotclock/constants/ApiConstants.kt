@@ -3,7 +3,8 @@ package com.app.shotclock.constants
 object ApiConstants {
 
     val BASE_URL = "http://202.164.42.227:3020/api/"
-//    val BASE_URL = "http://3.143.51.118:7711/api/"
+
+    //    val BASE_URL = "http://3.143.51.118:7711/api/"
     const val PARTNER_BASE_URL = "http://3.143.51.118:7711/apis/"
 
     //    val BASE_URL = "http://192.168.1.122:7711/api/"
@@ -19,7 +20,9 @@ object ApiConstants {
     const val READ_TIMEOUT: Long = 30000
     const val WRITE_TIMEOUT: Long = 30000
 
-
+    const val USER_LOGIN = "userLogin"
+    const val FORGOT_PASSWORD = "forgotPassword"
+    const val USER_SIGNUP="userSignup"
 }
 
 

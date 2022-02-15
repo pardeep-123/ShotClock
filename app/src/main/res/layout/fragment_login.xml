@@ -7,6 +7,9 @@
     android:background="@drawable/img_app_bg"
     tools:context=".fragments.LoginFragment">
 
+    <include layout="@layout/view_progressbar"
+        android:id="@+id/pb"/>
+
     <ImageView
         android:id="@+id/ivAppLogo"
         android:layout_width="@dimen/_60sdp"
