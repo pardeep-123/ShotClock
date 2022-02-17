@@ -1,28 +1,56 @@
 package com.app.shotclock.retrofit
 
 import com.app.shotclock.constants.ApiConstants
-import com.app.shotclock.models.BaseResponseModel
-import com.app.shotclock.models.LoginRequestModel
-import com.app.shotclock.models.LoginResponseModel
-import com.app.shotclock.models.SignUpResponseModel
+import com.app.shotclock.models.*
 import okhttp3.MultipartBody
-import okhttp3.Request
 import okhttp3.RequestBody
 import retrofit2.http.*
+import retrofit2.http.Body
 
 interface ApiService {
 
-// user login
+    // user login
     @POST(ApiConstants.USER_LOGIN)
     suspend fun loginUser(@Body body: LoginRequestModel): LoginResponseModel
 
-// forgot password
-    @FormUrlEncoded
+    // forgot password
     @POST(ApiConstants.FORGOT_PASSWORD)
-    suspend fun forgotPassword(@Field("email")type: String):BaseResponseModel
+    suspend fun forgotPassword(@Body data: ForgotPasswordRequest): BaseResponseModel
 
     // user signup
     @Multipart
     @POST(ApiConstants.USER_SIGNUP)
-    suspend fun userSignUp(@PartMap partMap: Map<String,@JvmSuppressWildcards RequestBody>,@Part file : MultipartBody.Part?):SignUpResponseModel
+    suspend fun userSignUp(
+        @PartMap partMap: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part file: MultipartBody.Part?
+    ): SignUpResponseModel
+
+    //change password
+    @POST(ApiConstants.CHANGE_PASSWORD)
+    suspend fun changePassword(@Body data: ChangePassRequestModel): BaseResponseModel
+
+    // terms and conditions
+    @GET(ApiConstants.TERMS_AND_CONDITIONS)
+    suspend fun termsConditions(): TermsAndConditionResponse
+
+    // copy right notice
+    @GET(ApiConstants.COPY_RIGHT_NOTICE)
+    suspend fun copyRightNotice(): CopyRightNoticeResponse
+
+    // safe dating policy
+    @GET(ApiConstants.SAFE_DATING_POLICY)
+    suspend fun safeDatingPolicy(): SafeDatingPolicyResponse
+
+    // privacy policy
+    @GET(ApiConstants.PRIVACY_POLICY)
+    suspend fun privacyPolicy(): PrivacyPolicyResponse
+
+    @GET(ApiConstants.COOKIE_POLICY)
+    suspend fun cookiePolicy(): CookiePolicyResponse
+
+    @GET(ApiConstants.LOGOUT)
+    suspend fun userLogout(): BaseResponseModel
+
+    @GET(ApiConstants.USER_PROFILE)
+    suspend fun userProfile(): ProfileViewModel
 }

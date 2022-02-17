@@ -22,7 +22,15 @@ object ApiConstants {
 
     const val USER_LOGIN = "userLogin"
     const val FORGOT_PASSWORD = "forgotPassword"
-    const val USER_SIGNUP="userSignup"
+    const val USER_SIGNUP = "userSignup"
+    const val CHANGE_PASSWORD = "changePassword"
+    const val TERMS_AND_CONDITIONS = "termConditions"
+    const val COPY_RIGHT_NOTICE = "copyrightsnotices"
+    const val SAFE_DATING_POLICY = "safedatingpolicy"
+    const val PRIVACY_POLICY = "privacyPolicy"
+    const val COOKIE_POLICY = "cookiesPolicys"
+    const val LOGOUT ="logout"
+    const val USER_PROFILE ="profile"
 }
 
 

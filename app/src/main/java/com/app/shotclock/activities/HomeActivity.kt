@@ -5,17 +5,31 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseActivity
+import com.app.shotclock.cache.clearAllData
+import com.app.shotclock.cache.clearData
 import com.app.shotclock.databinding.ActivityHomeBinding
+import com.app.shotclock.genericdatacontainer.Resource
+import com.app.shotclock.genericdatacontainer.Status
+import com.app.shotclock.models.BaseResponseModel
+import com.app.shotclock.utils.App
+import com.app.shotclock.utils.isGone
+import com.app.shotclock.utils.isVisible
 import com.app.shotclock.utils.myAlert
+import com.app.shotclock.viewmodels.LoginSignUpViewModel
 import de.hdodenhof.circleimageview.CircleImageView
+import javax.inject.Inject
 
 
 class HomeActivity : BaseActivity() {
@@ -25,10 +39,16 @@ class HomeActivity : BaseActivity() {
     private lateinit var drawableLayout: DrawerLayout
     private lateinit var listener: NavController.OnDestinationChangedListener
 
+    lateinit var loginSignUpViewModel: LoginSignUpViewModel
+    @Inject
+    lateinit var viewModelProvider : ViewModelProvider.Factory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        configureViewModel()
 
         navController = findNavController(R.id.fragment)
         drawableLayout = findViewById(R.id.drawerLayout)
@@ -65,13 +85,36 @@ class HomeActivity : BaseActivity() {
 
     }
 
-    private fun clickLogout() {
-        val intent = Intent(this@HomeActivity, InitialActivity::class.java)
-        intent.putExtra("logout", true)
-        startActivity(intent)
-        finishAffinity()
-
+    private fun configureViewModel() {
+        loginSignUpViewModel = ViewModelProviders.of(this,viewModelProvider).get(LoginSignUpViewModel::class.java)
     }
+
+    private var userLogoutObserver = Observer<Resource<BaseResponseModel>>{
+        when(it.status){
+            Status.SUCCESS->{
+                 binding.pb.clLoading.isGone()
+                clearAllData(this)
+                clearData(this,"token")
+                App.app?.clearShared()
+                val intent = Intent(this@HomeActivity, InitialActivity::class.java)
+                intent.putExtra("logout", true)
+                startActivity(intent)
+                finishAffinity()
+            }
+            Status.ERROR->{
+                binding.pb.clLoading.isGone()
+                Toast.makeText(this,it.message,Toast.LENGTH_SHORT).show()
+            }
+            Status.LOADING->{
+                binding.pb.clLoading.isVisible()
+            }
+        }
+    }
+    private fun clickLogout() {
+        loginSignUpViewModel.userLogout().observe(this,userLogoutObserver)
+    }
+
+
 
     fun openClose() {
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {

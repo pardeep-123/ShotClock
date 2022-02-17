@@ -16,7 +16,11 @@ import com.app.shotclock.models.SignUpResponseModel
 import com.app.shotclock.utils.*
 import com.app.shotclock.viewmodels.LoginSignUpViewModel
 import com.bumptech.glide.Glide
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 import javax.inject.Inject
 
 class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Resource<SignUpResponseModel>> {
@@ -25,7 +29,7 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
     @Inject
     lateinit var viewModelFactory : ViewModelProvider.Factory
 
-    private var imageResultPath = ""
+    private var imageResultPath =""
 
     override fun getViewBinding(): FragmentSignUpBinding {
         return FragmentSignUpBinding.inflate(layoutInflater)
@@ -48,6 +52,8 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
 
         binding.btNext.setOnClickListener {
             this.findNavController().navigate(R.id.action_signUpFragment_to_completeProfileFragment)
+
+//            getSigUpData()
         }
 
         binding.tvSignIn.setOnClickListener {
@@ -73,7 +79,7 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
         when(t.status){
             Status.SUCCESS->{
                 binding.pb.clLoading.isGone()
-                getSigUpData(t.data?.body!!)
+                this.findNavController().navigate(R.id.action_signUpFragment_to_completeProfileFragment)
             }
             Status.ERROR->{
                 binding.pb.clLoading.isGone()
@@ -85,7 +91,7 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
         }
     }
 
-    private fun getSigUpData(body: Body) {
+    private fun getSigUpData() {
         val map: HashMap<String, RequestBody> = HashMap()
         map["firstname"+"lastname"] = createRequestBody(binding.etName.text.trim().toString())
 //        map["lastname"] = createRequestBody(etLastNameSignUp.text.toString())
@@ -95,6 +101,17 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
         map["device_type"] = createRequestBody("2")
         map["device_token"] = createRequestBody(getToken(requireContext())!!)
         map["phone"] = createRequestBody(binding.etMobile.text.trim().toString())
+
+//        var imagePerfil: MultipartBody.Part?=null
+//        if (imageResultPath!=null){
+//            //create RequestBody instance from file
+//            val requestFile: RequestBody= imageResultPath.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+//            // MultipartBody.Part is used to send also the actual file name
+//            imagePerfil = MultipartBody.Part.createFormData("image",imageResultPath?.name,requestFile)
+//        }
+
+
+
     }
 
 }

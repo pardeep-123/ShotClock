@@ -1,15 +1,11 @@
 package com.app.shotclock.repo
 
 import com.app.shotclock.genericdatacontainer.Resource
-import com.app.shotclock.models.BaseResponseModel
-import com.app.shotclock.models.LoginRequestModel
-import com.app.shotclock.models.LoginResponseModel
-import com.app.shotclock.models.SignUpResponseModel
+import com.app.shotclock.models.*
 import com.app.shotclock.retrofit.ApiService
 import com.app.shotclock.retrofit.ResponseHandler
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,16 +22,19 @@ constructor(private val apiService: ApiService, private val responseHandler: Res
     }
 
     // forgot password
-    suspend fun forgotPassword(type: String): Resource<BaseResponseModel> {
+    suspend fun forgotPassword(data: ForgotPasswordRequest): Resource<BaseResponseModel> {
         return try {
-            responseHandler.handleResponse(apiService.forgotPassword(type))
+            responseHandler.handleResponse(apiService.forgotPassword(data))
         } catch (e: Exception) {
             responseHandler.handleException(e)
         }
     }
 
     // user signup
-    suspend fun userSignUp(request: Map<String, RequestBody>, file: MultipartBody.Part?): Resource<SignUpResponseModel> {
+    suspend fun userSignUp(
+        request: Map<String, RequestBody>,
+        file: MultipartBody.Part?
+    ): Resource<SignUpResponseModel> {
         return try {
             responseHandler.handleResponse(apiService.userSignUp(request, file))
         } catch (e: Exception) {
@@ -43,6 +42,77 @@ constructor(private val apiService: ApiService, private val responseHandler: Res
         }
     }
 
+    // change password
+    suspend fun changePassword(data: ChangePassRequestModel): Resource<BaseResponseModel> {
+        return try {
+            responseHandler.handleResponse(apiService.changePassword(data))
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+    // terms and conditions
+    suspend fun termsConditions(): Resource<TermsAndConditionResponse> {
+        return try {
+            responseHandler.handleResponse(apiService.termsConditions())
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+    // copy right notice
+    suspend fun copyRightNotice(): Resource<CopyRightNoticeResponse> {
+        return try {
+            responseHandler.handleResponse(apiService.copyRightNotice())
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+    // safe dating policy
+    suspend fun safeDatingPolicy(): Resource<SafeDatingPolicyResponse> {
+        return try {
+            responseHandler.handleResponse(apiService.safeDatingPolicy())
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+    // privacy policy
+    suspend fun privacyPolicy(): Resource<PrivacyPolicyResponse> {
+        return try {
+            responseHandler.handleResponse(apiService.privacyPolicy())
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+    // cookie Policy
+    suspend fun cookiePolicy(): Resource<CookiePolicyResponse> {
+        return try {
+            responseHandler.handleResponse(apiService.cookiePolicy())
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+    // user logout
+    suspend fun userLogout(): Resource<BaseResponseModel> {
+        return try {
+            responseHandler.handleResponse(apiService.userLogout())
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+    // user profile
+    suspend fun userProfile(): Resource<ProfileViewModel> {
+        return try {
+            responseHandler.handleResponse(apiService.userProfile())
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
 
 }
 

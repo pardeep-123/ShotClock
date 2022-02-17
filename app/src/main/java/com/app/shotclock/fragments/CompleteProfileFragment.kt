@@ -17,6 +17,7 @@ import com.app.shotclock.utils.isVisible
 import com.app.shotclock.utils.longToDate
 import com.app.shotclock.utils.setPopUpWindow
 import com.google.android.material.button.MaterialButton
+import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -29,7 +30,7 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
 
     override fun selectedImage(imagePath: String?, code: Int) {
         if (!imagePath.isNullOrEmpty()) {
-            imageList.add(imagePath)
+            imageList.add(imagePath.toString())
             completeProfileImagesAdapter.notifyDataSetChanged()
         }
     }
@@ -101,7 +102,6 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
                     findNavController().navigate(R.id.action_completeProfileFragment_to_homeActivity)
                     dismiss()
                 }
-
                 show()
             }
         }
@@ -168,6 +168,7 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
             setPopUpWindow(binding.tvAstrologicalSignSelect, requireContext(), list)
         }
 
+
     }
 
     private fun datePicker(context: Context) {
@@ -179,7 +180,5 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
             myCalendar[Calendar.DAY_OF_MONTH]
         ).show()
     }
-
-
 
 }

@@ -7,8 +7,13 @@
     android:background="@color/black"
     tools:context=".fragments.TermsConditionsFragment">
 
-    <include layout="@layout/app_toolbar"
-        android:id="@+id/tb"/>
+    <include
+        android:id="@+id/tb"
+        layout="@layout/app_toolbar" />
+
+    <include
+        android:id="@+id/pb"
+        layout="@layout/view_progressbar" />
 
     <TextView
         android:id="@+id/tvTermsConditions"
@@ -25,8 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_20sdp"
-        app:layout_constraintTop_toBottomOf="@id/tvTermsConditions"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTermsConditions">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -36,11 +41,10 @@
                 android:id="@+id/tvTermsConditionsDescription"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@color/white"
+                android:layout_marginHorizontal="@dimen/_20sdp"
                 android:fontFamily="@font/proxima_regular"
-                android:textSize="@dimen/_12ssp"
-                android:text="@string/cookiepolicy_description"
-                android:layout_marginHorizontal="@dimen/_20sdp"/>
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

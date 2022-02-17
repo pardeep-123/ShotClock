@@ -7,6 +7,9 @@
     android:background="@drawable/img_app_bg"
     tools:context=".fragments.ProfileFragment">
 
+    <include layout="@layout/view_progressbar"
+        android:id="@+id/pb"/>
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
@@ -49,7 +52,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_15sdp"
                 android:fontFamily="@font/proxima_bold"
-                android:text="@string/james_jackson"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintStart_toStartOf="parent"

@@ -12,6 +12,7 @@ import com.app.shotclock.utils.isVisible
 import com.app.shotclock.utils.longToDate
 import com.app.shotclock.utils.setPopUpWindow
 import com.bumptech.glide.Glide
+import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -19,7 +20,7 @@ import kotlin.collections.ArrayList
 class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>() {
     private val myCalendar = Calendar.getInstance()
     lateinit var date: DatePickerDialog.OnDateSetListener
-    private var imageResultPath = ""
+    private var imageResultPath =""
     private var imageList = ArrayList<String>()
     private lateinit var imagesAdapter: EditProfileImagesAdapter
 
@@ -148,7 +149,7 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>() {
                 imageResultPath = imagePath
                 Glide.with(context!!).load(imageResultPath).into(binding.rivUser)
             } else {
-                imageList.add(imagePath)
+                imageList.add(imagePath.toString())
                 imagesAdapter.notifyDataSetChanged()
             }
         }

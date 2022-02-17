@@ -10,6 +10,7 @@ import com.app.shotclock.databinding.FragmentForgotPasswordBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
 import com.app.shotclock.models.BaseResponseModel
+import com.app.shotclock.models.ForgotPasswordRequest
 import com.app.shotclock.utils.Validation
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
@@ -35,7 +36,6 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(),
         handleClicks()
         configureViewModel()
 
-
     }
 
     private fun handleClicks() {
@@ -48,10 +48,10 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(),
         binding.btSubmitForgot.setOnClickListener {
             if (Validation().verifyForgotPassword(
                     requireActivity(),
-                    binding.etEmailForgot.text.trim().toString()
+                    binding.etEmailForgot.text.toString().trim()
                 )
             ) {
-                forgotPassword(type)
+                forgotPassword()
             }
         }
     }
@@ -61,8 +61,9 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(),
             ViewModelProviders.of(this, viewModelFactory).get(LoginSignUpViewModel::class.java)
     }
 
-    private fun forgotPassword(type: String) {
-        loginSignUpViewModel.forgotPassword(type).observe(viewLifecycleOwner, this)
+    private fun forgotPassword() {
+        val data = ForgotPasswordRequest(binding.etEmailForgot.text.toString().trim())
+        loginSignUpViewModel.forgotPassword(data).observe(viewLifecycleOwner, this)
     }
 
     override fun onChanged(t: Resource<BaseResponseModel>) {

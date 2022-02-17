@@ -11,6 +11,9 @@
     <include layout="@layout/app_toolbar"
         android:id="@+id/tb"/>
 
+    <include layout="@layout/view_progressbar"
+        android:id="@+id/pb"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

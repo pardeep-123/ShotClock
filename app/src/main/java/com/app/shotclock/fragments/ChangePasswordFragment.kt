@@ -2,15 +2,30 @@ package com.app.shotclock.fragments
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.FragmentChangePasswordBinding
+import com.app.shotclock.genericdatacontainer.Resource
+import com.app.shotclock.genericdatacontainer.Status
+import com.app.shotclock.models.BaseResponseModel
+import com.app.shotclock.models.ChangePassRequestModel
+import com.app.shotclock.utils.Validation
 import com.app.shotclock.utils.hideKeyboard
+import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
+import com.app.shotclock.viewmodels.LoginSignUpViewModel
+import javax.inject.Inject
 
-class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>() {
+class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>(),
+    Observer<Resource<BaseResponseModel>> {
+
+    lateinit var loginSignUpViewModel: LoginSignUpViewModel
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun getViewBinding(): FragmentChangePasswordBinding {
         return FragmentChangePasswordBinding.inflate(layoutInflater)
@@ -20,7 +35,13 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         handleClicks()
+        configureViewModel()
 
+    }
+
+    private fun configureViewModel() {
+        loginSignUpViewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(LoginSignUpViewModel::class.java)
     }
 
     private fun handleClicks() {
@@ -28,11 +49,43 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>() {
         binding.tb.ivMenu.isVisible()
         binding.tb.ivMenu.setOnClickListener {
             (activity as HomeActivity).openClose()
-            hideKeyboard(it,requireActivity())
+            hideKeyboard(it, requireActivity())
         }
 
         binding.btUpdate.setOnClickListener {
-            activity?.onBackPressed()
+            if (Validation().changePassValidation(
+                    requireActivity(),
+                    binding.etOldPassword.toString().trim(),
+                    binding.etNewPassword.toString().trim(),
+                    binding.etConfirmPassword.toString().trim()
+                )
+            ) {
+                changePasswordData()
+            }
+        }
+    }
+
+    private fun changePasswordData() {
+        val data = ChangePassRequestModel()
+        data.old_password = binding.etOldPassword.toString().trim()
+        data.new_password = binding.etNewPassword.toString().trim()
+        loginSignUpViewModel.changePassword(data).observe(viewLifecycleOwner, this)
+    }
+
+    override fun onChanged(t: Resource<BaseResponseModel>) {
+        when (t.status) {
+            Status.SUCCESS -> {
+                binding.pb.clLoading.isGone()
+                activity?.onBackPressed()
+            }
+            Status.ERROR -> {
+                binding.pb.clLoading.isGone()
+                showError(t.message!!)
+            }
+            Status.LOADING -> {
+                binding.pb.clLoading.isVisible()
+
+            }
         }
     }
 

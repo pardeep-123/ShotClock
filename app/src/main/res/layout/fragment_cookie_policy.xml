@@ -10,6 +10,9 @@
     <include layout="@layout/app_toolbar"
         android:id="@+id/tb"/>
 
+    <include layout="@layout/view_progressbar"
+        android:id="@+id/pb"/>
+
     <TextView
         android:id="@+id/tvCookiePolicy"
         android:layout_width="match_parent"
@@ -39,7 +42,6 @@
         android:textColor="@color/white"
         android:fontFamily="@font/proxima_regular"
         android:textSize="@dimen/_12ssp"
-        android:text="@string/cookiepolicy_description"
         android:layout_marginHorizontal="@dimen/_20sdp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
