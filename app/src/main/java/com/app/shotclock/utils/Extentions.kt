@@ -18,8 +18,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.R
 import com.app.shotclock.adapters.HeightPopupAdapter
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -330,6 +333,29 @@ fun time_to_timestamp(str_date: String?, pattren: String?): Long {
     return time_stamp
 }
 
+
+fun prepareMultiPart(partName: String, image: Any?): MultipartBody.Part {
+
+/* var imageFileBody = MultipartBody.Part.createFormData(partName, "image_"+".jpg", requestBody);
+imageArrayBody.add(imageFileBody);*/
+    var requestFile: RequestBody? = null
+    if (image is File) {
+
+        requestFile = image
+            .asRequestBody("/*".toMediaTypeOrNull())
+    } else if (image is ByteArray) {
+        requestFile = image
+            .toRequestBody(
+                "/*".toMediaTypeOrNull(),
+                0, image.size
+            )
+    }
+    return if (image is String) {
+        val attachmentEmpty = "".toRequestBody("text/plain".toMediaTypeOrNull())
+        MultipartBody.Part.createFormData(partName, "", attachmentEmpty)
+    } else
+        MultipartBody.Part.createFormData(partName, (image as File).name, requestFile!!)
+}
 
 fun time_to_timestampLocal(str_date: String?, pattren: String?): Long {
     var time_stamp: Long = 0

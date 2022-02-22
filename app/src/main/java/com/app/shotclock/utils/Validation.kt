@@ -67,6 +67,7 @@ class Validation {
 
     fun signUpValidation(
         context: Activity,
+        image: String,
         name: String,
         email: String,
         phone: String,
@@ -74,7 +75,9 @@ class Validation {
         confirmPassword: String
     ): Boolean {
         var check = false
-        if (name.isEmpty()) {
+        if (image == "" || image.isEmpty()){
+            Toast.makeText(context, "Please select user image", Toast.LENGTH_SHORT).show()
+        }else if (name.isEmpty()) {
             Toast.makeText(context, "Please enter username", Toast.LENGTH_SHORT).show()
         } else if (email.isEmpty()) {
             Toast.makeText(context, "Please enter email", Toast.LENGTH_SHORT).show()

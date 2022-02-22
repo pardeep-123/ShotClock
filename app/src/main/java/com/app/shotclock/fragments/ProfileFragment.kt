@@ -73,7 +73,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
                 val body = t.data?.body!!
-                binding.tvUserName.text = body.username + " " + body.username
+                binding.tvUserName.text = body.username
                 binding.tvDetails.text = body.bio
                 binding.tvMail.text = body.email
                 binding.tvPhoneNo.text = body.countryCode+""+body.phone

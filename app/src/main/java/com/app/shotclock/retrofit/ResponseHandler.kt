@@ -46,7 +46,7 @@ constructor() {
         try {
             val jsonObject = JSONObject(responseBody.string())
 
-            return BaseError(400,jsonObject.getString("msg"))
+            return BaseError(400,jsonObject.getString("message"))
 
 
         } catch (e: Exception) {

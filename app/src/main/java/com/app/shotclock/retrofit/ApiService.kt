@@ -21,8 +21,7 @@ interface ApiService {
     @Multipart
     @POST(ApiConstants.USER_SIGNUP)
     suspend fun userSignUp(
-        @PartMap partMap: Map<String, @JvmSuppressWildcards RequestBody>,
-        @Part file: MultipartBody.Part?
+        @PartMap partMap: Map<String, @JvmSuppressWildcards RequestBody>
     ): SignUpResponseModel
 
     //change password
@@ -53,4 +52,12 @@ interface ApiService {
 
     @GET(ApiConstants.USER_PROFILE)
     suspend fun userProfile(): ProfileViewModel
+
+    @Multipart
+    @POST(ApiConstants.FILE_UPLOAD)
+    suspend fun fileUpload(@Part image : ArrayList<MultipartBody.Part>):FileUploadResponse
+
+    @POST(ApiConstants.COMPLETE_PROFILE)
+    suspend fun completeProfile(@Body data:CompleteProfileRequestModel):CompleteProfileResponse
+
 }

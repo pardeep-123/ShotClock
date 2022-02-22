@@ -21,13 +21,13 @@ class AppInterceptor(val context: Context) : Interceptor {
                 .add("Content-Type", "application/json")
                 .add("Accept", "application/json")
                 .add("auth_key", token)
-                .add("security_key","appointme11")
+             //   .add("security_key","appointme11")
                 .build()
         }else{
             headers = request.headers.newBuilder()
                 .add("Content-Type", "application/json")
                 .add("Accept", "application/json")
-                .add("security_key","appointme11")
+               // .add("security_key","appointme11")
                 .build()
         }
 

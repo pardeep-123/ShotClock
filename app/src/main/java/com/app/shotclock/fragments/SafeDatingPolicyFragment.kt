@@ -63,7 +63,7 @@ class SafeDatingPolicyFragment : BaseFragment<FragmentSafeDatingPolicyBinding>()
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-
+                showError(t.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()

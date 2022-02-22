@@ -10,14 +10,13 @@ import com.bumptech.glide.Glide
 class CompleteProfileImagesAdapter(private var ctx : Context,private val imageList: ArrayList<String>) :
     RecyclerView.Adapter<CompleteProfileImagesAdapter.ImageHolder>() {
 
-
     var onItemCLickListener: ((pos: Int) -> Unit)? = null
 
     inner class ImageHolder(val binding: ItemsCompleteProfileImagesBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(pos: Int) {
             if (pos != 0)
-                Glide.with(binding.rivUser).load(imageList[pos - 1]).into(binding.rivUser)
+                Glide.with(ctx).load(imageList[pos - 1]).into(binding.rivUser)
 
             itemView.setOnClickListener {
                 if (pos == 0)

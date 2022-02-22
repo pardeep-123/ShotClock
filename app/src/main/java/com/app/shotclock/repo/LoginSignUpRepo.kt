@@ -32,11 +32,10 @@ constructor(private val apiService: ApiService, private val responseHandler: Res
 
     // user signup
     suspend fun userSignUp(
-        request: Map<String, RequestBody>,
-        file: MultipartBody.Part?
+        request: Map<String, RequestBody>
     ): Resource<SignUpResponseModel> {
         return try {
-            responseHandler.handleResponse(apiService.userSignUp(request, file))
+            responseHandler.handleResponse(apiService.userSignUp(request))
         } catch (e: Exception) {
             responseHandler.handleException(e)
         }
@@ -110,6 +109,24 @@ constructor(private val apiService: ApiService, private val responseHandler: Res
         return try {
             responseHandler.handleResponse(apiService.userProfile())
         } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+    // file upload
+    suspend fun fileUpload(image: ArrayList<MultipartBody.Part>): Resource<FileUploadResponse> {
+        return try {
+            responseHandler.handleResponse(apiService.fileUpload(image))
+        } catch (e: Exception) {
+            responseHandler.handleException(e)
+        }
+    }
+
+    // complete profile
+    suspend fun completeProfile(data:CompleteProfileRequestModel): Resource<CompleteProfileResponse>{
+        return try {
+            responseHandler.handleResponse(apiService.completeProfile(data))
+        }catch (e: Exception){
             responseHandler.handleException(e)
         }
     }

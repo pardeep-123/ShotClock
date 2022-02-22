@@ -35,11 +35,10 @@ constructor(private val loginSignUpRepo: LoginSignUpRepo) : ViewModel() {
 
     // user signup
     fun userSignUp(
-        request: Map<String, RequestBody>, file: MultipartBody.Part?
-    ): LiveData<Resource<SignUpResponseModel>> {
+        request: Map<String, RequestBody>): LiveData<Resource<SignUpResponseModel>> {
         return liveData(Dispatchers.IO) {
             emit(Resource.loading(null))
-            val response = loginSignUpRepo.userSignUp(request, file)
+            val response = loginSignUpRepo.userSignUp(request)
             emit(response)
         }
     }
@@ -112,6 +111,24 @@ constructor(private val loginSignUpRepo: LoginSignUpRepo) : ViewModel() {
         return liveData(Dispatchers.IO) {
             emit(Resource.loading(null))
             val response = loginSignUpRepo.userProfile()
+            emit(response)
+        }
+    }
+
+    // file upload
+    fun fileUpload(image: ArrayList<MultipartBody.Part>): LiveData<Resource<FileUploadResponse>> {
+        return liveData(Dispatchers.IO) {
+            emit(Resource.loading(null))
+            val response = loginSignUpRepo.fileUpload(image)
+            emit(response)
+        }
+    }
+
+    // complete profile
+    fun completeProfile(data:CompleteProfileRequestModel):LiveData<Resource<CompleteProfileResponse>>{
+        return liveData(Dispatchers.IO){
+            emit(Resource.loading(null))
+            val response = loginSignUpRepo.completeProfile(data)
             emit(response)
         }
     }

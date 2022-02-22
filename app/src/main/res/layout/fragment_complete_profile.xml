@@ -10,6 +10,9 @@
     <include layout="@layout/app_toolbar"
         android:id="@+id/tb"/>
 
+    <include layout="@layout/view_progressbar"
+        android:id="@+id/pb"/>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -189,6 +192,9 @@
                 android:fontFamily="@font/proxima_regular"
                 android:hint="@string/select"
                 android:maxLines="1"
+                android:clickable="false"
+                android:focusable="false"
+                android:longClickable="false"
                 android:inputType="textPersonName"
                 android:drawableEnd="@drawable/ic_location"
                 android:paddingStart="@dimen/_15sdp"
