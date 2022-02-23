@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.app.shotclock.di.key.ViewModelKey
 import com.app.shotclock.di.viewmodelprovider.ViewModelFactory
+import com.app.shotclock.viewmodels.HomeViewModel
 import com.app.shotclock.viewmodels.LoginSignUpViewModel
+import com.app.shotclock.viewmodels.ProfileViewModels
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -29,15 +31,13 @@ internal abstract class ViewModelModule {
     @ViewModelKey(LoginSignUpViewModel::class)
     protected abstract fun loginSignUpViewModel(loginSignUpViewModel: LoginSignUpViewModel):ViewModel
 
-//
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(ProviderSignUpViewModel::class)
-//    protected abstract fun providerSignUpViewModel(providerSignUpViewModel: ProviderSignUpViewModel): ViewModel
-//
-//    @Binds
-//    @IntoMap
-//    @ViewModelKey(BookAppointmentViewModel::class)
-//    protected abstract fun bookAppointmentViewModel(bookAppointmentViewModel: BookAppointmentViewModel): ViewModel
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileViewModels::class)
+    protected abstract fun profileViewModels(profileViewModels: ProfileViewModels): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(HomeViewModel::class)
+    protected abstract fun homeViewModel(homeViewModel: HomeViewModel): ViewModel
 }

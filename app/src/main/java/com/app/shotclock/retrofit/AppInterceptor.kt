@@ -1,7 +1,7 @@
 package com.app.shotclock.retrofit
 
 import android.content.Context
-import com.app.shotclock.cache.getUser
+import com.app.shotclock.cache.getToken
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -12,7 +12,7 @@ class AppInterceptor(val context: Context) : Interceptor {
 
         var request = chain.request()
 
-        val token: String? = getUser(context)?.authKey
+        val token: String? = getToken(context)
 
         val headers:Headers
 

@@ -10,6 +10,7 @@ import com.app.shotclock.R
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.cache.getToken
 import com.app.shotclock.cache.saveString
+import com.app.shotclock.cache.saveToken
 import com.app.shotclock.cache.saveUser
 import com.app.shotclock.databinding.FragmentLoginBinding
 import com.app.shotclock.genericdatacontainer.Resource
@@ -81,6 +82,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), Observer<Resource<Lo
             Status.SUCCESS -> {
                 binding.pb.clLoading.isVisible()
                 saveUser(requireContext(), t.data?.body!!)
+                saveToken(requireContext(),t.data.body.authKey)
                 saveString(requireContext(), "token", t.data.body.authKey)
                 this.findNavController().navigate(R.id.action_loginFragment_to_homeActivity)
             }

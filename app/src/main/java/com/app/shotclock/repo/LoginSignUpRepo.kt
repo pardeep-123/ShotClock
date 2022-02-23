@@ -104,15 +104,6 @@ constructor(private val apiService: ApiService, private val responseHandler: Res
         }
     }
 
-    // user profile
-    suspend fun userProfile(): Resource<ProfileViewModel> {
-        return try {
-            responseHandler.handleResponse(apiService.userProfile())
-        } catch (e: Exception) {
-            responseHandler.handleException(e)
-        }
-    }
-
     // file upload
     suspend fun fileUpload(image: ArrayList<MultipartBody.Part>): Resource<FileUploadResponse> {
         return try {

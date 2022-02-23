@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import com.app.shotclock.R
+import com.app.shotclock.constants.ApiConstants
 import com.app.shotclock.models.ProfileImagesModel
+import com.app.shotclock.models.ProfileUserImage
 import com.app.shotclock.models.SubscriptionModel
+import com.app.shotclock.utils.Constants
+import com.bumptech.glide.Glide
 import com.makeramen.roundedimageview.RoundedImageView
 
-class ProfilePagerAdapter(private val ctx: Context, private val list: ArrayList<ProfileImagesModel>):PagerAdapter() {
+class ProfilePagerAdapter(private val ctx: Context, private val list: ArrayList<ProfileUserImage>):PagerAdapter() {
 
     override fun getCount(): Int {
       return list.size
@@ -24,7 +28,7 @@ class ProfilePagerAdapter(private val ctx: Context, private val list: ArrayList<
         val myLayout : View = LayoutInflater.from(ctx).inflate(R.layout.items_images_viewpager,container,false)
 
         val rivUser : RoundedImageView = myLayout.findViewById(R.id.rivUserViewPager)
-        rivUser.setImageResource(list[position].images)
+        Glide.with(ctx).load(ApiConstants.IMAGE_URL + list[position].image_path).into(rivUser)
         container.addView(myLayout,0)
         return myLayout
 

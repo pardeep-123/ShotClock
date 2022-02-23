@@ -341,14 +341,9 @@ imageArrayBody.add(imageFileBody);*/
     var requestFile: RequestBody? = null
     if (image is File) {
 
-        requestFile = image
-            .asRequestBody("/*".toMediaTypeOrNull())
+        requestFile = image.asRequestBody("/*".toMediaTypeOrNull())
     } else if (image is ByteArray) {
-        requestFile = image
-            .toRequestBody(
-                "/*".toMediaTypeOrNull(),
-                0, image.size
-            )
+        requestFile = image.toRequestBody("/*".toMediaTypeOrNull(), 0, image.size)
     }
     return if (image is String) {
         val attachmentEmpty = "".toRequestBody("text/plain".toMediaTypeOrNull())

@@ -1,5 +1,8 @@
 package com.app.shotclock.models
 
+import androidx.annotation.RawRes
+import java.io.Serializable
+
 data class ProfileViewModel(
     val body: ProfileBody,
     val code: Int,
@@ -74,7 +77,7 @@ data class ProfileBody(
     val wallet: Int,
     val whyLoveThis: String,
     val whychooseme: String
-)
+): Serializable
 
 data class ProfileUserImage(
     val createdAt: String,
@@ -83,4 +86,4 @@ data class ProfileUserImage(
     val status: Boolean,
     val updatedAt: String,
     val user_id: Int
-)
+):Serializable

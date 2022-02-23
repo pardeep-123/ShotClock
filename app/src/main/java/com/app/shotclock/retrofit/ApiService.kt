@@ -20,9 +20,7 @@ interface ApiService {
     // user signup
     @Multipart
     @POST(ApiConstants.USER_SIGNUP)
-    suspend fun userSignUp(
-        @PartMap partMap: Map<String, @JvmSuppressWildcards RequestBody>
-    ): SignUpResponseModel
+    suspend fun userSignUp(@PartMap partMap: Map<String, @JvmSuppressWildcards RequestBody>): SignUpResponseModel
 
     //change password
     @POST(ApiConstants.CHANGE_PASSWORD)
@@ -59,5 +57,12 @@ interface ApiService {
 
     @POST(ApiConstants.COMPLETE_PROFILE)
     suspend fun completeProfile(@Body data:CompleteProfileRequestModel):CompleteProfileResponse
+
+    @POST(ApiConstants.EDIT_PROFILE)
+    suspend fun editProfile(@Body data: EditProfileRequestModel): EditProfileResponse
+
+    @FormUrlEncoded
+    @POST(ApiConstants.HOME_API)
+    suspend fun homeApi(@Field("latitude") latitude: String ,@Field("longitude") longitude: String):BaseResponseModel
 
 }

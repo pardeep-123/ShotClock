@@ -10,27 +10,28 @@ import com.app.shotclock.R
 import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.adapters.ProfilePagerAdapter
 import com.app.shotclock.base.BaseFragment
-import com.app.shotclock.cache.getUser
 import com.app.shotclock.databinding.FragmentProfileBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
-import com.app.shotclock.models.ProfileImagesModel
+import com.app.shotclock.models.ProfileBody
+import com.app.shotclock.models.ProfileUserImage
 import com.app.shotclock.models.ProfileViewModel
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
-import com.app.shotclock.viewmodels.LoginSignUpViewModel
-import com.bumptech.glide.Glide
+import com.app.shotclock.viewmodels.ProfileViewModels
 import javax.inject.Inject
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(),
     Observer<Resource<ProfileViewModel>> {
 
-    lateinit var loginSignUpViewModel: LoginSignUpViewModel
+    private lateinit var profileViewModels: ProfileViewModels
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private var imageList = ArrayList<ProfileImagesModel>()
+    private var imageList = ArrayList<ProfileUserImage>()
+    private var gender = 0
+    private var interested = 0
+    private var profileData : ProfileBody? = null
 
     override fun getViewBinding(): FragmentProfileBinding {
         return FragmentProfileBinding.inflate(layoutInflater)
@@ -45,9 +46,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),
     }
 
     private fun configureViewModel() {
-        loginSignUpViewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(LoginSignUpViewModel::class.java)
-        loginSignUpViewModel.userProfile().observe(viewLifecycleOwner, this)
+        profileViewModels =
+            ViewModelProviders.of(this, viewModelFactory).get(ProfileViewModels::class.java)
+        profileViewModels.userProfile().observe(viewLifecycleOwner, this)
     }
 
     private fun clickHandle() {
@@ -57,14 +58,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),
         }
 
         binding.btEdit.setOnClickListener {
-            this.findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
+            val bundle = Bundle()
+            bundle.putSerializable("data",profileData)
+            this.findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment,bundle)
         }
-
-        imageList.add(ProfileImagesModel(R.drawable.img_two))
-        imageList.add(ProfileImagesModel(R.drawable.img_two))
-        imageList.add(ProfileImagesModel(R.drawable.img_two))
-        binding.viewPager.adapter = ProfilePagerAdapter(requireContext(), imageList)
-        binding.circleIndicator.setViewPager(binding.viewPager)
 
     }
 
@@ -73,22 +70,43 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
                 val body = t.data?.body!!
+                profileData = body
+                if(t.data.body.user_images.size>0){
+                    imageList = t.data.body.user_images
+                }
+
+                gender = body.gender
+                interested = body.interested
                 binding.tvUserName.text = body.username
                 binding.tvDetails.text = body.bio
                 binding.tvMail.text = body.email
-                binding.tvPhoneNo.text = body.countryCode+""+body.phone
+                binding.tvPhoneNo.text = body.countryCode + "" + body.phone
                 binding.tvDOB.text = body.dateofbirth
-                binding.tvGender.text = body.gender.toString()
                 binding.tvHeight.text = body.height
                 binding.tvGraduation.text = body.qualification
                 binding.tvLocation.text = body.address
-                binding.tvInterestedIn.text = body.interested.toString()
                 binding.tvSexualOrientation.text = body.sexualOrientation
                 binding.tvAstrologicalSign.text = body.astrologicalSign
                 binding.tvSmoking.text = body.smoking
                 binding.tvDrinking.text = body.drinking
                 binding.tvPets.text = body.pets
 
+                // pager adapter
+                binding.viewPager.adapter = ProfilePagerAdapter(requireContext(), imageList)
+                binding.circleIndicator.setViewPager(binding.viewPager)
+
+                binding.tvGender.text = body.gender.toString()
+                if (gender == 1)
+                    binding.tvGender.text = "Male"
+                else
+                    binding.tvGender.text = "Female"
+
+                binding.tvInterestedIn.text = body.interested.toString()
+                when (interested) {
+                    1 -> binding.tvInterestedIn.text = "Men"
+                    2 -> binding.tvInterestedIn.text = "Women"
+                    else -> binding.tvInterestedIn.text = "Others"
+                }
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
@@ -99,6 +117,5 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),
             }
         }
     }
-
 
 }

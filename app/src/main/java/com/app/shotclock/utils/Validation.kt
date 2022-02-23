@@ -44,23 +44,25 @@ class Validation {
         confirmPassword: String
     ): Boolean {
         var check = false
-        if (oldPassword.isEmpty()) {
-            Toast.makeText(context, "Please enter old password", Toast.LENGTH_SHORT).show()
-
-        } else if (newPassword.isEmpty()) {
-            Toast.makeText(context, "Please enter new password", Toast.LENGTH_SHORT).show()
-
-        } else if (confirmPassword.isEmpty()) {
-            Toast.makeText(context, "Please enter confirm password", Toast.LENGTH_SHORT).show()
-
-        } else if (newPassword != confirmPassword) {
-            Toast.makeText(context, "Password must be same", Toast.LENGTH_SHORT).show()
-        } else if (oldPassword == newPassword) {
-            Toast.makeText(context, "Old and new password should not be same", Toast.LENGTH_SHORT)
-                .show()
-
-        } else {
-            check = true
+        when {
+            oldPassword.isEmpty() -> {
+                Toast.makeText(context, "Please enter old password", Toast.LENGTH_SHORT).show()
+            }
+            newPassword.isEmpty() -> {
+                Toast.makeText(context, "Please enter new password", Toast.LENGTH_SHORT).show()
+            }
+            confirmPassword.isEmpty() -> {
+                Toast.makeText(context, "Please enter confirm password", Toast.LENGTH_SHORT).show()
+            }
+            newPassword != confirmPassword -> {
+                Toast.makeText(context, "Password must be same", Toast.LENGTH_SHORT).show()
+            }
+            oldPassword == newPassword -> {
+                Toast.makeText(context, "Old and new password should not be same", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                check = true
+            }
         }
         return check
     }
@@ -109,41 +111,61 @@ class Validation {
         astrologicalSign: String,
         smoking: String,
         drinking: String,
-        pets: String, bio: String
+        pets: String, bio: String,
+        imageList: ArrayList<String>
     ): Boolean {
         var check = false
-        if (dob.isEmpty()) {
-            Toast.makeText(context, "Please enter date of birth", Toast.LENGTH_SHORT).show()
-        } else if (gender.isEmpty()) {
-            Toast.makeText(context, "Please select gender", Toast.LENGTH_SHORT).show()
-        } else if (height.isEmpty()) {
-            Toast.makeText(context, "Please select height", Toast.LENGTH_SHORT).show()
-        } else if (qualification.isEmpty()) {
-            Toast.makeText(context, "Please select qualification", Toast.LENGTH_SHORT).show()
-        } else if (location.isEmpty()) {
-            Toast.makeText(context, "Please select location", Toast.LENGTH_SHORT).show()
-        } else if (interests.isEmpty()) {
-            Toast.makeText(context, "Please select interests", Toast.LENGTH_SHORT).show()
-        } else if (sexualOrientation.isEmpty()) {
-            Toast.makeText(context, "Please select sexual orientation", Toast.LENGTH_SHORT).show()
-        } else if (astrologicalSign.isEmpty()) {
-            Toast.makeText(context, "Please select astrological sign", Toast.LENGTH_SHORT).show()
-        } else if (smoking.isEmpty()) {
-            Toast.makeText(context, "Please select smoking", Toast.LENGTH_SHORT).show()
-        } else if (drinking.isEmpty()) {
-            Toast.makeText(context, "Please select drinking", Toast.LENGTH_SHORT).show()
-        } else if (pets.isEmpty()) {
-            Toast.makeText(context, "Please select pets", Toast.LENGTH_SHORT).show()
-        } else if (bio.isEmpty()) {
-            Toast.makeText(context, "Please enter bio", Toast.LENGTH_SHORT).show()
-        } else {
-            check = true
+        when {
+            dob.isEmpty() -> {
+                Toast.makeText(context, "Please enter date of birth", Toast.LENGTH_SHORT).show()
+            }
+            gender.isEmpty() -> {
+                Toast.makeText(context, "Please select gender", Toast.LENGTH_SHORT).show()
+            }
+            height.isEmpty() -> {
+                Toast.makeText(context, "Please select height", Toast.LENGTH_SHORT).show()
+            }
+            qualification.isEmpty() -> {
+                Toast.makeText(context, "Please select qualification", Toast.LENGTH_SHORT).show()
+            }
+            location.isEmpty() -> {
+                Toast.makeText(context, "Please select location", Toast.LENGTH_SHORT).show()
+            }
+            interests.isEmpty() -> {
+                Toast.makeText(context, "Please select interests", Toast.LENGTH_SHORT).show()
+            }
+            sexualOrientation.isEmpty() -> {
+                Toast.makeText(context, "Please select sexual orientation", Toast.LENGTH_SHORT).show()
+            }
+            astrologicalSign.isEmpty() -> {
+                Toast.makeText(context, "Please select astrological sign", Toast.LENGTH_SHORT).show()
+            }
+            smoking.isEmpty() -> {
+                Toast.makeText(context, "Please select smoking", Toast.LENGTH_SHORT).show()
+            }
+            drinking.isEmpty() -> {
+                Toast.makeText(context, "Please select drinking", Toast.LENGTH_SHORT).show()
+            }
+            pets.isEmpty() -> {
+                Toast.makeText(context, "Please select pets", Toast.LENGTH_SHORT).show()
+            }
+            bio.isEmpty() -> {
+                Toast.makeText(context, "Please enter bio", Toast.LENGTH_SHORT).show()
+            }
+            imageList.size == 0 -> {
+                Toast.makeText(context, "Please select at least one picture", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                check = true
+            }
         }
         return check
     }
 
     fun editProfileValidation(
-        context: Activity, name: String,
+        context: Activity,
+        image: String,
+        name: String,
         email: String,
         phone: String,
         dob: String,
@@ -156,10 +178,13 @@ class Validation {
         astrologicalSign: String,
         smoking: String,
         drinking: String,
-        pets: String, bio: String
+        pets: String, bio: String,
+    imageList: ArrayList<String>
     ): Boolean {
         var check = false
-        if (name.isEmpty()) {
+        if (image == "" || image.isEmpty()){
+            Toast.makeText(context, "Please select profile image", Toast.LENGTH_SHORT).show()
+        }else if (name.isEmpty()) {
             Toast.makeText(context, "Please enter username", Toast.LENGTH_SHORT).show()
         } else if (email.isEmpty()) {
             Toast.makeText(context, "Please enter email", Toast.LENGTH_SHORT).show()
@@ -191,11 +216,12 @@ class Validation {
             Toast.makeText(context, "Please select pets", Toast.LENGTH_SHORT).show()
         } else if (bio.isEmpty()) {
             Toast.makeText(context, "Please enter bio", Toast.LENGTH_SHORT).show()
-        } else {
+        }else if (imageList.size == 0) {
+            Toast.makeText(context, "Please select at least one picture", Toast.LENGTH_SHORT).show()
+        }else {
             check = true
         }
         return check
     }
-
 
 }

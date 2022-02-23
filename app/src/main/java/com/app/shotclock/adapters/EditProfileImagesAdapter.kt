@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.app.shotclock.constants.ApiConstants
 import com.app.shotclock.databinding.ItemsCompleteProfileImagesBinding
 import com.bumptech.glide.Glide
 
@@ -25,7 +26,7 @@ class EditProfileImagesAdapter(private var ctx: Context,private val imageList: A
 
     override fun onBindViewHolder(holder: EditHolder, position: Int) {
         if (position != 0) {
-            Glide.with(ctx).load(imageList[position - 1]).into(holder.itemBinding.rivUser)
+            Glide.with(ctx).load(ApiConstants.IMAGE_URL +imageList[position - 1]).into(holder.itemBinding.rivUser)
         }
         holder.itemView.setOnClickListener {
             if (position == 0)

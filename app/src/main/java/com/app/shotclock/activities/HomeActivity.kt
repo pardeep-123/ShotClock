@@ -19,6 +19,8 @@ import com.app.shotclock.R
 import com.app.shotclock.base.BaseActivity
 import com.app.shotclock.cache.clearAllData
 import com.app.shotclock.cache.clearData
+import com.app.shotclock.cache.getUser
+import com.app.shotclock.constants.ApiConstants
 import com.app.shotclock.databinding.ActivityHomeBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
@@ -28,6 +30,7 @@ import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
 import com.app.shotclock.utils.myAlert
 import com.app.shotclock.viewmodels.LoginSignUpViewModel
+import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 import javax.inject.Inject
 
@@ -43,36 +46,27 @@ class HomeActivity : BaseActivity() {
     @Inject
     lateinit var viewModelProvider : ViewModelProvider.Factory
 
+    private var headerView : View? =null
+    private var civUser : CircleImageView?= null
+    private var tvUserName : TextView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         configureViewModel()
+        manageHeaderView()
 
         navController = findNavController(R.id.fragment)
         drawableLayout = findViewById(R.id.drawerLayout)
         binding.navigationView.setupWithNavController(navController)
-        val headerView : View = binding.navigationView.getHeaderView(0)
-        val civUser : CircleImageView = headerView.findViewById(R.id.civUser)
-        val tvUserName : TextView = headerView.findViewById(R.id.tvUserName)
 
-        civUser.setOnClickListener {
-          val options = NavOptions.Builder().setPopUpTo(R.id.fragment,false).build()
-            findNavController(R.id.fragment).navigate(R.id.profileFragment,null,options)
-            openClose()
-        }
         // logout click
         binding.navigationView.menu.findItem(R.id.logout).setOnMenuItemClickListener {
             //write your implementation here
             //to close the navigation drawer
-            myAlert(
-                this,
-                getString(R.string.are_you_sure_you_want_to_log_out),
-                { clickLogout() },
-                "Cancel",
-                "Log Out"
-            )
+            myAlert(this, getString(R.string.are_you_sure_you_want_to_log_out), { clickLogout() }, "Cancel", "Log Out")
 
             binding.navigationView.setCheckedItem(R.id.homeFragment)
             true
@@ -82,6 +76,23 @@ class HomeActivity : BaseActivity() {
 //                if (destination.id == R.id.logout) {
 //                }
 //            }
+
+    }
+
+    // manage home side header view
+     fun manageHeaderView(){
+        headerView  = binding.navigationView.getHeaderView(0)
+        civUser = headerView?.findViewById(R.id.civUser)
+        tvUserName  = headerView?.findViewById(R.id.tvUserName)
+
+        civUser?.setOnClickListener {
+            val options = NavOptions.Builder().setPopUpTo(R.id.fragment,false).build()
+            findNavController(R.id.fragment).navigate(R.id.profileFragment,null,options)
+            openClose()
+        }
+
+        Glide.with(this).load(getUser(this)?.profileImage).into(civUser!!)
+        tvUserName?.text = getUser(this)?.username
 
     }
 

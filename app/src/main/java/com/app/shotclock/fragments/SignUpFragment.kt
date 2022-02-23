@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
+import com.app.shotclock.cache.saveToken
+import com.app.shotclock.cache.saveUser
 import com.app.shotclock.databinding.FragmentSignUpBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
@@ -73,8 +75,8 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
 
         binding.btNext.setOnClickListener {
 
-            this.findNavController().navigate(R.id.action_signUpFragment_to_completeProfileFragment)
-          /*  if (Validation().signUpValidation(
+//            this.findNavController().navigate(R.id.action_signUpFragment_to_completeProfileFragment)
+            if (Validation().signUpValidation(
                     requireActivity(),
                     imageResultPath,
                     binding.etName.text.toString().trim(),
@@ -85,7 +87,7 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
                 )
             ) {
                 getSigUpData()
-            }*/
+            }
         }
 
         binding.tvSignIn.setOnClickListener {
@@ -117,9 +119,12 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
 
     override fun onChanged(t: Resource<SignUpResponseModel>) {
         when(t.status){
-            Status.SUCCESS->{
+            Status.SUCCESS-> {
+                saveUser(requireContext(), t.data?.body!!)
+                saveToken(requireContext(), t.data.body.authKey)
                 binding.pb.clLoading.isGone()
-                this.findNavController().navigate(R.id.action_signUpFragment_to_completeProfileFragment)
+                this.findNavController()
+                    .navigate(R.id.action_signUpFragment_to_completeProfileFragment)
             }
             Status.ERROR->{
                 binding.pb.clLoading.isGone()
@@ -132,7 +137,7 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
     }
 
     private fun getSigUpData() {
-        var list= ArrayList<MultipartBody.Part>()
+        val list = ArrayList<MultipartBody.Part>()
         list.add(prepareMultiPart("image", File(imageResultPath)))
         loginSignUpViewModel.fileUpload(list).observe(viewLifecycleOwner, fileUploadObserver)
 
@@ -147,10 +152,8 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
                 map["name"] = createRequestBody(binding.etName.text.toString().trim())
                 map["email"] = createRequestBody(binding.etEmail.text.toString().trim())
                 map["password"] = createRequestBody(binding.etPassword.text.toString().trim())
-                map["confirm_password"] =
-                    createRequestBody(binding.etConfirmPassword.text.toString().trim())
-                map["countryCode"] =
-                    createRequestBody(binding.ccp.selectedCountryCodeWithPlus.toString())
+                map["confirm_password"] = createRequestBody(binding.etConfirmPassword.text.toString().trim())
+                map["countryCode"] = createRequestBody(binding.ccp.selectedCountryCodeWithPlus.toString())
                 map["device_type"] = createRequestBody("2")
                 map["device_token"] = createRequestBody("123456")
                 map["phone"] = createRequestBody(binding.etMobile.text.toString().trim())

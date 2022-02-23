@@ -15,6 +15,9 @@
             app:destination="@id/walkThroughFragment"
             app:popUpToInclusive="true"
             app:popUpTo="@id/splashFragment"/>
+        <action
+            android:id="@+id/action_splashFragment_to_homeActivity"
+            app:destination="@id/homeActivity" />
     </fragment>
 
     <fragment

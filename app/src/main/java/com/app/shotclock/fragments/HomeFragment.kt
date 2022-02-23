@@ -7,6 +7,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.R
@@ -17,16 +20,27 @@ import com.app.shotclock.adapters.SexualOrientationAdapter
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentHomeBinding
+import com.app.shotclock.genericdatacontainer.Resource
+import com.app.shotclock.genericdatacontainer.Status
+import com.app.shotclock.models.BaseResponseModel
 import com.app.shotclock.utils.Constants
 import com.app.shotclock.utils.hideKeyboard
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
+import com.app.shotclock.viewmodels.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.RangeSlider
+import javax.inject.Inject
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick {
-    private var isbottom = false
+class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick,
+    Observer<Resource<BaseResponseModel>> {
+
+    lateinit var homeViewModel: HomeViewModel
+
+    @Inject
+     lateinit var viewModelFactory: ViewModelProvider.Factory
+    private var isBottom = false
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var bottomSheetBehavior2: BottomSheetBehavior<ConstraintLayout>
     private var rsHeight: RangeSlider? = null
@@ -45,6 +59,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         CacheConstants.Current = "home"
+        configureViewModel()
         handleClickListeners()
         filterBottomSheet(view)
         itemHeightBottomSheet(view)
@@ -55,6 +70,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick {
         binding.rvHome.adapter = adapter
 
 
+    }
+
+    private fun configureViewModel() {
+        homeViewModel = ViewModelProviders.of(this,viewModelFactory).get(HomeViewModel::class.java)
+        homeViewModel.homeApi("30.7046","76.7179").observe(viewLifecycleOwner,this)
     }
 
     private fun itemHeightBottomSheet(view: View) {
@@ -128,6 +148,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick {
     private fun ageSlider() {
         rsHeight?.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
             override fun onStartTrackingTouch(slider: RangeSlider) {
+
             }
 
             override fun onStopTrackingTouch(slider: RangeSlider) {
@@ -197,10 +218,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick {
 
     private fun bottomOpen(bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>) {
         if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
-            isbottom = true
+            isBottom = true
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
         } else {
-            isbottom = false
+            isBottom = false
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED)
         }
     }
@@ -242,6 +263,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick {
                     activity?.finishAffinity()
                 }
             })
+    }
+
+    // home api
+    override fun onChanged(t: Resource<BaseResponseModel>) {
+        when (t.status) {
+            Status.SUCCESS -> {
+                binding.pb.clLoading.isGone()
+
+            }
+            Status.ERROR -> {
+                binding.pb.clLoading.isGone()
+                showError(t.message!!)
+            }
+            Status.LOADING -> {
+                binding.pb.clLoading.isVisible()
+            }
+        }
     }
 
 }

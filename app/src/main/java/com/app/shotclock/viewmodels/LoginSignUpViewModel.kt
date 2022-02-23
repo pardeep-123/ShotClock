@@ -106,15 +106,6 @@ constructor(private val loginSignUpRepo: LoginSignUpRepo) : ViewModel() {
         }
     }
 
-    // user profile
-    fun userProfile(): LiveData<Resource<ProfileViewModel>> {
-        return liveData(Dispatchers.IO) {
-            emit(Resource.loading(null))
-            val response = loginSignUpRepo.userProfile()
-            emit(response)
-        }
-    }
-
     // file upload
     fun fileUpload(image: ArrayList<MultipartBody.Part>): LiveData<Resource<FileUploadResponse>> {
         return liveData(Dispatchers.IO) {

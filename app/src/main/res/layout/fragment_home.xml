@@ -8,17 +8,17 @@
     android:background="@drawable/img_app_bg"
     tools:context=".fragments.HomeFragment">
 
-
-    <include layout="@layout/app_toolbar"
-        android:id="@+id/toolbarHome"/>
+    <include
+        android:id="@+id/pb"
+        layout="@layout/view_progressbar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-    <include layout="@layout/app_toolbar"
-        android:id="@+id/tb"/>
+        <include
+            android:id="@+id/tb"
+            layout="@layout/app_toolbar" />
 
 <!--    <androidx.core.widget.NestedScrollView-->
 <!--        android:layout_width="match_parent"-->

@@ -53,11 +53,10 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>(),
         }
 
         binding.btUpdate.setOnClickListener {
-            if (Validation().changePassValidation(
-                    requireActivity(),
-                    binding.etOldPassword.toString().trim(),
-                    binding.etNewPassword.toString().trim(),
-                    binding.etConfirmPassword.toString().trim()
+            if (Validation().changePassValidation(requireActivity(),
+                    binding.etOldPassword.text.toString().trim(),
+                    binding.etNewPassword.text.toString().trim(),
+                    binding.etConfirmPassword.text.toString().trim()
                 )
             ) {
                 changePasswordData()

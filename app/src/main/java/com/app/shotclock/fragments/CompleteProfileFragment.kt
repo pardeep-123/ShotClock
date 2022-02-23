@@ -47,11 +47,11 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
     lateinit var date: DatePickerDialog.OnDateSetListener
     private var imageList = ArrayList<String>()
     private var completeProfileImagesAdapter: CompleteProfileImagesAdapter? = null
-
     private var latitude = ""
     private var longitude = ""
     private var gender = 1      // 1 = male, 2= female
-    var imageFileList = ArrayList<String>()
+    private var interested ="" // 1 = men, 2= women, 3 = both
+    private var imageFileList = ArrayList<CompleteProfileRequestModel.Image>()
 
     override fun selectedImage(imagePath: String?, code: Int) {
         if (!imagePath.isNullOrEmpty()) {
@@ -81,7 +81,6 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
         binding.rvUserImages.adapter = completeProfileImagesAdapter
 
         completeProfileImagesAdapter?.onItemCLickListener = {
-
             getImage(requireActivity(), 0, false)
         }
     }
@@ -122,10 +121,7 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
         }
 
         binding.btSubmit.setOnClickListener {
-
-//            completeProfileData()
-            if (Validation().completeProfileValidation(
-                    requireActivity(),
+            if (Validation().completeProfileValidation(requireActivity(),
                     binding.tvDOBSelect.text.toString().trim(),
                     binding.tvGenderSelect.text.toString().trim(),
                     binding.tvHeightSelect.text.toString().trim(),
@@ -137,9 +133,11 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
                     binding.tvSmokingSelect.text.toString().trim(),
                     binding.tvDrinkingSelect.text.toString().trim(),
                     binding.tvPetsSelect.text.toString().trim(),
-                    binding.etAddBio.text.toString().trim()
+                    binding.etAddBio.text.toString().trim(),
+                    imageList
                 )
             ) {
+
                 completeProfileData()
             }
 
@@ -234,8 +232,7 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
     }
 
     private val locationLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
+        ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val place = Autocomplete.getPlaceFromIntent(result.data!!)
             Log.d("Place: ", place.name.toString() + " " + place.address)
@@ -254,7 +251,6 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
                 val file = File(i)
                 list.add(prepareMultiPart("image", file))
             }
-
             loginSignUpViewModel.fileUpload(list).observe(viewLifecycleOwner, fileUploadObserver)
 
 //        val image = prepareMultiPart("image",File(imageList))
@@ -264,8 +260,7 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
     }
 
     private fun configureViewModel() {
-        loginSignUpViewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(LoginSignUpViewModel::class.java)
+        loginSignUpViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginSignUpViewModel::class.java)
     }
 
     override fun onChanged(t: Resource<CompleteProfileResponse>) {
@@ -302,54 +297,40 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
 
                 val data = it.data!!.body
                 for (i in 0 until data.size) {
-                    imageList.add(data[i].image)
+                    imageFileList.add(CompleteProfileRequestModel.Image(data[i].image))
                 }
 
                 // for gender select
-                if (binding.tvGenderSelect.text.toString() == "Male")
-                    gender = 1
+                gender = if (binding.tvGenderSelect.text.toString() == "Male")
+                    1
                 else
-                    gender = 2
+                    2
 
+                // for interested select
+                interested = when {
+                    binding.tvInterestSelect.text.toString() =="Men" -> "1"
+                    binding.tvInterestSelect.text.toString() =="Women" -> "2"
+                    else -> "3"
+                }
 
-                // TODAY START 
-
-
-/*                val requestData = CompleteProfileRequestModel(
+                val requestData = CompleteProfileRequestModel(
                     binding.tvAstrologicalSignSelect.text.toString(),
                     binding.etAddBio.text.toString(),
                     binding.tvDOBSelect.text.toString(),
                     binding.tvDrinkingSelect.text.toString(),
                     gender,
                     binding.tvHeightSelect.text.toString().toFloat().toString(),
-                    data,
-                    binding.tvInterestSelect.text.toString(),
+                    imageFileList,
+                    interested,
                     latitude,
                     binding.etLocation.text.toString(),
                     longitude,
                     binding.tvPetsSelect.text.toString(),
                     binding.tvQualificatSelect.text.toString(),
                     binding.tvSexualOrientationSelect.text.toString(),
-                    binding.tvSmokingSelect.text.toString()
-                    )*/
+                    binding.tvSmokingSelect.text.toString())
 
-                /* Log.e("====","successs")
-                 val map: HashMap<String, RequestBody> = HashMap()
-                 map["dob"] = createRequestBody(binding.tvDOBSelect.text.toString())
-                 map["gender"] = createRequestBody(binding.tvGenderSelect.text.toString())
-                 map["height"] = createRequestBody(binding.tvHeightSelect.text.toString())
-                 map["qualification"] = createRequestBody(binding.tvQualificatSelect.text.toString())
-                 map["interest"] = createRequestBody(binding.tvInterestSelect.text.toString())
-                 map["sexualOrientation"] =
-                     createRequestBody(binding.tvSexualOrientationSelect.text.toString())
-                 map["astrologicalSign"] =
-                     createRequestBody(binding.tvAstrologicalSignSelect.text.toString())
-                 map["smoking"] = createRequestBody(binding.tvSmokingSelect.text.toString())
-                 map["drinking"] = createRequestBody(binding.tvDrinkingSelect.text.toString())
-                 map["tvPetsSelect"] = createRequestBody(binding.tvPetsSelect.text.toString())
-                 map["bio"] = createRequestBody(binding.etAddBio.text.toString())
-
-                 loginSignUpViewModel.completeProfile(map).observe(viewLifecycleOwner, this)*/
+                loginSignUpViewModel.completeProfile(requestData).observe(viewLifecycleOwner,this)
 
             }
             Status.ERROR -> {
