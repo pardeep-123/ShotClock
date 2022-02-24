@@ -11,9 +11,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.app.shotclock.R
 import com.app.shotclock.models.SubscriptionModel
+import com.app.shotclock.models.SubscriptionPlansResponse
 
 
-class SubscriptionViewPager(private val ctx: Context, private val list: ArrayList<SubscriptionModel>) :
+class SubscriptionViewPager(private val ctx: Context, private val list: ArrayList<SubscriptionPlansResponse.SubscriptionPlansBody>) :
     PagerAdapter() {
 
     override fun getCount(): Int {
@@ -31,9 +32,9 @@ class SubscriptionViewPager(private val ctx: Context, private val list: ArrayLis
         val tvPrice: TextView = myLayout.findViewById(R.id.tvPrice)
         val tvDays: TextView = myLayout.findViewById(R.id.tvDay)
         val tvDescriptions: TextView = myLayout.findViewById(R.id.tvDescription)
-        tvPrice.text = list[position].price
-        tvDays.text = list[position].days
-        tvDescriptions.text = list[position].text
+        tvPrice.text = list[position].amount
+        tvDays.text = list[position].duration
+        tvDescriptions.text = list[position].name
         container.addView(myLayout, 0)
         return myLayout
     }

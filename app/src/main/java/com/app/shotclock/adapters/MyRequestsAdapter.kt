@@ -1,14 +1,17 @@
 package com.app.shotclock.adapters
 
+import android.content.Context
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
+import com.app.shotclock.constants.ApiConstants
 import com.app.shotclock.databinding.ItemsMyrequestsBinding
+import com.app.shotclock.models.RequestListResponseModel
+import com.bumptech.glide.Glide
 
-class MyRequestsAdapter : RecyclerView.Adapter<MyRequestsAdapter.MyRequestHolder>() {
+class MyRequestsAdapter(private var ctx: Context,private var list: ArrayList<RequestListResponseModel.RequestListResponseBody>) : RecyclerView.Adapter<MyRequestsAdapter.MyRequestHolder>() {
 
-    class MyRequestHolder(itemsView: ItemsMyrequestsBinding) :
-        RecyclerView.ViewHolder(itemsView.root) {
+    class MyRequestHolder(itemsView: ItemsMyrequestsBinding) : RecyclerView.ViewHolder(itemsView.root) {
          val itemBinding: ItemsMyrequestsBinding = itemsView
     }
 
@@ -19,10 +22,11 @@ class MyRequestsAdapter : RecyclerView.Adapter<MyRequestsAdapter.MyRequestHolder
     }
 
     override fun onBindViewHolder(holder: MyRequestHolder, position: Int) {
-
+        Glide.with(ctx).load(ApiConstants.IMAGE_URL + list[position].profileImage).into(holder.itemBinding.civUser)
+          holder.itemBinding.tvUserName.text = list[position].username
     }
 
     override fun getItemCount(): Int {
-        return 5
+        return list.size
     }
 }

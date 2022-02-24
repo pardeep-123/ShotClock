@@ -63,6 +63,17 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST(ApiConstants.HOME_API)
-    suspend fun homeApi(@Field("latitude") latitude: String ,@Field("longitude") longitude: String):BaseResponseModel
+    suspend fun homeApi(@Field("latitude") latitude: String ,@Field("longitude") longitude: String):HomeResponseModel
 
+    @POST(ApiConstants.FILTER)
+    suspend fun filterApi(@Body data: FilterRequestModel): BaseResponseModel
+
+    @GET(ApiConstants.SUBSCRIPTION_PLANS)
+    suspend fun subscriptionPlans(): SubscriptionPlansResponse
+
+    @POST(ApiConstants.SELECTION_DONE)
+    suspend fun selectionDone(@Body data: SelectionDoneRequestModel):SelectionDoneResponse
+
+    @GET(ApiConstants.REQUEST_LIST)
+    suspend fun requestList(): RequestListResponseModel
 }

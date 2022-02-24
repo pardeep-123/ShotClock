@@ -7,6 +7,9 @@
     android:background="@drawable/img_app_bg"
     tools:context=".fragments.MyRequestsFragment">
 
+    <include layout="@layout/view_progressbar"
+        android:id="@+id/pb"/>
+
     <include layout="@layout/app_toolbar"
         android:id="@+id/tb"/>
 

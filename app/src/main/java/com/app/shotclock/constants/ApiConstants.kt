@@ -43,6 +43,14 @@ object ApiConstants {
 
     const val HOME_API = "home"
 
+    const val FILTER = "filter"
+
+    const val SUBSCRIPTION_PLANS = "subscriptionPlans"
+
+    const val SELECTION_DONE = "selectionDone"
+
+    const val REQUEST_LIST = "requestList"
+
 }
 
 

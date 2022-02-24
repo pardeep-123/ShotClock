@@ -2,8 +2,11 @@ package com.app.shotclock.fragments
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -23,27 +26,28 @@ import com.app.shotclock.databinding.FragmentHomeBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
 import com.app.shotclock.models.BaseResponseModel
-import com.app.shotclock.utils.Constants
-import com.app.shotclock.utils.hideKeyboard
-import com.app.shotclock.utils.isGone
-import com.app.shotclock.utils.isVisible
+import com.app.shotclock.models.HomeResponseModel
+import com.app.shotclock.models.SelectionDoneRequestModel
+import com.app.shotclock.models.SelectionDoneResponse
+import com.app.shotclock.utils.*
 import com.app.shotclock.viewmodels.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.RangeSlider
 import javax.inject.Inject
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick,
-    Observer<Resource<BaseResponseModel>> {
+
+open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick,
+    Observer<Resource<HomeResponseModel>> {
 
     lateinit var homeViewModel: HomeViewModel
 
     @Inject
-     lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private var isBottom = false
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var bottomSheetBehavior2: BottomSheetBehavior<ConstraintLayout>
-    private var rsHeight: RangeSlider? = null
+    private var rsAge: RangeSlider? = null
     private var adapter: HomeAdapter? = null
     private var selectHeightText = ""
     private var astrologicalAdapter: SexualOrientationAdapter? = null
@@ -51,6 +55,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick,
     private var orientationList = ArrayList<String>()
     private var astrologicalList = ArrayList<String>()
     private var tvHeightSelect: TextView? = null
+    private var educationList = ArrayList<String>()
+    private var latitude = ""
+    private var longitude = ""
+    private var idList = ArrayList<SelectionDoneRequestModel.SelectionDoneUser>()
+
+    private var homeList = ArrayList<HomeResponseModel.HomeBody>()
 
     override fun getViewBinding(): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(layoutInflater)
@@ -66,15 +76,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick,
         handleHomeFragmentBackPress()
 
 
-        adapter = HomeAdapter(this)
+        adapter = HomeAdapter(requireContext(), this, homeList)
         binding.rvHome.adapter = adapter
 
+        astrologicalAdapter?.onItemClickListener = {
+
+        }
 
     }
 
     private fun configureViewModel() {
-        homeViewModel = ViewModelProviders.of(this,viewModelFactory).get(HomeViewModel::class.java)
-        homeViewModel.homeApi("30.7046","76.7179").observe(viewLifecycleOwner,this)
+        homeViewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
+        homeViewModel.homeApi("30.7046", "76.7179").observe(viewLifecycleOwner, this)
     }
 
     private fun itemHeightBottomSheet(view: View) {
@@ -103,9 +116,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick,
         val rvEducation: RecyclerView = view.findViewById(R.id.rvEducation)
         val rvSexualOrientation: RecyclerView = view.findViewById(R.id.rvSexualOrientation)
         val rvAstrologicalSign: RecyclerView = view.findViewById(R.id.rvAstrologicalSign)
+        val rgGender: RadioGroup = view.findViewById(R.id.rgGender)
+        val rgSmoke: RadioGroup = view.findViewById(R.id.rgSmoke)
+        val rgDrink: RadioGroup = view.findViewById(R.id.rgDrink)
+        val rgPets: RadioGroup = view.findViewById(R.id.rgPets)
+        rsAge = view.findViewById(R.id.rsAge)
+
+        val rbMale: RadioButton = view.findViewById(R.id.rbMale)
+        val rbFemale: RadioButton = view.findViewById(R.id.rbFemale)
+        val rbSmokeYes: RadioButton = view.findViewById(R.id.rbSmokeYes)
+        val rbSmokeNo: RadioButton = view.findViewById(R.id.rbSmokeNo)
+        val rbDrinkYes: RadioButton = view.findViewById(R.id.rbDrinkYes)
+        val rbDrinkNo: RadioButton = view.findViewById(R.id.rbDrinkNo)
+        val rbPetsYes: RadioButton = view.findViewById(R.id.rbPetsYes)
+        val rbPetsNo: RadioButton = view.findViewById(R.id.rbPetsNo)
+
         tvHeightSelect = view.findViewById(R.id.tvHeightSelect)
         // add list education adapter
-        val educationList = ArrayList<String>()
+
         educationList.add("High School")
         educationList.add("Bachelor's Degree")
         educationList.add("Master's Degree")
@@ -142,13 +170,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick,
             bottomOpen(bottomSheetBehavior2)
         }
 //        selectHeightText = tvHeightSelect.text.toString()
+
+
     }
 
     // for Age range set
     private fun ageSlider() {
-        rsHeight?.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
+        rsAge?.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
             override fun onStartTrackingTouch(slider: RangeSlider) {
 
+//                slider.text = value.toInt().toString()
+//                slider = value.toInt().toString()
             }
 
             override fun onStopTrackingTouch(slider: RangeSlider) {
@@ -173,6 +205,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick,
         binding.tb.ivFilter.setOnClickListener {
             Constants.BottomSheet = true
             bottomOpen(bottomSheetBehavior)
+//            findNavController().navigate(R.id.action_homeFragment_to_subscriptionFragment)
         }
 
         binding.ivPlus.setOnClickListener {
@@ -200,20 +233,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick,
 //            }
 
         binding.btDone.setOnClickListener {
+            Log.e("=====", idList.size.toString())
             Constants.isPlus = false
-            val dialog = Dialog(requireContext())
-            with(dialog) {
-                setCancelable(false)
-                setContentView(R.layout.alert_dialog_home)
-                val btDone: MaterialButton = findViewById(R.id.btDone)
-                btDone.setOnClickListener {
-                    findNavController().navigate(R.id.action_homeFragment_to_myRequestsFragment)
-                    dismiss()
-                }
-                show()
-            }
-        }
+            val data = SelectionDoneRequestModel(idList)
 
+            homeViewModel.selectionDone(data).observe(viewLifecycleOwner, selectionDoneObserver)
+
+        }
     }
 
     private fun bottomOpen(bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>) {
@@ -266,10 +292,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick,
     }
 
     // home api
-    override fun onChanged(t: Resource<BaseResponseModel>) {
+    override fun onChanged(t: Resource<HomeResponseModel>) {
         when (t.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
+                homeList.addAll(t.data?.body!!)
+                adapter?.notifyDataSetChanged()
 
             }
             Status.ERROR -> {
@@ -281,5 +309,70 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick,
             }
         }
     }
+
+//    protected fun onDraw(canvas: Canvas) {
+//        super.onDraw(canvas)
+//        setSliderTooltipAlwaysVisible(this)
+//    }
+
+    private fun setFilterData() {
+//        val body = FilterRequestModel(tvHeightSelect?.text.toString().trim())
+
+    }
+
+    // filter api
+    private val filterApiObserver = Observer<Resource<BaseResponseModel>> {
+        when (it.status) {
+            Status.SUCCESS -> {
+                binding.pb.clLoading.isGone()
+
+            }
+            Status.ERROR -> {
+                binding.pb.clLoading.isGone()
+                showError(it.message!!)
+            }
+            Status.LOADING -> {
+                binding.pb.clLoading.isVisible()
+            }
+        }
+    }
+
+    override fun showClick(pos: Int, id: String) {
+        idList.add(SelectionDoneRequestModel.SelectionDoneUser(id))
+        Log.e("====size", idList.size.toString())
+
+        if(idList.size>5){
+            showToast("You cannot add more than 5 persons.")
+        }
+    }
+
+    // selection done api
+    private val selectionDoneObserver = Observer<Resource<SelectionDoneResponse>> {
+        when (it.status) {
+            Status.SUCCESS -> {
+                binding.pb.clLoading.isGone()
+
+                val dialog = Dialog(requireContext())
+                with(dialog) {
+                    setCancelable(false)
+                    setContentView(R.layout.alert_dialog_home)
+                    val btDone: MaterialButton = findViewById(R.id.btDone)
+                    btDone.setOnClickListener {
+                        findNavController().navigate(R.id.action_homeFragment_to_myRequestsFragment)
+                        dismiss()
+                    }
+                    show()
+                }
+            }
+            Status.ERROR -> {
+                binding.pb.clLoading.isGone()
+                showError(it.message!!)
+            }
+            Status.LOADING -> {
+                binding.pb.clLoading.isVisible()
+            }
+        }
+    }
+
 
 }

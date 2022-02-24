@@ -167,7 +167,10 @@
     <string name="no_data_found">No data found</string>
     <string name="loading_data_please_wait">Loading please wait a moment</string>
 
-
+    <string name="permission_rationale">Location permission needed for core functionality</string>
+    <string name="permission_denied_explanation">Permission was denied, but is needed for core functionality.</string>
+    <string name="gps_required">GPS is required you be turned on</string>
+    <string name="settings">Settings</string>
     <string-array name="selectGender">
         <item>Select</item>
         <item>Female</item>

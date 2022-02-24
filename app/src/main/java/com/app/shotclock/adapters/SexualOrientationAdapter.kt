@@ -14,6 +14,8 @@ import org.jetbrains.anko.backgroundDrawable
 class SexualOrientationAdapter(private var ctx: Context,private var list : ArrayList<String>): RecyclerView.Adapter<SexualOrientationAdapter.OrientationHolder>() {
     private var selectedPosition = -1
 
+   var onItemClickListener : ((pos: Int)->Unit)?= null
+
     class OrientationHolder(itemViews:ItemsSexualorientationBinding): RecyclerView.ViewHolder(itemViews.root){
         val binding : ItemsSexualorientationBinding = itemViews
     }
@@ -37,6 +39,7 @@ class SexualOrientationAdapter(private var ctx: Context,private var list : Array
 
         holder.itemView.setOnClickListener {
          selectedPosition = position
+            onItemClickListener?.invoke(position)
             notifyDataSetChanged()
         }
     }

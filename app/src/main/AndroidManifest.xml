@@ -21,7 +21,8 @@
         android:theme="@style/Theme.ShotClock">
         <activity
             android:name=".activities.HomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.InitialActivity"
             android:exported="true"
