@@ -4,8 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.databinding.ItemsIcebreakerQuestionBinding
+import com.app.shotclock.models.IceBreakerQuestionResponse
 
-class IcebreakerAdapter : RecyclerView.Adapter<IcebreakerAdapter.BreakerHolder>() {
+class IcebreakerAdapter(private var list: ArrayList<IceBreakerQuestionResponse.IceBreakerBody>) : RecyclerView.Adapter<IcebreakerAdapter.BreakerHolder>() {
 
     class BreakerHolder(itemsView : ItemsIcebreakerQuestionBinding) : RecyclerView.ViewHolder(itemsView.root){
         val itemBinding : ItemsIcebreakerQuestionBinding = itemsView
@@ -18,11 +19,12 @@ class IcebreakerAdapter : RecyclerView.Adapter<IcebreakerAdapter.BreakerHolder>(
     }
 
     override fun onBindViewHolder(holder: BreakerHolder, position: Int) {
-
+      holder.itemBinding.tvQDescription.text = list[position].question
+        holder.itemBinding.tvADescription.text = list[position].answer
     }
 
     override fun getItemCount(): Int {
-       return 3
+       return list.size
     }
 
 }

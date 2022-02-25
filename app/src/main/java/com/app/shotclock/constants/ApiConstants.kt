@@ -51,6 +51,16 @@ object ApiConstants {
 
     const val REQUEST_LIST = "requestList"
 
+    const val REQUEST_ALL = "allRequest"
+
+    const val GET_NOTIFICATION = "getNotifications"
+
+    const val RECEIVED_LIST = "recievedList"
+
+    const val ICE_BREAKER_QUESTIONS = "icebreakerQuestion"
+
+    const val CANCEL_REQUEST_ADMIN= "cancelrequestAdmin"
+
 }
 
 

@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.app.shotclock.R
 import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.adapters.EditProfileImagesAdapter
+import com.app.shotclock.constants.ApiConstants
 import com.app.shotclock.databinding.FragmentEditProfileBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
@@ -67,7 +68,7 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
     }
 
     private fun setEditProfileData(){
-        Glide.with(requireContext()).load(profileData?.profileImage).into(binding.rivUser)
+        Glide.with(requireContext()).load(ApiConstants.IMAGE_URL+profileData?.profileImage).into(binding.rivUser)
         binding.etName.setText( profileData?.username)
         binding.etEmail.setText(profileData?.email)
         binding.ccp.registerCarrierNumberEditText(binding.etMobile)

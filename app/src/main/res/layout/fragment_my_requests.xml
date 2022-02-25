@@ -49,7 +49,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/past"
-        android:textColor="@color/black"
+        android:textColor="@color/hintcolor"
         android:textSize="@dimen/_12ssp"
         android:gravity="center"
         android:paddingVertical="@dimen/_8sdp"
@@ -58,7 +58,7 @@
         android:layout_marginTop="@dimen/_20sdp"
         app:layout_constraintStart_toEndOf="@id/tvCurrent"
         android:fontFamily="@font/proxima_semibold"
-        android:background="@drawable/bg_white_round_corners"
+        android:background="@drawable/bg_grey_round_corners"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvMyRequests" />
 
@@ -77,10 +77,11 @@
             android:layout_height="wrap_content"
             android:text="@string/speed_date_session"
             android:textColor="@color/black"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_16ssp"
+            android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:fontFamily="@font/proxima_semibold"
+            android:fontFamily="@font/proxima_bold"
             android:layout_marginStart="@dimen/_10sdp"/>
 
         <TextView
@@ -92,6 +93,7 @@
             android:textSize="@dimen/_10ssp"
             android:layout_marginTop="@dimen/_5sdp"
             android:ellipsize="end"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/tvSpeedDate"
             app:layout_constraintStart_toStartOf="@id/tvSpeedDate"
             android:fontFamily="@font/proxima_regular"
@@ -105,6 +107,47 @@
             android:layout_marginTop="@dimen/_10sdp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/items_myrequests"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAllRequests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvHeading"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/items_myrequests"/>
+
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_black_rectangle"
+            android:fontFamily="@font/proxima_regular"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:paddingVertical="@dimen/_4sdp"
+            android:text="@string/cancel"
+            android:visibility="visible"
+            android:layout_margin="@dimen/_10sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tvStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_black_rectangle"
+            android:fontFamily="@font/proxima_regular"
+            android:paddingHorizontal="@dimen/_18sdp"
+            android:paddingVertical="@dimen/_4sdp"
+            android:text="@string/start"
+            android:visibility="visible"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintBottom_toTopOf="@id/tvCancel"
+            app:layout_constraintEnd_toEndOf="@id/tvCancel" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

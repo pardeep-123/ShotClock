@@ -189,7 +189,6 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
 
     }
 
-
     private fun handleClickListeners() {
         binding.tb.ivMenu.isVisible()
         binding.tb.ivAppLogo.isVisible()
@@ -205,6 +204,7 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
         binding.tb.ivFilter.setOnClickListener {
             Constants.BottomSheet = true
             bottomOpen(bottomSheetBehavior)
+
 //            findNavController().navigate(R.id.action_homeFragment_to_subscriptionFragment)
         }
 

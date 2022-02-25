@@ -23,41 +23,11 @@
         android:textSize="@dimen/_10ssp"
         android:textColor="@color/black"
         android:layout_marginStart="@dimen/_12sdp"
+        android:ellipsize="end"
         android:fontFamily="@font/proxima_regular"
         app:layout_constraintTop_toTopOf="@id/civUser"
         app:layout_constraintBottom_toBottomOf="@id/civUser"
         app:layout_constraintStart_toEndOf="@id/civUser"/>
-
-    <TextView
-        android:id="@+id/tvCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_black_rectangle"
-        android:fontFamily="@font/proxima_regular"
-        android:paddingHorizontal="@dimen/_12sdp"
-        android:paddingVertical="@dimen/_2sdp"
-        android:text="@string/cancel"
-        android:visibility="gone"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_8ssp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/tvStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_black_rectangle"
-        android:fontFamily="@font/proxima_regular"
-        android:paddingHorizontal="@dimen/_16sdp"
-        android:paddingVertical="@dimen/_2sdp"
-        android:text="@string/start"
-        android:visibility="gone"
-        android:layout_marginBottom="@dimen/_5sdp"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_8ssp"
-        app:layout_constraintBottom_toTopOf="@id/tvCancel"
-        app:layout_constraintEnd_toEndOf="@id/tvCancel" />
 
     <TextView
         android:id="@+id/tvStatus"

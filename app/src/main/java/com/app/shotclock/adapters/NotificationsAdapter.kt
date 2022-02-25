@@ -1,11 +1,13 @@
 package com.app.shotclock.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.databinding.ItemsNotificationsBinding
+import com.app.shotclock.models.GetNotificationResponse
 
-class NotificationsAdapter :RecyclerView.Adapter<NotificationsAdapter.NotificationHolder>(){
+class NotificationsAdapter(private var ctx: Context,) :RecyclerView.Adapter<NotificationsAdapter.NotificationHolder>(){
 
     class NotificationHolder (itemsView : ItemsNotificationsBinding) : RecyclerView.ViewHolder(itemsView.root){
       val itemBinding : ItemsNotificationsBinding = itemsView

@@ -91,7 +91,7 @@ class HomeActivity : BaseActivity() {
             openClose()
         }
 
-        Glide.with(this).load(getUser(this)?.profileImage).into(civUser!!)
+        Glide.with(this).load(ApiConstants.IMAGE_URL+ getUser(this)?.profileImage).into(civUser!!)
         tvUserName?.text = getUser(this)?.username
 
     }

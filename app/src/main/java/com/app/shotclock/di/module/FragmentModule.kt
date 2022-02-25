@@ -79,4 +79,7 @@ abstract class FragmentModule {
     @ContributesAndroidInjector
     internal abstract fun iceBreakerQuestionsFragment() : IcebreakerQuestionsFragment
 
+    @ContributesAndroidInjector
+    internal abstract fun speedDateSession(): SpeedDateSessionFragment
+
 }

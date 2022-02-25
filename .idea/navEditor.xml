@@ -136,6 +136,15 @@
                             <option name="y" value="-315" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_myRequestsFragment_to_speedDateSessionFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
@@ -191,6 +200,18 @@
                           <Point>
                             <option name="x" value="1982" />
                             <option name="y" value="-131" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="speedDateSessionFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="501" />
+                            <option name="y" value="-327" />
                           </Point>
                         </option>
                       </LayoutPositions>

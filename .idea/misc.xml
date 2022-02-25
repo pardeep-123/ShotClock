@@ -16,6 +16,7 @@
         <entry key="app/src/main/res/drawable/bg_fb_round_corners.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_filter.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_grey.xml" value="0.20104166666666667" />
+        <entry key="app/src/main/res/drawable/bg_grey_round_corners.xml" value="0.19794871794871796" />
         <entry key="app/src/main/res/drawable/bg_white_corners.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_white_round_corners.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_whiteline_round_corners.xml" value="0.20104166666666667" />
@@ -44,17 +45,18 @@
         <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_forgot_password.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/fragment_icebraker_questions.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_icebraker_questions.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_login_phone.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_message.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/fragment_my_requests.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_my_requests.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_otp.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_privcay_policy.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_safe_dating_policy.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_speed_date_session.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_subscription.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_terms_conditions.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_video_call.xml" value="0.2" />
@@ -67,10 +69,11 @@
         <entry key="app/src/main/res/layout/items_homes.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/items_icebreaker_question.xml" value="0.22" />
         <entry key="app/src/main/res/layout/items_images_viewpager.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/items_myrequests.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/items_myrequests.xml" value="0.22" />
         <entry key="app/src/main/res/layout/items_navigation_header.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/items_notifications.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/items_sexualorientation.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/items_speed_date_session.xml" value="0.25" />
         <entry key="app/src/main/res/layout/items_spinner_list.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/items_subscription_viewpager.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/items_textlist_bottomsheet.xml" value="0.18489583333333334" />

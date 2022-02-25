@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide
 
 class MyRequestsAdapter(private var ctx: Context,private var list: ArrayList<RequestListResponseModel.RequestListResponseBody>) : RecyclerView.Adapter<MyRequestsAdapter.MyRequestHolder>() {
 
+    var onItemClickListener : ((pos: Int)->Unit)? = null
+
     class MyRequestHolder(itemsView: ItemsMyrequestsBinding) : RecyclerView.ViewHolder(itemsView.root) {
          val itemBinding: ItemsMyrequestsBinding = itemsView
     }
@@ -24,6 +26,12 @@ class MyRequestsAdapter(private var ctx: Context,private var list: ArrayList<Req
     override fun onBindViewHolder(holder: MyRequestHolder, position: Int) {
         Glide.with(ctx).load(ApiConstants.IMAGE_URL + list[position].profileImage).into(holder.itemBinding.civUser)
           holder.itemBinding.tvUserName.text = list[position].username
+
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.invoke(position)
+        }
+//        val itemsRecyclerView
+
     }
 
     override fun getItemCount(): Int {

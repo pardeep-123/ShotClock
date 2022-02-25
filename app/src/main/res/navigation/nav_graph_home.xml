@@ -37,7 +37,11 @@
         android:id="@+id/myRequestsFragment"
         android:name="com.app.shotclock.fragments.MyRequestsFragment"
         android:label="fragment_my_requests"
-        tools:layout="@layout/fragment_my_requests" />
+        tools:layout="@layout/fragment_my_requests" >
+        <action
+            android:id="@+id/action_myRequestsFragment_to_speedDateSessionFragment"
+            app:destination="@id/speedDateSessionFragment" />
+    </fragment>
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.app.shotclock.fragments.NotificationFragment"
@@ -106,6 +110,11 @@
         android:name="com.app.shotclock.fragments.IcebreakerQuestionsFragment"
         android:label="fragment_icebraker_questions"
         tools:layout="@layout/fragment_icebraker_questions" />
+    <fragment
+        android:id="@+id/speedDateSessionFragment"
+        android:name="com.app.shotclock.fragments.SpeedDateSessionFragment"
+        android:label="fragment_speed_date_session"
+        tools:layout="@layout/fragment_speed_date_session" />
 
 
 </navigation>

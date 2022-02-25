@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_app_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.SpeedDateSessionFragment">
+
+    <include
+        android:id="@+id/pb"
+        layout="@layout/view_progressbar" />
+
+    <include
+        android:id="@+id/tb"
+        layout="@layout/app_toolbar" />
+
+    <TextView
+        android:id="@+id/tvDateSession"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:fontFamily="@font/proxima_semibold"
+        android:gravity="center"
+        android:text="@string/speed_date_sessioncaps"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16ssp"
+        app:layout_constraintTop_toBottomOf="@id/tb" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSpeedDate"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@+id/tvDateSession"/>
+
+    <TextView
+        android:id="@+id/tvCurrent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/current"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
+        android:gravity="center"
+        android:paddingVertical="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_2sdp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginVertical="@dimen/_20sdp"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        android:fontFamily="@font/proxima_bold"
+        app:layout_constraintEnd_toStartOf="@+id/tvPast"
+        android:background="@drawable/bg_white_round_corners"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvSpeedDate" />
+
+    <TextView
+        android:id="@+id/tvPast"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/past"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
+        android:gravity="center"
+        android:paddingVertical="@dimen/_8sdp"
+        android:layout_marginStart="2sp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginVertical="@dimen/_20sdp"
+        app:layout_constraintStart_toEndOf="@id/tvCurrent"
+        android:fontFamily="@font/proxima_bold"
+        android:background="@drawable/bg_white_round_corners"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvSpeedDate" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

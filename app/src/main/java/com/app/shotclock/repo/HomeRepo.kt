@@ -53,4 +53,49 @@ class HomeRepo @Inject constructor(private var apiService: ApiService, private v
         }
     }
 
+    // all request
+    suspend fun allRequestList(): Resource<AllRequestResponseModel>{
+        return try {
+            responseHandler.handleResponse(apiService.allRequestList())
+        }catch (e: Exception){
+            responseHandler.handleException(e)
+        }
+    }
+
+    // get notifications
+    suspend fun getNotifications(): Resource<GetNotificationResponse>{
+        return try {
+            responseHandler.handleResponse(apiService.getNotifications())
+        }catch (e: Exception){
+            responseHandler.handleException(e)
+        }
+    }
+
+    // received list
+    suspend fun receivedList(): Resource<ReceivedListResponseModel>{
+        return try {
+            responseHandler.handleResponse(apiService.receivedList())
+        }catch (e:Exception){
+            responseHandler.handleException(e)
+        }
+    }
+
+    // ice breaker question
+    suspend fun iceBreakerQuestions(): Resource<IceBreakerQuestionResponse>{
+        return try {
+            responseHandler.handleResponse(apiService.iceBreakerQuestions())
+        }catch (e:Exception){
+            responseHandler.handleException(e)
+        }
+    }
+
+    // cancel request admin
+    suspend fun cancelRequestAdmin(data : CancelRequestAdminRequest): Resource<BaseResponseModel>{
+        return try {
+            responseHandler.handleResponse(apiService.cancelRequestAdmin(data))
+        }catch (e:Exception){
+            responseHandler.handleException(e)
+        }
+    }
+
 }

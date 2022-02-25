@@ -72,8 +72,23 @@ interface ApiService {
     suspend fun subscriptionPlans(): SubscriptionPlansResponse
 
     @POST(ApiConstants.SELECTION_DONE)
-    suspend fun selectionDone(@Body data: SelectionDoneRequestModel):SelectionDoneResponse
+    suspend fun selectionDone(@Body data: SelectionDoneRequestModel): SelectionDoneResponse
 
     @GET(ApiConstants.REQUEST_LIST)
     suspend fun requestList(): RequestListResponseModel
+
+    @GET(ApiConstants.REQUEST_ALL)
+    suspend fun allRequestList():AllRequestResponseModel
+
+    @GET(ApiConstants.GET_NOTIFICATION)
+    suspend fun getNotifications(): GetNotificationResponse
+
+    @GET(ApiConstants.RECEIVED_LIST)
+    suspend fun receivedList(): ReceivedListResponseModel
+
+    @GET(ApiConstants.ICE_BREAKER_QUESTIONS)
+    suspend fun iceBreakerQuestions(): IceBreakerQuestionResponse
+
+    @POST(ApiConstants.CANCEL_REQUEST_ADMIN)
+    suspend fun cancelRequestAdmin(@Body data: CancelRequestAdminRequest): BaseResponseModel
 }
