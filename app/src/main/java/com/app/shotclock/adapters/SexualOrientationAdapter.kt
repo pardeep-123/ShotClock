@@ -2,19 +2,17 @@ package com.app.shotclock.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.R
 import com.app.shotclock.databinding.ItemsSexualorientationBinding
-import org.jetbrains.anko.backgroundDrawable
 
-class SexualOrientationAdapter(private var ctx: Context,private var list : ArrayList<String>): RecyclerView.Adapter<SexualOrientationAdapter.OrientationHolder>() {
+class SexualOrientationAdapter(private var ctx: Context,private var list : ArrayList<String>, private var from : String): RecyclerView.Adapter<SexualOrientationAdapter.OrientationHolder>() {
     private var selectedPosition = -1
 
-   var onItemClickListener : ((pos: Int)->Unit)?= null
+   var onItemClickListener : ((pos: String)->Unit)?= null
 
     class OrientationHolder(itemViews:ItemsSexualorientationBinding): RecyclerView.ViewHolder(itemViews.root){
         val binding : ItemsSexualorientationBinding = itemViews
@@ -28,8 +26,10 @@ class SexualOrientationAdapter(private var ctx: Context,private var list : Array
 
     override fun onBindViewHolder(holder: OrientationHolder, @SuppressLint("RecyclerView") position: Int) {
         holder.binding.tvSexualList.text = list[position]
+
         if (selectedPosition == position){
 //               selectedPosition = position
+
             holder.binding.tvSexualList.setTextColor(ContextCompat.getColor(ctx,R.color.black))
             holder.binding.tvSexualList.background = ContextCompat.getDrawable(ctx,R.drawable.bg_white_corners)
         }else{
@@ -38,10 +38,19 @@ class SexualOrientationAdapter(private var ctx: Context,private var list : Array
         }
 
         holder.itemView.setOnClickListener {
-         selectedPosition = position
-            onItemClickListener?.invoke(position)
-            notifyDataSetChanged()
+                selectedPosition = position
+                onItemClickListener?.invoke(list[position])
+                notifyDataSetChanged()
+
         }
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 
     override fun getItemCount(): Int {

@@ -25,6 +25,7 @@ class SpeedDateSessionAdapter(private var ctx: Context,private var list: ArrayLi
       Glide.with(ctx).load(ApiConstants.IMAGE_URL + list[position].profileImage).into(holder.itemBinding.rivUser)
         holder.itemBinding.tvUserName.text = list[position].username
         holder.itemBinding.tvBio.text = list[position].bio
+
         holder.itemBinding.tvStatus.text = list[position].isOnline
 
     }

@@ -20,7 +20,7 @@ public class Prefs {
 
     static SharedPreferences.Editor editor;
 
-    private static Gson GSON = new Gson();
+    private static final Gson GSON = new Gson();
 
     @SuppressLint("CommitPrefEdits")
     Prefs(Context context) {

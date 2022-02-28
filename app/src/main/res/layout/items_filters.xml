@@ -208,7 +208,7 @@
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:fontFamily="@font/proxima_regular"
-            android:text="@string/smoke"
+            android:text="@string/pets"
             android:textColor="@color/white"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintStart_toStartOf="parent"
@@ -264,6 +264,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_10sdp"
             tools:listitem="@layout/items_sexualorientation"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/tvEducation"/>
@@ -286,6 +287,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_10sdp"
             tools:listitem="@layout/items_sexualorientation"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/tvSexualOrientation"/>
@@ -308,6 +310,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_10sdp"
             tools:listitem="@layout/items_sexualorientation"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/tvAstrologicalSign"/>
@@ -366,7 +369,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:valueFrom="10"
             android:valueTo="70"
-            app:labelBehavior="floating"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAge"
@@ -426,7 +429,6 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:valueFrom="10"
             android:valueTo="70"
-            app:labelBehavior="withinBounds"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDistance"

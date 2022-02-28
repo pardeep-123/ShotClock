@@ -100,4 +100,13 @@ class HomeViewModel @Inject constructor(private val homeRepo: HomeRepo) : ViewMo
         }
     }
 
+    // accept decline request
+    fun acceptDeclineRequest(data: AcceptDeclineRequestModel): LiveData<Resource<BaseResponseModel>>{
+        return liveData(Dispatchers.IO){
+            emit(Resource.loading(null))
+            val response = homeRepo.acceptDeclineRequest(data)
+            emit(response)
+        }
+    }
+
 }

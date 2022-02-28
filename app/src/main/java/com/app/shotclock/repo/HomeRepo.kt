@@ -98,4 +98,13 @@ class HomeRepo @Inject constructor(private var apiService: ApiService, private v
         }
     }
 
+    // accept decline request
+    suspend fun acceptDeclineRequest(data: AcceptDeclineRequestModel):Resource<BaseResponseModel>{
+        return try {
+            responseHandler.handleResponse(apiService.acceptDeclineRequest(data))
+        }catch (e:Exception){
+            responseHandler.handleException(e)
+        }
+    }
+
 }

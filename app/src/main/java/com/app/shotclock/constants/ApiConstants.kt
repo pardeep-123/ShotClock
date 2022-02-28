@@ -61,6 +61,8 @@ object ApiConstants {
 
     const val CANCEL_REQUEST_ADMIN= "cancelrequestAdmin"
 
+    const val ACCEPT_DECLINE_REQUEST ="acceptRequest"
+
 }
 
 

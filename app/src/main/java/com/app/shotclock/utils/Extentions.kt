@@ -391,7 +391,7 @@ fun getDateFromUTCTimestamp(mTimestamp: Long, mDateFormate: String?): String? {
 
 //
 // zuluTime  time convert to string
-fun getchatListTime(zuluTime: String): Long {
+fun getChatListTime(zuluTime: String): Long {
     val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     val output = SimpleDateFormat("dd/MM/yyyy")
 
@@ -406,7 +406,21 @@ fun getchatListTime(zuluTime: String): Long {
 
     return time_to_timestamp(formatted, "dd/MM/yyyy")
 }
+fun getNotificationTime(zuluTime: String): String {
+    val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    val output = SimpleDateFormat("hh:mm aa")
 
+    var d: Date? = null
+    try {
+        d = input.parse(zuluTime)
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
+    val formatted = output.format(d)
+    Log.i("ZULLU DATE", "" + formatted)
+
+    return formatted
+}
 //fun tackleError(activity: Activity, errorBody: String) {
 //    when (errorBody) {
 //        "401" -> {

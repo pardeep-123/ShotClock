@@ -14,20 +14,18 @@ class AppInterceptor(val context: Context) : Interceptor {
 
         val token: String? = getToken(context)
 
-        val headers:Headers
-
-        if (token != null){
-            headers = request.headers.newBuilder()
+        val headers = if (token != null){
+            request.headers.newBuilder()
                 .add("Content-Type", "application/json")
                 .add("Accept", "application/json")
                 .add("auth_key", token)
-             //   .add("security_key","appointme11")
+                //   .add("security_key","appointme11")
                 .build()
         }else{
-            headers = request.headers.newBuilder()
+            request.headers.newBuilder()
                 .add("Content-Type", "application/json")
                 .add("Accept", "application/json")
-               // .add("security_key","appointme11")
+                // .add("security_key","appointme11")
                 .build()
         }
 

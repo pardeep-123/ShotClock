@@ -48,6 +48,7 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var bottomSheetBehavior2: BottomSheetBehavior<ConstraintLayout>
     private var rsAge: RangeSlider? = null
+    private var rsDistance: RangeSlider? = null
     private var adapter: HomeAdapter? = null
     private var selectHeightText = ""
     private var astrologicalAdapter: SexualOrientationAdapter? = null
@@ -56,8 +57,22 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
     private var astrologicalList = ArrayList<String>()
     private var tvHeightSelect: TextView? = null
     private var educationList = ArrayList<String>()
-    private var latitude = ""
-    private var longitude = ""
+    private var rgSmoke: RadioGroup?=null
+    private var rgDrink: RadioGroup?=null
+    private var rgPets: RadioGroup?=null
+    private var latitude = "30.4370"
+    private var longitude = "76.7179"
+    private var education = ""
+    private var sexualOrientation = ""
+    private var astrologicalSign = ""
+    private var lowerAge = ""
+    private var upperAge = ""
+    private var lowerDistance = ""
+    private var upperDistance = ""
+    private var gender = 0
+    private var smoke =""
+    private var pets =""
+    private var drink =""
     private var idList = ArrayList<SelectionDoneRequestModel.SelectionDoneUser>()
 
     private var homeList = ArrayList<HomeResponseModel.HomeBody>()
@@ -74,14 +89,15 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
         filterBottomSheet(view)
         itemHeightBottomSheet(view)
         handleHomeFragmentBackPress()
+        rangeSliders()
 
 
         adapter = HomeAdapter(requireContext(), this, homeList)
         binding.rvHome.adapter = adapter
 
-        astrologicalAdapter?.onItemClickListener = {
 
-        }
+
+
 
     }
 
@@ -117,10 +133,11 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
         val rvSexualOrientation: RecyclerView = view.findViewById(R.id.rvSexualOrientation)
         val rvAstrologicalSign: RecyclerView = view.findViewById(R.id.rvAstrologicalSign)
         val rgGender: RadioGroup = view.findViewById(R.id.rgGender)
-        val rgSmoke: RadioGroup = view.findViewById(R.id.rgSmoke)
-        val rgDrink: RadioGroup = view.findViewById(R.id.rgDrink)
-        val rgPets: RadioGroup = view.findViewById(R.id.rgPets)
+        rgSmoke  = view.findViewById(R.id.rgSmoke)
+        rgDrink = view.findViewById(R.id.rgDrink)
+        rgPets = view.findViewById(R.id.rgPets)
         rsAge = view.findViewById(R.id.rsAge)
+        rsDistance = view.findViewById(R.id.rsDistance)
 
         val rbMale: RadioButton = view.findViewById(R.id.rbMale)
         val rbFemale: RadioButton = view.findViewById(R.id.rbFemale)
@@ -134,23 +151,72 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
         tvHeightSelect = view.findViewById(R.id.tvHeightSelect)
         // add list education adapter
 
+        // radio group gender
+        rgGender.setOnCheckedChangeListener { _, checkedId ->
+            if (checkedId == R.id.rbMale) {
+                gender = 1
+            } else if (checkedId == R.id.rbFemale) {
+                gender = 2
+            }
+        }
+
+        // radio group smoke
+        rgSmoke?.setOnCheckedChangeListener { _, checkedId ->
+            if (checkedId == R.id.rbSmokeYes) {
+                smoke = "Yes"
+            } else if (checkedId == R.id.rbSmokeNo) {
+                smoke = "No"
+            }
+        }
+
+        rgDrink?.setOnCheckedChangeListener { _, checkedId ->
+            if (checkedId == R.id.rbDrinkYes){
+                drink = "Yes"
+            }else if (checkedId ==R.id.rbDrinkNo)
+                drink ="No"
+        }
+
+        rgPets?.setOnCheckedChangeListener { _, checkedId ->
+            if (checkedId == R.id.rbPetsYes){
+                pets = "Yes"
+            }else if (checkedId == R.id.rbPetsNo){
+                pets = "No"
+            }
+        }
+
+        // add list education adapter
         educationList.add("High School")
         educationList.add("Bachelor's Degree")
         educationList.add("Master's Degree")
         educationList.add("Doctorate Degree")
         educationList.add("Other")
-        astrologicalAdapter = SexualOrientationAdapter(requireContext(), educationList)
-        rvEducation.adapter = astrologicalAdapter
+        val educationAdapter = SexualOrientationAdapter(requireContext(), educationList,"education")
+        rvEducation.adapter = educationAdapter
 
         // add list astrologicalSign adapter
         val astrologicalSignList = resources.getStringArray(R.array.astrologicalSign)
         astrologicalList.addAll(astrologicalSignList)
-        rvAstrologicalSign.adapter = SexualOrientationAdapter(requireContext(), astrologicalList)
+        val astrologicalAdapter = SexualOrientationAdapter(requireContext(), astrologicalList,"astro")
+        rvAstrologicalSign.adapter = astrologicalAdapter
+
         // add list sexualOrientation adapter
         val orientation = resources.getStringArray(R.array.sexualOrientation)
         orientationList.addAll(orientation)
-        rvSexualOrientation.adapter = SexualOrientationAdapter(requireContext(), orientationList)
+        val orientationAdapter = SexualOrientationAdapter(requireContext(), orientationList,"sexual")
+        rvSexualOrientation.adapter = orientationAdapter
 
+
+        educationAdapter.onItemClickListener = {pos ->
+            education = pos
+        }
+
+        astrologicalAdapter.onItemClickListener = {pos ->
+            astrologicalSign = pos
+        }
+
+        orientationAdapter.onItemClickListener = {pos ->
+            sexualOrientation = pos
+        }
 
 //        rsHeight = view.findViewById(R.id.rsHeight)
 //        val tvSixFeet: TextView = view.findViewById(R.id.tvSixFeet)
@@ -161,6 +227,7 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
             bottomOpen(bottomSheetBehavior)
         }
 
+        // hit filter api
         btApply.setOnClickListener {
             bottomOpen(bottomSheetBehavior)
         }
@@ -171,23 +238,58 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
         }
 //        selectHeightText = tvHeightSelect.text.toString()
 
-
     }
 
     // for Age range set
-    private fun ageSlider() {
-        rsAge?.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
-            override fun onStartTrackingTouch(slider: RangeSlider) {
+    private fun rangeSliders() {
+        rsAge?.addOnChangeListener(RangeSlider.OnChangeListener { slider, value, fromUser ->
+            try {
+                val startValue = rsAge?.values?.get(0)
+                val endValue = rsAge?.values?.get(1)
 
-//                slider.text = value.toInt().toString()
-//                slider = value.toInt().toString()
-            }
+                lowerAge = startValue?.toInt().toString()
+                upperAge = endValue?.toInt().toString()
 
-            override fun onStopTrackingTouch(slider: RangeSlider) {
+            }catch (e:Exception){
+
             }
         })
 
+        rsDistance?.addOnChangeListener(RangeSlider.OnChangeListener { slider, value, fromUser ->
+            try {
+                val startValue = rsDistance?.values?.get(0)
+                val endValue = rsDistance?.values?.get(1)
+
+                lowerDistance = startValue?.toInt().toString()
+                upperDistance = endValue?.toInt().toString()
+            }catch (e:Exception){
+
+            }
+        })
+        // for Age range set
+        rsAge?.setLabelFormatter { value: Float ->
+
+            value.toInt().toString()
+        }
+        rsDistance?.setLabelFormatter { value: Float ->
+
+            value.toInt().toString()
+        }
+
     }
+
+/*    rsAge?.addOnChangeListener(RangeSlider.OnChangeListener { slider, value, fromUser ->
+        try {
+            val start_values = rangeSlider.values[0]
+            val end_values = rangeSlider.values[1]
+            tvValues.text = start_values.toInt().toString() + "-" + end_values.toInt().toString()
+            minAge = start_values.toInt().toString()
+            maxAge = end_values.toInt().toString()
+        } catch (e: Exception) {
+        }
+
+//            tvValues.text = values.
+    })*/
 
     private fun handleClickListeners() {
         binding.tb.ivMenu.isVisible()
@@ -215,6 +317,7 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
             binding.clBottomBtn.isVisible()
             adapter?.notifyDataSetChanged()
         }
+
         binding.btCancel.setOnClickListener {
             Constants.isPlus = false
             binding.clBottomBtn.isGone()
@@ -236,7 +339,6 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
             Log.e("=====", idList.size.toString())
             Constants.isPlus = false
             val data = SelectionDoneRequestModel(idList)
-
             homeViewModel.selectionDone(data).observe(viewLifecycleOwner, selectionDoneObserver)
 
         }
@@ -316,6 +418,9 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
 //    }
 
     private fun setFilterData() {
+        if (gender == 1){
+
+        }
 //        val body = FilterRequestModel(tvHeightSelect?.text.toString().trim())
 
     }
@@ -351,7 +456,6 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
         when (it.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
-
                 val dialog = Dialog(requireContext())
                 with(dialog) {
                     setCancelable(false)

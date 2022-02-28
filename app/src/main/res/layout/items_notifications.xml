@@ -19,7 +19,6 @@
         android:id="@+id/civUser"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
-        android:src="@drawable/img_one"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,7 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
         android:fontFamily="@font/proxima_regular"
-        android:text="@string/jack_jackson_has_sent_you_a_request_for_speed_dating_session"
         android:textColor="@color/hintcolor"
         android:textSize="@dimen/_10ssp"
         android:layout_marginEnd="5dp"
@@ -44,7 +42,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
         android:fontFamily="@font/proxima_regular"
-        android:text="@string/_3_min"
         android:textColor="@color/hintcolor"
         android:textSize="@dimen/_10ssp"
         app:layout_constraintBottom_toBottomOf="@id/tvMessage"

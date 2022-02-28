@@ -21,13 +21,7 @@ import javax.inject.Singleton
  * Provides our activities and fragments with given module.
  * */
 @Component(
-    modules = arrayOf(
-        ViewModelModule::class,
-        AppModule::class,
-        ActivityModule::class,
-        AndroidSupportInjectionModule::class,
-        ContextModule::class
-    )
+    modules = [ViewModelModule::class, AppModule::class, ActivityModule::class, AndroidSupportInjectionModule::class, ContextModule::class]
 )
 @Singleton
 interface AppComponent {

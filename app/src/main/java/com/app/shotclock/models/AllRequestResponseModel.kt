@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class AllRequestResponseModel(
     @SerializedName("body")
-    var body: List<List<AllRequestBody>>,
+    var body: ArrayList<ArrayList<AllRequestBody>>,
     @SerializedName("code")
     var code: Int, // 200
     @SerializedName("message")

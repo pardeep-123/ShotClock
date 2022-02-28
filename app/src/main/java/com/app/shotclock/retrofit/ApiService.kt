@@ -91,4 +91,8 @@ interface ApiService {
 
     @POST(ApiConstants.CANCEL_REQUEST_ADMIN)
     suspend fun cancelRequestAdmin(@Body data: CancelRequestAdminRequest): BaseResponseModel
+
+    @POST(ApiConstants.ACCEPT_DECLINE_REQUEST)
+    suspend fun acceptDeclineRequest(@Body data: AcceptDeclineRequestModel): BaseResponseModel
+
 }

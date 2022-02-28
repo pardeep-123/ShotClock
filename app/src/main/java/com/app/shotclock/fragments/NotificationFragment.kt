@@ -17,14 +17,14 @@ import com.app.shotclock.utils.isVisible
 import com.app.shotclock.viewmodels.HomeViewModel
 import javax.inject.Inject
 
-class NotificationFragment : BaseFragment<FragmentNotificationBinding>(),
-    Observer<Resource<GetNotificationResponse>> {
+class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Observer<Resource<GetNotificationResponse>> {
 
     lateinit var homeViewModel: HomeViewModel
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private var notificationAdapter: NotificationsAdapter? = null
+    private var notificationList = ArrayList<GetNotificationResponse.GetNotificationBody>()
 
     override fun getViewBinding(): FragmentNotificationBinding {
         return FragmentNotificationBinding.inflate(layoutInflater)
@@ -36,7 +36,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(),
         configureViewModel()
         handleClicks()
 
-        notificationAdapter = NotificationsAdapter(requireContext())
+        notificationAdapter = NotificationsAdapter(requireContext(),notificationList)
         binding.rvNotification.adapter = notificationAdapter
 
     }
@@ -58,6 +58,8 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(),
         when (t.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
+                notificationList.addAll(t.data?.body!!)
+                notificationAdapter?.notifyDataSetChanged()
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()

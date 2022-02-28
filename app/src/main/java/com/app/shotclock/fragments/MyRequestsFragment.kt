@@ -1,5 +1,6 @@
 package com.app.shotclock.fragments
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -23,6 +24,7 @@ import com.app.shotclock.models.RequestListResponseModel
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
 import com.app.shotclock.viewmodels.HomeViewModel
+import com.google.android.material.button.MaterialButton
 import javax.inject.Inject
 
 class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Resource<RequestListResponseModel>> {
@@ -50,12 +52,9 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
         setAdapter()
 //        handleHomeFragmentBackPress()
 
-
-
     }
 
     private fun setAdapter() {
-
         requestAdapter = MyRequestsAdapter(requireContext(), requestList)
         binding.rvMyRequests.adapter = requestAdapter
         requestAdapter?.onItemClickListener = {pos->
@@ -83,8 +82,6 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
 
 
         binding.tvCurrent.setOnClickListener {
-//            binding.tvNoDataFound.isGone()
-//            binding.clSpeedDate.isVisible()
             binding.tvCancel.isVisible()
             binding.tvCurrent.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_white_round_corners)
             binding.tvCurrent.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
@@ -93,9 +90,8 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
             // api hit
             homeViewModel.requestList().observe(viewLifecycleOwner, this)
         }
+
         binding.tvPast.setOnClickListener {
-//            binding.clSpeedDate.isGone()
-//            binding.tvNoDataFound.isVisible()
             binding.tvStart.isGone()
             binding.tvCancel.isGone()
             binding.tvPast.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_white_round_corners)
@@ -107,7 +103,23 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
         }
 
         binding.tvCancel.setOnClickListener {
+            val dialog = Dialog(requireContext())
+            with(dialog) {
+                setCancelable(false)
+                setContentView(R.layout.alert_dialog_cancel_requests)
+                val btYes: MaterialButton = findViewById(R.id.btYes)
+                val btNo: MaterialButton = findViewById(R.id.btNo)
 
+                btYes.setOnClickListener {
+                    setCancelRequestData()
+                    dismiss()
+                }
+
+                btNo.setOnClickListener {
+                    dismiss()
+                }
+                show()
+            }
         }
     }
 
@@ -122,7 +134,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
             })
     }
 
-    // request list api
+    // request list api for current
     override fun onChanged(t: Resource<RequestListResponseModel>) {
         when (t.status) {
             Status.SUCCESS -> {
@@ -130,6 +142,8 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
                 requestList.clear()
                 allRequestList.clear()
                 if (t.data?.body!!.size > 0) {
+                    binding.clSpeedDate.isVisible()
+                    binding.tvNoDataFound.isGone()
                     requestList.addAll(t.data.body)
                     if (t.data.body[0].requestCount == 0)
                         binding.tvStart.isGone()
@@ -152,6 +166,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
         }
     }
 
+    // all request api for past
     private val allRequestListObserver = Observer<Resource<AllRequestResponseModel>> {
         when (it.status) {
             Status.SUCCESS -> {
@@ -159,9 +174,13 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
                 requestList.clear()
                 allRequestList.clear()
                 if (it.data?.body!!.isNotEmpty()) {
+                    binding.clSpeedDate.isVisible()
+                    binding.tvNoDataFound.isGone()
+//                    for (i in 0 )
                     allRequestList.addAll(it.data.body[0])
                     requestAdapter?.notifyDataSetChanged()
                     allRequestAdapter?.notifyDataSetChanged()
+
                 } else {
                     binding.clSpeedDate.isGone()
                     binding.tvNoDataFound.isVisible()
@@ -179,10 +198,9 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
 
     private fun setCancelRequestData() {
         val data = CancelRequestAdminRequest()
-        data.groupName
-        data.status
-        homeViewModel.cancelRequestAdmin(data)
-            .observe(viewLifecycleOwner, cancelRequestAdminObserver)
+        data.groupName = requestList[0].groupName
+        data.status= requestList[0].status
+        homeViewModel.cancelRequestAdmin(data).observe(viewLifecycleOwner, cancelRequestAdminObserver)
     }
 
     // cancel request admin
@@ -190,8 +208,13 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
         when (it.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
-                requestList.clear()
-                allRequestList.clear()
+               if (requestList.size > 0) {
+//                   requestAdapter?.notifyDataSetChanged()
+//                   allRequestAdapter?.notifyDataSetChanged()
+                   this.findNavController().navigate(R.id.action_myRequestsFragment_to_homeFragment)
+               }
+//                requestList.clear()
+//                allRequestList.clear()
 
             }
             Status.ERROR -> {

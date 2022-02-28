@@ -20,17 +20,6 @@
             android:id="@+id/tb"
             layout="@layout/app_toolbar" />
 
-<!--    <androidx.core.widget.NestedScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:fillViewport="true"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/toolbar"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent">-->
-
-<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent">-->
-
             <TextView
                 android:id="@+id/tvDiscover"
                 android:layout_width="match_parent"
@@ -127,6 +116,5 @@
 
     <include layout="@layout/items_filters" />
     <include layout="@layout/items_height_bottomsheet"/>
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
-<!--    </androidx.core.widget.NestedScrollView>-->
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

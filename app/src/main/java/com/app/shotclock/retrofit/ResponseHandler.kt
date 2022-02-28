@@ -43,14 +43,14 @@ constructor() {
 
     fun getErrorMsg(responseBody: ResponseBody): BaseError {
 
-        try {
+        return try {
             val jsonObject = JSONObject(responseBody.string())
 
-            return BaseError(400,jsonObject.getString("message"))
+            BaseError(400,jsonObject.getString("message"))
 
 
         } catch (e: Exception) {
-            return BaseError(400, e.message!!)
+            BaseError(400, e.message!!)
         }
 
     }
