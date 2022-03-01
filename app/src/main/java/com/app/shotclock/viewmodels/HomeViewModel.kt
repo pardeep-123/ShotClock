@@ -20,7 +20,7 @@ class HomeViewModel @Inject constructor(private val homeRepo: HomeRepo) : ViewMo
     }
 
     // filter api
-    fun filterApi(data: FilterRequestModel): LiveData<Resource<BaseResponseModel>>{
+    fun filterApi(data: FilterRequestModel): LiveData<Resource<HomeResponseModel>>{
         return liveData(Dispatchers.IO){
             emit(Resource.loading(null))
             val response = homeRepo.filterApi(data)

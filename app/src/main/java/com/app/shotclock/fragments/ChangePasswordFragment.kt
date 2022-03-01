@@ -40,8 +40,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>(),
     }
 
     private fun configureViewModel() {
-        loginSignUpViewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(LoginSignUpViewModel::class.java)
+        loginSignUpViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginSignUpViewModel::class.java)
     }
 
     private fun handleClicks() {
@@ -66,8 +65,8 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>(),
 
     private fun changePasswordData() {
         val data = ChangePassRequestModel()
-        data.old_password = binding.etOldPassword.toString().trim()
-        data.new_password = binding.etNewPassword.toString().trim()
+        data.old_password = binding.etOldPassword.text.toString().trim()
+        data.new_password = binding.etNewPassword.text.toString().trim()
         loginSignUpViewModel.changePassword(data).observe(viewLifecycleOwner, this)
     }
 

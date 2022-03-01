@@ -66,7 +66,7 @@ interface ApiService {
     suspend fun homeApi(@Field("latitude") latitude: String ,@Field("longitude") longitude: String):HomeResponseModel
 
     @POST(ApiConstants.FILTER)
-    suspend fun filterApi(@Body data: FilterRequestModel): BaseResponseModel
+    suspend fun filterApi(@Body data: FilterRequestModel): HomeResponseModel
 
     @GET(ApiConstants.SUBSCRIPTION_PLANS)
     suspend fun subscriptionPlans(): SubscriptionPlansResponse

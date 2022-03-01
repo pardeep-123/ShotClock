@@ -11,6 +11,8 @@ import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.FragmentNotificationBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
+import com.app.shotclock.models.AcceptDeclineRequestModel
+import com.app.shotclock.models.BaseResponseModel
 import com.app.shotclock.models.GetNotificationResponse
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
@@ -32,18 +34,28 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Observ
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         configureViewModel()
         handleClicks()
-
-        notificationAdapter = NotificationsAdapter(requireContext(),notificationList)
-        binding.rvNotification.adapter = notificationAdapter
+        setAdapter()
 
     }
 
+    private fun setAdapter() {
+        notificationAdapter = NotificationsAdapter(requireContext(), notificationList)
+        binding.rvNotification.adapter = notificationAdapter
+
+        notificationAdapter?.onItemClickListener={pos,status ->
+            if (status ==2){
+                acceptDeclineData(notificationList[pos].requestId,status)
+            }else{
+                acceptDeclineData(notificationList[pos].requestId, status)
+            }
+        }
+    }
+
     private fun configureViewModel() {
-        homeViewModel = ViewModelProviders.of(this,viewModelFactory).get(HomeViewModel::class.java)
-        homeViewModel.getNotifications().observe(viewLifecycleOwner,this)
+        homeViewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
+        homeViewModel.getNotifications().observe(viewLifecycleOwner, this)
     }
 
     private fun handleClicks() {
@@ -54,6 +66,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Observ
         }
     }
 
+    // get notification api
     override fun onChanged(t: Resource<GetNotificationResponse>) {
         when (t.status) {
             Status.SUCCESS -> {
@@ -64,6 +77,30 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Observ
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
                 showError(t.message!!)
+            }
+            Status.LOADING -> {
+                binding.pb.clLoading.isVisible()
+            }
+        }
+    }
+
+    private fun acceptDeclineData(requestId: Int, status: Int) {
+        val data = AcceptDeclineRequestModel()
+        data.request_id = requestId
+        data.status = status
+        homeViewModel.acceptDeclineRequest(data).observe(viewLifecycleOwner,acceptDeclineObserver)
+    }
+
+    // accept decline api
+    private val acceptDeclineObserver = Observer<Resource<BaseResponseModel>>{
+        when (it.status) {
+            Status.SUCCESS -> {
+                binding.pb.clLoading.isGone()
+                notificationAdapter?.notifyDataSetChanged()
+            }
+            Status.ERROR -> {
+                binding.pb.clLoading.isGone()
+                showError(it.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()

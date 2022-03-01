@@ -2,27 +2,37 @@ package com.app.shotclock.utils
 
 import android.Manifest
 import android.app.Activity
+import android.app.Activity.RESULT_CANCELED
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.LocationRequest
 import android.net.Uri
+import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import com.app.shotclock.base.BaseActivity
+import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.material.snackbar.Snackbar
 import com.intuit.sdp.BuildConfig
+import dagger.android.support.AndroidSupportInjection
 
 
+abstract class LocationUpdateUtility<VB : ViewBinding> : Fragment() {
 
-/*
-abstract class LocationUpdateUtility : BaseActivity() {
+    var baseView: View? = null
+    private var _binding: VB? = null
+    val binding get() = _binding!!
+    var isLoaded = false
 
     private val TAG = "LocationUpdateUtility"
 //    private lateinit var binding: ActivityMainBinding
@@ -36,6 +46,23 @@ abstract class LocationUpdateUtility : BaseActivity() {
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION
     )
+
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        //   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        super.onAttach(context)
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+
+        _binding = getViewBinding()
+        return binding.root
+    }
+
+    abstract fun getViewBinding(): VB
 
     private val requestMultiplePermissions =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -67,7 +94,7 @@ abstract class LocationUpdateUtility : BaseActivity() {
             } else if (result.resultCode == RESULT_CANCELED) {
                 Log.e(TAG, "GPS Turned on failed")
                 Snackbar.make(
-                    findViewById(android.R.id.content),
+                    requireActivity().findViewById(android.R.id.content),
                     com.app.shotclock.R.string.gps_required,
                     Snackbar.LENGTH_LONG
                 )
@@ -87,9 +114,9 @@ abstract class LocationUpdateUtility : BaseActivity() {
 
         checkLocationPermissions()
         locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult?) {
-                locationResult ?: return
-                for (location in locationResult.locations) {
+            override fun onLocationResult(p0: LocationResult) {
+                p0 ?: return
+                for (location in p0.locations) {
                     // Update UI with location data
                     // ...
                     Log.e(
@@ -131,7 +158,7 @@ abstract class LocationUpdateUtility : BaseActivity() {
         if (shouldShowRequestPermissionRationale(permission)) {
             Log.e(TAG, "Permissions Denied")
             Snackbar.make(
-                findViewById(android.R.id.content),
+                requireActivity().findViewById(android.R.id.content),
                 com.app.shotclock.R.string.permission_rationale,
                 Snackbar.LENGTH_LONG
             )
@@ -143,7 +170,7 @@ abstract class LocationUpdateUtility : BaseActivity() {
 
         } else {
             Snackbar.make(
-                findViewById(android.R.id.content),
+                requireActivity().findViewById(android.R.id.content),
                 com.app.shotclock.R.string.permission_denied_explanation,
                 Snackbar.LENGTH_LONG
             )
@@ -165,8 +192,7 @@ abstract class LocationUpdateUtility : BaseActivity() {
         }
     }
 
-    */
-/*private fun locationPermission(permissions: Array<String>): Boolean {
+    private fun locationPermission(permissions: Array<String>): Boolean {
         return ActivityCompat.checkSelfPermission(
             mActivity,
             permissions[0]
@@ -174,8 +200,7 @@ abstract class LocationUpdateUtility : BaseActivity() {
             mActivity,
             permissions[1]
         ) == PackageManager.PERMISSION_GRANTED
-    }*//*
-
+    }
 
 
     private fun checkGpsOn() {
@@ -201,13 +226,6 @@ abstract class LocationUpdateUtility : BaseActivity() {
                 when (e.statusCode) {
                     LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
                         val resolvableApiException = e as ResolvableApiException
-                        */
-/*resolvableApiException.startResolutionForResult(
-                            mActivity,
-                            REQUEST_CHECK_SETTINGS
-                        )*//*
-
-
                         gpsOnLauncher.launch(
                             IntentSenderRequest.Builder(resolvableApiException.resolution).build()
                         )
@@ -239,7 +257,7 @@ abstract class LocationUpdateUtility : BaseActivity() {
         }
 
         fusedLocationClient.requestLocationUpdates(
-            locationRequest,
+            locationRequest!!,
             locationCallback,
             Looper.getMainLooper()
         )
@@ -254,4 +272,4 @@ abstract class LocationUpdateUtility : BaseActivity() {
     }
 
     abstract fun updatedLatLng(lat: Double, lng: Double)
-}*/
+}

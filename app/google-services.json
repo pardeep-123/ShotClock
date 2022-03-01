@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "968701457668",
+    "project_id": "shotclock-18eff",
+    "storage_bucket": "shotclock-18eff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968701457668:android:68a368774cc61468878c51",
+        "android_client_info": {
+          "package_name": "com.app.shotclock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "968701457668-0psn6ktn6dkfu79oops5lkq2mhr6u03m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyj7d9KGAOi_N-L-5r0nrHn0_dBwpToVM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "968701457668-0psn6ktn6dkfu79oops5lkq2mhr6u03m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

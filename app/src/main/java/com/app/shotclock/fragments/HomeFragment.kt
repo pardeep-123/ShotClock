@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -20,15 +19,11 @@ import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.adapters.HeightBottomSheetAdapter
 import com.app.shotclock.adapters.HomeAdapter
 import com.app.shotclock.adapters.SexualOrientationAdapter
-import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentHomeBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
-import com.app.shotclock.models.BaseResponseModel
-import com.app.shotclock.models.HomeResponseModel
-import com.app.shotclock.models.SelectionDoneRequestModel
-import com.app.shotclock.models.SelectionDoneResponse
+import com.app.shotclock.models.*
 import com.app.shotclock.utils.*
 import com.app.shotclock.viewmodels.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -37,7 +32,7 @@ import com.google.android.material.slider.RangeSlider
 import javax.inject.Inject
 
 
-open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowTick,
+open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(), HomeAdapter.ShowTick,
     Observer<Resource<HomeResponseModel>> {
 
     lateinit var homeViewModel: HomeViewModel
@@ -50,31 +45,30 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
     private var rsAge: RangeSlider? = null
     private var rsDistance: RangeSlider? = null
     private var adapter: HomeAdapter? = null
-    private var selectHeightText = ""
-    private var astrologicalAdapter: SexualOrientationAdapter? = null
+    private var sexualOrientationAdapter: SexualOrientationAdapter? = null
     private var itemHeightBottomAdapter: HeightBottomSheetAdapter? = null
     private var orientationList = ArrayList<String>()
     private var astrologicalList = ArrayList<String>()
     private var tvHeightSelect: TextView? = null
+    private var tvClear: TextView? = null
     private var educationList = ArrayList<String>()
-    private var rgSmoke: RadioGroup?=null
-    private var rgDrink: RadioGroup?=null
-    private var rgPets: RadioGroup?=null
-    private var latitude = "30.4370"
-    private var longitude = "76.7179"
+    private var rgSmoke: RadioGroup? = null
+    private var rgDrink: RadioGroup? = null
+    private var rgPets: RadioGroup? = null
+    private var latitude = ""
+    private var longitude = ""
     private var education = ""
     private var sexualOrientation = ""
     private var astrologicalSign = ""
     private var lowerAge = ""
     private var upperAge = ""
-    private var lowerDistance = ""
-    private var upperDistance = ""
+    private var lowerDistance = 0
+    private var upperDistance = 0
     private var gender = 0
-    private var smoke =""
-    private var pets =""
-    private var drink =""
+    private var smoke = ""
+    private var pets = ""
+    private var drink = ""
     private var idList = ArrayList<SelectionDoneRequestModel.SelectionDoneUser>()
-
     private var homeList = ArrayList<HomeResponseModel.HomeBody>()
 
     override fun getViewBinding(): FragmentHomeBinding {
@@ -90,20 +84,20 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
         itemHeightBottomSheet(view)
         handleHomeFragmentBackPress()
         rangeSliders()
+        setAdapter()
 
+        getLiveLocation(requireActivity())
+    }
 
+    private fun setAdapter() {
         adapter = HomeAdapter(requireContext(), this, homeList)
         binding.rvHome.adapter = adapter
-
-
-
-
 
     }
 
     private fun configureViewModel() {
         homeViewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
-        homeViewModel.homeApi("30.7046", "76.7179").observe(viewLifecycleOwner, this)
+
     }
 
     private fun itemHeightBottomSheet(view: View) {
@@ -134,54 +128,58 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
         val rvAstrologicalSign: RecyclerView = view.findViewById(R.id.rvAstrologicalSign)
         val rgGender: RadioGroup = view.findViewById(R.id.rgGender)
         rgSmoke  = view.findViewById(R.id.rgSmoke)
+        tvClear  = view.findViewById(R.id.tvClear)
         rgDrink = view.findViewById(R.id.rgDrink)
         rgPets = view.findViewById(R.id.rgPets)
         rsAge = view.findViewById(R.id.rsAge)
         rsDistance = view.findViewById(R.id.rsDistance)
 
-        val rbMale: RadioButton = view.findViewById(R.id.rbMale)
+/*        val rbMale: RadioButton = view.findViewById(R.id.rbMale)
         val rbFemale: RadioButton = view.findViewById(R.id.rbFemale)
         val rbSmokeYes: RadioButton = view.findViewById(R.id.rbSmokeYes)
         val rbSmokeNo: RadioButton = view.findViewById(R.id.rbSmokeNo)
         val rbDrinkYes: RadioButton = view.findViewById(R.id.rbDrinkYes)
         val rbDrinkNo: RadioButton = view.findViewById(R.id.rbDrinkNo)
         val rbPetsYes: RadioButton = view.findViewById(R.id.rbPetsYes)
-        val rbPetsNo: RadioButton = view.findViewById(R.id.rbPetsNo)
+        val rbPetsNo: RadioButton = view.findViewById(R.id.rbPetsNo)*/
+
+        tvClear?.setOnClickListener {
+            homeViewModel.homeApi(latitude, longitude).observe(viewLifecycleOwner, this)
+            adapter?.notifyDataSetChanged()
+        }
 
         tvHeightSelect = view.findViewById(R.id.tvHeightSelect)
         // add list education adapter
 
         // radio group gender
         rgGender.setOnCheckedChangeListener { _, checkedId ->
-            if (checkedId == R.id.rbMale) {
+            if (checkedId == R.id.rbMale)
                 gender = 1
-            } else if (checkedId == R.id.rbFemale) {
+            else if (checkedId == R.id.rbFemale)
                 gender = 2
-            }
         }
 
         // radio group smoke
         rgSmoke?.setOnCheckedChangeListener { _, checkedId ->
-            if (checkedId == R.id.rbSmokeYes) {
+            if (checkedId == R.id.rbSmokeYes)
                 smoke = "Yes"
-            } else if (checkedId == R.id.rbSmokeNo) {
+            else if (checkedId == R.id.rbSmokeNo)
                 smoke = "No"
-            }
-        }
 
+        }
+        // radio group drink
         rgDrink?.setOnCheckedChangeListener { _, checkedId ->
-            if (checkedId == R.id.rbDrinkYes){
+            if (checkedId == R.id.rbDrinkYes)
                 drink = "Yes"
-            }else if (checkedId ==R.id.rbDrinkNo)
-                drink ="No"
+            else if (checkedId == R.id.rbDrinkNo)
+                drink = "No"
         }
-
+        // radio group pets
         rgPets?.setOnCheckedChangeListener { _, checkedId ->
-            if (checkedId == R.id.rbPetsYes){
+            if (checkedId == R.id.rbPetsYes)
                 pets = "Yes"
-            }else if (checkedId == R.id.rbPetsNo){
+            else if (checkedId == R.id.rbPetsNo)
                 pets = "No"
-            }
         }
 
         // add list education adapter
@@ -229,7 +227,7 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
 
         // hit filter api
         btApply.setOnClickListener {
-            bottomOpen(bottomSheetBehavior)
+            setFilterData()
         }
 
         tvHeightSelect?.setOnClickListener {
@@ -260,8 +258,8 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
                 val startValue = rsDistance?.values?.get(0)
                 val endValue = rsDistance?.values?.get(1)
 
-                lowerDistance = startValue?.toInt().toString()
-                upperDistance = endValue?.toInt().toString()
+                lowerDistance = startValue?.toInt()!!
+                upperDistance = endValue?.toInt()!!
             }catch (e:Exception){
 
             }
@@ -277,19 +275,6 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
         }
 
     }
-
-/*    rsAge?.addOnChangeListener(RangeSlider.OnChangeListener { slider, value, fromUser ->
-        try {
-            val start_values = rangeSlider.values[0]
-            val end_values = rangeSlider.values[1]
-            tvValues.text = start_values.toInt().toString() + "-" + end_values.toInt().toString()
-            minAge = start_values.toInt().toString()
-            maxAge = end_values.toInt().toString()
-        } catch (e: Exception) {
-        }
-
-//            tvValues.text = values.
-    })*/
 
     private fun handleClickListeners() {
         binding.tb.ivMenu.isVisible()
@@ -338,9 +323,18 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
         binding.btDone.setOnClickListener {
             Log.e("=====", idList.size.toString())
             Constants.isPlus = false
-            val data = SelectionDoneRequestModel(idList)
-            homeViewModel.selectionDone(data).observe(viewLifecycleOwner, selectionDoneObserver)
-
+            when {
+                idList.size < 5 -> {
+                    showToast("You cannot add less than 5 person")
+                }
+                idList.size > 5 -> {
+                    showToast("You cannot add more than 5 persons.")
+                }
+                else -> {
+                    val data = SelectionDoneRequestModel(idList)
+                    homeViewModel.selectionDone(data).observe(viewLifecycleOwner, selectionDoneObserver)
+                }
+            }
         }
     }
 
@@ -404,7 +398,7 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showError(t.message!!)
+                showToast(t.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()
@@ -412,29 +406,41 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
         }
     }
 
-//    protected fun onDraw(canvas: Canvas) {
-//        super.onDraw(canvas)
-//        setSliderTooltipAlwaysVisible(this)
-//    }
-
     private fun setFilterData() {
-        if (gender == 1){
-
-        }
-//        val body = FilterRequestModel(tvHeightSelect?.text.toString().trim())
+        val body = FilterRequestModel(
+            astrologicalSign,
+            drink,
+            gender,
+            tvHeightSelect?.text.toString().trim(),
+            latitude,
+            longitude,
+            lowerAge,
+            lowerDistance,
+            pets,
+            education,
+            sexualOrientation,
+            smoke,
+            upperAge,
+            upperDistance
+        )
+        homeViewModel.filterApi(body).observe(viewLifecycleOwner, filterApiObserver)
 
     }
 
     // filter api
-    private val filterApiObserver = Observer<Resource<BaseResponseModel>> {
+    private val filterApiObserver = Observer<Resource<HomeResponseModel>> {
         when (it.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
+                bottomOpen(bottomSheetBehavior)
+                homeList.clear()
+                homeList.addAll(it.data?.body!!)
+                adapter?.notifyDataSetChanged()
 
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showError(it.message!!)
+                showToast(it.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()
@@ -443,12 +449,15 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
     }
 
     override fun showClick(pos: Int, id: String) {
+      //  if (idList.contains(id))
         idList.add(SelectionDoneRequestModel.SelectionDoneUser(id))
-        Log.e("====size", idList.size.toString())
+        val newId = idList.distinctBy { it.userId }
+        Log.e("====size", newId.size.toString())
 
-        if(idList.size>5){
+/*        if (idList.size > 5) {
             showToast("You cannot add more than 5 persons.")
-        }
+        }*/
+
     }
 
     // selection done api
@@ -470,7 +479,7 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showError(it.message!!)
+                showToast(it.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()
@@ -478,5 +487,12 @@ open class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeAdapter.ShowT
         }
     }
 
+    override fun updatedLatLng(lat: Double, lng: Double) {
+        latitude = lat.toString()
+        longitude = lng.toString()
+
+        homeViewModel.homeApi(latitude, longitude).observe(viewLifecycleOwner, this)
+        stopLocationUpdates()
+    }
 
 }

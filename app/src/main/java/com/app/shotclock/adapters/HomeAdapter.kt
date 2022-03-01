@@ -2,6 +2,7 @@ package com.app.shotclock.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.constants.ApiConstants
@@ -53,17 +54,13 @@ class HomeAdapter(
             if (selectedPosition == position) {
                 holder.itemBinding.ivTick.isChecked=true
                 showTick.showClick(position,homeList[position].id.toString())
+
                 /*holder.itemBinding.ivTick.setOnCheckedChangeListener { _, _ ->
                     showTick.showClick(position,homeList[position].id.toString())
 //                    Toast.makeText(cts,isChecked.toString(),Toast.LENGTH_SHORT).show()
 
                 }*/
 
-//                if (!holder.itemBinding.ivTick.isVisible){
-//                    holder.itemBinding.ivTick.isVisible()
-//                }else{
-//                    holder.itemBinding.ivTick.isGone()
-//                }
             }
         }
 
@@ -71,6 +68,10 @@ class HomeAdapter(
             holder.itemBinding.ivTick.isVisible()
         }else
             holder.itemBinding.ivTick.isGone()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 
     override fun getItemCount(): Int {

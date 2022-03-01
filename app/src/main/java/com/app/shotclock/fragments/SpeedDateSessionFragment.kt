@@ -6,6 +6,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.adapters.SpeedDateSessionAdapter
 import com.app.shotclock.base.BaseFragment
@@ -30,6 +31,8 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private var speedAdapter: SpeedDateSessionAdapter? = null
     private var speedList = ArrayList<RequestListResponseModel.RequestListResponseBody>()
+    private var groupName = ""
+    private var status = 0
 
     override fun getViewBinding(): FragmentSpeedDateSessionBinding {
         return FragmentSpeedDateSessionBinding.inflate(layoutInflater)
@@ -69,7 +72,7 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
                 val btNo: MaterialButton = findViewById(R.id.btNo)
 
                 btYes.setOnClickListener {
-                    setCancelRequestData()
+                    setCancelRequestData(groupName,status)
                     dismiss()
                 }
 
@@ -86,7 +89,11 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
         when (t.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
-                speedList.addAll(t.data?.body!!)
+                for (i in 0 until t.data?.body!!.size){
+                    groupName = t.data.body[i].groupName
+                    status= t.data.body[i].status
+                }
+                speedList.addAll(t.data.body)
                 speedAdapter?.notifyDataSetChanged()
             }
             Status.ERROR -> {
@@ -99,10 +106,10 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
         }
     }
 
-    private fun setCancelRequestData() {
+    private fun setCancelRequestData(groupName:String,status:Int) {
         val data = CancelRequestAdminRequest()
-        data.groupName = speedList[0].groupName
-        data.status= speedList[0].status
+        data.groupName = groupName
+        data.status= status
         homeViewModel.cancelRequestAdmin(data).observe(viewLifecycleOwner, cancelRequestAdminObserver)
     }
 
@@ -112,7 +119,7 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
                 speedAdapter?.notifyDataSetChanged()
-                activity?.onBackPressed()
+               findNavController().navigate(R.id.action_speedDateSessionFragment_to_homeFragment)
 //                requestList.clear()
 //                allRequestList.clear()
 

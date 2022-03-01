@@ -406,7 +406,7 @@ fun getChatListTime(zuluTime: String): Long {
 
     return time_to_timestamp(formatted, "dd/MM/yyyy")
 }
-fun getNotificationTime(zuluTime: String): String {
+fun getNotificationTimeZullu(zuluTime: String): String {
     val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     val output = SimpleDateFormat("hh:mm aa")
 

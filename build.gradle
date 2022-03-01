@@ -4,6 +4,7 @@ buildscript {
     ext.Rx_GSON_Converter_version='2.1.0'
     ext.retrofit2_version = "2.6.2"
 
+
     repositories {
         google()
         mavenCentral()
@@ -11,10 +12,10 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.4"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
-//        classpath 'com.google.gms:google-services:4.3.10'
+        classpath 'com.google.gms:google-services:4.3.10'
         def nav_version = "2.4.0-alpha02"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
-
+        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
 

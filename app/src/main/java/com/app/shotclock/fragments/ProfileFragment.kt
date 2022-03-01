@@ -1,7 +1,9 @@
 package com.app.shotclock.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -19,7 +21,10 @@ import com.app.shotclock.models.ProfileViewModel
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
 import com.app.shotclock.viewmodels.ProfileViewModels
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 import javax.inject.Inject
+
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(),
     Observer<Resource<ProfileViewModel>> {
@@ -65,15 +70,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onChanged(t: Resource<ProfileViewModel>) {
         when (t.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
                 val body = t.data?.body!!
                 profileData = body
-                if(t.data.body.user_images.size>0){
+                if (t.data.body.user_images.size > 0) {
                     imageList = t.data.body.user_images
                 }
+
+  /*              val str: String = body.height
+                val pattern: Pattern = Pattern.compile("(\\d+)'((\\d+)\")?")
+                val matcher: Matcher = pattern.matcher(str)
+                if (!matcher.matches()) {
+                    return
+                }*/
 
                 gender = body.gender
                 interested = body.interested

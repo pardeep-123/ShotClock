@@ -26,7 +26,6 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -34,8 +33,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.app.shotclock.BuildConfig
 import com.app.shotclock.R
-import com.app.shotclock.base.BaseFragment
-import com.app.shotclock.databinding.FragmentCompleteProfileBinding
 import dagger.android.support.AndroidSupportInjection
 import java.io.File
 import java.io.IOException
@@ -73,10 +70,10 @@ abstract class ImagePickerUtility1<VB : ViewBinding> :Fragment() {
 
         _binding = getViewBinding()
         return binding.root
-
-
     }
+
     abstract fun getViewBinding(): VB
+
     private val requestMultiplePermissions =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
 

@@ -80,7 +80,6 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
 
         // myRequest adapter click to open speed date session fragment
 
-
         binding.tvCurrent.setOnClickListener {
             binding.tvCancel.isVisible()
             binding.tvCurrent.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_white_round_corners)
@@ -111,7 +110,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
                 val btNo: MaterialButton = findViewById(R.id.btNo)
 
                 btYes.setOnClickListener {
-                    setCancelRequestData()
+                    setCancelRequestData(groupName,status)
                     dismiss()
                 }
 
@@ -139,9 +138,13 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
         when (t.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
+                for (i in 0 until t.data?.body!!.size) {
+                    groupName = t.data.body[i].groupName
+                    status = t.data.body[i].status
+                }
                 requestList.clear()
                 allRequestList.clear()
-                if (t.data?.body!!.size > 0) {
+                if (t.data.body.size > 0) {
                     binding.clSpeedDate.isVisible()
                     binding.tvNoDataFound.isGone()
                     requestList.addAll(t.data.body)
@@ -149,12 +152,14 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
                         binding.tvStart.isGone()
                     else
                         binding.tvStart.isVisible()
-                    requestAdapter?.notifyDataSetChanged()
-                    allRequestAdapter?.notifyDataSetChanged()
+
                 } else {
                     binding.clSpeedDate.isGone()
                     binding.tvNoDataFound.isVisible()
                 }
+
+                requestAdapter?.notifyDataSetChanged()
+                allRequestAdapter?.notifyDataSetChanged()
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
@@ -178,13 +183,13 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
                     binding.tvNoDataFound.isGone()
 //                    for (i in 0 )
                     allRequestList.addAll(it.data.body[0])
-                    requestAdapter?.notifyDataSetChanged()
-                    allRequestAdapter?.notifyDataSetChanged()
 
                 } else {
                     binding.clSpeedDate.isGone()
                     binding.tvNoDataFound.isVisible()
                 }
+                requestAdapter?.notifyDataSetChanged()
+                allRequestAdapter?.notifyDataSetChanged()
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
@@ -196,10 +201,10 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
         }
     }
 
-    private fun setCancelRequestData() {
+    private fun setCancelRequestData(groupName:String,status:Int) {
         val data = CancelRequestAdminRequest()
-        data.groupName = requestList[0].groupName
-        data.status= requestList[0].status
+        data.groupName = groupName
+        data.status = status
         homeViewModel.cancelRequestAdmin(data).observe(viewLifecycleOwner, cancelRequestAdminObserver)
     }
 
@@ -213,9 +218,6 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
 //                   allRequestAdapter?.notifyDataSetChanged()
                    this.findNavController().navigate(R.id.action_myRequestsFragment_to_homeFragment)
                }
-//                requestList.clear()
-//                allRequestList.clear()
-
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()

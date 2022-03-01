@@ -18,7 +18,7 @@ class HomeRepo @Inject constructor(private var apiService: ApiService, private v
     }
 
     // filter api
-    suspend fun filterApi(data: FilterRequestModel): Resource<BaseResponseModel>{
+    suspend fun filterApi(data: FilterRequestModel): Resource<HomeResponseModel>{
         return try {
             responseHandler.handleResponse(apiService.filterApi(data))
         }catch (e: Exception){

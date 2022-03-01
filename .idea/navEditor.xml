@@ -138,6 +138,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_myRequestsFragment_to_homeFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_myRequestsFragment_to_speedDateSessionFragment">
                               <value>
                                 <LayoutPositions />
@@ -210,7 +215,7 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="501" />
+                            <option name="x" value="556" />
                             <option name="y" value="-327" />
                           </Point>
                         </option>
