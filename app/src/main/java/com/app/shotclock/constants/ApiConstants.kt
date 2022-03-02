@@ -7,7 +7,7 @@ object ApiConstants {
 
     const val PARTNER_BASE_URL = "http://3.143.51.118:7711/apis/"
     const val SOCKET_IMAGE_URL = "http://3.143.51.118:7711/images/"
-    const val SOCKET_URL = "http://3.143.51.118:7711"
+    const val SOCKET_URL =  "http://202.164.42.227:3020"
 
     const val CONNECT_TIMEOUT: Long = 50000
     const val READ_TIMEOUT: Long = 50000
@@ -18,6 +18,8 @@ object ApiConstants {
     const val FORGOT_PASSWORD = "forgotPassword"
 
     const val USER_SIGNUP = "userSignup"
+
+    const val SOCIAL_LOGIN ="socialLogin"
 
     const val CHANGE_PASSWORD = "changePassword"
 

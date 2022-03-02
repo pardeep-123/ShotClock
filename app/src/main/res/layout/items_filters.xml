@@ -367,9 +367,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:valueFrom="10"
-            android:valueTo="70"
-
+            android:valueFrom="0.0"
+            android:valueTo="100.0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAge"
@@ -382,32 +381,6 @@
             app:trackColorInactive="@color/hintcolor"
             app:trackHeight="5dp"
             app:values="@array/range_slider_age" />
-
-<!--
-        <TextView
-            android:id="@+id/tvEighteenYear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:fontFamily="@font/proxima_regular"
-            android:text="@string/_18_years"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_10ssp"
-            app:layout_constraintStart_toStartOf="@id/rsHeight"
-            app:layout_constraintTop_toBottomOf="@id/rsAge" />
-
-        <TextView
-            android:id="@+id/tvFortyAbove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:fontFamily="@font/proxima_regular"
-            android:text="@string/_40_above"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_10ssp"
-            app:layout_constraintEnd_toEndOf="@id/rsHeight"
-            app:layout_constraintTop_toBottomOf="@id/rsAge" />
--->
 
         <TextView
             android:id="@+id/tvDistance"
@@ -427,8 +400,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:valueFrom="10"
-            android:valueTo="70"
+            android:valueFrom="0.0"
+            android:valueTo="100.0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDistance"
@@ -441,31 +414,6 @@
             app:trackColorInactive="@color/hintcolor"
             app:trackHeight="5dp"
             app:values="@array/range_slider_distance" />
-
-       <!-- <TextView
-            android:id="@+id/tvZeroMiles"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:fontFamily="@font/proxima_regular"
-            android:text="@string/_0_miles"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_10ssp"
-            app:layout_constraintStart_toStartOf="@id/rsHeight"
-            app:layout_constraintTop_toBottomOf="@id/rsDistance" />
-
-        <TextView
-            android:id="@+id/tvTwoHundredMiles"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:fontFamily="@font/proxima_regular"
-            android:text="@string/_200_miles"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_10ssp"
-            app:layout_constraintEnd_toEndOf="@id/rsHeight"
-            app:layout_constraintTop_toBottomOf="@id/rsDistance" />
--->
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btApply"

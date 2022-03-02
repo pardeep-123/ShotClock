@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_5sdp"
     android:layout_marginHorizontal="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_5sdp"
     android:background="@drawable/bg_white_round_corners"
     android:padding="@dimen/_5sdp">
 
@@ -12,75 +12,76 @@
         android:id="@+id/rivUser"
         android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_70sdp"
-        android:src="@drawable/img_one"
-        app:riv_corner_radius="@dimen/_5sdp"
         android:scaleType="fitXY"
+        android:src="@drawable/img_one"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_corner_radius="@dimen/_5sdp" />
 
     <TextView
         android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:fontFamily="@font/proxima_semibold"
         android:text="@string/kristen_jane"
         android:textColor="@color/black"
-        android:fontFamily="@font/proxima_semibold"
+        android:textSize="@dimen/_13ssp"
         app:layout_constraintStart_toEndOf="@id/rivUser"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:textSize="@dimen/_13ssp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/ivGreenDot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
         android:src="@drawable/ic_green_dot"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/tvUserName"
         app:layout_constraintStart_toEndOf="@id/tvUserName"
-        android:layout_marginStart="@dimen/_10sdp"
-        app:layout_constraintTop_toTopOf="@id/tvUserName"
-        app:layout_constraintBottom_toBottomOf="@id/tvUserName"/>
-
+        app:layout_constraintTop_toTopOf="@id/tvUserName" />
 
 
     <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/ivTick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:button="@null"
         android:foreground="@drawable/checkbox_tick_home"
         android:foregroundGravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/tvUserName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvUserName"
-        app:layout_constraintBottom_toBottomOf="@id/tvUserName"/>
+        app:layout_constraintTop_toTopOf="@id/tvUserName" />
 
     <TextView
         android:id="@+id/tvAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:ellipsize="end"
+        android:fontFamily="@font/proxima_regular"
+        android:maxLines="1"
         android:text="@string/_31_miles_away"
         android:textColor="@color/hintcolor"
-        android:fontFamily="@font/proxima_regular"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:textSize="@dimen/_10ssp"
         app:layout_constraintStart_toStartOf="@id/tvUserName"
-        app:layout_constraintTop_toBottomOf="@id/tvUserName"
-        android:textSize="@dimen/_10ssp"/>
+        app:layout_constraintTop_toBottomOf="@id/tvUserName" />
 
     <TextView
         android:id="@+id/tvDetails"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/finding_online_dating_partner"
-        android:textColor="@color/hintcolor"
-        android:fontFamily="@font/proxima_regular"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_5sdp"
-        android:maxLines="2"
         android:ellipsize="end"
+        android:fontFamily="@font/proxima_regular"
+        android:maxLines="2"
+        android:text="@string/finding_online_dating_partner"
+        android:textColor="@color/hintcolor"
+        android:textSize="@dimen/_10ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tvUserName"
-        app:layout_constraintTop_toBottomOf="@id/tvAddress"
-        android:textSize="@dimen/_10ssp"/>
+        app:layout_constraintTop_toBottomOf="@id/tvAddress" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

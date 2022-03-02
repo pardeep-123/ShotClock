@@ -29,6 +29,15 @@
                             <option name="y" value="-483" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_chatFragment_to_videoCallFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
@@ -73,8 +82,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-76" />
-                            <option name="y" value="94" />
+                            <option name="x" value="-106" />
+                            <option name="y" value="103" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -99,8 +108,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1315" />
-                            <option name="y" value="315" />
+                            <option name="x" value="1735" />
+                            <option name="y" value="-485" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -111,8 +120,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="966" />
-                            <option name="y" value="-496" />
+                            <option name="x" value="963" />
+                            <option name="y" value="-484" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -132,8 +141,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="270" />
-                            <option name="y" value="-315" />
+                            <option name="x" value="164" />
+                            <option name="y" value="-399" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -219,6 +228,15 @@
                             <option name="y" value="-327" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_speedDateSessionFragment_to_homeFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
@@ -251,8 +269,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1068" />
-                            <option name="y" value="316" />
+                            <option name="x" value="1455" />
+                            <option name="y" value="-486" />
                           </Point>
                         </option>
                         <option name="myPositions">

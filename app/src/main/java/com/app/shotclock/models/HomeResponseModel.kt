@@ -144,7 +144,9 @@ data class HomeResponseModel(
         @SerializedName("why_Love_this")
         var whyLoveThis: String,
         @SerializedName("whychooseme")
-        var whychooseme: String
+        var whychooseme: String,
+        @SerializedName("is_select")
+        var isSelect: Boolean = false
     ) {
         data class HomeUserImage(
             @SerializedName("createdAt")

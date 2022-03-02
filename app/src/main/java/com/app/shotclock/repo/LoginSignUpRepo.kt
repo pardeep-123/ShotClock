@@ -41,6 +41,16 @@ constructor(private val apiService: ApiService, private val responseHandler: Res
         }
     }
 
+    // social login
+    suspend fun socialLogin(data: SocialLoginRequestModel):Resource<BaseResponseModel>{
+        return try {
+            responseHandler.handleResponse(apiService.socialLogin(data))
+        }catch (e:Exception){
+            responseHandler.handleException(e)
+        }
+    }
+
+
     // change password
     suspend fun changePassword(data: ChangePassRequestModel): Resource<BaseResponseModel> {
         return try {

@@ -2,7 +2,6 @@ package com.app.shotclock.fragments
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.RadioGroup
@@ -23,7 +22,10 @@ import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentHomeBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
-import com.app.shotclock.models.*
+import com.app.shotclock.models.FilterRequestModel
+import com.app.shotclock.models.HomeResponseModel
+import com.app.shotclock.models.SelectionDoneRequestModel
+import com.app.shotclock.models.SelectionDoneResponse
 import com.app.shotclock.utils.*
 import com.app.shotclock.viewmodels.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -32,7 +34,7 @@ import com.google.android.material.slider.RangeSlider
 import javax.inject.Inject
 
 
-open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(), HomeAdapter.ShowTick,
+open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     Observer<Resource<HomeResponseModel>> {
 
     lateinit var homeViewModel: HomeViewModel
@@ -85,14 +87,12 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(), HomeAdap
         handleHomeFragmentBackPress()
         rangeSliders()
         setAdapter()
-
         getLiveLocation(requireActivity())
     }
 
     private fun setAdapter() {
-        adapter = HomeAdapter(requireContext(), this, homeList)
+        adapter = HomeAdapter(requireContext(), homeList)
         binding.rvHome.adapter = adapter
-
     }
 
     private fun configureViewModel() {
@@ -134,16 +134,8 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(), HomeAdap
         rsAge = view.findViewById(R.id.rsAge)
         rsDistance = view.findViewById(R.id.rsDistance)
 
-/*        val rbMale: RadioButton = view.findViewById(R.id.rbMale)
-        val rbFemale: RadioButton = view.findViewById(R.id.rbFemale)
-        val rbSmokeYes: RadioButton = view.findViewById(R.id.rbSmokeYes)
-        val rbSmokeNo: RadioButton = view.findViewById(R.id.rbSmokeNo)
-        val rbDrinkYes: RadioButton = view.findViewById(R.id.rbDrinkYes)
-        val rbDrinkNo: RadioButton = view.findViewById(R.id.rbDrinkNo)
-        val rbPetsYes: RadioButton = view.findViewById(R.id.rbPetsYes)
-        val rbPetsNo: RadioButton = view.findViewById(R.id.rbPetsNo)*/
-
         tvClear?.setOnClickListener {
+            bottomOpen(bottomSheetBehavior)
             homeViewModel.homeApi(latitude, longitude).observe(viewLifecycleOwner, this)
             adapter?.notifyDataSetChanged()
         }
@@ -165,7 +157,6 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(), HomeAdap
                 smoke = "Yes"
             else if (checkedId == R.id.rbSmokeNo)
                 smoke = "No"
-
         }
         // radio group drink
         rgDrink?.setOnCheckedChangeListener { _, checkedId ->
@@ -203,7 +194,6 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(), HomeAdap
         val orientationAdapter = SexualOrientationAdapter(requireContext(), orientationList,"sexual")
         rvSexualOrientation.adapter = orientationAdapter
 
-
         educationAdapter.onItemClickListener = {pos ->
             education = pos
         }
@@ -216,8 +206,6 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(), HomeAdap
             sexualOrientation = pos
         }
 
-//        rsHeight = view.findViewById(R.id.rsHeight)
-//        val tvSixFeet: TextView = view.findViewById(R.id.tvSixFeet)
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomBehave(bottomSheetBehavior)
         // bottom sheet press close icon
@@ -234,7 +222,6 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(), HomeAdap
             Constants.BottomSheet = false
             bottomOpen(bottomSheetBehavior2)
         }
-//        selectHeightText = tvHeightSelect.text.toString()
 
     }
 
@@ -264,13 +251,11 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(), HomeAdap
 
             }
         })
-        // for Age range set
+        // for  label Age range set
         rsAge?.setLabelFormatter { value: Float ->
-
             value.toInt().toString()
         }
         rsDistance?.setLabelFormatter { value: Float ->
-
             value.toInt().toString()
         }
 
@@ -286,17 +271,12 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(), HomeAdap
         }
 
         // for open bottom sheet
-//        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetDialog.bottomSheet)
-
         binding.tb.ivFilter.setOnClickListener {
             Constants.BottomSheet = true
             bottomOpen(bottomSheetBehavior)
-
-//            findNavController().navigate(R.id.action_homeFragment_to_subscriptionFragment)
         }
 
         binding.ivPlus.setOnClickListener {
-//            if (binding.ivPlus.visibility == View.VISIBLE) {
             Constants.isPlus = true
             binding.ivPlus.isGone()
             binding.clBottomBtn.isVisible()
@@ -305,24 +285,22 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(), HomeAdap
 
         binding.btCancel.setOnClickListener {
             Constants.isPlus = false
+            homeList.forEach {
+                it.isSelect = false
+            }
             binding.clBottomBtn.isGone()
             binding.ivPlus.isVisible()
             adapter?.notifyDataSetChanged()
         }
-//                binding.btDone.isGone()
-//                binding.btCancel.isGone()
-//                binding.ivPlus.isVisible()
-//            }else{
-//
-//            }
-
-//            binding.bottomSheetDialog.btApply.setOnClickListener {
-//                activity?.onBackPressed()
-//            }
 
         binding.btDone.setOnClickListener {
-            Log.e("=====", idList.size.toString())
-            Constants.isPlus = false
+            idList.clear()
+            homeList.forEach {
+                if (it.isSelect) {
+                    idList.add(SelectionDoneRequestModel.SelectionDoneUser(it.id.toString()))
+                }
+            }
+
             when {
                 idList.size < 5 -> {
                     showToast("You cannot add less than 5 person")
@@ -331,60 +309,12 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(), HomeAdap
                     showToast("You cannot add more than 5 persons.")
                 }
                 else -> {
+                    Constants.isPlus = false
                     val data = SelectionDoneRequestModel(idList)
                     homeViewModel.selectionDone(data).observe(viewLifecycleOwner, selectionDoneObserver)
                 }
             }
         }
-    }
-
-    private fun bottomOpen(bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>) {
-        if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
-            isBottom = true
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
-        } else {
-            isBottom = false
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED)
-        }
-    }
-
-    private fun bottomBehave(bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>) {
-        bottomSheetBehavior.setBottomSheetCallback(object :
-            BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-// React to state change
-                when (newState) {
-                    BottomSheetBehavior.STATE_HIDDEN -> {
-                    }
-                    BottomSheetBehavior.STATE_EXPANDED -> {
-                    }
-                    BottomSheetBehavior.STATE_COLLAPSED -> {
-                    }
-                    BottomSheetBehavior.STATE_DRAGGING -> {
-                    }
-                    BottomSheetBehavior.STATE_SETTLING -> {
-                    }
-                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
-
-                    }
-                }
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-// React to dragging events
-            }
-        })
-    }
-
-    //        for back press in fragment
-    private fun handleHomeFragmentBackPress() {
-        requireActivity().onBackPressedDispatcher
-            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    //Handle back event from any fragment
-                    activity?.finishAffinity()
-                }
-            })
     }
 
     // home api
@@ -394,7 +324,6 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(), HomeAdap
                 binding.pb.clLoading.isGone()
                 homeList.addAll(t.data?.body!!)
                 adapter?.notifyDataSetChanged()
-
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
@@ -448,18 +377,6 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(), HomeAdap
         }
     }
 
-    override fun showClick(pos: Int, id: String) {
-      //  if (idList.contains(id))
-        idList.add(SelectionDoneRequestModel.SelectionDoneUser(id))
-        val newId = idList.distinctBy { it.userId }
-        Log.e("====size", newId.size.toString())
-
-/*        if (idList.size > 5) {
-            showToast("You cannot add more than 5 persons.")
-        }*/
-
-    }
-
     // selection done api
     private val selectionDoneObserver = Observer<Resource<SelectionDoneResponse>> {
         when (it.status) {
@@ -487,12 +404,63 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(), HomeAdap
         }
     }
 
+    // set lat lng and hit home api
     override fun updatedLatLng(lat: Double, lng: Double) {
         latitude = lat.toString()
         longitude = lng.toString()
 
         homeViewModel.homeApi(latitude, longitude).observe(viewLifecycleOwner, this)
         stopLocationUpdates()
+    }
+
+
+    //        for back press in fragment
+    private fun handleHomeFragmentBackPress() {
+        requireActivity().onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    //Handle back event from any fragment
+                    activity?.finishAffinity()
+                }
+            })
+    }
+
+    private fun bottomOpen(bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>) {
+        if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
+            isBottom = true
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
+        } else {
+            isBottom = false
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED)
+        }
+    }
+
+    private fun bottomBehave(bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>) {
+        bottomSheetBehavior.setBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                // React to state change
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                    }
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                    }
+                    BottomSheetBehavior.STATE_SETTLING -> {
+                    }
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                // React to dragging events
+            }
+        })
     }
 
 }

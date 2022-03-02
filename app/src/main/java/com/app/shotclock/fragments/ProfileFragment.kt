@@ -21,8 +21,6 @@ import com.app.shotclock.models.ProfileViewModel
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
 import com.app.shotclock.viewmodels.ProfileViewModels
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 import javax.inject.Inject
 
 
@@ -36,7 +34,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),
     private var imageList = ArrayList<ProfileUserImage>()
     private var gender = 0
     private var interested = 0
-    private var profileData : ProfileBody? = null
+    private var profileData: ProfileBody? = null
+    private val oneFeet = 0.0328  //Don't change this value
 
     override fun getViewBinding(): FragmentProfileBinding {
         return FragmentProfileBinding.inflate(layoutInflater)
@@ -81,12 +80,20 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),
                     imageList = t.data.body.user_images
                 }
 
-  /*              val str: String = body.height
-                val pattern: Pattern = Pattern.compile("(\\d+)'((\\d+)\")?")
-                val matcher: Matcher = pattern.matcher(str)
-                if (!matcher.matches()) {
-                    return
-                }*/
+                /*              val str: String = body.height
+                              val pattern: Pattern = Pattern.compile("(\\d+)'((\\d+)\")?")
+                              val matcher: Matcher = pattern.matcher(str)
+                              if (!matcher.matches()) {
+                                  return
+                              }*/
+
+
+
+                if (body.height.isNotEmpty()) {
+                    val feetHeight = (oneFeet * body.height.toDouble()).toFloat()
+                    binding.tvHeight.text =  String.format("%.1f", feetHeight)+ "'"
+                }
+
 
                 gender = body.gender
                 interested = body.interested
@@ -95,7 +102,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),
                 binding.tvMail.text = body.email
                 binding.tvPhoneNo.text = body.countryCode + "" + body.phone
                 binding.tvDOB.text = body.dateofbirth
-                binding.tvHeight.text = body.height
                 binding.tvGraduation.text = body.qualification
                 binding.tvLocation.text = body.address
                 binding.tvSexualOrientation.text = body.sexualOrientation

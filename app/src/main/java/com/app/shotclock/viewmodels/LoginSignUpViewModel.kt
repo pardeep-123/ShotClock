@@ -43,6 +43,15 @@ constructor(private val loginSignUpRepo: LoginSignUpRepo) : ViewModel() {
         }
     }
 
+    // social login
+    fun socialLogin(data: SocialLoginRequestModel): LiveData<Resource<BaseResponseModel>>{
+        return liveData(Dispatchers.IO){
+            emit(Resource.loading(null))
+            val response = loginSignUpRepo.socialLogin(data)
+            emit(response)
+        }
+    }
+
     // change password
     fun changePassword(data: ChangePassRequestModel): LiveData<Resource<BaseResponseModel>> {
         return liveData(Dispatchers.IO) {

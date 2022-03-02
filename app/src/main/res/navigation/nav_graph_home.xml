@@ -63,7 +63,11 @@
         android:id="@+id/chatFragment"
         android:name="com.app.shotclock.fragments.ChatFragment"
         android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat">
+        <action
+            android:id="@+id/action_chatFragment_to_videoCallFragment"
+            app:destination="@id/videoCallFragment" />
+    </fragment>
     <fragment
         android:id="@+id/changePasswordFragment"
         android:name="com.app.shotclock.fragments.ChangePasswordFragment"

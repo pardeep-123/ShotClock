@@ -3,10 +3,14 @@ package com.app.shotclock.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.app.shotclock.R
 import com.app.shotclock.constants.ApiConstants
 import com.app.shotclock.databinding.ItemsSpeedDateSessionBinding
 import com.app.shotclock.models.RequestListResponseModel
+import com.app.shotclock.utils.isGone
+import com.app.shotclock.utils.isVisible
 import com.bumptech.glide.Glide
 
 class SpeedDateSessionAdapter(private var ctx: Context,private var list: ArrayList<RequestListResponseModel.RequestListResponseBody>) :RecyclerView.Adapter<SpeedDateSessionAdapter.SpeedDateHolder>(){
@@ -26,7 +30,21 @@ class SpeedDateSessionAdapter(private var ctx: Context,private var list: ArrayLi
         holder.itemBinding.tvUserName.text = list[position].username
         holder.itemBinding.tvBio.text = list[position].bio
 
-        holder.itemBinding.tvStatus.text = list[position].isOnline
+        when (list[position].status) {
+            1 -> {
+                holder.itemBinding.tvStatus.text = "Pending"
+            }
+            2 -> {
+                holder.itemBinding.tvStatus.text = "Accepted"
+                holder.itemBinding.tvStatus.setTextColor(ContextCompat.getColor(ctx,R.color.green))
+            }
+            else -> holder.itemBinding.tvStatus.text = "Cancelled"
+        }
+
+        if (list[position].isOnline == "1")
+            holder.itemBinding.ivGreenDot.isVisible()
+        else
+            holder.itemBinding.ivGreenDot.isGone()
 
     }
 

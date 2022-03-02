@@ -12,7 +12,6 @@ import dagger.android.support.AndroidSupportInjection
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
-    var baseView: View? = null
     private var _binding: VB? = null
     val binding get() = _binding!!
     var isLoaded = false

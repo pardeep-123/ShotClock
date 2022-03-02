@@ -140,4 +140,8 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
+    // socket dependency
+    implementation('io.socket:socket.io-client:1.0.0') {
+        exclude group: 'org.json', module: 'json'
+    }
 }

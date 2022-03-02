@@ -50,6 +50,7 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
     private var interested = "" // 1 = men, 2= women, 3 = both
     private var imageFileList = ArrayList<EditProfileRequestModel.EditProfileImage>()
     private var profileData : ProfileBody?= null
+    private val oneFeet = 0.0328  //Don't change this value
 
     override fun getViewBinding(): FragmentEditProfileBinding {
         return FragmentEditProfileBinding.inflate(layoutInflater)
@@ -82,7 +83,12 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
             "Female"
         binding.tvGenderSelect.text = genderValue
 
-        binding.tvHeightSelect.text = profileData?.height
+        if (profileData?.height!!.isNotEmpty()) {
+            val feetHeight = (oneFeet * profileData?.height!!.toDouble()).toFloat()
+            binding.tvHeightSelect.text  =  String.format("%.1f", feetHeight)
+        }
+        //        binding.tvHeightSelect.text = profileData?.height
+
         binding.tvQualificatSelect.text = profileData?.qualification
         binding.etLocation.setText(profileData?.address)
         binding.tvSexualOrientationSelect.text = profileData?.sexualOrientation
