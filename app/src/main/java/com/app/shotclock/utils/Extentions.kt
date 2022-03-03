@@ -473,14 +473,10 @@ fun setPopUpWindow(
     val inflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     val view: View = inflater.inflate(R.layout.custom_spinners, null)
 
-    val myPopupWindow = PopupWindow(
-        view,
-        930,
-        ConstraintLayout.LayoutParams.WRAP_CONTENT, true
-    )
+    val myPopupWindow = PopupWindow(view, 930, ConstraintLayout.LayoutParams.WRAP_CONTENT, true)
 //     myPopupWindow.showAtLocation(text, Gravity.CENTER, 0, 20)
     myPopupWindow.showAsDropDown(textView)
-    //  val tvMale: TextView = view.findViewById(R.id.tvMale)
+
     val rvTextList: RecyclerView = view.findViewById(R.id.rvTextList)
     rvTextList.adapter = HeightPopupAdapter(list, object : HeightPopupAdapter.TextClick {
         override fun clickText(pos: Int) {
@@ -489,19 +485,5 @@ fun setPopUpWindow(
         }
 
     })
-
-    //  tvMale.text = male
-    // tvFemale.text = female
-
-    /*tvMale.setOnClickListener {
-
-        text.text = male
-        myPopupWindow.dismiss()
-    }
-
-    tvFemale.setOnClickListener {
-        text.text = female
-        myPopupWindow.dismiss()
-    }*/
 
 }

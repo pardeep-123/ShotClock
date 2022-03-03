@@ -227,7 +227,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
 
     // for Age range set
     private fun rangeSliders() {
-        rsAge?.addOnChangeListener(RangeSlider.OnChangeListener { slider, value, fromUser ->
+        rsAge?.addOnChangeListener(RangeSlider.OnChangeListener { _, _, _ ->
             try {
                 val startValue = rsAge?.values?.get(0)
                 val endValue = rsAge?.values?.get(1)
@@ -240,7 +240,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
             }
         })
 
-        rsDistance?.addOnChangeListener(RangeSlider.OnChangeListener { slider, value, fromUser ->
+        rsDistance?.addOnChangeListener(RangeSlider.OnChangeListener { _, _, _ ->
             try {
                 val startValue = rsDistance?.values?.get(0)
                 val endValue = rsDistance?.values?.get(1)
@@ -413,8 +413,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         stopLocationUpdates()
     }
 
-
-    //        for back press in fragment
+    // for back press in fragment
     private fun handleHomeFragmentBackPress() {
         requireActivity().onBackPressedDispatcher
             .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {

@@ -35,6 +35,7 @@
         android:hint="@string/search_here"
         android:inputType="textPersonName"
         android:maxLines="1"
+        android:cursorVisible="true"
         android:imeOptions="actionDone"
         android:paddingEnd="@dimen/_10sdp"
         android:paddingStart="@dimen/_10sdp"

@@ -59,10 +59,8 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Places.initialize(requireContext(), getString(R.string.api_key_map))
-
         val bundle = arguments
         profileData = (bundle?.getSerializable("data") as ProfileBody?)!!
-
         configureViewModel()
         handleClicks()
         setEditProfileData()

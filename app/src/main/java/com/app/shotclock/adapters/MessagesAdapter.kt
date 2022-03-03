@@ -1,15 +1,14 @@
 package com.app.shotclock.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.databinding.ItemsMessagesBinding
 
-class MessagesAdapter(private var clickMessage: ClickMessage) : RecyclerView.Adapter<MessagesAdapter.MessageHolder>(){
+class MessagesAdapter(private var ctx: Context) : RecyclerView.Adapter<MessagesAdapter.MessageHolder>(){
 
-    interface ClickMessage {
-        fun onClick()
-    }
+    var onItemClickListener : ((pos:Int)->Unit)? =null
 
     class MessageHolder (itemsView : ItemsMessagesBinding) : RecyclerView.ViewHolder(itemsView.root){
          val itemBinding : ItemsMessagesBinding = itemsView
@@ -24,7 +23,7 @@ class MessagesAdapter(private var clickMessage: ClickMessage) : RecyclerView.Ada
     override fun onBindViewHolder(holder: MessageHolder, position: Int) {
 
              holder.itemView.setOnClickListener {
-                 clickMessage.onClick()
+                 onItemClickListener?.invoke(position)
              }
     }
 

@@ -1,444 +1,240 @@
 package com.app.shotclock.utils
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import com.app.shotclock.cache.getUser
 import com.app.shotclock.constants.ApiConstants
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
-import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
 import java.net.URISyntaxException
 import java.util.*
 
-class SocketManager {
-
-    private val connectUser = "connect_user"   //socket name
-    private val connectListener = "connect_listener"  //listener
-
-    private val sendMessage = "send_message"
-    private val myChat1Listener = "body"
-
-    private val getChatEvent = "get_chat"
-    private val myChatListener = "my_chat"
-
-    private val getChatListEvent = "get_chat_list"
-    private val getListListener = "get_list"
-
-    private val deleteChatEmitter = "delete_chat"
-    private val deleteListener = "delete_data"
-
-    private val clearChatEmitter = "clear_chat"
-    private val clearListener = "clear_data"
-
-    private val blockUnblockUserEmitter = "blockUnblock_user"
-    private val blockDataListener = "block_data"
-
-    private val getProfileDataEmitter = "get_profile_data"
-    private val profileInformationListener = "profile_information"
-
-    private val readUnreadEmitter = "read_unread"
-    private val readDataStatusListener = "read_data_status"
-
+object SocketManager {
 
     private var mSocket: Socket? = null
-    private var observerList: MutableList<Observer>? = null
+    private var observerList: MutableList<SocketInterface>? = null
+    private var isConnect = false
+    private val TAG = SocketManager::class.java.canonicalName
 
-    private val errorMessage = "error_message"
 
-    private fun isConnected(): Boolean {
-        return mSocket != null && mSocket!!.connected()
-    }
+    //**********************EVENT***********************
+    private const val CONNECT_USER = "connect_user"  //event
+    const val SEND_MSG = "send_messages"
+    const val GET_MESSAGE = "get_messages"
+    const val CHAT_LISTING = "chat_listing"
 
-    fun init() {
-        initializeSocket()
-    }
 
-    private fun getSocket(): Socket? {
-        run {
-            try {
-                mSocket = IO.socket(ApiConstants.SOCKET_URL)
-            } catch (e: URISyntaxException) {
-                throw RuntimeException(e)
-            }
-        }
-        return mSocket
-    }
+    //************************LISTENER***********************
+    private const val CONNECT_LISTENER = "connect_listener"  //listener
+    const val SEND_MSG_LISTENER = "send_message_listner"
+    const val GET_MSG_LISTENER = "get_messagelistner"
+    const val CHAT_LISTING_LISTENER = "chatlistinglistner"
 
-    fun onRegister(observer: Observer) {
-        if (observerList != null && !requireNotNull(observerList?.contains(observer))) {
-            observerList?.clear()
-            observerList?.add(observer)
-        } else {
-            observerList = ArrayList()
-            observerList?.clear()
-            observerList?.add(observer)
+
+    init {
+        try {
+            createSocketOptions()
+        } catch (e: URISyntaxException) {
+            e.printStackTrace()
         }
     }
 
-    fun unRegister(observer: Observer) {
-        observerList?.let { list ->
-            for (i in list.indices) {
-                val model = list[i]
-                if (model === observer) {
-                    observerList?.remove(model)
-                }
-            }
+    fun initSocket() {
+        try {
+            createSocketOptions()
+            onConnect()
+        } catch (e: URISyntaxException) {
+            e.printStackTrace()
         }
     }
 
-    private fun initializeSocket() {
-        if (mSocket == null) {
-            mSocket = getSocket()
-        }
+    fun isConnected(): Boolean {
+        return isConnect
+    }
+
+    private fun createSocketOptions() {
+        val opts = IO.Options()
+
+        opts.reconnection = true
+        mSocket = IO.socket(ApiConstants.SOCKET_URL, opts)
         if (observerList == null || observerList!!.size == 0) {
             observerList = ArrayList()
         }
-        disconnect()
-        mSocket!!.connect()
-        mSocket!!.on(Socket.EVENT_CONNECT, onConnect)
-        mSocket!!.on(Socket.EVENT_DISCONNECT, onDisconnect)
-        mSocket!!.on(Socket.EVENT_CONNECT_ERROR, onConnectError)
-        mSocket!!.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError)
-        mSocket!!.on(errorMessage, onErrorMessage)
     }
 
-    private fun disconnect() {
-        if (mSocket != null) {
-            mSocket!!.off(Socket.EVENT_DISCONNECT, onDisconnect)
-            mSocket!!.off(Socket.EVENT_CONNECT, onConnect)
-            mSocket!!.off(Socket.EVENT_DISCONNECT, onDisconnect)
-            mSocket!!.off(Socket.EVENT_CONNECT_ERROR, onConnectError)
-            mSocket!!.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError)
-            mSocket!!.off()
-            mSocket!!.disconnect()
+    fun onConnect() {
+        if (mSocket == null)
+            return
+        if (!mSocket!!.connected()) {
+            mSocket!!.on(Socket.EVENT_CONNECT, onConnectListener)
+            mSocket!!.on(Socket.EVENT_DISCONNECT, onDisConnect)
+            mSocket!!.on(Socket.EVENT_CONNECT_ERROR, onConnectError)
+//            mSocket!!.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError)
+            mSocket!!.on(CONNECT_LISTENER, onConnectUserListener)
+            mSocket!!.on(SEND_MSG_LISTENER, onSendMsgListener)
+            mSocket!!.on(GET_MSG_LISTENER, onGetMsgListener)
+            mSocket!!.on(CHAT_LISTING_LISTENER, onChatListingListener)
+
+
+            mSocket!!.connect()
+        } else {
+            Log.e("info", "Socket connected: ${mSocket?.id()}")
         }
     }
 
-    private val onDisconnect = Emitter.Listener { args ->
-        try {
-            Log.e("Socket", "DISCONNECTED :::$args")
-        } catch (ex: Exception) {
-            ex.localizedMessage
+    /**
+     * Call this method in onPause and onDestroy
+     */
+    fun onDisConnect() {
+        Log.e("onDisConnect", "Socket disConnected: ${mSocket?.id()}")
+        if (mSocket == null)
+            return
+        isConnect = false
+        mSocket!!.off(Socket.EVENT_CONNECT, onConnectListener)
+        mSocket!!.off(Socket.EVENT_DISCONNECT, onDisConnect)
+        mSocket!!.off(Socket.EVENT_CONNECT_ERROR, onConnectError)
+        mSocket!!.off(CONNECT_LISTENER, onConnectUserListener)
+        mSocket!!.off(SEND_MSG_LISTENER, onSendMsgListener)
+        mSocket!!.off(GET_MSG_LISTENER, onGetMsgListener)
+        mSocket!!.off(CHAT_LISTING_LISTENER, onChatListingListener)
+
+
+        mSocket!!.disconnect()
+    }
+
+
+    /*
+     * Send Data to server by use of socket
+     * */
+    fun sendDataToServer(methodName: String?, mObject: Any) {
+        // Get a handler that can be used to post to the main thread
+        Handler(Looper.getMainLooper()).post {
+            mSocket?.emit(methodName, mObject)
+            Log.e(methodName, mObject.toString())
         }
     }
 
-    private val onConnect = Emitter.Listener {
-        Log.e("Socket", "CONNECTED")
-        if (isConnected()) {
+
+    private val onConnectUserListener = Emitter.Listener { args ->
+        // Get a handler that can be used to post to the main thread
+        Handler(Looper.getMainLooper()).post { //                    JSONObject data = (JSONObject) args[0];
+            Log.e("onConnectUserListener", args[0].toString())
+            for (observer in observerList!!) {
+                observer.onSocketCall(CONNECT_LISTENER, *args)
+            }
+        }
+    }
+
+    /********************************************************************************/
+    private val onConnectListener = Emitter.Listener { args ->
+        // Get a handler that can be used to post to the main thread
+        Log.e("onConnectListener", "Socket connected: ${mSocket?.id()}")
+        Handler(Looper.getMainLooper()).post {
+            Log.e(TAG, "socket connected")
+            isConnect = true
+
             try {
-                Log.e("Socket", "want to go online")
-                val jsonObject = JSONObject()
-                // val loginStatus:Boolean= prefs?.getLoggedIn()!!
-                //   if(loginStatus)
-                //   {
-                //     if(prefs?.getString(USER_ID) != "0")
-                //    {
-                jsonObject.put("userid", App.app?.getString("user_id"))
-                mSocket!!.off(connectListener, onConnectListener)
-                mSocket!!.on(connectListener, onConnectListener)
-                mSocket!!.emit(connectUser, jsonObject)
-                mSocket!!.off(myChat1Listener, onNewMessage)
-                mSocket!!.on(myChat1Listener, onNewMessage)
-//                        connectSingleChatSocket()
-                //     }
-                //}
-            } catch (e: JSONException) {
+
+                val userId = getUser(App.context!!)?.id.toString()
+
+                if (userId.isNotEmpty()) {
+                    val jsonObject = JSONObject()
+                    jsonObject.put("userId", userId)
+                    sendDataToServer(CONNECT_USER, jsonObject)
+                }
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
-        } else {
-            initializeSocket()
-        }
-    }
-
-    private val onConnectError = Emitter.Listener { args ->
-        try {
-            Log.e("Socket", "CONNECTION ERROR :::$args")
-        } catch (ex: Exception) {
-            ex.localizedMessage
-        }
-    }
-
-    private val onErrorMessage = Emitter.Listener { args ->
-        for (observer in observerList!!) {
-            try {
-                val data = args[0] as JSONObject
-                Log.e("Socket", "Error Message :::$data")
-                observer.onError(connectUser, args)
-            } catch (ex: Exception) {
-                ex.localizedMessage
-            }
-        }
-    }
-
-    private val onConnectListener = Emitter.Listener { args ->
-        try {
-            val data = args[0] as JSONObject
-            Log.e("ConnectListener", data.toString())
-        } catch (ex: Exception) {
-            ex.localizedMessage
-        }
-    }
-
-    // function for get message list
-    fun getMessageList(jsonObject: JSONObject?) {
-        if (jsonObject != null) {
-            if (!mSocket!!.connected()) {
-                mSocket!!.connect()
-                mSocket!!.off(getListListener, onGetMessageList)
-                mSocket!!.on(getListListener, onGetMessageList)
-                mSocket!!.emit(getChatListEvent, jsonObject)
-            } else {
-                mSocket!!.off(getListListener, onGetMessageList)
-                mSocket!!.on(getListListener, onGetMessageList)
-                mSocket!!.emit(getChatListEvent, jsonObject)
-            }
-            Log.e("Socket", "Chat List Called")
-        }
-    }
-
-    private val onGetMessageList = Emitter.Listener { args ->
-        try {
-            val data = args[0] as JSONArray
             for (observer in observerList!!) {
-                observer.onGetChatList(getListListener, data)
+                observer.onSocketConnect(*args)
             }
-
-            Log.e("Socket", "onGetChatRead ::$data")
-        } catch (ex: Exception) {
-            ex.localizedMessage
         }
     }
 
-    // function for delete chat
-    fun deleteChat(jsonObject: JSONObject?) {
-        if (jsonObject != null) {
-            if (!mSocket!!.connected()) {
-                mSocket!!.connect()
-                mSocket!!.off(deleteListener, deletChatList)
-                mSocket!!.on(deleteListener, deletChatList)
-                mSocket!!.emit(deleteChatEmitter, jsonObject)
-            } else {
-                mSocket!!.off(deleteListener, deletChatList)
-                mSocket!!.on(deleteListener, deletChatList)
-                mSocket!!.emit(deleteChatEmitter, jsonObject)
-            }
-            Log.e("Socket", "delete List Called")
-        }
-    }
-
-    private val deletChatList = Emitter.Listener { args ->
-        try {
-            val data = args[0] as JSONObject
+    private val onDisConnect = Emitter.Listener { args ->
+        // Get a handler that can be used to post to the main thread
+        Handler(Looper.getMainLooper()).post {
+            Log.e(TAG, "socket disConnected")
+            isConnect = false
+            //                    if (mSocketInterface!=null)
+//                        mSocketInterface.onSocketDisConnect(args);
             for (observer in observerList!!) {
-                observer.onResponse(deleteListener, data)
+                observer.onSocketDisConnect(*args)
             }
-            Log.e("DeleteSocket", "onGetChatRead ::$data")
-        } catch (ex: Exception) {
-            ex.localizedMessage
         }
     }
 
-    //   function for get chatting list
-    fun getSingleChatList(jsonObject: JSONObject?) {
-        if (jsonObject != null) {
-            if (!mSocket!!.connected()) {
-                mSocket!!.connect()
-                mSocket!!.emit(getChatEvent, jsonObject)
-                mSocket!!.off(myChatListener, onGetChatList)
-                mSocket!!.on(myChatListener, onGetChatList)
-                mSocket!!.off(myChat1Listener)
-                mSocket!!.on(myChat1Listener, onNewMessage)
-            } else {
-                mSocket!!.emit(getChatEvent, jsonObject)
-                mSocket!!.off(myChatListener, onGetChatList)
-                mSocket!!.on(myChatListener, onGetChatList)
-                mSocket!!.off(myChat1Listener)
-                mSocket!!.on(myChat1Listener, onNewMessage)
-            }
-            Log.e("Socket", "Chat List Called")
-        }
-    }
-
-    private val onGetChatList = Emitter.Listener { args ->
-        try {
-            // val data = args[0] as JSONObject
-            val data = args[0] as JSONArray
-            for (observer in observerList!!) {
-                //   observer.onResponse(myChatListener, data)
-                observer.onGetChatList(myChatListener, data)
-            }
-
-            Log.e("Socket", "onGetChatRead ::$data")
-        } catch (ex: Exception) {
-            ex.localizedMessage
-        }
-    }
-
-    //    function for send message to sender
-    fun sendMessage(jsonObject: JSONObject?) {
-        if (jsonObject != null) {
-            try {
-                if (!mSocket!!.connected()) {
-                    mSocket!!.connect()
-                    mSocket!!.emit(sendMessage, jsonObject)
-                    mSocket!!.off(myChat1Listener)
-                    mSocket!!.on(myChat1Listener, onNewMessage)
-                } else {
-                    mSocket!!.emit(sendMessage, jsonObject)
-                    mSocket!!.off(myChat1Listener)
-                    mSocket!!.on(myChat1Listener, onNewMessage)
+    private val onConnectError =
+        Emitter.Listener { args -> // Get a handler that can be used to post to the main thread
+            Handler(Looper.getMainLooper()).post {
+                for (observer in observerList!!) {
+                    observer.onError("ERROR", *args)
                 }
-            } catch (ex: Exception) {
-                ex.localizedMessage
+                Log.e(TAG, "Run" + args[0])
+                Log.e(TAG, "socket Error connecting")
+//                if (!checkStringNull(MyApplication.instance!!.getString(Constants.AuthKey)))
+//                    initSocket()
             }
-
-            Log.e("Socket", "Send Message Called")
         }
-    }
 
-    private val onNewMessage = Emitter.Listener { args ->
-        Log.e("Socket", "ON_NEW_MESSAGE")
-        try {
-            val data = args[0] as JSONObject
-            Log.e("Socket", "New Message :::$data")
-            for (observer in observerList!!) {
-                observer.onResponse(myChat1Listener, data)
-            }
-        } catch (ex: Exception) {
-            ex.localizedMessage
-        }
-    }
 
-    // function for clear chat
-    fun clearChat(jsonObject: JSONObject?) {
-        if (jsonObject != null) {
-            if (!mSocket!!.connected()) {
-                mSocket!!.connect()
-                mSocket!!.off(clearListener, clearChatList)
-                mSocket!!.on(clearListener, clearChatList)
-                mSocket!!.emit(clearChatEmitter, jsonObject)
-            } else {
-                mSocket!!.off(clearListener, clearChatList)
-                mSocket!!.on(clearListener, clearChatList)
-                mSocket!!.emit(clearChatEmitter, jsonObject)
-            }
-            Log.e("DeleteSocket", "delete List Called")
-        }
-    }
-
-    private val clearChatList = Emitter.Listener { args ->
-        try {
-            val data = args[0] as JSONObject
-            for (observer in observerList!!) {
-                observer.onCheckResponse(clearListener, data)
-            }
-            Log.e("ClaerSocket", "onGetChatRead ::$data")
-        } catch (ex: Exception) {
-            ex.localizedMessage
-        }
-    }
-
-    // function for block unblock user
-    fun blockUnblockUser(jsonObject: JSONObject?) {
-        if (jsonObject != null) {
-            if (!mSocket!!.connected()) {
-                mSocket!!.off(blockDataListener, blockUnblockUser)
-                mSocket!!.on(blockDataListener, blockUnblockUser)
-                mSocket!!.emit(blockUnblockUserEmitter, jsonObject)
-            } else {
-                mSocket!!.off(blockDataListener, blockUnblockUser)
-                mSocket!!.on(blockDataListener, blockUnblockUser)
-                mSocket!!.emit(blockUnblockUserEmitter, jsonObject)
-            }
-            Log.e("BlockUnBlockUser", "block list Called")
-        }
-    }
-
-    private val blockUnblockUser = Emitter.Listener { args ->
-        try {
-            val data = args[0] as JSONObject
-            for (observer in observerList!!) {
-                observer.onCheckResponse(blockDataListener, data)
-            }
-            Log.e(" ", "onBlockUnblock ::$data")
-
-        } catch (ex: Exception) {
-            ex.localizedMessage
-        }
-    }
-
-    // function for get profile data
-    fun getProfileData(jsonObject: JSONObject?) {
-        if (jsonObject != null) {
-            if (!mSocket!!.connected()) {
-                mSocket!!.off(profileInformationListener, getProfileData)
-                mSocket!!.on(profileInformationListener, getProfileData)
-                mSocket!!.emit(getProfileDataEmitter, jsonObject)
-            } else {
-                mSocket!!.off(profileInformationListener, getProfileData)
-                mSocket!!.on(profileInformationListener, getProfileData)
-                mSocket!!.emit(getProfileDataEmitter, jsonObject)
-            }
-            Log.e("ProfileInformation", "profile list Called")
-        }
-    }
-
-    private val getProfileData = Emitter.Listener { args ->
-        try {
-            val data = args[0] as JSONObject
-            for (observer in observerList!!) {
-                observer.onCheckResponse(profileInformationListener, data)
-            }
-            Log.e("getProfileInformation", "profileInformationListener::  $data")
-        } catch (ex: Exception) {
-            ex.localizedMessage
-        }
-    }
-
-    // function for read unread status
-    fun readUnreadStatus(jsonObject: JSONObject?) {
-        if (jsonObject != null)
-            if (!mSocket!!.connected()) {
-                mSocket!!.off(readDataStatusListener, readDataStatus)
-                mSocket!!.on(readDataStatusListener, readDataStatus)
-                mSocket!!.emit(readUnreadEmitter, jsonObject)
-            } else {
-                mSocket!!.off(readDataStatusListener, readDataStatus)
-                mSocket!!.on(readDataStatusListener, readDataStatus)
-                mSocket!!.emit(readUnreadEmitter, jsonObject)
-            }
-        Log.e("ReadUnreadStatus", "read unread list Called")
-    }
-
-    private val readDataStatus = Emitter.Listener { args ->
-        try {
-            val data = args[0] as JSONObject
-            for (observer in observerList!!) {
-                observer.onResponse(readDataStatusListener, data)
-            }
-            Log.e("readDataStatusListener", "ReadDataStatus::  $data")
-        } catch (ex: Exception) {
-            ex.localizedMessage
-        }
-    }
-
-    fun connectSingleChatSocket() {
-        if (mSocket!!.connected()) {
-            mSocket!!.off(myChatListener, onNewMessage)
-            mSocket!!.on(myChatListener, onNewMessage)
+    fun onRegister(observer: SocketInterface) {
+        if (observerList != null && !observerList!!.contains(observer)) {
+            observerList!!.add(observer)
         } else {
-            mSocket!!.connect()
-            mSocket!!.off(myChatListener, onNewMessage)
-            mSocket!!.on(myChatListener, onNewMessage)
+            observerList = ArrayList()
+            observerList!!.add(observer)
         }
-        Log.e("Socket", "single chat")
     }
 
-    interface Observer {
-        fun onResponse(listener: String, args: JSONObject)
-        fun onCheckResponse(listener: String, args: JSONObject)
-        fun onGetChatList(listener: String, args: JSONArray)
-        fun onError(listener: String, vararg args: Array<*>)
+    fun unRegister(observer: SocketInterface) {
+        if (!observerList.isNullOrEmpty()) {
+            for (i in observerList!!.indices) {
+                /*if (!checkObjectNull(observerList!![i])) {*/
+                if (i < observerList!!.size) {
+                    val model = observerList!![i]
+                    if (model === observer) {
+                        observerList!!.remove(model)
+                    }
+                }
+                /*  }*/
+            }
+        }
     }
+
+
+    private val onSendMsgListener = Emitter.Listener { args ->
+        Handler(Looper.getMainLooper()).post {
+            for (observer in observerList!!) {
+                observer.onSocketCall(SEND_MSG_LISTENER, args)
+            }
+        }
+    }
+
+    private val onGetMsgListener = Emitter.Listener { args ->
+        Handler(Looper.getMainLooper()).post {
+            for (observer in observerList!!) {
+                observer.onSocketCall(GET_MSG_LISTENER, args)
+            }
+        }
+    }
+
+    private val onChatListingListener = Emitter.Listener { args ->
+        Handler(Looper.getMainLooper()).post {
+            for (observer in observerList!!) {
+                observer.onSocketCall(CHAT_LISTING_LISTENER, args)
+            }
+        }
+    }
+
+    interface SocketInterface {
+        fun onSocketCall(event: String?, vararg args: Any?)
+        fun onSocketConnect(vararg args: Any?)
+        fun onSocketDisConnect(vararg args: Any?)
+        fun onError(event: String?, vararg args: Any?)
+    }
+
 }

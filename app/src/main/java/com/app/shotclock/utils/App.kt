@@ -4,10 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.app.shotclock.di.component.DaggerAppComponent
 import dagger.android.AndroidInjector
@@ -15,11 +12,13 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
-class App : Application(), HasAndroidInjector, LifecycleObserver {
+class App : Application(), HasAndroidInjector, LifecycleObserver,
+    AppLifecycleHandler.AppLifecycleDelegates {
 
     var shared: SharedPreferences? = null
     var editor: SharedPreferences.Editor? = null
-//    private var mSocketManager: SocketManager? = null
+
+    //    private var mSocketManager: SocketManager? = null
 //
     companion object {
         var context: Context? = null
@@ -30,15 +29,6 @@ class App : Application(), HasAndroidInjector, LifecycleObserver {
             return app!!
         }
     }
-//
-//    fun getSocketManager(): SocketManager? {
-//        if (mSocketManager == null) {
-//            mSocketManager = SocketManager()
-//        } else {
-//            return mSocketManager
-//        }
-//        return mSocketManager
-//    }
 
     override fun onCreate() {
         super.onCreate()
@@ -76,19 +66,19 @@ class App : Application(), HasAndroidInjector, LifecycleObserver {
             apply()
         }
     }
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onMoveToForeground() {
-        Log.d("Lifecycle", "Returning to foreground…")
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onMoveToBackground() {
-        Log.d("Lifecycle", "Moving to background…")
-
-    }
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
+
+    override fun onAppForegrounded() {
+        if (!SocketManager.isConnected()) {
+            SocketManager.initSocket()
+        }
+    }
+
+    override fun onAppBackgrounded() {
+        SocketManager.onDisConnect()
+    }
 }

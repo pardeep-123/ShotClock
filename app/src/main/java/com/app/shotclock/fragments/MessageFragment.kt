@@ -8,11 +8,16 @@ import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.adapters.MessagesAdapter
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.FragmentMessageBinding
+import com.app.shotclock.utils.App
+import com.app.shotclock.utils.SocketManager
 import com.app.shotclock.utils.hideKeyboard
 import com.app.shotclock.utils.isVisible
+import org.json.JSONObject
 
 
-class MessageFragment : BaseFragment<FragmentMessageBinding>(),MessagesAdapter.ClickMessage {
+class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.SocketInterface {
+
+    private var messageAdapter: MessagesAdapter? = null
 
     override fun getViewBinding(): FragmentMessageBinding {
         return FragmentMessageBinding.inflate(layoutInflater)
@@ -20,14 +25,19 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(),MessagesAdapter.C
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        getChatList()
         handleClicks()
-        binding.rvMessages.adapter = MessagesAdapter(this@MessageFragment)
+        setAdapter()
+
     }
 
-    // message interface
-    override fun onClick() {
-        this.findNavController().navigate(R.id.action_messageFragment_to_chatFragment)
+    private fun setAdapter() {
+        messageAdapter = MessagesAdapter(requireContext())
+        binding.rvMessages.adapter = messageAdapter
+
+        messageAdapter?.onItemClickListener={pos ->
+            findNavController().navigate(R.id.action_messageFragment_to_chatFragment)
+        }
     }
 
     private fun handleClicks() {
@@ -35,8 +45,44 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(),MessagesAdapter.C
         binding.tb.ivMenu.isVisible()
         binding.tb.ivMenu.setOnClickListener {
             (activity as HomeActivity).openClose()
-            hideKeyboard(it,requireActivity())
+            hideKeyboard(it, requireActivity())
         }
+
+    }
+
+    private fun getChatList() {
+        val jsonObject = JSONObject()
+        jsonObject.put("user_id", App.app?.getString("userid"))
+//        jsonObject.put("discussion_id", discussionId)
+
+        SocketManager.sendDataToServer(SocketManager.CHAT_LISTING, jsonObject)
+    }
+
+
+    override fun onSocketCall(event: String?, vararg args: Any?) {
+        when (event) {
+            SocketManager.CHAT_LISTING_LISTENER -> {
+
+            }
+
+        }
+    }
+
+    override fun onSocketConnect(vararg args: Any?) {
+
+    }
+
+    override fun onSocketDisConnect(vararg args: Any?) {
+
+    }
+
+    override fun onError(event: String?, vararg args: Any?) {
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        SocketManager.onRegister(this)
     }
 
 }

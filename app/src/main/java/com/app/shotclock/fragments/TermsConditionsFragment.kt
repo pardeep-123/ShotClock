@@ -56,6 +56,7 @@ class TermsConditionsFragment : BaseFragment<FragmentTermsConditionsBinding>(),
         when (t.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
+
               binding.tvTermsConditionsDescription.text = HtmlCompat.fromHtml(t.data?.body?.terms_content!!,HtmlCompat.FROM_HTML_MODE_COMPACT)
             }
             Status.ERROR -> {

@@ -80,20 +80,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),
                     imageList = t.data.body.user_images
                 }
 
-                /*              val str: String = body.height
-                              val pattern: Pattern = Pattern.compile("(\\d+)'((\\d+)\")?")
-                              val matcher: Matcher = pattern.matcher(str)
-                              if (!matcher.matches()) {
-                                  return
-                              }*/
-
-
-
                 if (body.height.isNotEmpty()) {
                     val feetHeight = (oneFeet * body.height.toDouble()).toFloat()
                     binding.tvHeight.text =  String.format("%.1f", feetHeight)+ "'"
                 }
-
 
                 gender = body.gender
                 interested = body.interested

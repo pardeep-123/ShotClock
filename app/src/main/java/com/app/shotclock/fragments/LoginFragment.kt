@@ -15,9 +15,9 @@ import com.app.shotclock.cache.saveUser
 import com.app.shotclock.databinding.FragmentLoginBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
-import com.app.shotclock.models.Body
 import com.app.shotclock.models.LoginRequestModel
 import com.app.shotclock.models.LoginResponseModel
+import com.app.shotclock.utils.SocketManager
 import com.app.shotclock.utils.Validation
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
@@ -39,6 +39,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), Observer<Resource<Lo
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        SocketManager.onDisConnect()
         clickHandles()
         configureViewModel()
     }
@@ -82,9 +83,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), Observer<Resource<Lo
             Status.SUCCESS -> {
                 binding.pb.clLoading.isVisible()
                 saveUser(requireContext(), t.data?.body!!)
-                saveToken(requireContext(),t.data.body.authKey)
+                saveToken(requireContext(), t.data.body.authKey)
                 saveString(requireContext(), "token", t.data.body.authKey)
                 this.findNavController().navigate(R.id.action_loginFragment_to_homeActivity)
+                if (!SocketManager.isConnected()) {
+                    SocketManager.initSocket()
+                }
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
