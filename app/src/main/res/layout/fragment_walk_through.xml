@@ -8,13 +8,13 @@
     android:background="@drawable/img_app_bg"
     tools:context=".fragments.WalkThroughFragment">
 
-    <include
-        android:id="@+id/pb"
-        layout="@layout/view_progressbar" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/pb"
+            layout="@layout/view_progressbar" />
 
     <ImageView
         android:id="@+id/ivAppLogo"

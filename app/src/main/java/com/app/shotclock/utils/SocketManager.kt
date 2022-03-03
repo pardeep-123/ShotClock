@@ -25,6 +25,7 @@ object SocketManager {
     const val SEND_MSG = "send_messages"
     const val GET_MESSAGE = "get_messages"
     const val CHAT_LISTING = "chat_listing"
+    const val READ_UNREAD = "read_unread"
 
 
     //************************LISTENER***********************
@@ -32,6 +33,7 @@ object SocketManager {
     const val SEND_MSG_LISTENER = "send_message_listner"
     const val GET_MSG_LISTENER = "get_messagelistner"
     const val CHAT_LISTING_LISTENER = "chatlistinglistner"
+    const val READ_UNREAD_LISTENER = "read_unreadlistner"
 
 
     init {
@@ -77,7 +79,7 @@ object SocketManager {
             mSocket!!.on(SEND_MSG_LISTENER, onSendMsgListener)
             mSocket!!.on(GET_MSG_LISTENER, onGetMsgListener)
             mSocket!!.on(CHAT_LISTING_LISTENER, onChatListingListener)
-
+            mSocket!!.on(READ_UNREAD_LISTENER, onReadUnreadListener)
 
             mSocket!!.connect()
         } else {
@@ -100,11 +102,10 @@ object SocketManager {
         mSocket!!.off(SEND_MSG_LISTENER, onSendMsgListener)
         mSocket!!.off(GET_MSG_LISTENER, onGetMsgListener)
         mSocket!!.off(CHAT_LISTING_LISTENER, onChatListingListener)
-
+        mSocket!!.off(READ_UNREAD_LISTENER,onReadUnreadListener)
 
         mSocket!!.disconnect()
     }
-
 
     /*
      * Send Data to server by use of socket
@@ -142,7 +143,7 @@ object SocketManager {
 
                 if (userId.isNotEmpty()) {
                     val jsonObject = JSONObject()
-                    jsonObject.put("userId", userId)
+                    jsonObject.put("user_id", userId)
                     sendDataToServer(CONNECT_USER, jsonObject)
                 }
             } catch (e: Exception) {
@@ -205,7 +206,6 @@ object SocketManager {
         }
     }
 
-
     private val onSendMsgListener = Emitter.Listener { args ->
         Handler(Looper.getMainLooper()).post {
             for (observer in observerList!!) {
@@ -226,6 +226,14 @@ object SocketManager {
         Handler(Looper.getMainLooper()).post {
             for (observer in observerList!!) {
                 observer.onSocketCall(CHAT_LISTING_LISTENER, args)
+            }
+        }
+    }
+
+    private val onReadUnreadListener = Emitter.Listener { args ->
+        Handler(Looper.getMainLooper()).post{
+            for (observer in observerList!!){
+                observer.onSocketCall(READ_UNREAD_LISTENER,args)
             }
         }
     }

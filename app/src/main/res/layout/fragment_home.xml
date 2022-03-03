@@ -50,6 +50,7 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/_15sdp"
                 tools:listitem="@layout/items_homes"
+                android:paddingBottom="@dimen/_10sdp"
                 app:layout_constraintBottom_toTopOf="@id/clBottomBtn"
                 app:layout_constraintTop_toBottomOf="@id/tvPlsSelect"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
@@ -58,7 +59,7 @@
                 android:id="@+id/ivPlus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
                 android:src="@drawable/ic_plus"
                 android:layout_marginBottom="@dimen/_15sdp"
                 app:layout_constraintBottom_toBottomOf="parent"

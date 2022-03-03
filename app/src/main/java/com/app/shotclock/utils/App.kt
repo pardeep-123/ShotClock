@@ -17,6 +17,7 @@ class App : Application(), HasAndroidInjector, LifecycleObserver,
 
     var shared: SharedPreferences? = null
     var editor: SharedPreferences.Editor? = null
+    private var lifecycleHandler: AppLifecycleHandler? = null
 
     //    private var mSocketManager: SocketManager? = null
 //
@@ -35,6 +36,7 @@ class App : Application(), HasAndroidInjector, LifecycleObserver,
         app = this
 
         context = this
+        lifecycleHandler = AppLifecycleHandler(this)
 
         ProcessLifecycleOwner.get().lifecycle
             .addObserver(this)
@@ -44,6 +46,7 @@ class App : Application(), HasAndroidInjector, LifecycleObserver,
             .build()
             .inject(this)
         initializePrefs()
+        registerLifecycleHandler(lifecycleHandler!!)
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -71,6 +74,11 @@ class App : Application(), HasAndroidInjector, LifecycleObserver,
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
+
+    private fun registerLifecycleHandler(lifecycleHandler: AppLifecycleHandler) {
+        registerActivityLifecycleCallbacks(lifecycleHandler)
+        registerComponentCallbacks(lifecycleHandler)
+    }
 
     override fun onAppForegrounded() {
         if (!SocketManager.isConnected()) {
