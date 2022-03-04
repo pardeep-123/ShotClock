@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.app.shotclock.di.component.DaggerAppComponent
@@ -26,15 +27,28 @@ class App : Application(), HasAndroidInjector, LifecycleObserver,
 
         var app: App? = null
 
+        var mSocketManager: SocketManager? = null
+        lateinit var mInstance: App
         fun getInstance(): App {
-            return app!!
+            return mInstance
         }
+    }
+
+    fun getSocketManager(): SocketManager? {
+        mSocketManager = if (mSocketManager == null) {
+            SocketManager()
+        } else {
+            return mSocketManager
+        }
+        return mSocketManager
     }
 
     override fun onCreate() {
         super.onCreate()
-        app = this
 
+        mInstance = this
+
+        mSocketManager = getSocketManager()
         context = this
         lifecycleHandler = AppLifecycleHandler(this)
 
@@ -46,7 +60,7 @@ class App : Application(), HasAndroidInjector, LifecycleObserver,
             .build()
             .inject(this)
         initializePrefs()
-        registerLifecycleHandler(lifecycleHandler!!)
+        registerLifeCycleHandler(lifecycleHandler!!)
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -75,18 +89,21 @@ class App : Application(), HasAndroidInjector, LifecycleObserver,
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
 
-    private fun registerLifecycleHandler(lifecycleHandler: AppLifecycleHandler) {
-        registerActivityLifecycleCallbacks(lifecycleHandler)
-        registerComponentCallbacks(lifecycleHandler)
+    override fun onAppBackgrounded() {
+        Log.e("Application", "Background")
+//        mSocketManager!!.disconnectAll()
     }
 
     override fun onAppForegrounded() {
-        if (!SocketManager.isConnected()) {
-            SocketManager.initSocket()
+        Log.e("Application", "Foreground")
+        if (!mSocketManager!!.isConnected() || mSocketManager!!.getmSocket() == null) {
+            mSocketManager!!.init()
         }
     }
 
-    override fun onAppBackgrounded() {
-        SocketManager.onDisConnect()
+    private fun registerLifeCycleHandler(lifeCycleHandler: AppLifecycleHandler?) {
+        registerActivityLifecycleCallbacks(lifeCycleHandler)
+        registerComponentCallbacks(lifeCycleHandler)
     }
+
 }

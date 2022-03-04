@@ -11,32 +11,38 @@ import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.cache.getUser
 import com.app.shotclock.databinding.FragmentMessageBinding
 import com.app.shotclock.models.sockets.GetChatListModel
+import com.app.shotclock.utils.App
 import com.app.shotclock.utils.SocketManager
 import com.app.shotclock.utils.hideKeyboard
 import com.app.shotclock.utils.isVisible
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 
 
-class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.SocketInterface {
+class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Observer {
 
     private var messageAdapter: MessagesAdapter? = null
     private var getChatList = ArrayList<GetChatListModel.GetChatListModelItem>()
-    var socketManager: SocketManager? = null
+    private val activityScope = CoroutineScope(Dispatchers.Main)
+    private lateinit var socketManager: SocketManager
 
     override fun getViewBinding(): FragmentMessageBinding {
         return FragmentMessageBinding.inflate(layoutInflater)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        socketManager = App.mInstance.getSocketManager()!!
+        if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
+            socketManager.init()
+        }
         setAdapter()
         handleClicks()
-        /* SocketManager.onDisConnect()
-         SocketManager.initSocket()*/
-
         getChatList()
 
     }
@@ -46,8 +52,12 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.So
         messageAdapter = MessagesAdapter(requireContext(), getChatList)
         binding.rvMessages.adapter = messageAdapter
 
-        messageAdapter?.onItemClickListener={pos ->
-            findNavController().navigate(R.id.action_messageFragment_to_chatFragment)
+        messageAdapter?.onItemClickListener = { pos ,user2Id->
+            val bundle= Bundle()
+            bundle.putInt("userId",getChatList[pos].userOne)
+            bundle.putInt("user2Id",getChatList[pos].userTwo)
+            bundle.putString("username",getChatList[pos].userName)
+            findNavController().navigate(R.id.action_messageFragment_to_chatFragment,bundle)
         }
     }
 
@@ -61,54 +71,49 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.So
 
     }
 
+
     private fun getChatList() {
-        val jsonObject = JSONObject()
-        jsonObject.put("userid", getUser(requireContext())?.id.toString())
-        SocketManager.sendDataToServer(SocketManager.CHAT_LISTING, jsonObject)
+        val jsonObjects = JSONObject()
+        val userid = getUser(requireContext())?.id.toString()
+        jsonObjects.put("userid", userid)
+        socketManager.getChatList(jsonObjects)
     }
 
 
-    override fun onSocketCall(event: String?, vararg args: Any?) {
-        when (event) {
-            SocketManager.CHAT_LISTING_LISTENER -> {
-                requireActivity().runOnUiThread {
-                    val mObject = (JSONArray(args[0]).get(0) as JSONArray)
-//                    val mObject = (JSONArray(args[0]).get(0)) as JSONObject
-
-                    val getChatListModel =
-                        Gson().fromJson(mObject.toString(), GetChatListModel::class.java)
-
-                    getChatList.clear()
-                    getChatList.addAll(getChatListModel)
-                    messageAdapter?.notifyDataSetChanged()
-
-
-                    Log.e("getChatListing", getChatList.toString())
-                }
-
-            }
-
-            SocketManager.READ_UNREAD_LISTENER -> {
-
-            }
-        }
-    }
-
-    override fun onSocketConnect(vararg args: Any?) {
-
-    }
-
-    override fun onSocketDisConnect(vararg args: Any?) {
-
-    }
-
-    override fun onError(event: String?, vararg args: Any?) {
-
-    }
 
     override fun onResume() {
         super.onResume()
-        SocketManager.onRegister(this)
+        socketManager.unRegister(this)
+        socketManager.onRegister(this)
+
+        if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
+            socketManager.init()
+        }
+        getChatList()
+    }
+
+    override fun onResponseArray(event: String, args: JSONArray) {
+        try {
+            activityScope.launch {
+                val mObject = args as JSONArray
+                val gson = GsonBuilder().create()
+                val listChat = gson.fromJson(mObject.toString(), GetChatListModel::class.java)
+
+                getChatList.clear()
+                getChatList.addAll(listChat)
+                messageAdapter?.notifyDataSetChanged()
+            }
+        } catch (e: Exception) {
+
+        }
+    }
+
+    override fun onResponse(event: String, args: JSONObject) {
+
+
+    }
+
+    override fun onError(event: String, vararg args: Array<*>) {
     }
 
 }

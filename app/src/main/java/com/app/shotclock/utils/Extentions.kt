@@ -8,6 +8,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.R
 import com.app.shotclock.adapters.HeightPopupAdapter
+import com.github.chrisbanes.photoview.PhotoView
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -88,7 +90,7 @@ fun myAlert(ctx: Context, messageRes: String, onClick: () -> Unit, yes: String, 
 //    }
 //}
 
-/*fun openImagePopUp(pos: String?, ctx: Context) {
+fun openImagePopUp(pos: String?, ctx: Context) {
 
     val popup: View
     val layoutInflater: LayoutInflater =
@@ -104,16 +106,16 @@ fun myAlert(ctx: Context, messageRes: String, onClick: () -> Unit, yes: String, 
         popupWindow.showAtLocation(popup, Gravity.CENTER, 0, 0)
         popupWindow.isTouchable = false
         popupWindow.isOutsideTouchable = false
-        val headImagePopUp = popup.findViewById<PhotoView>(R.id.headImagePopUp)
-        val backpress = popup.findViewById<ImageView>(R.id.backpress)
-        backpress.setOnClickListener {
+        val headImagePopUp:PhotoView = popup.findViewById(R.id.headImagePopUp)
+        val backPress:ImageView = popup.findViewById(R.id.backpress)
+        backPress.setOnClickListener {
             popupWindow.dismiss()
         }
 
       //  Glide.with(ctx).load(ApiConstants.PRODUCT_IMAGE_URL + pos).into(headImagePopUp)
 
     }
-}*/
+}
 
 
 // for hide keyboard on btn click

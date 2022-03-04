@@ -14,7 +14,6 @@
         android:id="@+id/tvUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/kristen_jane"
         android:gravity="center"
         android:textSize="@dimen/_16ssp"
         android:textColor="@color/white"
@@ -53,6 +52,8 @@
             android:paddingEnd="@dimen/_10sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@color/black"
             app:layout_constraintEnd_toStartOf="@id/ivAttachment"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -63,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_6sdp"
             android:src="@drawable/ic_send"
+            android:padding="@dimen/_4sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -72,6 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_6sdp"
+            android:padding="@dimen/_3sdp"
             android:src="@drawable/ic_attachment"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ivSend"

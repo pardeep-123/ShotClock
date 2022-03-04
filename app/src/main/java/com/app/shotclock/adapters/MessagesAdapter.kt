@@ -17,7 +17,7 @@ class MessagesAdapter(
 ) :
     RecyclerView.Adapter<MessagesAdapter.MessageHolder>() {
 
-    var onItemClickListener: ((pos: Int) -> Unit)? = null
+    var onItemClickListener: ((pos: Int,user2Id: Int) -> Unit)? = null
 
     class MessageHolder(itemsView: ItemsMessagesBinding) : RecyclerView.ViewHolder(itemsView.root) {
         val itemBinding: ItemsMessagesBinding = itemsView
@@ -36,11 +36,11 @@ class MessagesAdapter(
         holder.itemBinding.tvUserName.text = list[position].userName
         holder.itemBinding.tvMessages.text = list[position].lastMessage
         holder.itemBinding.tvMsgCount.text = list[position].unreadcount.toString()
-        holder.itemBinding.tvTime.text =
-            getNotificationTime(getChatListTime(list[position].createdAt))
+        if (list[position].createdAt != null)
+        holder.itemBinding.tvTime.text = getNotificationTime(getChatListTime(list[position].createdAt))
 
         holder.itemView.setOnClickListener {
-            onItemClickListener?.invoke(position)
+            onItemClickListener?.invoke(position,list[position].userTwo)
         }
     }
 

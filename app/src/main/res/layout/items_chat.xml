@@ -20,7 +20,6 @@
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_marginStart="@dimen/_10sdp"
-            android:src="@drawable/img_two"
             app:layout_constraintBottom_toBottomOf="@id/layoutReceiver"
             app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -57,7 +56,6 @@
                     android:singleLine="false"
                     android:maxWidth="@dimen/_100sdp"
                     android:gravity="start"
-                    android:text="@string/hello_shuri"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11ssp"
                     android:fontFamily="@font/proxima_regular"
@@ -87,7 +85,7 @@
         android:id="@+id/constraintLayoutSender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_marginStart="@dimen/_25sdp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -97,7 +95,6 @@
             android:layout_height="@dimen/_30sdp"
             android:layout_marginStart="@dimen/_3sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-            android:src="@drawable/img_two"
             app:civ_border_width="@dimen/_1sdp"
             app:layout_constraintBottom_toBottomOf="@+id/layoutSender"
             app:layout_constraintRight_toRightOf="parent" />
@@ -137,7 +134,6 @@
                     android:textSize="@dimen/_11ssp"
                     android:gravity="end"
                     android:paddingVertical="@dimen/_5sdp"
-                    android:text="@string/hello_james"
                     android:fontFamily="@font/proxima_regular"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />

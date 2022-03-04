@@ -144,4 +144,6 @@ dependencies {
     implementation('io.socket:socket.io-client:1.0.0') {
         exclude group: 'org.json', module: 'json'
     }
+    // use this library for zoom function on image.
+    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
 }
