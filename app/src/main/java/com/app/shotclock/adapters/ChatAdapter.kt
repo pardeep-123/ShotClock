@@ -12,7 +12,10 @@ import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
 import com.bumptech.glide.Glide
 
-class ChatAdapter(private var ctx: Context,private var list: ArrayList<ChatHistoryResponse.ChatHistoryResponseItem>) : RecyclerView.Adapter<ChatAdapter.ChatHolder>() {
+class ChatAdapter(
+    private var ctx: Context,
+    private var list: ArrayList<ChatHistoryResponse.ChatHistoryResponseItem>
+) : RecyclerView.Adapter<ChatAdapter.ChatHolder>() {
 
     class ChatHolder(itemsView: ItemsChatBinding) : RecyclerView.ViewHolder(itemsView.root) {
         val itemsBinding: ItemsChatBinding = itemsView
@@ -26,14 +29,14 @@ class ChatAdapter(private var ctx: Context,private var list: ArrayList<ChatHisto
 
     override fun onBindViewHolder(holder: ChatHolder, position: Int) {
 
-        if (getUser(ctx)?.id.toString() == list[position].senderID.toString()){
-
+        if (getUser(ctx)?.id.toString() == list[position].senderID.toString()) {
             holder.itemsBinding.constraintLayoutReceiver.isGone()
             holder.itemsBinding.constraintLayoutSender.isVisible()
-        Glide.with(ctx).load(ApiConstants.SOCKET_URL + list[position].senderImage).into(holder.itemsBinding.civSender)
-         holder.itemsBinding.tvSender.text = list[position].message
-            }else {
-                holder.itemsBinding.constraintLayoutSender.isGone()
+            Glide.with(ctx).load(ApiConstants.SOCKET_URL + list[position].senderImage)
+                .into(holder.itemsBinding.civSender)
+            holder.itemsBinding.tvSender.text = list[position].message
+        } else {
+            holder.itemsBinding.constraintLayoutSender.isGone()
             holder.itemsBinding.constraintLayoutReceiver.isVisible()
             Glide.with(ctx).load(ApiConstants.SOCKET_URL + list[position].receiverImage)
                 .into(holder.itemsBinding.civReceiver)
@@ -44,5 +47,6 @@ class ChatAdapter(private var ctx: Context,private var list: ArrayList<ChatHisto
     override fun getItemCount(): Int {
         return list.size
     }
+
 
 }

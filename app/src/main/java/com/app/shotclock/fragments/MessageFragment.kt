@@ -1,8 +1,10 @@
 package com.app.shotclock.fragments
 
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.activities.HomeActivity
@@ -11,10 +13,7 @@ import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.cache.getUser
 import com.app.shotclock.databinding.FragmentMessageBinding
 import com.app.shotclock.models.sockets.GetChatListModel
-import com.app.shotclock.utils.App
-import com.app.shotclock.utils.SocketManager
-import com.app.shotclock.utils.hideKeyboard
-import com.app.shotclock.utils.isVisible
+import com.app.shotclock.utils.*
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,27 +22,33 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 
-class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Observer {
+class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Observer,TextWatcher {
 
     private var messageAdapter: MessagesAdapter? = null
     private var getChatList = ArrayList<GetChatListModel.GetChatListModelItem>()
     private val activityScope = CoroutineScope(Dispatchers.Main)
     private lateinit var socketManager: SocketManager
 
+    companion object {
+        lateinit var txtMessage: TextView
+    }
+
+
     override fun getViewBinding(): FragmentMessageBinding {
         return FragmentMessageBinding.inflate(layoutInflater)
     }
 
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         socketManager = App.mInstance.getSocketManager()!!
         if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
             socketManager.init()
         }
+        txtMessage = view.findViewById(R.id.tvNoChatHistory)
         setAdapter()
         handleClicks()
-        getChatList()
+//        getChatList()
 
     }
 
@@ -52,13 +57,18 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
         messageAdapter = MessagesAdapter(requireContext(), getChatList)
         binding.rvMessages.adapter = messageAdapter
 
-        messageAdapter?.onItemClickListener = { pos ,user2Id->
+        messageAdapter?.onItemClickListener = { pos ->
             val bundle= Bundle()
-            bundle.putInt("userId",getChatList[pos].userOne)
-            bundle.putInt("user2Id",getChatList[pos].userTwo)
+            if (getChatList[pos].userTwo == getUser(requireContext())?.id){
+                bundle.putInt("user2Id",getChatList[pos].userOne)
+            }else{
+                bundle.putInt("user2Id",getChatList[pos].userTwo)
+            }
+
             bundle.putString("username",getChatList[pos].userName)
             findNavController().navigate(R.id.action_messageFragment_to_chatFragment,bundle)
         }
+
     }
 
     private fun handleClicks() {
@@ -69,8 +79,10 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
             hideKeyboard(it, requireActivity())
         }
 
-    }
+            // for edit text search
+        binding.etSearch.addTextChangedListener(this)
 
+    }
 
     private fun getChatList() {
         val jsonObjects = JSONObject()
@@ -78,7 +90,6 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
         jsonObjects.put("userid", userid)
         socketManager.getChatList(jsonObjects)
     }
-
 
 
     override fun onResume() {
@@ -89,6 +100,15 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
         if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
             socketManager.init()
         }
+
+        messageAdapter?.arrayList = getChatList
+        //messageAdapter?.notifyDataSetChanged()
+        if (getChatList.isNotEmpty()) {
+            binding.tvNoChatHistory.isGone()
+        } else {
+            binding.tvNoChatHistory.isVisible()
+        }
+
         getChatList()
     }
 
@@ -99,9 +119,14 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
                 val gson = GsonBuilder().create()
                 val listChat = gson.fromJson(mObject.toString(), GetChatListModel::class.java)
 
+//                val filteredList = listChat.filter { it.userTwo != getUser(requireContext())?.id }
                 getChatList.clear()
                 getChatList.addAll(listChat)
                 messageAdapter?.notifyDataSetChanged()
+                if (getChatList.isEmpty())
+                    txtMessage.isVisible()
+                else
+                    txtMessage.isGone()
             }
         } catch (e: Exception) {
 
@@ -114,6 +139,18 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
     }
 
     override fun onError(event: String, vararg args: Array<*>) {
+    }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        messageAdapter?.filter?.filter(s.toString().trim())
+    }
+
+    override fun afterTextChanged(s: Editable?) {
+
     }
 
 }

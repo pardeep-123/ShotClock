@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.shotclock.R
 import com.app.shotclock.adapters.ChatAdapter
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.cache.getUser
 import com.app.shotclock.databinding.FragmentChatBinding
 import com.app.shotclock.models.sockets.ChatHistoryResponse
 import com.app.shotclock.utils.App
@@ -26,7 +27,6 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), SocketManager.Observer
     private val activityScope = CoroutineScope(Dispatchers.Main)
     private lateinit var socketManager: SocketManager
     private var linearLayoutManager: LinearLayoutManager? = null
-    private var userId = 0
     private var user2Id = 0
     private var userName = ""
     private var messageType = 0  // 0-text, 1-image
@@ -42,7 +42,6 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), SocketManager.Observer
         super.onViewCreated(view, savedInstanceState)
         val bundle = arguments
         user2Id = bundle?.getInt("user2Id")!!
-        userId = bundle.getInt("userId")
         userName = bundle.getString("username")!!
         socketManager = App.mInstance.getSocketManager()!!
 
@@ -52,8 +51,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), SocketManager.Observer
         clickHandle()
         setAdapter()
 
-        getChatHistory()
-        readUnreadMessage()
+//        getChatHistory()
+//        readUnreadMessage()
     }
 
     private fun setAdapter() {
@@ -100,19 +99,16 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), SocketManager.Observer
                 // for send images
                 binding.ivAttachment.setOnClickListener {
 //                openImagePopUp(message,requireContext())
+
                 }
             }
-
-
         }
-
-
     }
 
     private fun getChatHistory() {
         val jsonObject = JSONObject()
 //        val userid = getUser(requireContext())?.id.toString()
-        jsonObject.put("userid", userId)
+        jsonObject.put("userid", getUser(requireContext())?.id)
         jsonObject.put("user2Id", user2Id)
         socketManager.getFriendChat(jsonObject)
 
@@ -121,13 +117,13 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), SocketManager.Observer
     private fun readUnreadMessage() {
         val jsonObject = JSONObject()
         jsonObject.put("user2Id", user2Id)
-        jsonObject.put("userid", userId)
+        jsonObject.put("userid", getUser(requireContext())?.id)
         socketManager.readUnReadMessage(jsonObject)
     }
 
     private fun sendMessageChat() {
         val jsonObject = JSONObject()
-        jsonObject.put("userid", userId)
+        jsonObject.put("userid", getUser(requireContext())?.id)
         jsonObject.put("user2Id", user2Id)
         jsonObject.put("messageType", messageType)
         jsonObject.put("message", binding.etSendMsg.text.toString().trim())
@@ -170,6 +166,20 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), SocketManager.Observer
     }
 
     override fun onResponse(event: String, args: JSONObject) {
+        try {
+            activityScope.launch {
+                val mObject = args as JSONObject
+
+                val gson = GsonBuilder().create()
+                val listChatHistory =
+                    gson.fromJson(mObject.toString(), ChatHistoryResponse.ChatHistoryResponseItem::class.java)
+                chatList.add(listChatHistory)
+                binding.tvUserName.text = userName
+
+            }
+        } catch (e: Exception) {
+
+        }
 
     }
 

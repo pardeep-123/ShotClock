@@ -36,9 +36,9 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
     private var requestAdapter: MyRequestsAdapter? = null
     private var allRequestAdapter: AllRequestAdapter? = null
     private var requestList = ArrayList<RequestListResponseModel.RequestListResponseBody>()
-    private var allRequestList = ArrayList<AllRequestResponseModel.AllRequestBody>()
     private var groupName = ""
     private var status = 0
+    private var allRequestList = ArrayList<ArrayList<AllRequestResponseModel.AllRequestBody>>()
 
     override fun getViewBinding(): FragmentMyRequestsBinding {
         return FragmentMyRequestsBinding.inflate(layoutInflater)
@@ -60,9 +60,6 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
         requestAdapter?.onItemClickListener = {pos->
             this.findNavController().navigate(R.id.action_myRequestsFragment_to_speedDateSessionFragment)
         }
-
-        allRequestAdapter = AllRequestAdapter(requireContext(), allRequestList)
-        binding.rvAllRequests.adapter = allRequestAdapter
 
     }
 
@@ -138,15 +135,17 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
         when (t.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
+                requestList.clear()
+                allRequestList.clear()
                 for (i in 0 until t.data?.body!!.size) {
                     groupName = t.data.body[i].groupName
                     status = t.data.body[i].status
                 }
-                requestList.clear()
-                allRequestList.clear()
                 if (t.data.body.size > 0) {
-                    binding.clSpeedDate.isVisible()
                     binding.tvNoDataFound.isGone()
+                    binding.rvAllRequests.isGone()
+                    binding.clSpeedDate.isVisible()
+                    binding.rvMyRequests.isVisible()
                     requestList.addAll(t.data.body)
                     if (t.data.body[0].requestCount == 0)
                         binding.tvStart.isGone()
@@ -179,17 +178,21 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
                 requestList.clear()
                 allRequestList.clear()
                 if (it.data?.body!!.isNotEmpty()) {
-                    binding.clSpeedDate.isVisible()
                     binding.tvNoDataFound.isGone()
-//                    for (i in 0 )
-                    allRequestList.addAll(it.data.body[0])
-
+                    binding.rvMyRequests.isGone()
+                    binding.clSpeedDate.isVisible()
+                    binding.rvAllRequests.isVisible()
+                    allRequestList.addAll(it.data.body)
+                    val body = it.data.body
+                    allRequestAdapter = AllRequestAdapter(requireContext(), body)
+                    binding.rvAllRequests.adapter = allRequestAdapter
                 } else {
                     binding.clSpeedDate.isGone()
                     binding.tvNoDataFound.isVisible()
                 }
                 requestAdapter?.notifyDataSetChanged()
                 allRequestAdapter?.notifyDataSetChanged()
+
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
@@ -214,8 +217,6 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
                if (requestList.size > 0) {
-//                   requestAdapter?.notifyDataSetChanged()
-//                   allRequestAdapter?.notifyDataSetChanged()
                    this.findNavController().navigate(R.id.action_myRequestsFragment_to_homeFragment)
                }
             }
