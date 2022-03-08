@@ -23,6 +23,17 @@
             app:layout_constraintBottom_toBottomOf="@id/layoutReceiver"
             app:layout_constraintLeft_toLeftOf="parent" />
 
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/ivReceivePic"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/_6sdp"
+            app:layout_constraintStart_toEndOf="@id/civReceiver"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_corner_radius="@dimen/_5sdp" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutReceiver"
             android:layout_width="0dp"
@@ -56,6 +67,7 @@
                     android:singleLine="false"
                     android:maxWidth="@dimen/_100sdp"
                     android:gravity="start"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_11ssp"
                     android:fontFamily="@font/proxima_regular"
@@ -99,6 +111,17 @@
             app:layout_constraintBottom_toBottomOf="@+id/layoutSender"
             app:layout_constraintRight_toRightOf="parent" />
 
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/ivSendPic"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:layout_marginEnd="@dimen/_6sdp"
+            app:layout_constraintEnd_toStartOf="@id/civSender"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_corner_radius="@dimen/_5sdp" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutSender"
             android:layout_width="0dp"
@@ -133,6 +156,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/_11ssp"
                     android:gravity="end"
+                    android:visibility="gone"
                     android:paddingVertical="@dimen/_5sdp"
                     android:fontFamily="@font/proxima_regular"
                     app:layout_constraintTop_toTopOf="parent"

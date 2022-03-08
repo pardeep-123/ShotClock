@@ -17,6 +17,7 @@ import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
 import com.app.shotclock.models.LoginRequestModel
 import com.app.shotclock.models.LoginResponseModel
+import com.app.shotclock.utils.Prefs
 import com.app.shotclock.utils.Validation
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
@@ -67,7 +68,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), Observer<Resource<Lo
         body.email = binding.etEmail.text.trim().toString()
         body.password = binding.etPassword.text.trim().toString()
         body.device_type = 2
-        body.device_token = getToken(requireContext())!!
+        body.device_token = Prefs.with(requireContext()).getString("token","0")
         loginSignUpViewModel.loginUser(body).observe(viewLifecycleOwner,this)
     }
 

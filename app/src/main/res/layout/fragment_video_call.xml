@@ -90,7 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_30sdp"
         android:padding="@dimen/_5sdp"
-        android:src="@drawable/ic_mike"
+        android:src="@drawable/ic_video"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivMike" />
 

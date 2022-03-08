@@ -28,9 +28,9 @@ class NotificationsAdapter(private var ctx: Context,private var list: ArrayList<
     override fun onBindViewHolder(holder: NotificationHolder, position: Int) {
         Glide.with(ctx).load(ApiConstants.IMAGE_URL + list[position].request.requestBy.profileImage).into(holder.itemBinding.civUser)
      holder.itemBinding.tvMessage.text = list[position].data
-        holder.itemBinding.tvTime.text = getNotificationTime(getChatListTime(list[position].createdAt))
+        holder.itemBinding.tvTime.text = getNotificationTime(getChatListTime(list[position].request.createdAt))
 
-        if (list[position].type ==1){
+        if (list[position].request.status ==1){
             holder.itemBinding.tvAccept.isVisible()
             holder.itemBinding.tvDecline.isVisible()
 

@@ -155,7 +155,7 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
                 map["confirm_password"] = createRequestBody(binding.etConfirmPassword.text.toString().trim())
                 map["countryCode"] = createRequestBody(binding.ccp.selectedCountryCodeWithPlus.toString())
                 map["device_type"] = createRequestBody("2")
-                map["device_token"] = createRequestBody("123456")
+                map["device_token"] = createRequestBody(Prefs.with(requireContext()).getString("token","0"))
                 map["phone"] = createRequestBody(binding.etMobile.text.toString().trim())
                 map["profile_image"] = createRequestBody(it.data?.body!![0].image)
                 //

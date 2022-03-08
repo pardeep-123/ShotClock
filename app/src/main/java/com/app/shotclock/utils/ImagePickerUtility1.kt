@@ -155,18 +155,24 @@ abstract class ImagePickerUtility1<VB : ViewBinding> :Fragment() {
         mCode = code
         mVideoDialog = videoDialog
 
-        if (hasPermissions(permissions)) {
-            Log.e("Permissions", "Permissions Granted")
-            imageDialog()
-        } else if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            checkPermissionDenied(Manifest.permission.READ_EXTERNAL_STORAGE)
-        } else if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            checkPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        } else if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-            checkPermissionDenied(Manifest.permission.CAMERA)
-        } else {
-            Log.e("Permissions", "Request for Permissions")
-            requestPermission()
+        when {
+            hasPermissions(permissions) -> {
+                Log.e("Permissions", "Permissions Granted")
+                imageDialog()
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
+                checkPermissionDenied(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE) -> {
+                checkPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
+                checkPermissionDenied(Manifest.permission.CAMERA)
+            }
+            else -> {
+                Log.e("Permissions", "Request for Permissions")
+                requestPermission()
+            }
         }
     }
 

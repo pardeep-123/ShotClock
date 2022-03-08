@@ -71,8 +71,10 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Observ
         when (t.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
+
                 notificationList.addAll(t.data?.body!!)
                 notificationAdapter?.notifyDataSetChanged()
+                notificationList.reverse()
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()

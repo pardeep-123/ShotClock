@@ -6,14 +6,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.shotclock.R
 import com.app.shotclock.adapters.ChatAdapter
-import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.cache.getUser
 import com.app.shotclock.databinding.FragmentChatBinding
 import com.app.shotclock.models.sockets.ChatHistoryResponse
-import com.app.shotclock.utils.App
-import com.app.shotclock.utils.SocketManager
-import com.app.shotclock.utils.isVisible
-import com.app.shotclock.utils.showToast
+import com.app.shotclock.utils.*
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +17,7 @@ import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ChatFragment : BaseFragment<FragmentChatBinding>(), SocketManager.Observer {
+class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.Observer {
 
     private var chatAdapter: ChatAdapter? = null
     private val activityScope = CoroutineScope(Dispatchers.Main)
@@ -32,6 +28,9 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), SocketManager.Observer
     private var messageType = 0  // 0-text, 1-image
     private var message = ""
     private var chatList = ArrayList<ChatHistoryResponse.ChatHistoryResponseItem>()
+
+    private var imageFilePath = ""
+    private var extension = ""
 
 
     override fun getViewBinding(): FragmentChatBinding {
@@ -86,6 +85,10 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), SocketManager.Observer
             this.findNavController().navigate(R.id.action_chatFragment_to_videoCallFragment)
         }
 
+        binding.ivAttachment.setOnClickListener {
+            getImage(requireActivity(), 0, false)
+        }
+
         binding.ivSend.setOnClickListener {
             // for send text
             if (messageType == 0) {
@@ -95,14 +98,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), SocketManager.Observer
                     sendMessageChat()
                     binding.etSendMsg.text.clear()
                 }
-            } else {
-                // for send images
-                binding.ivAttachment.setOnClickListener {
-//                openImagePopUp(message,requireContext())
-
-                }
             }
-        }
+            }
     }
 
     private fun getChatHistory() {
@@ -130,7 +127,6 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), SocketManager.Observer
         socketManager.sendMessageForChat(jsonObject)
     }
 
-
     override fun onResume() {
         super.onResume()
 
@@ -157,11 +153,11 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), SocketManager.Observer
                 chatList.addAll(listChatHistory)
                 binding.tvUserName.text = userName
                 chatAdapter?.notifyDataSetChanged()
+                chatAdapter?.updateList(chatList)
             }
         } catch (e: Exception) {
 
         }
-
 
     }
 
@@ -174,7 +170,9 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), SocketManager.Observer
                 val listChatHistory =
                     gson.fromJson(mObject.toString(), ChatHistoryResponse.ChatHistoryResponseItem::class.java)
                 chatList.add(listChatHistory)
+                chatAdapter?.notifyDataSetChanged()
                 binding.tvUserName.text = userName
+
 
             }
         } catch (e: Exception) {
@@ -185,5 +183,27 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(), SocketManager.Observer
 
     override fun onError(event: String, vararg args: Array<*>) {
 
+    }
+
+    override fun selectedImage(imagePath: String?, code: Int) {
+        if (!imagePath.isNullOrEmpty()) {
+            imageFilePath = imagePath
+
+            try {
+                extension =
+                    imageFilePath.substring(imageFilePath.lastIndexOf(".") + 1); // Without dot jpg, png
+            } catch (e: Exception) {
+            }
+
+            val imgBase64 = getBase64FromPath(imageFilePath)
+            val jsonObject = JSONObject()
+            jsonObject.put("userid", getUser(requireContext())?.id)
+            jsonObject.put("user2Id", user2Id)
+            jsonObject.put("messageType", 1)
+            jsonObject.put("message", imgBase64)
+            jsonObject.put("extension", extension)
+            socketManager.sendMessageForChat(jsonObject)
+
+        }
     }
 }

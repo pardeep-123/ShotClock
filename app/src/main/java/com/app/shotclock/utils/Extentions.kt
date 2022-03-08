@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.R
 import com.app.shotclock.adapters.HeightPopupAdapter
+import com.app.shotclock.constants.ApiConstants
+import com.bumptech.glide.Glide
 import com.github.chrisbanes.photoview.PhotoView
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -25,6 +27,8 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.io.FileInputStream
+import java.io.IOException
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -106,20 +110,20 @@ fun openImagePopUp(pos: String?, ctx: Context) {
         popupWindow.showAtLocation(popup, Gravity.CENTER, 0, 0)
         popupWindow.isTouchable = false
         popupWindow.isOutsideTouchable = false
-        val headImagePopUp:PhotoView = popup.findViewById(R.id.headImagePopUp)
-        val backPress:ImageView = popup.findViewById(R.id.backpress)
+        val headImagePopUp: PhotoView = popup.findViewById(R.id.headImagePopUp)
+        val backPress: ImageView = popup.findViewById(R.id.backpress)
         backPress.setOnClickListener {
             popupWindow.dismiss()
         }
 
-      //  Glide.with(ctx).load(ApiConstants.PRODUCT_IMAGE_URL + pos).into(headImagePopUp)
+          Glide.with(ctx).load(ApiConstants.SOCKET_URL + pos).into(headImagePopUp)
 
     }
 }
 
 
 // for hide keyboard on btn click
-fun hideKeyboard(view: View, activity: Activity){
+fun hideKeyboard(view: View, activity: Activity) {
     val imm =
         activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
     imm!!.hideSoftInputFromWindow(view.windowToken, 0)
@@ -132,15 +136,15 @@ fun Fragment.showToast(message: String) {
 
 //to set Visibilties
 fun View.isVisible() {
-    visibility = View.VISIBLE
+    this.visibility = View.VISIBLE
 }
 
 fun View.inVisible() {
-    visibility = View.INVISIBLE
+    this.visibility = View.INVISIBLE
 }
 
 fun View.isGone() {
-    visibility = View.GONE
+    this.visibility = View.GONE
 }
 
 
@@ -310,8 +314,7 @@ fun String.matches(regex: String): Boolean {
 //}
 
 
-
-  fun getUTCdatetimeAsString(): String? {
+fun getUTCdatetimeAsString(): String? {
     val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
     sdf.timeZone = TimeZone.getTimeZone("UTC")
     return sdf.format(Date())
@@ -323,7 +326,7 @@ fun time_to_timestamp(str_date: String?, pattren: String?): Long {
     try {
         val formatter = SimpleDateFormat(pattren)
         //SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-        formatter.timeZone = TimeZone.getTimeZone("UTC")
+        formatter.timeZone = TimeZone.getTimeZone("GMT")
         val date = formatter.parse(str_date) as Date
         time_stamp = date.time
     } catch (ex: ParseException) {
@@ -370,6 +373,7 @@ fun time_to_timestampLocal(str_date: String?, pattren: String?): Long {
     time_stamp = time_stamp / 1000
     return time_stamp
 }
+
 //
 //
 fun getDateFromUTCTimestamp(mTimestamp: Long, mDateFormate: String?): String? {
@@ -408,6 +412,7 @@ fun getChatListTime(zuluTime: String): Long {
 
     return time_to_timestamp(formatted, "dd/MM/yyyy")
 }
+
 fun getNotificationTimeZullu(zuluTime: String): String {
     val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     val output = SimpleDateFormat("hh:mm aa")
@@ -488,4 +493,23 @@ fun setPopUpWindow(
 
     })
 
+
 }
+
+fun getBase64FromPath(path: String): String {
+    var base64 = ""
+    try {
+        val file = File(path)
+        val buffer = ByteArray(file.length().toInt() + 100)
+        val length = FileInputStream(file).read(buffer)
+        base64 = android.util.Base64.encodeToString(
+            buffer, 0, length,
+            android.util.Base64.DEFAULT
+        )
+
+    } catch (e: IOException) {
+//e.printStackTrace()
+    }
+    return base64
+}
+

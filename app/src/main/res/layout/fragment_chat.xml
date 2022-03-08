@@ -52,6 +52,7 @@
             android:paddingEnd="@dimen/_10sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp"
+            android:background="@null"
             android:cursorVisible="true"
             android:textCursorDrawable="@color/black"
             app:layout_constraintEnd_toStartOf="@id/ivAttachment"

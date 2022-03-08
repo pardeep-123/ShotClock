@@ -1,15 +1,20 @@
 package com.app.shotclock.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.cache.getUser
 import com.app.shotclock.constants.ApiConstants
 import com.app.shotclock.databinding.ItemsChatBinding
 import com.app.shotclock.models.sockets.ChatHistoryResponse
+import com.app.shotclock.models.sockets.GetChatListModel
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
+import com.app.shotclock.utils.openImagePopUp
 import com.bumptech.glide.Glide
 
 class ChatAdapter(
@@ -29,24 +34,62 @@ class ChatAdapter(
 
     override fun onBindViewHolder(holder: ChatHolder, position: Int) {
 
-        if (getUser(ctx)?.id.toString() == list[position].senderID.toString()) {
-            holder.itemsBinding.constraintLayoutReceiver.isGone()
-            holder.itemsBinding.constraintLayoutSender.isVisible()
-            Glide.with(ctx).load(ApiConstants.SOCKET_URL + list[position].senderImage)
-                .into(holder.itemsBinding.civSender)
-            holder.itemsBinding.tvSender.text = list[position].message
-        } else {
-            holder.itemsBinding.constraintLayoutSender.isGone()
-            holder.itemsBinding.constraintLayoutReceiver.isVisible()
-            Glide.with(ctx).load(ApiConstants.SOCKET_URL + list[position].receiverImage)
-                .into(holder.itemsBinding.civReceiver)
-            holder.itemsBinding.tvReceiver.text = list[position].message
-        }
+        if (list[position].senderID > 0) {
+            if (getUser(ctx)?.id == list[position].senderID) {
+                holder.itemsBinding.constraintLayoutSender.isVisible()
+                holder.itemsBinding.constraintLayoutReceiver.isGone()
+
+                Glide.with(ctx).load(ApiConstants.SOCKET_URL + list[position].senderImage).into(holder.itemsBinding.civSender)
+
+                if (list[position].messageType == 0) {
+                    holder.itemsBinding.ivSendPic.isGone()
+                    holder.itemsBinding.tvSender.isVisible()
+                    holder.itemsBinding.tvSender.text = list[position].message
+
+                } else {
+                    holder.itemsBinding.tvSender.isGone()
+                    holder.itemsBinding.ivSendPic.isVisible()
+                    Glide.with(ctx).load(ApiConstants.SOCKET_URL + list[position].message)
+                        .into(holder.itemsBinding.ivSendPic)
+
+                }
+
+                holder.itemsBinding.ivSendPic.setOnClickListener {
+                    openImagePopUp(list[position].message, ctx)
+                }
+
+            } else {
+                holder.itemsBinding.constraintLayoutSender.isGone()
+                holder.itemsBinding.constraintLayoutReceiver.isVisible()
+                Glide.with(ctx).load(ApiConstants.SOCKET_URL + list[position].receiverImage).into(holder.itemsBinding.civReceiver)
+
+                if (list[position].messageType == 0) {
+                    holder.itemsBinding.ivReceivePic.isGone()
+                    holder.itemsBinding.tvReceiver.isVisible()
+                    holder.itemsBinding.tvReceiver.text = list[position].message
+                } else {
+                    holder.itemsBinding.tvReceiver.isGone()
+                    holder.itemsBinding.ivReceivePic.isVisible()
+                    Glide.with(ctx).load(ApiConstants.SOCKET_URL + list[position].message)
+                        .into(holder.itemsBinding.ivReceivePic)
+                }
+
+                holder.itemsBinding.ivReceivePic.setOnClickListener {
+                    openImagePopUp(list[position].message, ctx)
+                }
+            }
+        }else
+            Log.d("senderId",list[position].senderID.toString())
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(list: ArrayList<ChatHistoryResponse.ChatHistoryResponseItem>) {
+        this.list=list
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
-
 
 }

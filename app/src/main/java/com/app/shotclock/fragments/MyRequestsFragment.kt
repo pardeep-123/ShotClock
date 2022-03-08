@@ -144,6 +144,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
                 if (t.data.body.size > 0) {
                     binding.tvNoDataFound.isGone()
                     binding.rvAllRequests.isGone()
+                    binding.tvCancel.isVisible()
                     binding.clSpeedDate.isVisible()
                     binding.rvMyRequests.isVisible()
                     requestList.addAll(t.data.body)
