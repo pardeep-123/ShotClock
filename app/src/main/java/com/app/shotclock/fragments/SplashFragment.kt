@@ -1,6 +1,5 @@
 package com.app.shotclock.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -55,6 +54,5 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
     override fun getViewBinding(): FragmentSplashBinding {
      return FragmentSplashBinding.inflate(layoutInflater)
     }
-
 
 }

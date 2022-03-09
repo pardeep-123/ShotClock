@@ -32,7 +32,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.RangeSlider
 import javax.inject.Inject
-
+import androidx.lifecycle.LifecycleOwner
 
 open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     Observer<Resource<HomeResponseModel>> {
@@ -327,6 +327,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
+                if (t.message!="Invalid Authorization Key" || t.message!= "Invalid authorization key")
                 showToast(t.message!!)
             }
             Status.LOADING -> {
@@ -404,12 +405,15 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         }
     }
 
+
     // set lat lng and hit home api
     override fun updatedLatLng(lat: Double, lng: Double) {
         latitude = lat.toString()
         longitude = lng.toString()
 
+       if (homeViewModel != null && viewLifecycleOwner!=null)
         homeViewModel.homeApi(latitude, longitude).observe(viewLifecycleOwner, this)
+
         stopLocationUpdates()
     }
 

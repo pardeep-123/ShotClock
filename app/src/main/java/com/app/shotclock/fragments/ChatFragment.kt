@@ -31,6 +31,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
 
     private var imageFilePath = ""
     private var extension = ""
+    private var senderId = ""
 
 
     override fun getViewBinding(): FragmentChatBinding {
@@ -40,6 +41,9 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val bundle = arguments
+//        if (bundle?.getString("sender_id").toString() != null)
+//            senderId = bundle?.getString("sender_id")!!
+
         user2Id = bundle?.getInt("user2Id")!!
         userName = bundle.getString("username")!!
         socketManager = App.mInstance.getSocketManager()!!
@@ -153,7 +157,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
                 chatList.addAll(listChatHistory)
                 binding.tvUserName.text = userName
                 chatAdapter?.notifyDataSetChanged()
-                chatAdapter?.updateList(chatList)
+//                chatAdapter?.updateList(chatList)
             }
         } catch (e: Exception) {
 
@@ -171,6 +175,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
                     gson.fromJson(mObject.toString(), ChatHistoryResponse.ChatHistoryResponseItem::class.java)
                 chatList.add(listChatHistory)
                 chatAdapter?.notifyDataSetChanged()
+                binding.rvChat.smoothScrollToPosition(chatList.size - 1)
                 binding.tvUserName.text = userName
 
 

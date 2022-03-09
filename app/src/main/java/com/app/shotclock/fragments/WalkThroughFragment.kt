@@ -14,7 +14,6 @@ import com.app.shotclock.databinding.FragmentWalkThroughBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
 import com.app.shotclock.models.BaseResponseModel
-import com.app.shotclock.models.SocialLoginRequestModel
 import com.app.shotclock.models.WalkThroughModel
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible

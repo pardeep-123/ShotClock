@@ -1,6 +1,7 @@
 package com.app.shotclock.activities
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseActivity
@@ -15,7 +16,10 @@ class InitialActivity : BaseActivity() {
         binding = ActivityInitialBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (intent.hasExtra("logout")){
+        if (intent.hasExtra("expired")){
+            findNavController(R.id.fragment_host).navigate(R.id.action_splashFragment_to_loginFragment)
+            Toast.makeText(this, "Session Expired", Toast.LENGTH_LONG).show()
+        }else if (intent.hasExtra("logout")){
             findNavController(R.id.fragment_host).navigate(R.id.action_splashFragment_to_walkThroughFragment)
         }
 

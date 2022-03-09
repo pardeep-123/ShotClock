@@ -3,11 +3,11 @@
 
     <string name="api_key_map" translatable="false">AIzaSyCM_VpnKA8OeL80rRUE6cKRkwK6KhuIVPs</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="alert">Alert</string>
+    <string name="default_notification_channel_id" translatable="false">ShotClock_channel</string>
+    <string name="default_notification_channel_name" translatable="true">ShotClock</string>
     <string name="permissionRequired">Required camera and storage permission to access this functionality.</string>
     <string name="openSettings">Open Settings</string>
     <string name="video">Video</string>

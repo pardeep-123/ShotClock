@@ -150,4 +150,8 @@ dependencies {
     // firebase dependency
     implementation 'com.google.firebase:firebase-messaging:23.0.0'
     implementation 'com.google.firebase:firebase-core:20.1.0'
+
+    // shared preference
+    implementation 'androidx.preference:preference-ktx:1.2.0'
+
 }

@@ -2,6 +2,7 @@ package com.app.shotclock.utils
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.util.Log
 import android.view.Gravity
@@ -17,7 +18,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.R
+import com.app.shotclock.activities.InitialActivity
 import com.app.shotclock.adapters.HeightPopupAdapter
+import com.app.shotclock.cache.clearAllData
+import com.app.shotclock.cache.clearData
 import com.app.shotclock.constants.ApiConstants
 import com.bumptech.glide.Glide
 import com.github.chrisbanes.photoview.PhotoView
@@ -283,37 +287,6 @@ fun String.matches(regex: String): Boolean {
     return true
 }
 
-/**
- * Method for Opening Images
- */
-//fun openImagePopUp(pos: String?, ctx: Context) {
-//
-//    val popup: View
-//    val layoutInflater: LayoutInflater =
-//        ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//    if (layoutInflater != null) {
-//        popup = layoutInflater.inflate(R.layout.porflioeimage_popup, null)
-//        val popupWindow = PopupWindow(
-//            popup,
-//            ConstraintLayout.LayoutParams.MATCH_PARENT,
-//            ConstraintLayout.LayoutParams.MATCH_PARENT,
-//            true
-//        )
-//        popupWindow.showAtLocation(popup, Gravity.CENTER, 0, 0)
-//        popupWindow.isTouchable = false
-//        popupWindow.isOutsideTouchable = false
-//        val headImagePopUp = popup.findViewById<PhotoView>(R.id.headImagePopUp)
-//        val backpress = popup.findViewById<ImageView>(R.id.backpress)
-//        backpress.setOnClickListener {
-//            popupWindow.dismiss()
-//        }
-//
-//        Glide.with(ctx).load(ApiConstants.PRODUCT_IMAGE_URL + pos).into(headImagePopUp)
-//
-//    }
-//}
-
-
 fun getUTCdatetimeAsString(): String? {
     val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
     sdf.timeZone = TimeZone.getTimeZone("UTC")
@@ -441,21 +414,21 @@ fun getNotificationTimeZullu(zuluTime: String): String {
 //    }
 //}
 
-//fun inValidAuth() {
-//        try {
-//        clearAllData(App.context!!)
-//        clearData(App.context!!, "role")
-//        clearData(App.context!!, "token")
-//        val intent = Intent(App.context!!, InitialActivity::class.java)
-//        intent.putExtra("logout", true)
-//        intent.putExtra("expired", true)
-//        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//        App.context?.startActivity(intent)
-//
-//    } catch (e: Exception) {
-//        e.printStackTrace()
-//    }
-//}
+fun inValidAuth() {
+        try {
+        clearAllData(App.context!!)
+        clearData(App.context!!, "role")
+        clearData(App.context!!, "token")
+        val intent = Intent(App.context!!, InitialActivity::class.java)
+        intent.putExtra("logout", true)
+        intent.putExtra("expired", true)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        App.context?.startActivity(intent)
+
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
 
 //fun cardTypeModelSet(): ArrayList<CardTypeModel> {
 //    val listOfPattern: ArrayList<CardTypeModel> = ArrayList<CardTypeModel>()

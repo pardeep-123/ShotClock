@@ -61,7 +61,7 @@ class ChatAdapter(
             } else {
                 holder.itemsBinding.constraintLayoutSender.isGone()
                 holder.itemsBinding.constraintLayoutReceiver.isVisible()
-                Glide.with(ctx).load(ApiConstants.SOCKET_URL + list[position].receiverImage).into(holder.itemsBinding.civReceiver)
+                Glide.with(ctx).load(ApiConstants.SOCKET_URL + list[position].senderImage).into(holder.itemsBinding.civReceiver)
 
                 if (list[position].messageType == 0) {
                     holder.itemsBinding.ivReceivePic.isGone()

@@ -1,5 +1,7 @@
 package com.app.shotclock.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -17,10 +19,7 @@ import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
 import com.app.shotclock.models.LoginRequestModel
 import com.app.shotclock.models.LoginResponseModel
-import com.app.shotclock.utils.Prefs
-import com.app.shotclock.utils.Validation
-import com.app.shotclock.utils.isGone
-import com.app.shotclock.utils.isVisible
+import com.app.shotclock.utils.*
 import com.app.shotclock.viewmodels.LoginSignUpViewModel
 import javax.inject.Inject
 
@@ -54,13 +53,28 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), Observer<Resource<Lo
         binding.btSignIn.setOnClickListener {
             if (Validation().verifyLoginValidation(
                     requireActivity(),
-                    binding.etEmail.text.trim().toString(),
-                    binding.etPassword.text.trim().toString()
+                    binding.etEmail.text.toString().trim(),
+                    binding.etPassword.text.toString().trim()
                 )
             ) {
+//                RememberShared(requireContext()).setString("email",binding.etEmail.text.toString().trim())
+//                RememberShared(requireContext()).setString("password",binding.etPassword.toString().trim())
                 userLogin()
             }
+
         }
+
+        binding.cbRememberMe.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                RememberShared(requireContext()).setString("email",binding.etEmail.text.toString().trim())
+                RememberShared(requireContext()).setString("password",binding.etPassword.text.toString().trim())
+            }else{
+                RememberShared(requireContext()).clearShared()
+            }
+        }
+            binding.etEmail.setText(RememberShared(requireContext()).getString("email"))
+            binding.etPassword.setText(RememberShared(requireContext()).getString("password"))
+
     }
 
     private fun userLogin() {

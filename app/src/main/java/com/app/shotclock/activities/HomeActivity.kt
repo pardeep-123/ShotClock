@@ -41,6 +41,8 @@ class HomeActivity : BaseActivity() {
     private lateinit var navController: NavController
     private lateinit var drawableLayout: DrawerLayout
     private lateinit var listener: NavController.OnDestinationChangedListener
+    private var senderId = ""
+    private var senderName = ""
 
     lateinit var loginSignUpViewModel: LoginSignUpViewModel
     @Inject
@@ -72,6 +74,8 @@ class HomeActivity : BaseActivity() {
             binding.navigationView.setCheckedItem(R.id.homeFragment)
             true
         }
+
+        loadData(intent)
 
 //        listener = NavController.OnDestinationChangedListener { controller, destination, arguments ->
 //                if (destination.id == R.id.logout) {
@@ -149,6 +153,41 @@ class HomeActivity : BaseActivity() {
 //                        super.onBackPressed()
 //                    }
 //                }
+            }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        loadData(intent)
+    }
+
+    // notification_code = 1 = request, 3 = send message
+    private fun loadData(intent: Intent?) {
+        if (intent!!.getStringExtra("notification_code") != null) {
+            if (intent.getStringExtra("notification_code").equals("3")) {
+                senderId = intent.getStringExtra("sender_id").toString()
+                senderName = intent.getStringExtra("sender_name").toString()
+                val bundle = Bundle()
+                bundle.putInt("user2Id", senderId.toInt())
+                bundle.putString("username", senderName)
+                val options = NavOptions.Builder().setPopUpTo(R.id.chatFragment, true).build()
+                findNavController(R.id.fragment).navigate(R.id.chatFragment,bundle,options)
+
+//                   val options = NavOptions.Builder()
+//                       .setPopUpTo(androidx.navigation.R.id.detail_message_fragment, true)
+//                       .build()
+//                   findNavController(androidx.navigation.R.id.fragment).navigate(
+//                       androidx.navigation.R.id.detail_message_fragment,
+//                       bundle,
+//                       options
+//                   )
+            } else {
+//                val bundle = Bundle()
+//                bundle.putString("sender_id",senderId)
+//                val options = NavOptions.Builder().setPopUpTo(R.id.myRequestsFragment,true).build()
+//                findNavController(R.id.fragment).navigate(R.id.myRequestsFragment,bundle,options)
+
             }
         }
     }

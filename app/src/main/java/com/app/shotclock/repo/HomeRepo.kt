@@ -4,6 +4,8 @@ import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.models.*
 import com.app.shotclock.retrofit.ApiService
 import com.app.shotclock.retrofit.ResponseHandler
+import com.app.shotclock.utils.inValidAuth
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class HomeRepo @Inject constructor(private var apiService: ApiService, private var responseHandler: ResponseHandler) {
@@ -13,6 +15,13 @@ class HomeRepo @Inject constructor(private var apiService: ApiService, private v
         return try {
             responseHandler.handleResponse(apiService.homeApi(latitude, longitude))
         }catch (e :Exception){
+            try {
+                if ((e as HttpException).code() == 401) {
+                    inValidAuth()
+                }
+            } catch (e: java.lang.Exception) {
+                e.toString()
+            }
             responseHandler.handleException(e)
         }
     }
@@ -49,9 +58,19 @@ class HomeRepo @Inject constructor(private var apiService: ApiService, private v
         return try {
             responseHandler.handleResponse(apiService.requestList())
         }catch (e: Exception){
+//    try {
+//        if ((e as HttpException).code() == 401) {
+//            inValidAuth()
+//        }
+//    } catch (e: java.lang.Exception) {
+//        e.toString()
+//    }
             responseHandler.handleException(e)
         }
     }
+
+
+
 
     // all request
     suspend fun allRequestList(): Resource<AllRequestResponseModel>{

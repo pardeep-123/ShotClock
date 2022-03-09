@@ -27,6 +27,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Observ
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private var notificationAdapter: NotificationsAdapter? = null
     private var notificationList = ArrayList<GetNotificationResponse.GetNotificationBody>()
+    private var senderId = ""
 
     override fun getViewBinding(): FragmentNotificationBinding {
         return FragmentNotificationBinding.inflate(layoutInflater)
@@ -34,6 +35,10 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Observ
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val bundle = arguments
+        if (bundle?.getString("sender_id").toString() != null)
+            senderId = bundle?.getString("sender_id")!!
+
         configureViewModel()
         handleClicks()
         setAdapter()
