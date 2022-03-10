@@ -5,6 +5,8 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import com.app.shotclock.R
 import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.adapters.NotificationsAdapter
 import com.app.shotclock.base.BaseFragment
@@ -35,9 +37,6 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Observ
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bundle = arguments
-        if (bundle?.getString("sender_id").toString() != null)
-            senderId = bundle?.getString("sender_id")!!
 
         configureViewModel()
         handleClicks()
@@ -103,6 +102,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Observ
         when (it.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
+                findNavController().navigate(R.id.action_notificationFragment_to_homeFragment)
                 notificationAdapter?.notifyDataSetChanged()
             }
             Status.ERROR -> {

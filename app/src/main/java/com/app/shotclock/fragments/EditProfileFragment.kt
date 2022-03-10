@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,10 +27,12 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
@@ -42,15 +45,20 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
     private val myCalendar = Calendar.getInstance()
     lateinit var date: DatePickerDialog.OnDateSetListener
     private var imageResultPath = ""
-    private var imageList = ArrayList<String>()
+    private var imageList = ArrayList<EditProfileModel>()
     private var imagesAdapter: EditProfileImagesAdapter? = null
     private var latitude = ""
     private var longitude = ""
+    private var imageType = 0
+    private var profileImage = ""
     private var gender = 1      // 1 = male, 2= female
     private var interested = "" // 1 = men, 2= women, 3 = both
     private var imageFileList = ArrayList<EditProfileRequestModel.EditProfileImage>()
-    private var profileData : ProfileBody?= null
+    private var profileData: ProfileBody? = null
     private val oneFeet = 0.0328  //Don't change this value
+    private val imageArrayList = ArrayList<MultipartBody.Part>()
+
+    val userImages=ArrayList<String>()
 
     override fun getViewBinding(): FragmentEditProfileBinding {
         return FragmentEditProfileBinding.inflate(layoutInflater)
@@ -67,6 +75,7 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
     }
 
     private fun setEditProfileData(){
+        profileImage=profileData?.profileImage!!
         Glide.with(requireContext()).load(ApiConstants.IMAGE_URL+profileData?.profileImage).into(binding.rivUser)
         binding.etName.setText( profileData?.username)
         binding.etEmail.setText(profileData?.email)
@@ -103,7 +112,8 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
         }
 
         for (i in 0 until profileData?.user_images!!.size ){
-            imageList.add(profileData?.user_images!![i].image_path)
+            userImages.add(profileData?.user_images!![i].image_path)
+            imageList.add(EditProfileModel(ApiConstants.IMAGE_URL+profileData?.user_images!![i].image_path,1))
         }
          imagesAdapter?.notifyDataSetChanged()
 
@@ -136,10 +146,12 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
         imagesAdapter = EditProfileImagesAdapter(requireContext(), imageList)
         binding.rvEditProfile.adapter = imagesAdapter
         imagesAdapter?.onItemClickListener = {
+            imageType = 2
             getImage(requireActivity(), 1, false)
         }
 
         binding.ivCamera.setOnClickListener {
+            imageType = 1
             getImage(requireActivity(), 0, false)
         }
 
@@ -218,11 +230,13 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
             locationLauncher.launch(intent)
         }
 
-
         binding.btUpdate.setOnClickListener {
+            var imagearray= ArrayList<String>()
+            for(i in 0 until imageList.size){
+                imagearray.add(imageList[i].image)
+            }
             if (Validation().editProfileValidation(
                     requireActivity(),
-                    imageResultPath,
                     binding.etName.text.toString().trim(),
                     binding.etEmail.text.toString().trim(),
                     binding.etMobile.text.toString().trim(),
@@ -238,10 +252,17 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
                     binding.tvDrinkingSelect.text.toString().trim(),
                     binding.tvPetsSelect.text.toString().trim(),
                     binding.etAddBio.text.toString().trim(),
-                    imageList
+                    imagearray
                 )
             )
+                if(imageResultPath.isEmpty() && profileImage.isEmpty()){
+                    Toast.makeText(context, "Please select profile image", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
                 getEditProfile()
+
+
         }
     }
 
@@ -259,7 +280,6 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
         }
     }
 
-
     private fun datePicker(context: Context) {
         DatePickerDialog(
             context, R.style.DialogTheme,
@@ -270,23 +290,59 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
         ).show()
     }
 
-
     override fun selectedImage(imagePath: String?, code: Int) {
         if (!imagePath.isNullOrEmpty()) {
             if (code == 0) {
-                imageResultPath = imagePath
-                Glide.with(context!!).load(imageResultPath).into(binding.rivUser)
-            } else {
-                imageList.add(imagePath.toString())
+                if (imageType == 1) {
+                    imageResultPath = imagePath
+                    Glide.with(context!!).load(imageResultPath).into(binding.rivUser)
+                    val hasMap = HashMap<String, RequestBody>()
+                    hasMap["type"] = createRequestBody("image")
+                    hasMap["folder"] = createRequestBody("profile")
+
+                    imageArrayList.add(prepareMultiPart("image", File(imageResultPath)))
+                    profileViewModels.fileUpload(imageArrayList, hasMap)
+                        .observe(viewLifecycleOwner, imageUploadObserver)
+
+                }
+            }
+            else {
+                imageList.add(EditProfileModel(imagePath.toString(),0))
                 imagesAdapter?.notifyDataSetChanged()
             }
+
         }
     }
 
     private fun getEditProfile() {
-        val imageList = ArrayList<MultipartBody.Part>()
-        imageList.add(prepareMultiPart("image", File(imageResultPath)))
-        profileViewModels.fileUpload(imageList).observe(viewLifecycleOwner, imageUploadObserver)
+
+        val arrStringMultipleImagesUploadable= ArrayList<String>()
+        for (i in 0 until imageList.size) {
+            if (imageList[i].image.contains(ApiConstants.IMAGE_URL)) {
+                arrStringMultipleImagesUploadable.remove(imageList[i].image)
+            } else {
+                arrStringMultipleImagesUploadable.add(imageList[i].image)
+            }
+        }
+        if(arrStringMultipleImagesUploadable.size>0){
+            val imagesList= ArrayList<MultipartBody.Part>()
+            for(i in 0 until arrStringMultipleImagesUploadable.size){
+
+                imagesList.add(prepareMultiPart("image", File(arrStringMultipleImagesUploadable[i])))
+
+            }
+            val hasMap = HashMap<String, RequestBody>()
+            hasMap["type"] = createRequestBody("image")
+            hasMap["folder"] = createRequestBody("user_images")
+
+            profileViewModels.fileUpload(imagesList, hasMap)
+                .observe(viewLifecycleOwner, imageUploadObserver)
+        }
+
+        else{
+            updateProfile()
+        }
+
 
     }
 
@@ -296,46 +352,18 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
 
-                val data = it.data!!.body
-                for (i in 0 until data.size) {
-                    imageFileList.add(EditProfileRequestModel.EditProfileImage(data[i].image))
+                if (imageType == 2) {
+                    val data = it.data!!.body
+                    for (i in 0 until data.size) {
+                        imageFileList.add(EditProfileRequestModel.EditProfileImage(data[i].image))
+                    }
+                    updateProfile()
+
+                } else {
+                    val data = it.data!!.body
+                    profileImage = data[0].image
+
                 }
-
-                // for gender selects
-                gender = if (binding.tvGenderSelect.text.toString() == "Male")
-                    1
-                else
-                    2
-
-                // for interested select
-                interested = when {
-                    binding.tvInterestSelect.text.toString() == "Men" -> "1"
-                    binding.tvInterestSelect.text.toString() == "Women" -> "2"
-                    else -> "3"
-                }
-
-                val requestData = EditProfileRequestModel(
-                    binding.tvAstrologicalSignSelect.text.toString(),
-                    binding.etAddBio.text.toString(),
-                    binding.ccp.selectedCountryCodeWithPlus.toString(),
-                    binding.tvDOBSelect.text.toString(),
-                    gender,
-                    binding.tvDrinkingSelect.text.toString(),
-                    binding.etEmail.text.toString(),
-                    binding.tvHeightSelect.text.toString(),
-                    imageFileList,
-                    interested,
-                    binding.etLocation.text.toString(),
-                    binding.etName.text.toString(),
-                    binding.tvPetsSelect.text.toString(),
-                    binding.etMobile.text.toString(),
-                    imageResultPath,
-                    binding.tvQualificatSelect.text.toString(),
-                    binding.tvSexualOrientationSelect.text.toString(),
-                    binding.tvSmokingSelect.text.toString()
-                )
-
-                profileViewModels.editProfile(requestData).observe(viewLifecycleOwner, this)
 
             }
             Status.ERROR -> {
@@ -348,12 +376,53 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
         }
     }
 
+    fun updateProfile(){
+
+        // for gender selects
+        gender = if (binding.tvGenderSelect.text.toString() == "Male")
+            1
+        else
+            2
+
+        // for interested select
+        interested = when {
+            binding.tvInterestSelect.text.toString() == "Men" -> "1"
+            binding.tvInterestSelect.text.toString() == "Women" -> "2"
+            else -> "3"
+        }
+
+
+        val requestData = EditProfileRequestModel(
+            binding.tvAstrologicalSignSelect.text.toString(),
+            binding.etAddBio.text.toString(),
+            binding.ccp.selectedCountryCodeWithPlus.toString(),
+            binding.tvDOBSelect.text.toString(),
+            gender,
+            binding.tvDrinkingSelect.text.toString(),
+            binding.etEmail.text.toString(),
+            binding.tvHeightSelect.text.toString(),
+            imageFileList,
+            interested,
+            binding.etLocation.text.toString(),
+            binding.etName.text.toString(),
+            binding.tvPetsSelect.text.toString(),
+            binding.etMobile.text.toString(),
+            profileImage,
+            binding.tvQualificatSelect.text.toString(),
+            binding.tvSexualOrientationSelect.text.toString(),
+            binding.tvSmokingSelect.text.toString()
+        )
+
+        profileViewModels.editProfile(requestData).observe(viewLifecycleOwner, this)
+        (activity as HomeActivity).manageHeaderView()
+    }
+
+
     // edit profile api response
     override fun onChanged(t: Resource<EditProfileResponse>) {
         when (t.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
-                (activity as HomeActivity).manageHeaderView()
                 activity?.onBackPressed()
 
             }

@@ -11,6 +11,7 @@ import com.app.shotclock.models.ProfileViewModel
 import com.app.shotclock.repo.ProfileRepo
 import kotlinx.coroutines.Dispatchers
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 
 class ProfileViewModels @Inject constructor(private val profileRepo: ProfileRepo) : ViewModel() {
@@ -35,10 +36,10 @@ class ProfileViewModels @Inject constructor(private val profileRepo: ProfileRepo
 
 
     // file upload
-    fun fileUpload(image: ArrayList<MultipartBody.Part>): LiveData<Resource<FileUploadResponse>> {
+    fun fileUpload(image: ArrayList<MultipartBody.Part>,partMap: Map<String, RequestBody>): LiveData<Resource<FileUploadResponse>> {
         return liveData(Dispatchers.IO) {
             emit(Resource.loading(null))
-            val response = profileRepo.fileUpload(image)
+            val response = profileRepo.fileUpload(image,partMap)
             emit(response)
         }
     }

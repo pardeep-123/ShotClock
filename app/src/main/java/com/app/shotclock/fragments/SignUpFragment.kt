@@ -139,7 +139,10 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
     private fun getSigUpData() {
         val list = ArrayList<MultipartBody.Part>()
         list.add(prepareMultiPart("image", File(imageResultPath)))
-        loginSignUpViewModel.fileUpload(list).observe(viewLifecycleOwner, fileUploadObserver)
+        val hashMap = HashMap<String,RequestBody>()
+        hashMap["type"] = createRequestBody("image")
+        hashMap["folder"] = createRequestBody("profile")
+        loginSignUpViewModel.fileUpload(list,hashMap).observe(viewLifecycleOwner, fileUploadObserver)
 
     }
 

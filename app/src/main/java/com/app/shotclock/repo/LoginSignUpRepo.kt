@@ -115,9 +115,9 @@ constructor(private val apiService: ApiService, private val responseHandler: Res
     }
 
     // file upload
-    suspend fun fileUpload(image: ArrayList<MultipartBody.Part>): Resource<FileUploadResponse> {
+    suspend fun fileUpload(image: ArrayList<MultipartBody.Part>,partMap: Map<String, RequestBody>): Resource<FileUploadResponse> {
         return try {
-            responseHandler.handleResponse(apiService.fileUpload(image))
+            responseHandler.handleResponse(apiService.fileUpload(image,partMap))
         } catch (e: Exception) {
             responseHandler.handleException(e)
         }

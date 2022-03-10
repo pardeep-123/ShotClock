@@ -8,6 +8,8 @@ import com.app.shotclock.models.ProfileViewModel
 import com.app.shotclock.retrofit.ApiService
 import com.app.shotclock.retrofit.ResponseHandler
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.http.PartMap
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -33,9 +35,9 @@ class ProfileRepo @Inject constructor(private val apiService: ApiService,private
     }
 
     // file upload
-    suspend fun fileUpload(image: ArrayList<MultipartBody.Part>): Resource<FileUploadResponse> {
+    suspend fun fileUpload(image: ArrayList<MultipartBody.Part>, partMap: Map<String, RequestBody>): Resource<FileUploadResponse> {
         return try {
-            responseHandler.handleResponse(apiService.fileUpload(image))
+            responseHandler.handleResponse(apiService.fileUpload(image,partMap))
         } catch (e: Exception) {
             responseHandler.handleException(e)
         }

@@ -32,7 +32,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.RangeSlider
 import javax.inject.Inject
-import androidx.lifecycle.LifecycleOwner
 
 open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     Observer<Resource<HomeResponseModel>> {
@@ -410,10 +409,14 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     override fun updatedLatLng(lat: Double, lng: Double) {
         latitude = lat.toString()
         longitude = lng.toString()
+        try {
+            if (homeViewModel != null && viewLifecycleOwner != null)
+                homeViewModel.homeApi(latitude, longitude).observe(viewLifecycleOwner, this)
 
-       if (homeViewModel != null && viewLifecycleOwner!=null)
-        homeViewModel.homeApi(latitude, longitude).observe(viewLifecycleOwner, this)
 
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
         stopLocationUpdates()
     }
 

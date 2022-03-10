@@ -153,8 +153,7 @@ fun View.isGone() {
 
 
 fun createRequestBody(param: String): RequestBody {
-    val request = param.toRequestBody("text/plain".toMediaTypeOrNull())
-    return request
+    return param.toRequestBody("text/plain".toMediaTypeOrNull())
 }
 
 // to set Date in custom format

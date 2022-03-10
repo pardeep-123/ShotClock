@@ -13,26 +13,22 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
 import com.app.shotclock.R
 import com.app.shotclock.activities.HomeActivity
+import com.app.shotclock.utils.Constants
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.google.gson.Gson
-import org.json.JSONObject
-import java.util.logging.Level.parse
 
 class NotificationHandlingService : FirebaseMessagingService() {
     private val TAG = "FireBasePush"
     private var i = 0
-    var title = ""
-    var message: String? = ""
-    var CHANNEL_ID = "ShotClock"
-    var senderId = ""
-    var name = ""
-    var senderName = ""
-    var notificationCode = ""
-    lateinit var soundUri: Uri
+    private var title = ""
+    private var message: String? = ""
+    private var CHANNEL_ID = "ShotClock"
+    private var senderId = ""
+    private var senderName = ""
+    private var notificationCode = ""
+    private lateinit var soundUri: Uri
 
     override fun onNewToken(refreshedToken: String) {
         super.onNewToken(refreshedToken)
@@ -45,33 +41,19 @@ class NotificationHandlingService : FirebaseMessagingService() {
         Log.e(TAG, "Notification: ${remoteMessage.data}")
 
         message = remoteMessage.data["message"]
-        notificationCode= remoteMessage.data["notification_code"]!!
+        notificationCode = remoteMessage.data["notification_code"]!!
         title = remoteMessage.data["title"]!!
         senderId = remoteMessage.data["sender_id"]!!
         senderName = remoteMessage.data["sender_name"]!!
 
 
-        val intent = Intent(applicationContext,HomeActivity::class.java)
-        intent.putExtra("notification_code",notificationCode)
-        intent.putExtra("sender_id",senderId)
-        intent.putExtra("sender_name",senderName)
-        makePush(intent)
+        val intent = Intent(applicationContext, HomeActivity::class.java)
+        intent.putExtra("notification_code", notificationCode)
+        intent.putExtra("sender_id", senderId)
+        intent.putExtra("sender_name", senderName)
 
-
-//        val notificationModel = Gson().fromJson(
-//            (Gson().toJson(remoteMessage.data)).toString(),
-//            PushNotificationModel::class.java
-//        )
-
-//        title = notificationModel.name
-//        message = notificationModel.message
-//
-//        val intent = Intent(this, HomeActivity::class.java)
-//        intent.putExtra("pushNotificationModel", notificationModel)
-//
-//        if (Constants.User2Id!= notificationModel.id || !Constants.OnMessageScreen)
-//        makePush(intent)
-
+        if (Constants.user2Id != senderId || !Constants.OnMessageScreen)
+            makePush(intent)
     }
 
     private fun makePush(intent: Intent?) {

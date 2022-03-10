@@ -183,10 +183,8 @@ class HomeActivity : BaseActivity() {
 //                       options
 //                   )
             } else {
-//                val bundle = Bundle()
-//                bundle.putString("sender_id",senderId)
-//                val options = NavOptions.Builder().setPopUpTo(R.id.myRequestsFragment,true).build()
-//                findNavController(R.id.fragment).navigate(R.id.myRequestsFragment,bundle,options)
+                val options = NavOptions.Builder().setPopUpTo(R.id.notificationFragment,true).build()
+                findNavController(R.id.fragment).navigate(R.id.notificationFragment,null,options)
 
             }
         }

@@ -60,9 +60,9 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
 
     private fun setAdapter() {
         walkList?.clear()
-        walkList?.add(WalkThroughModel(R.drawable.img_four))
-        walkList?.add(WalkThroughModel(R.drawable.img_three))
-        walkList?.add(WalkThroughModel(R.drawable.img_two))
+        walkList?.add(WalkThroughModel(R.drawable.img_walkthree))
+        walkList?.add(WalkThroughModel(R.drawable.img_walktwo))
+        walkList?.add(WalkThroughModel(R.drawable.img_walkone))
 
         binding.rvWalkThrough.adapter = WalkThroughAdapter(walkList!!)
 

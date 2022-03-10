@@ -16,6 +16,6 @@ class Constants {
         var GetServices  = "getSeriveces"
         var ProductList = "getProductList"
         var UserProductList = "userProductList"
-        var User2Id = ""
+        var user2Id = ""
     }
 }

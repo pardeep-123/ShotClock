@@ -2,7 +2,7 @@ package com.app.shotclock.models
 import com.google.gson.annotations.SerializedName
 
 
-data class EditProfileRequestModel(
+data class EditProfileRequestModel  (
     @SerializedName("astrologicalSign")
     var astrologicalSign: String,
     @SerializedName("bio")

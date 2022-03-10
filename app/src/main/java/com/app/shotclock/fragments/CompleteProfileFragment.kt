@@ -31,10 +31,12 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.button.MaterialButton
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBinding>(),
     Observer<Resource<CompleteProfileResponse>> {
@@ -251,10 +253,10 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
                 val file = File(i)
                 list.add(prepareMultiPart("image", file))
             }
-            loginSignUpViewModel.fileUpload(list).observe(viewLifecycleOwner, fileUploadObserver)
-
-//        val image = prepareMultiPart("image",File(imageList))
-//        loginSignUpViewModel.fileUpload(image).observe(viewLifecycleOwner,fileUploadObserver)
+            val hashMap = HashMap<String,RequestBody>()
+            hashMap["type"] = createRequestBody("image")
+            hashMap["folder"] = createRequestBody("user_images")
+            loginSignUpViewModel.fileUpload(list,hashMap).observe(viewLifecycleOwner, fileUploadObserver)
 
         }
     }

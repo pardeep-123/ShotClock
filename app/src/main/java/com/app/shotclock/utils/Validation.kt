@@ -164,7 +164,6 @@ class Validation {
 
     fun editProfileValidation(
         context: Activity,
-        image: String,
         name: String,
         email: String,
         phone: String,
@@ -182,9 +181,7 @@ class Validation {
     imageList: ArrayList<String>
     ): Boolean {
         var check = false
-        if (image == "" || image.isEmpty()){
-            Toast.makeText(context, "Please select profile image", Toast.LENGTH_SHORT).show()
-        }else if (name.isEmpty()) {
+        if (name.isEmpty()) {
             Toast.makeText(context, "Please enter username", Toast.LENGTH_SHORT).show()
         } else if (email.isEmpty()) {
             Toast.makeText(context, "Please enter email", Toast.LENGTH_SHORT).show()

@@ -34,7 +34,6 @@ class ChatAdapter(
 
     override fun onBindViewHolder(holder: ChatHolder, position: Int) {
 
-        if (list[position].senderID > 0) {
             if (getUser(ctx)?.id == list[position].senderID) {
                 holder.itemsBinding.constraintLayoutSender.isVisible()
                 holder.itemsBinding.constraintLayoutReceiver.isGone()
@@ -78,18 +77,15 @@ class ChatAdapter(
                     openImagePopUp(list[position].message, ctx)
                 }
             }
-        }else
-            Log.d("senderId",list[position].senderID.toString())
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun updateList(list: ArrayList<ChatHistoryResponse.ChatHistoryResponseItem>) {
-        this.list=list
-        notifyDataSetChanged()
-    }
 
     override fun getItemCount(): Int {
         return list.size
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 
 }

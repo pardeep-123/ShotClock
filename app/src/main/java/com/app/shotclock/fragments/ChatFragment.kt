@@ -1,6 +1,7 @@
 package com.app.shotclock.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,16 +41,15 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bundle = arguments
-//        if (bundle?.getString("sender_id").toString() != null)
-//            senderId = bundle?.getString("sender_id")!!
-
-        user2Id = bundle?.getInt("user2Id")!!
-        userName = bundle.getString("username")!!
+        Constants.OnMessageScreen = true
         socketManager = App.mInstance.getSocketManager()!!
-
         if (!socketManager.isConnected() || socketManager.getmSocket() == null)
             socketManager.init()
+
+        val bundle = arguments
+        user2Id = bundle?.getInt("user2Id")!!
+        userName = bundle.getString("username")!!
+        Constants.user2Id = user2Id.toString()
 
         clickHandle()
         setAdapter()
@@ -67,15 +67,19 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
         binding.rvChat.adapter = chatAdapter
 
 //        scrollToPosition(items.size() - 1)
-        binding.rvChat.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
-            if (bottom < oldBottom) scrollToBottom()
-        }
+//        binding.rvChat.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+//            if (bottom < oldBottom) scrollToBottom()
+//        }
 
     }
 
-    private fun scrollToBottom() {
+   private fun scrollToBottom(){
         linearLayoutManager?.smoothScrollToPosition(binding.rvChat, null, chatAdapter?.itemCount!!)
     }
+
+//    private fun scrollToBottom() {
+//        linearLayoutManager?.smoothScrollToPosition(binding.rvChat, null, chatAdapter?.itemCount!!)
+//    }
 
     private fun clickHandle() {
         binding.tb.ivBack.isVisible()
@@ -144,43 +148,51 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
     }
 
     override fun onResponseArray(event: String, args: JSONArray) {
+        when(event){
+            SocketManager.get_chat-> {
+                try {
+                    activityScope.launch {
+                        val mObject = args as JSONArray
 
-        try {
-            activityScope.launch {
-                val mObject = args as JSONArray
+                        val gson = GsonBuilder().create()
+                        val listChatHistory =
+                            gson.fromJson(mObject.toString(), ChatHistoryResponse::class.java)
 
-                val gson = GsonBuilder().create()
-                val listChatHistory =
-                    gson.fromJson(mObject.toString(), ChatHistoryResponse::class.java)
+                        chatList.clear()
+                        chatList.addAll(listChatHistory)
+                        Log.e("====chatListSize",chatList.size.toString())
+                        binding.tvUserName.text = userName
+                        chatAdapter?.notifyDataSetChanged()
+                        scrollToBottom()
+                    }
+                } catch (e: Exception) {
 
-                chatList.clear()
-                chatList.addAll(listChatHistory)
-                binding.tvUserName.text = userName
-                chatAdapter?.notifyDataSetChanged()
-//                chatAdapter?.updateList(chatList)
+                }
             }
-        } catch (e: Exception) {
-
         }
 
     }
 
     override fun onResponse(event: String, args: JSONObject) {
-        try {
-            activityScope.launch {
-                val mObject = args as JSONObject
+        when(event){
+            SocketManager.send_message->{
+                try {
+                    activityScope.launch {
+                        val mObject = args as JSONObject
 
-                val gson = GsonBuilder().create()
-                val listChatHistory =
-                    gson.fromJson(mObject.toString(), ChatHistoryResponse.ChatHistoryResponseItem::class.java)
-                chatList.add(listChatHistory)
-                chatAdapter?.notifyDataSetChanged()
-                binding.rvChat.smoothScrollToPosition(chatList.size - 1)
-                binding.tvUserName.text = userName
+                        val gson = GsonBuilder().create()
+                        val listChatHistory =
+                            gson.fromJson(mObject.toString(), ChatHistoryResponse.ChatHistoryResponseItem::class.java)
+                        chatList.add(listChatHistory)
+                        chatAdapter?.notifyDataSetChanged()
+                        binding.rvChat.smoothScrollToPosition(chatList.size - 1)
+                        binding.tvUserName.text = userName
 
+                    }
+                } catch (e: Exception) {
 
+                }
             }
-        } catch (e: Exception) {
 
         }
 

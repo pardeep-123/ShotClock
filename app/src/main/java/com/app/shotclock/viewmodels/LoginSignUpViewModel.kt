@@ -116,10 +116,10 @@ constructor(private val loginSignUpRepo: LoginSignUpRepo) : ViewModel() {
     }
 
     // file upload
-    fun fileUpload(image: ArrayList<MultipartBody.Part>): LiveData<Resource<FileUploadResponse>> {
+    fun fileUpload(image: ArrayList<MultipartBody.Part>,partMap : Map<String,RequestBody>): LiveData<Resource<FileUploadResponse>> {
         return liveData(Dispatchers.IO) {
             emit(Resource.loading(null))
-            val response = loginSignUpRepo.fileUpload(image)
+            val response = loginSignUpRepo.fileUpload(image,partMap)
             emit(response)
         }
     }

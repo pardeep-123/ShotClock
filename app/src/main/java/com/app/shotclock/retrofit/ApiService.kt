@@ -56,7 +56,7 @@ interface ApiService {
 
     @Multipart
     @POST(ApiConstants.FILE_UPLOAD)
-    suspend fun fileUpload(@Part image : ArrayList<MultipartBody.Part>):FileUploadResponse
+    suspend fun fileUpload(@Part image : ArrayList<MultipartBody.Part>, @PartMap partMap: Map<String, @JvmSuppressWildcards RequestBody>):FileUploadResponse
 
     @POST(ApiConstants.COMPLETE_PROFILE)
     suspend fun completeProfile(@Body data:CompleteProfileRequestModel):CompleteProfileResponse
