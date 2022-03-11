@@ -1,17 +1,13 @@
 package com.app.shotclock.adapters
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.cache.getUser
 import com.app.shotclock.constants.ApiConstants
 import com.app.shotclock.databinding.ItemsChatBinding
 import com.app.shotclock.models.sockets.ChatHistoryResponse
-import com.app.shotclock.models.sockets.GetChatListModel
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
 import com.app.shotclock.utils.openImagePopUp
@@ -78,7 +74,6 @@ class ChatAdapter(
                 }
             }
     }
-
 
     override fun getItemCount(): Int {
         return list.size

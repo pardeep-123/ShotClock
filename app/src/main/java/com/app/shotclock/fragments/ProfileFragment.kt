@@ -76,14 +76,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),
                 binding.pb.clLoading.isGone()
                 val body = t.data?.body!!
                 profileData = body
+                imageList.clear()
                 if (t.data.body.user_images.size > 0) {
                     imageList = t.data.body.user_images
                 }
 
-                if (body.height.isNotEmpty()) {
-                    val feetHeight = (oneFeet * body.height.toDouble()).toFloat()
-                    binding.tvHeight.text =  String.format("%.1f", feetHeight)+ "'"
-                }
+                binding.tvHeight.text = body.height
+                /*     if (body.height.isNotEmpty()) {
+                         val feetHeight = (oneFeet * body.height.toDouble()).toFloat()
+                         binding.tvHeight.text =  String.format("%.1f", feetHeight)+ "'"
+                     }*/
 
                 gender = body.gender
                 interested = body.interested
@@ -119,7 +121,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showError(t.message!!)
+                if (t.message != "Invalid Authorization Key" || t.message != "Invalid authorization key")
+                    showError(t.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()

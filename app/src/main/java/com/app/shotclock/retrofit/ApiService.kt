@@ -62,7 +62,7 @@ interface ApiService {
     suspend fun completeProfile(@Body data:CompleteProfileRequestModel):CompleteProfileResponse
 
     @POST(ApiConstants.EDIT_PROFILE)
-    suspend fun editProfile(@Body data: EditProfileRequestModel): EditProfileResponse
+    suspend fun editProfile(@Body data: EditProfileRequestModel): LoginResponseModel
 
     @FormUrlEncoded
     @POST(ApiConstants.HOME_API)

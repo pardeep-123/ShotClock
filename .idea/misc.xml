@@ -28,6 +28,7 @@
         <entry key="app/src/main/res/drawable/viewpager_indicator_color.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/layout-v23/items_base.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout-v23/porflioeimage_popup.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout-v23/view_progressbar.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/activity_initial.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/alert_dialog_cancel_call.xml" value="0.22" />
@@ -83,6 +84,7 @@
         <entry key="app/src/main/res/layout/items_subscription_viewpager.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/items_textlist_bottomsheet.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/items_walkthrough.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/porflioeimage_popup.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/puppypedia.xml" value="0.1" />
         <entry key="app/src/main/res/layout/test.xml" value="0.2" />
         <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.18489583333333334" />

@@ -16,10 +16,10 @@ class HomeRepo @Inject constructor(private var apiService: ApiService, private v
             responseHandler.handleResponse(apiService.homeApi(latitude, longitude))
         }catch (e :Exception){
             try {
-                if ((e as HttpException).code() == 401) {
+                if ((e as HttpException).code() == 401)
                     inValidAuth()
-                }
-            } catch (e: java.lang.Exception) {
+
+            } catch (e: Exception) {
                 e.toString()
             }
             responseHandler.handleException(e)
@@ -57,26 +57,30 @@ class HomeRepo @Inject constructor(private var apiService: ApiService, private v
     suspend fun requestList(): Resource<RequestListResponseModel>{
         return try {
             responseHandler.handleResponse(apiService.requestList())
-        }catch (e: Exception){
-//    try {
-//        if ((e as HttpException).code() == 401) {
-//            inValidAuth()
-//        }
-//    } catch (e: java.lang.Exception) {
-//        e.toString()
-//    }
+        } catch (e: Exception) {
+            try {
+                if ((e as HttpException).code() == 401)
+                    inValidAuth()
+
+            } catch (e: Exception) {
+                e.toString()
+            }
             responseHandler.handleException(e)
         }
     }
-
-
-
 
     // all request
     suspend fun allRequestList(): Resource<AllRequestResponseModel>{
         return try {
             responseHandler.handleResponse(apiService.allRequestList())
-        }catch (e: Exception){
+        }catch (e: Exception) {
+            try {
+                if ((e as HttpException).code() == 401)
+                    inValidAuth()
+
+            } catch (e: Exception) {
+                e.toString()
+            }
             responseHandler.handleException(e)
         }
     }
@@ -86,6 +90,12 @@ class HomeRepo @Inject constructor(private var apiService: ApiService, private v
         return try {
             responseHandler.handleResponse(apiService.getNotifications())
         }catch (e: Exception){
+            try {
+                if ((e as HttpException).code() == 401)
+                    inValidAuth()
+            }catch (e : Exception){
+                e.toString()
+            }
             responseHandler.handleException(e)
         }
     }

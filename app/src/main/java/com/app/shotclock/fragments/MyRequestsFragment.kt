@@ -163,6 +163,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
+                if (t.message!="Invalid Authorization Key" || t.message!= "Invalid authorization key")
                 showError(t.message!!)
             }
             Status.LOADING -> {
@@ -197,6 +198,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(),Observer<Re
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
+                if (it.message!="Invalid Authorization Key" || it.message!= "Invalid authorization key")
                 showError(it.message!!)
             }
             Status.LOADING -> {

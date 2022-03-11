@@ -133,7 +133,7 @@ fun hideKeyboard(view: View, activity: Activity) {
     imm!!.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-// for showTaost
+// for showToast
 fun Fragment.showToast(message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
@@ -306,7 +306,7 @@ fun time_to_timestamp(str_date: String?, pattren: String?): Long {
     } catch (ex: java.lang.Exception) {
         ex.printStackTrace()
     }
-    time_stamp = time_stamp / 1000
+    time_stamp /= 1000
     return time_stamp
 }
 

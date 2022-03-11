@@ -134,6 +134,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         rsDistance = view.findViewById(R.id.rsDistance)
 
         tvClear?.setOnClickListener {
+            homeList.clear()
             bottomOpen(bottomSheetBehavior)
             homeViewModel.homeApi(latitude, longitude).observe(viewLifecycleOwner, this)
             adapter?.notifyDataSetChanged()

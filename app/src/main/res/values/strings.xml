@@ -3,6 +3,8 @@
 
     <string name="api_key_map" translatable="false">AIzaSyCM_VpnKA8OeL80rRUE6cKRkwK6KhuIVPs</string>
 
+    <string name="agora_app_id">b3021aff36e7492b9b721e5d924f6c9f</string>
+
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="alert">Alert</string>
@@ -175,6 +177,7 @@
     <string name="speed_date_sessioncaps">Speed Date Session</string>
     <string name="pending">Pending</string>
     <string name="no_chat_history_found">No chat history found</string>
+    <string name="no_result_found">No result found</string>
     <string-array name="selectGender">
         <item>Select</item>
         <item>Female</item>

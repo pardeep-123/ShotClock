@@ -75,14 +75,21 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Observ
         when (t.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
-
                 notificationList.addAll(t.data?.body!!)
-                notificationAdapter?.notifyDataSetChanged()
-                notificationList.reverse()
+                if (notificationList.size > 0) {
+                    binding.tvNoResultFound.isGone()
+                    binding.rvNotification.isVisible()
+                    notificationAdapter?.notifyDataSetChanged()
+                    notificationList.reverse()
+                } else {
+                    binding.rvNotification.isGone()
+                    binding.tvNoResultFound.isVisible()
+                }
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showError(t.message!!)
+                if (t.message != "Invalid Authorization Key" || t.message != "Invalid authorization key")
+                    showError(t.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()

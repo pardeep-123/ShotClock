@@ -83,7 +83,11 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
         binding.rvUserImages.adapter = completeProfileImagesAdapter
 
         completeProfileImagesAdapter?.onItemCLickListener = {
-            getImage(requireActivity(), 0, false)
+            if(imageList.size==5){
+                Toast.makeText(requireContext(), "You can only select 5 images", Toast.LENGTH_SHORT).show()
+            }else{
+                getImage(requireActivity(), 0, false)
+            }
         }
     }
 

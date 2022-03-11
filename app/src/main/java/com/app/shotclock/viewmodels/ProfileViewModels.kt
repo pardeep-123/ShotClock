@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.app.shotclock.genericdatacontainer.Resource
-import com.app.shotclock.models.EditProfileRequestModel
-import com.app.shotclock.models.EditProfileResponse
-import com.app.shotclock.models.FileUploadResponse
-import com.app.shotclock.models.ProfileViewModel
+import com.app.shotclock.models.*
 import com.app.shotclock.repo.ProfileRepo
 import kotlinx.coroutines.Dispatchers
 import okhttp3.MultipartBody
@@ -26,7 +23,7 @@ class ProfileViewModels @Inject constructor(private val profileRepo: ProfileRepo
     }
 
     // edit profile
-    fun editProfile(data: EditProfileRequestModel): LiveData<Resource<EditProfileResponse>> {
+    fun editProfile(data: EditProfileRequestModel): LiveData<Resource<LoginResponseModel>> {
         return liveData(Dispatchers.IO) {
             emit(Resource.loading(null))
             val response = profileRepo.editProfile(data)
