@@ -16,14 +16,21 @@ import com.app.shotclock.genericdatacontainer.Status
 import com.app.shotclock.models.BaseResponseModel
 import com.app.shotclock.models.CancelRequestAdminRequest
 import com.app.shotclock.models.RequestListResponseModel
-import com.app.shotclock.utils.isGone
-import com.app.shotclock.utils.isVisible
+import com.app.shotclock.models.sockets.VideoCallResponse
+import com.app.shotclock.utils.*
 import com.app.shotclock.viewmodels.HomeViewModel
 import com.google.android.material.button.MaterialButton
+import com.google.gson.GsonBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONObject
 import javax.inject.Inject
 
 
-class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>(), Observer<Resource<RequestListResponseModel>> {
+class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>(),
+    Observer<Resource<RequestListResponseModel>>, SocketManager.Observer {
 
     private lateinit var homeViewModel: HomeViewModel
 
@@ -33,6 +40,8 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
     private var speedList = ArrayList<RequestListResponseModel.RequestListResponseBody>()
     private var groupName = ""
     private var status = 0
+    private var activityScope = CoroutineScope(Dispatchers.Main)
+    private lateinit var socketManager: SocketManager
 
     override fun getViewBinding(): FragmentSpeedDateSessionBinding {
         return FragmentSpeedDateSessionBinding.inflate(layoutInflater)
@@ -40,6 +49,10 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        socketManager = App.mInstance.getSocketManager()!!
+        if (!socketManager.isConnected() || socketManager.getmSocket() == null)
+            socketManager.init()
+
         configureViewModel()
         handleClicks()
         setAdapter()
@@ -72,7 +85,7 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
                 val btNo: MaterialButton = findViewById(R.id.btNo)
 
                 btYes.setOnClickListener {
-                    setCancelRequestData(groupName,status)
+                    setCancelRequestData(groupName, status)
                     dismiss()
                 }
 
@@ -80,6 +93,14 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
                     dismiss()
                 }
                 show()
+            }
+        }
+
+        binding.tvStart.setOnClickListener {
+            if (speedList[0].requestCount == 0) {
+                showToast("You can't this calling because no user has accept your request yet")
+            } else {
+                callToUser()
             }
         }
     }
@@ -132,6 +153,63 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
                 binding.pb.clLoading.isVisible()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        socketManager.unRegister(this)
+        socketManager.onRegister(this)
+        if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
+            socketManager.init()
+        }
+    }
+
+    private fun callToUser() {
+        val jsonObject = JSONObject()
+        jsonObject.put("senderName", speedList[0].username)
+        jsonObject.put("senderImage", speedList[0].profileImage)
+        jsonObject.put("senderId", speedList[0].id)
+        jsonObject.put("receiverId", speedList[0].id)
+        jsonObject.put("requestId", speedList[0].requestTo)
+        jsonObject.put("receiverName", speedList[0].username)
+        jsonObject.put("callType", "1")
+        jsonObject.put("groupName", speedList[0].groupName)
+        socketManager.callToUser(jsonObject)
+
+    }
+
+    override fun onResponseArray(event: String, args: JSONArray) {
+
+    }
+
+    override fun onResponse(event: String, args: JSONObject) {
+        when (event) {
+            SocketManager.call_to_user_emitter -> {
+                try {
+                    activityScope.launch {
+                        val mObject = args as JSONObject
+                        val gson = GsonBuilder().create()
+
+                        val userToCallList =
+                            gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
+                        val bundle = Bundle()
+                        bundle.putString("channel_name", userToCallList.channelName)
+                        bundle.putString("video_token", userToCallList.videoToken)
+                        findNavController().navigate(
+                            R.id.action_speedDateSessionFragment_to_videoCallFragment,
+                            bundle
+                        )
+                    }
+                } catch (e: Exception) {
+
+                }
+            }
+        }
+    }
+
+    override fun onError(event: String, vararg args: Array<*>) {
+
     }
 
 }

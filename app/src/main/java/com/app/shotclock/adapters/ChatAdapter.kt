@@ -8,9 +8,7 @@ import com.app.shotclock.cache.getUser
 import com.app.shotclock.constants.ApiConstants
 import com.app.shotclock.databinding.ItemsChatBinding
 import com.app.shotclock.models.sockets.ChatHistoryResponse
-import com.app.shotclock.utils.isGone
-import com.app.shotclock.utils.isVisible
-import com.app.shotclock.utils.openImagePopUp
+import com.app.shotclock.utils.*
 import com.bumptech.glide.Glide
 
 class ChatAdapter(
@@ -35,7 +33,7 @@ class ChatAdapter(
                 holder.itemsBinding.constraintLayoutReceiver.isGone()
 
                 Glide.with(ctx).load(ApiConstants.SOCKET_URL + list[position].senderImage).into(holder.itemsBinding.civSender)
-
+                 holder.itemsBinding.tvTimeSender.text = convertDateStampToTime(list[position].created.toLong())
                 if (list[position].messageType == 0) {
                     holder.itemsBinding.ivSendPic.isGone()
                     holder.itemsBinding.tvSender.isVisible()
@@ -57,6 +55,7 @@ class ChatAdapter(
                 holder.itemsBinding.constraintLayoutSender.isGone()
                 holder.itemsBinding.constraintLayoutReceiver.isVisible()
                 Glide.with(ctx).load(ApiConstants.SOCKET_URL + list[position].senderImage).into(holder.itemsBinding.civReceiver)
+                holder.itemsBinding.tvTimeReceiver.text = convertDateStampToTime(list[position].created.toLong())
 
                 if (list[position].messageType == 0) {
                     holder.itemsBinding.ivReceivePic.isGone()

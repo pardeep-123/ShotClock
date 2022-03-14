@@ -51,7 +51,7 @@ class MessagesAdapter(
 
         if (arrayList[position].createdAt != null)
             holder.itemBinding.tvTime.text =
-                getNotificationTime(getChatListTime(arrayList[position].createdAt))
+                getNotificationTime(arrayList[position].created.toLong())
 
         holder.itemView.setOnClickListener {
             onItemClickListener?.invoke(position)

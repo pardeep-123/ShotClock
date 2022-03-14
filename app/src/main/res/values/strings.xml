@@ -178,6 +178,7 @@
     <string name="pending">Pending</string>
     <string name="no_chat_history_found">No chat history found</string>
     <string name="no_result_found">No result found</string>
+    <string name="thursday_1_16pm">Thursday 1.16PM</string>
     <string-array name="selectGender">
         <item>Select</item>
         <item>Female</item>

@@ -44,6 +44,9 @@
         <action
             android:id="@+id/action_myRequestsFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_myRequestsFragment_to_videoCallFragment"
+            app:destination="@id/videoCallFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
@@ -129,6 +132,9 @@
         <action
             android:id="@+id/action_speedDateSessionFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_speedDateSessionFragment_to_videoCallFragment"
+            app:destination="@id/videoCallFragment" />
     </fragment>
 
 

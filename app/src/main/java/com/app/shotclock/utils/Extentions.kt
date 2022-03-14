@@ -86,11 +86,11 @@ fun myAlert(ctx: Context, messageRes: String, onClick: () -> Unit, yes: String, 
 //        popUpWindowReport.elevation = 10f
 //    }
 //
-//    val dialogtext11: TextView = popUp.findViewById(R.id.tvAreYouSure)
+//    val dialogText11: TextView = popUp.findViewById(R.id.tvAreYouSure)
 //
 //    val tvYes: TextView = popUp.findViewById(R.id.tvYes)
 //    //tvYes.text = yes
-//    dialogtext11.setText(messageRes)
+//    dialogText11.setText(messageRes)
 //
 //    tvYes.setOnClickListener {
 //        onClick()
@@ -103,28 +103,25 @@ fun openImagePopUp(pos: String?, ctx: Context) {
     val popup: View
     val layoutInflater: LayoutInflater =
         ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    if (layoutInflater != null) {
-        popup = layoutInflater.inflate(R.layout.porflioeimage_popup, null)
-        val popupWindow = PopupWindow(
-            popup,
-            ConstraintLayout.LayoutParams.MATCH_PARENT,
-            ConstraintLayout.LayoutParams.MATCH_PARENT,
-            true
-        )
-        popupWindow.showAtLocation(popup, Gravity.CENTER, 0, 0)
-        popupWindow.isTouchable = false
-        popupWindow.isOutsideTouchable = false
-        val headImagePopUp: PhotoView = popup.findViewById(R.id.headImagePopUp)
-        val backPress: ImageView = popup.findViewById(R.id.backpress)
-        backPress.setOnClickListener {
-            popupWindow.dismiss()
-        }
-
-          Glide.with(ctx).load(ApiConstants.SOCKET_URL + pos).into(headImagePopUp)
-
+    popup = layoutInflater.inflate(R.layout.porflioeimage_popup, null)
+    val popupWindow = PopupWindow(
+        popup,
+        ConstraintLayout.LayoutParams.MATCH_PARENT,
+        ConstraintLayout.LayoutParams.MATCH_PARENT,
+        true
+    )
+    popupWindow.showAtLocation(popup, Gravity.CENTER, 0, 0)
+    popupWindow.isTouchable = false
+    popupWindow.isOutsideTouchable = false
+    val headImagePopUp: PhotoView = popup.findViewById(R.id.headImagePopUp)
+    val backPress: ImageView = popup.findViewById(R.id.backpress)
+    backPress.setOnClickListener {
+        popupWindow.dismiss()
     }
-}
 
+    Glide.with(ctx).load(ApiConstants.SOCKET_URL + pos).into(headImagePopUp)
+
+}
 
 // for hide keyboard on btn click
 fun hideKeyboard(view: View, activity: Activity) {
@@ -138,7 +135,7 @@ fun Fragment.showToast(message: String) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
-//to set Visibilties
+//to set Visibilities
 fun View.isVisible() {
     this.visibility = View.VISIBLE
 }
@@ -157,58 +154,57 @@ fun createRequestBody(param: String): RequestBody {
 }
 
 // to set Date in custom format
-fun convertDateStempToTime(timestamp: Long): String? {
+fun convertDateStampToTime(timestamp: Long): String? {
     val cal: Calendar = Calendar.getInstance(Locale.ENGLISH)
     cal.timeInMillis = timestamp * 1000
-    val outputFormat: DateFormat = SimpleDateFormat("dd MMM yyyy hh:mm aa")
+    val outputFormat: DateFormat = SimpleDateFormat("EEEE hh:mm aa")
     //outputFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-    return outputFormat.format(cal.getTime())
+    return outputFormat.format(cal.time)
 }
 
 
-fun convertDateStempToTime1(timestamp: String): String? {
+fun convertDateStampToTime1(timestamp: String): String? {
     val simpleDateFormat = SimpleDateFormat("dd-MMM-yyyy hh:mm a", Locale.ENGLISH)
-    val date = simpleDateFormat.format(timestamp.toLong() * 1000L)
     // val outputFormat: DateFormat = SimpleDateFormat("dd-MMM-yyyy hh:mm a")
     //outputFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-    return date
+    return simpleDateFormat.format(timestamp.toLong() * 1000L)
 }
 
 // to set Date in custom format
 fun convertDateToTime(timestamp: Long): String? {
     val cal: Calendar = Calendar.getInstance(Locale.ENGLISH)
-    cal.setTimeInMillis(timestamp * 1000)
+    cal.timeInMillis = timestamp * 1000
     val outputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
     //outputFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-    return outputFormat.format(cal.getTime())
+    return outputFormat.format(cal.time)
 }
 
 // to set time in custom format
-fun convertTimeStempToTime(timestamp: Long): String? {
+fun convertTimeToStampToTime(timestamp: Long): String? {
     val cal: Calendar = Calendar.getInstance(Locale.ENGLISH)
-    cal.setTimeInMillis(timestamp * 1000)
+    cal.timeInMillis = timestamp * 1000
     val outputFormat: DateFormat = SimpleDateFormat("hh:mm a")
     //outputFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-    return outputFormat.format(cal.getTime())
+    return outputFormat.format(cal.time)
 }
 
 // to set Date to Rating Date in custom format
 fun convertDateToRatingTime(timestamp: Long): String? {
     val cal: Calendar = Calendar.getInstance(Locale.ENGLISH)
-    cal.setTimeInMillis(timestamp * 1000)
+    cal.timeInMillis = timestamp * 1000
     val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
     //outputFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-    return outputFormat.format(cal.getTime())
+    return outputFormat.format(cal.time)
 }
 
 
 // to set time in notification format
-fun convertTimeTonotifiaction(timestamp: Long): String? {
+fun convertTimeToNotification(timestamp: Long): String? {
     val cal: Calendar = Calendar.getInstance(Locale.ENGLISH)
-    cal.setTimeInMillis(timestamp * 1000)
+    cal.timeInMillis = timestamp * 1000
     val outputFormat: DateFormat = SimpleDateFormat("dd MMM yyyy")
     //outputFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-    return outputFormat.format(cal.getTime())
+    return outputFormat.format(cal.time)
 }
 
 // automatically date and time formatting by get api
@@ -219,7 +215,7 @@ fun getNotificationTime(time_stamp: Long): String {
     } catch (ex: Exception) {
         ex.printStackTrace()
     }
-    System.out.println("dateeee" + date.toString())
+    println("dateeee" + date.toString())
     var string_date = ""
     val current = Calendar.getInstance().time
     var diffInSeconds = (current.time - date!!.time) / 1000
@@ -238,41 +234,48 @@ fun getNotificationTime(time_stamp: Long): String {
             diffInSeconds = it
         } >= 12) diffInSeconds % 12 else diffInSeconds
     val years = (diffInSeconds / 12).also { diffInSeconds = it }
-    if (years > 0) {
-        string_date = if (years == 1L) {
-            "1 year"
-        } else {
-            "$years years"
+    when {
+        years > 0 -> {
+            string_date = if (years == 1L) {
+                "1 year"
+            } else {
+                "$years years"
+            }
         }
-    } else if (months > 0) {
-        string_date = if (months == 1L) {
-            "1 month"
-        } else {
-            "$months months"
+        months > 0 -> {
+            string_date = if (months == 1L) {
+                "1 month"
+            } else {
+                "$months months"
+            }
         }
-    } else if (weeks > 0) {
-        string_date = if (weeks == 1L) {
-            "1 week"
-        } else {
-            "$weeks Weeks"
+        weeks > 0 -> {
+            string_date = if (weeks == 1L) {
+                "1 week"
+            } else {
+                "$weeks Weeks"
+            }
         }
-    } else if (days > 0) {
-        string_date = if (days == 1L) {
-            "1 day"
-        } else {
-            "$days days"
+        days > 0 -> {
+            string_date = if (days == 1L) {
+                "1 day"
+            } else {
+                "$days days"
+            }
         }
-    } else if (hrs > 0) {
-        string_date = if (hrs == 1L) {
-            "1 hour"
-        } else {
-            "$hrs hours"
+        hrs > 0 -> {
+            string_date = if (hrs == 1L) {
+                "1 hour"
+            } else {
+                "$hrs hours"
+            }
         }
-    } else if (min > 0) {
-        string_date = if (min == 1L) {
-            "1 minute"
-        } else {
-            "$min minutes"
+        min > 0 -> {
+            string_date = if (min == 1L) {
+                "1 minute"
+            } else {
+                "$min minutes"
+            }
         }
     }
     string_date = "$string_date ago"
@@ -286,7 +289,7 @@ fun String.matches(regex: String): Boolean {
     return true
 }
 
-fun getUTCdatetimeAsString(): String? {
+fun getUTCDateTimeAsString(): String? {
     val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
     sdf.timeZone = TimeZone.getTimeZone("UTC")
     return sdf.format(Date())
@@ -342,12 +345,11 @@ fun time_to_timestampLocal(str_date: String?, pattren: String?): Long {
     } catch (ex: java.lang.Exception) {
         ex.printStackTrace()
     }
-    time_stamp = time_stamp / 1000
+    time_stamp /= 1000
     return time_stamp
 }
 
-//
-//
+
 fun getDateFromUTCTimestamp(mTimestamp: Long, mDateFormate: String?): String? {
     var date: String? = null
     try {
@@ -367,7 +369,6 @@ fun getDateFromUTCTimestamp(mTimestamp: Long, mDateFormate: String?): String? {
     return date
 }
 
-//
 // zuluTime  time convert to string
 fun getChatListTime(zuluTime: String): Long {
     val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
@@ -396,22 +397,10 @@ fun getNotificationTimeZullu(zuluTime: String): String {
         e.printStackTrace()
     }
     val formatted = output.format(d)
-    Log.i("ZULLU DATE", "" + formatted)
+    Log.i("ZULU DATE", "" + formatted)
 
     return formatted
 }
-//fun tackleError(activity: Activity, errorBody: String) {
-//    when (errorBody) {
-//        "401" -> {
-//            // showAlert(activity, errorBody.message,activity.getString(R.string.ok)) {
-//            activity.startActivity(Intent(activity, InitialActivity::class.java))
-//            activity.finishAffinity()
-//            clearAllData(activity)
-//            clearData(activity, "role")
-//            clearData(activity, "token")
-//        }
-//    }
-//}
 
 fun inValidAuth() {
         try {
@@ -443,7 +432,6 @@ fun longToDate(timeInMillis: Long, format: String): String {
     return sdf.format(timeInMillis)
 }
 
-
 fun setPopUpWindow(
     textView: TextView,
     ctx: Context,
@@ -464,8 +452,6 @@ fun setPopUpWindow(
         }
 
     })
-
-
 }
 
 fun getBase64FromPath(path: String): String {

@@ -56,6 +56,17 @@
             app:layout_constraintStart_toEndOf="@id/civReceiver"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/tvTimeReceiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvReceiver"
+            app:layout_constraintStart_toStartOf="@id/tvReceiver"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_8ssp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/proxima_regular"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -108,6 +119,17 @@
             app:layout_constraintBottom_toBottomOf="@id/civSender"
             app:layout_constraintEnd_toStartOf="@id/civSender"
             app:layout_constraintTop_toTopOf="@id/civSender" />
+
+        <TextView
+            android:id="@+id/tvTimeSender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvSender"
+            app:layout_constraintEnd_toEndOf="@id/tvSender"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_8ssp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/proxima_regular"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

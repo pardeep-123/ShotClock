@@ -19,12 +19,7 @@ class SocketManager {
     companion object {
         //for chat
         //emitter
-
-        //listener
-        const val send_message_listener = "send_message_listner"
-        const val read_data_status = "read_data_status"
-
-        // sockets emitter events
+        // sockets events
         private const val connectUser = "connect_user"
         const val get_chat_list = "chat_listing"
         const val get_chat = "get_messages"
@@ -35,8 +30,8 @@ class SocketManager {
         const val call_status_emitter = "callStatus"
         const val call_socket_disconnect_emitter = "socket_disconnect"
 
-
         /*listener*/
+        const val send_message_listener = "send_message_listner"
         private const val connect_listener = "connect_listener"
         private const val get_list = "chatlistinglistner"
         const val my_chat = "get_messagelistner"
@@ -48,7 +43,6 @@ class SocketManager {
 
     }
 
-
     private var mSocket: Socket? = null
     private var observerList: MutableList<Observer>? = null
 
@@ -56,6 +50,7 @@ class SocketManager {
         return mSocket
     }
 
+    // use for get SOCKET_URL
     private fun getSocket(): Socket? {
         run {
             try {
@@ -242,7 +237,7 @@ class SocketManager {
             val data = args[0] as JSONObject
             Log.e("Socket", "read_unread :::$data")
             for (observer in observerList!!) {
-                observer.onResponse(read_data_status, data)
+                observer.onResponse(read_unread_emitter, data)
             }
         } catch (ex: Exception) {
             ex.localizedMessage

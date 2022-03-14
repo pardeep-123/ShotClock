@@ -30,12 +30,8 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
     private var messageType = 0  // 0-text, 1-image
     private var message = ""
     private var chatList = ArrayList<ChatHistoryResponse.ChatHistoryResponseItem>()
-
-
     private var imageFilePath = ""
     private var extension = ""
-    private var senderId = ""
-    private var callType = 0       // (0=>for single call,1=>for group call)
 
 
     override fun getViewBinding(): FragmentChatBinding {
@@ -57,8 +53,6 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
         clickHandle()
         setAdapter()
 
-//        getChatHistory()
-//        readUnreadMessage()
     }
 
     private fun setAdapter() {
@@ -147,7 +141,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
         jsonObject.put("receiverId", user2Id)
         jsonObject.put("requestId", "0")
         jsonObject.put("receiverName", userName)
-        jsonObject.put("callType", "0")
+        jsonObject.put("callType", "0")     // (0=>for single call,1=>for group call)
         jsonObject.put("groupName", "singleCall")
         socketManager.callToUser(jsonObject)
 
@@ -216,21 +210,20 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
 
             SocketManager.call_to_user_emitter -> {
                 try {
-                    val mObject = args as JSONObject
+                    activityScope.launch {
+                        val mObject = args as JSONObject
+                        val gson = GsonBuilder().create()
 
-                    val gson = GsonBuilder().create()
-                    val userToCallList =
-                        gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
-                    val bundle = Bundle()
-                    bundle.putString("channel_name", userToCallList.channelName)
-                    bundle.putString("video_token", userToCallList.videoToken)
-                    this.findNavController()
-                        .navigate(R.id.action_chatFragment_to_videoCallFragment, bundle)
+                        val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
+                        val bundle = Bundle()
+                        bundle.putString("channel_name", userToCallList.channelName)
+                        bundle.putString("video_token", userToCallList.videoToken)
+                        findNavController().navigate(R.id.action_chatFragment_to_videoCallFragment, bundle)
+                    }
                 } catch (e: Exception) {
 
                 }
             }
-
         }
 
     }
@@ -244,8 +237,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
             imageFilePath = imagePath
 
             try {
-                extension =
-                    imageFilePath.substring(imageFilePath.lastIndexOf(".") + 1); // Without dot jpg, png
+                extension = imageFilePath.substring(imageFilePath.lastIndexOf(".") + 1); // Without dot jpg, png
             } catch (e: Exception) {
             }
 
@@ -260,4 +252,5 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
 
         }
     }
+
 }
