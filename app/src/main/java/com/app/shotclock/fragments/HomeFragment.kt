@@ -303,10 +303,10 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
 
             when {
                 idList.size < 5 -> {
-                    showToast("You cannot add less than 5 person")
+                    showToast("Please select maximum 5 users")
                 }
                 idList.size > 5 -> {
-                    showToast("You cannot add more than 5 persons.")
+                    showToast("Please select 5 users")
                 }
                 else -> {
                     Constants.isPlus = false

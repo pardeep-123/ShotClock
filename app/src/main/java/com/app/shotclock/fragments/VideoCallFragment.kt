@@ -2,7 +2,10 @@ package com.app.shotclock.fragments
 
 import android.app.Dialog
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.View
+import android.view.WindowManager
+import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseFragment
@@ -16,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.concurrent.TimeUnit
 
 
 class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManager.Observer {
@@ -46,6 +50,7 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
         videoToken = bundle.getString("video_token")!!
 
         handleClicks()
+        videoTimingDialog()
 
     }
 
@@ -80,7 +85,6 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
             }
         }
 
-
         binding.tvSkip.setOnClickListener {
             isCallEnd = "0"
         }
@@ -106,6 +110,17 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        socketManager.unRegister(this)
+        socketManager.onRegister(this)
+        if (!socketManager.isConnected() || socketManager.getmSocket() == null)
+            socketManager.init()
+
+        getCallStatus()
+
+    }
+
     override fun onResponseArray(event: String, args: JSONArray) {
 
     }
@@ -116,6 +131,35 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
 
     override fun onError(event: String, vararg args: Array<*>) {
 
+    }
+
+    private fun videoTimingDialog() {
+        val count = 0
+        val dialog = Dialog(requireContext(),android.R.style.Theme_Translucent_NoTitleBar)
+        with(dialog) {
+            setCancelable(false)
+            setContentView(R.layout.items_video_calling_timer)
+            val tvTimer: TextView = findViewById(R.id.tvTimer)
+
+//            =new Dialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen)Dialog dialog
+
+            val timer = object : CountDownTimer(5000, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+
+                    tvTimer.text = String.format("%d", TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished))
+
+                }
+
+                override fun onFinish() {
+                    dismiss()
+                }
+            }
+            timer.start()
+
+//                if (tvTimer.text.length >5)
+//                tvTimer.text = count.toString()
+            show()
+        }
     }
 
 }
