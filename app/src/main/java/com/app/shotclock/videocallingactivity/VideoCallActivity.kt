@@ -18,10 +18,15 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseActivity
+import com.app.shotclock.databinding.ActivityVideoChatViewBinding
+import com.app.shotclock.utils.App
 import com.app.shotclock.utils.SocketManager
+import com.app.shotclock.utils.isNetworkConnected
 import com.google.gson.GsonBuilder
 import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcEngine
+import io.agora.rtc.video.VideoCanvas
+import io.agora.rtc.video.VideoEncoderConfiguration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,7 +34,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 class VideoCallActivity:BaseActivity(), SocketManager.Observer {
-
+    private lateinit var binding: ActivityVideoChatViewBinding
     var channelName = ""
     var name = ""
     private lateinit var socketManager: SocketManager
@@ -79,7 +84,8 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
          * @param reason Reason why the user goes offline:
          *
          *     USER_OFFLINE_QUIT(0): The user left the current channel.
-         *     USER_OFFLINE_DROPPED(1): The SDK timed out and the user dropped offline because no data packet was received within a certain period of time. If a user quits the call and the message is not passed to the SDK (due to an unreliable channel), the SDK assumes the user dropped offline.
+         *     USER_OFFLINE_DROPPED(1): The SDK timed out and the user dropped offline because no data packet was received within a certain period of time.
+         *     If a user quits the call and the message is not passed to the SDK (due to an unreliable channel), the SDK assumes the user dropped offline.
          *     USER_OFFLINE_BECOME_AUDIENCE(2): (Live broadcast only.) The client role switched from the host to the audience.
          */
         override fun onUserOffline(uid: Int, reason: Int) {
@@ -88,7 +94,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
         override fun onFirstRemoteVideoDecoded(uid: Int, width: Int, height: Int, elapsed: Int) {
             runOnUiThread { //                    mLogView.logI("First remote video decoded, uid: " + (uid & 0xFFFFFFFFL));
-                Log.e("callAcceted",uid.toString())
+                Log.e("callAccepted",uid.toString())
                 //  isVideoCallPicked = true
                 if (mCounter != null)
                     mCounter!!.cancel()
@@ -136,7 +142,9 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_video_chat_view)
+        binding = ActivityVideoChatViewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         initialiseSocket()
         channelName = intent?.getStringExtra("channelName").toString()
         agoraToken = intent?.getStringExtra("agoraToken").toString()
@@ -156,7 +164,9 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     }
 
     fun activateReceiverListenerSocket() {
-        socketManager.callTerminateListeners()
+        val jsonObject = JSONObject()
+        jsonObject.put("status", "3")
+        socketManager.getCallStatus(jsonObject)
     }
 
     private fun initAgoraEngineAndJoinChannel() {
@@ -220,9 +230,9 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
     override fun onDestroy() {
         super.onDestroy()
-        val jsonObject = JSONObject()
-        jsonObject.put("requestId", requestId)
-        socketManager.callTermination(jsonObject)
+//        val jsonObject = JSONObject()
+//        jsonObject.put("requestId", requestId)
+//        socketManager.callTermination(jsonObject)
         socketManager.unRegister(this)
         leaveChannel()
         /*
@@ -242,7 +252,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
             iv.clearColorFilter()
         } else {
             iv.isSelected = true
-            iv.setColorFilter(resources.getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY)
+            iv.setColorFilter(resources.getColor(R.color.pink), PorterDuff.Mode.MULTIPLY)
         }
 
         // Stops/Resumes sending the local video stream.
@@ -252,10 +262,10 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         val surfaceView = container.getChildAt(0) as SurfaceView
         surfaceView.setZOrderMediaOverlay(!iv.isSelected)
         surfaceView.visibility = if (iv.isSelected) {
-            iv.setImageResource(R.drawable.camera_on)
+            iv.setImageResource(R.drawable.ic_video)
             View.GONE
         } else {
-            iv.setImageResource(R.drawable.camera_off)
+            iv.setImageResource(R.drawable.ic_video)
             View.VISIBLE
         }
 
@@ -268,7 +278,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
             iv.clearColorFilter()
         } else {
             iv.isSelected = true
-            iv.setColorFilter(resources.getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY)
+            iv.setColorFilter(resources.getColor(R.color.pink), PorterDuff.Mode.MULTIPLY)
         }
 
         // Stops/Resumes sending the local audio stream.
@@ -281,12 +291,12 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     }
 
 
-    //    callStatus:0 for ringing, 1 for answered, 2 for cancelled
+    //   (0=>calling,1=> callConnected,2=>call Declined,3=>Call Disconnected,4=>Missed call
     fun onEncCallClicked(view: View) {
-        if (AppUtils.isNetworkConnected()) {
+        if (isNetworkConnected()) {
             val jsonObject = JSONObject()
-            jsonObject.put("requestId", requestId)
-            socketManager.callTermination(jsonObject)
+            jsonObject.put("status", "2")
+            socketManager.getCallStatus(jsonObject)
 
         }
 
@@ -334,7 +344,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         // Our server will assign one and return the uid via the event
         // handler callback function (onJoinChannelSuccess) after
         // joining the channel successfully.
-        val container = findViewById(R.id.local_video_view_container) as FrameLayout
+        val container = findViewById<FrameLayout>(R.id.local_video_view_container)
         val surfaceView = RtcEngine.CreateRendererView(baseContext)
         surfaceView.setZOrderMediaOverlay(true)
         container.addView(surfaceView)
@@ -350,7 +360,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         // 2. One token is only valid for the channel name that
         // you use to generate this token.
 
-        var token: String? = getString(R.string.agora_access_token)
+        var token: String? = getString(R.string.agora_app_id)
         if (agoraToken.isEmpty()) {
             token = null
         }
@@ -385,8 +395,9 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
     private fun setupRemoteVideo(uid: Int) {
 
-        ll_join.visibility = View.VISIBLE
-        rl_calling.visibility = View.GONE
+//        ll_join.visibility = View.VISIBLE
+//        rl_calling.visibility = View.GONE
+
         // Only one remote video view is available for this
         // tutorial. Here we check if there exists a surface
         // view tagged as this uid.
@@ -447,7 +458,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     }
 
     fun initialiseSocket() {
-        socketManager = AppController.mInstance.getSocketManager()!!
+        socketManager = App.mInstance.getSocketManager()!!
         if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
             socketManager.init()
         }
@@ -465,10 +476,10 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
             .setCancelable(false)
             .setPositiveButton("Yes") { dialog, id ->
                 //if (!isVideoCallPicked) {
-                if (AppUtils.isNetworkConnected()) {
+                if (isNetworkConnected()) {
                     val jsonObject = JSONObject()
-                    jsonObject.put("requestId", requestId)
-                    socketManager.callTermination(jsonObject)
+                    jsonObject.put("status", "2")
+                    socketManager.getCallStatus(jsonObject)
                 } else{
 
                 }
@@ -490,38 +501,38 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     override fun onResponse(event: String, args: JSONObject) {
         when (event) {
 
-            SocketManager.call_termination_event -> {
-                activityScope.launch {
-                    var data = args as JSONObject
-                    Log.e("callResponse", data.toString())
-                    val gson = GsonBuilder().create()
-                    val callData = gson.fromJson(
-                        data.toString(),
-                        CallTerminateResponse::class.java
-                    )
-                    if (callData.requestId.toString() == requestId) {
-                        Log.e("===five","finish")
-                        finish()
-                    }
-                }
-
-            }
-
-            SocketManager.call_termination_listener -> {
-                activityScope.launch {
-                    var data = args as JSONObject
-                    Log.e("callResponse", data.toString())
-                    val gson = GsonBuilder().create()
-                    val callData = gson.fromJson(
-                        data.toString(),
-                        CallTerminateResponse::class.java
-                    )
-                    if (callData.requestId.toString() == requestId) {
-                        Log.e("===one","finish")
-                        finish()
-                    }
-                }
-            }
+//            SocketManager.call_termination_event -> {
+//                activityScope.launch {
+//                    var data = args as JSONObject
+//                    Log.e("callResponse", data.toString())
+//                    val gson = GsonBuilder().create()
+//                    val callData = gson.fromJson(
+//                        data.toString(),
+//                        CallTerminateResponse::class.java
+//                    )
+//                    if (callData.requestId.toString() == requestId) {
+//                        Log.e("===five","finish")
+//                        finish()
+//                    }
+//                }
+//
+//            }
+//
+//            SocketManager.call_termination_listener -> {
+//                activityScope.launch {
+//                    var data = args as JSONObject
+//                    Log.e("callResponse", data.toString())
+//                    val gson = GsonBuilder().create()
+//                    val callData = gson.fromJson(
+//                        data.toString(),
+//                        CallTerminateResponse::class.java
+//                    )
+//                    if (callData.requestId.toString() == requestId) {
+//                        Log.e("===one","finish")
+//                        finish()
+//                    }
+//                }
+//            }
 
         }
     }

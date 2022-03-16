@@ -1,7 +1,9 @@
 package com.app.shotclock.fragments
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.RadioGroup
@@ -27,14 +29,20 @@ import com.app.shotclock.models.HomeResponseModel
 import com.app.shotclock.models.SelectionDoneRequestModel
 import com.app.shotclock.models.SelectionDoneResponse
 import com.app.shotclock.utils.*
+import com.app.shotclock.videocallingactivity.IncomingCallActivity
 import com.app.shotclock.viewmodels.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.RangeSlider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONObject
 import javax.inject.Inject
 
 open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
-    Observer<Resource<HomeResponseModel>> {
+    Observer<Resource<HomeResponseModel>>{
 
     lateinit var homeViewModel: HomeViewModel
 
@@ -79,6 +87,8 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         CacheConstants.Current = "home"
+
+
         configureViewModel()
         handleClickListeners()
         filterBottomSheet(view)
@@ -88,6 +98,8 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         setAdapter()
         getLiveLocation(requireActivity())
     }
+
+
 
     private fun setAdapter() {
         adapter = HomeAdapter(requireContext(), homeList)
@@ -469,5 +481,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
             }
         })
     }
+
+
 
 }

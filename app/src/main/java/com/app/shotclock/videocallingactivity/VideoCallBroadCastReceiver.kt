@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import com.app.shotclock.R
+import com.app.shotclock.utils.App
+import com.app.shotclock.utils.isNetworkConnected
 import org.json.JSONObject
 
 
@@ -37,15 +39,20 @@ class VideoCallBroadCastReceiver: BroadcastReceiver() {
             ContextCompat.startActivity(context, intent2, Bundle())*/
         }else
             if (intent.getStringExtra("type") == "reject") {
-                if (AppUtils.isNetworkConnected()) {
+                if (isNetworkConnected()) {
 
                     val jsonObject = JSONObject()
-                    jsonObject.put("requestId",  intent.getStringExtra("channelName").toString())
+                    jsonObject.put("requestId", intent.getStringExtra("channelName").toString())
                     jsonObject.put("status", "2")
-                    AppController.mInstance.getSocketManager()?.acceptRejectCall(jsonObject)
-                }
-                else
-                    Toast.makeText(context, context!!.resources.getString(R.string.internet_connection), Toast.LENGTH_SHORT).show()
+                    App.mInstance.getSocketManager()?.getCallStatus(jsonObject)
+
+
+                } else
+                    Toast.makeText(
+                        context,
+                        context!!.resources.getString(R.string.internet_connection),
+                        Toast.LENGTH_SHORT
+                    ).show()
             }
 
         val notificationId = intent.getIntExtra("notificationId", 1)

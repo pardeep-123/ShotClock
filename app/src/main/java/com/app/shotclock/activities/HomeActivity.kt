@@ -2,6 +2,7 @@ package com.app.shotclock.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
@@ -25,17 +26,22 @@ import com.app.shotclock.databinding.ActivityHomeBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
 import com.app.shotclock.models.BaseResponseModel
-import com.app.shotclock.utils.App
-import com.app.shotclock.utils.isGone
-import com.app.shotclock.utils.isVisible
-import com.app.shotclock.utils.myAlert
+import com.app.shotclock.models.sockets.VideoCallResponse
+import com.app.shotclock.utils.*
+import com.app.shotclock.videocallingactivity.IncomingCallActivity
 import com.app.shotclock.viewmodels.LoginSignUpViewModel
 import com.bumptech.glide.Glide
+import com.google.gson.GsonBuilder
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONObject
 import javax.inject.Inject
 
 
-class HomeActivity : BaseActivity() {
+class HomeActivity : BaseActivity() , SocketManager.Observer {
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var navController: NavController
@@ -43,6 +49,8 @@ class HomeActivity : BaseActivity() {
     private lateinit var listener: NavController.OnDestinationChangedListener
     private var senderId = ""
     private var senderName = ""
+    private lateinit var socketManager: SocketManager
+    private val activityScope = CoroutineScope(Dispatchers.Main)
 
     lateinit var loginSignUpViewModel: LoginSignUpViewModel
     @Inject
@@ -56,7 +64,8 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        initializeSocket()
+        activateReceiverListenerSocket()
 
         configureViewModel()
         manageHeaderView()
@@ -157,6 +166,20 @@ class HomeActivity : BaseActivity() {
         }
     }
 
+
+    private fun initializeSocket() {
+        socketManager = App.mInstance.getSocketManager()!!
+        if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
+            socketManager.init()
+        }
+        socketManager.unRegister(this)
+        socketManager.onRegister(this)
+    }
+
+    private fun activateReceiverListenerSocket() {
+        socketManager.callToUserActivate()
+    }
+
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         loadData(intent)
@@ -189,5 +212,34 @@ class HomeActivity : BaseActivity() {
             }
         }
     }
+    override fun onResponseArray(event: String, args: JSONArray) {
+
+    }
+
+    override fun onResponse(event: String, args: JSONObject) {
+        when (event) {
+            SocketManager.call_to_user_listener -> {
+                activityScope.launch {
+                    val mObject = args as JSONObject
+                    val gson = GsonBuilder().create()
+                    val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
+
+                    val options = NavOptions.Builder().setPopUpTo(R.id.incomingCallActivity,true).build()
+                    val bundle = Bundle()
+                    bundle.putString("channelName",userToCallList.channelName)
+                    findNavController(R.id.fragment).navigate(R.id.incomingCallActivity,bundle,options)
+
+                    /* val intent = Intent(this@HomeActivity,IncomingCallActivity::class.java)
+                    intent.putExtra("channelName",userToCallList.channelName)
+                    startActivity(intent)*/
+
+                }
+            }
+        }
+    }
+
+    override fun onError(event: String, vararg args: Array<*>) {
+    }
+
 
 }

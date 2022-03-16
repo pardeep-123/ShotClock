@@ -1,6 +1,7 @@
 package com.app.shotclock.di.module
 
 import com.app.shotclock.fragments.*
+import com.app.shotclock.videocallingactivity.IncomingCallActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -81,5 +82,8 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     internal abstract fun speedDateSession(): SpeedDateSessionFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun incomingCallActivity(): IncomingCallActivity
 
 }

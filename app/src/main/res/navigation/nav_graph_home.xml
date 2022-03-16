@@ -136,6 +136,14 @@
             android:id="@+id/action_speedDateSessionFragment_to_videoCallFragment"
             app:destination="@id/videoCallFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/incomingCallActivity"
+        android:name="com.app.shotclock.videocallingactivity.IncomingCallActivity"
+        android:label="IncomingCallActivity" >
+        <action
+            android:id="@+id/action_incomingCallActivity_to_videoCallFragment"
+            app:destination="@id/videoCallFragment" />
+    </fragment>
 
 
 </navigation>

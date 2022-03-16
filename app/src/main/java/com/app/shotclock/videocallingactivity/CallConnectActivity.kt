@@ -1,24 +1,20 @@
 package com.app.shotclock.videocallingactivity
 
-import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseActivity
+import com.app.shotclock.databinding.ActivityVideoChatViewBinding
+import com.app.shotclock.utils.App
 import com.app.shotclock.utils.SocketManager
-import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
-import java.lang.Exception
 
 class CallConnectActivity : BaseActivity(), SocketManager.Observer, View.OnClickListener {
-
+    private lateinit var binding: ActivityVideoChatViewBinding
     var requestId = ""
     var channelName = ""
     var agoraToken = ""
@@ -27,9 +23,11 @@ class CallConnectActivity : BaseActivity(), SocketManager.Observer, View.OnClick
     private var mPlayer: MediaPlayer? = null
     private val activityScope = CoroutineScope(Dispatchers.Main)
     private lateinit var socketManager: SocketManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_call_connect)
+        binding = ActivityVideoChatViewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initializeSocket()
         activateReceiverListenerSocket()
@@ -38,11 +36,12 @@ class CallConnectActivity : BaseActivity(), SocketManager.Observer, View.OnClick
         agoraToken = intent.getStringExtra("agoraToken").toString()
         callerName = intent.getStringExtra("callerName").toString()
         callerImage = intent.getStringExtra("callerImage").toString()
-        ivImage.loadImage(callerImage)
-        tvName.text= "$callerName phone is ringing"
+//        ivImage.loadImage(callerImage)
+//        tvName.text= "$callerName phone is ringing"
 
         startRinging()
-        ivRejectCall.setOnClickListener(this)
+
+//        ivRejectCall.setOnClickListener(this)
 
     }
 
@@ -55,7 +54,8 @@ class CallConnectActivity : BaseActivity(), SocketManager.Observer, View.OnClick
     }
 
     fun activateReceiverListenerSocket() {
-        socketManager.receivedMessageActivate()
+
+//        socketManager.receivedMessageActivate()
     }
 
     private fun startRinging(resource: Int): MediaPlayer {
@@ -78,7 +78,7 @@ class CallConnectActivity : BaseActivity(), SocketManager.Observer, View.OnClick
 
     private fun initializeSocket() {
 
-        socketManager = AppController.mInstance.getSocketManager()!!
+        socketManager = App.mInstance.getSocketManager()!!
         if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
             socketManager.init()
         }
@@ -107,97 +107,97 @@ class CallConnectActivity : BaseActivity(), SocketManager.Observer, View.OnClick
 
     override fun onResponse(event: String, args: JSONObject) {
         when (event) {
-            SocketManager.call_request_action_response_listener -> {
-                stopRinging()
-                var data = args as JSONObject
-                Log.e("callResponse", data.toString())
-                val gson = GsonBuilder().create()
-                val callData = gson.fromJson(
-                    data.toString(),
-                    CallActionResponseListener::class.java
-                )
-                if (callData.status == 2) {
-                    finish()
-                } else {
-                    if (callData.type == "1") {
-                        val intent = Intent(this@CallConnectActivity, VoiceChatViewActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
-                        intent.putExtra("requestId", requestId)
-                        intent.putExtra("channelName", channelName)
-                        intent.putExtra("agoraToken", agoraToken)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        val intent = Intent(this@CallConnectActivity, VideoCallActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
-                        intent.putExtra("requestId", requestId.toString())
-                        intent.putExtra("channelName", channelName)
-                        intent.putExtra("agoraToken", agoraToken)
-                        startActivity(intent)
-                        finish()
-                    }
-                }
-            }
-            SocketManager.call_request_action_listener -> {
-                stopRinging()
-                var data = args as JSONObject
-                Log.e("callResponse", data.toString())
-                val gson = GsonBuilder().create()
-                val callData = gson.fromJson(
-                    data.toString(),
-                    CallActionResponseListener::class.java
-                )
-
-                if (callData.status == 2) {
-                    finish()
-                } else if (callData.type == "1") {
-                    val intent = Intent(this@CallConnectActivity, VoiceChatViewActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
-                    intent.putExtra("requestId", requestId.toString())
-                    intent.putExtra("channelName", channelName)
-                    intent.putExtra("agoraToken", agoraToken)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    val intent = Intent(this@CallConnectActivity, VideoCallActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
-                    intent.putExtra("requestId", requestId.toString())
-                    intent.putExtra("channelName", channelName)
-                    intent.putExtra("agoraToken", agoraToken)
-                    startActivity(intent)
-                    finish()
-                }
-
-            }
-
-            SocketManager.call_termination_event -> {
-                activityScope.launch {
-                    stopRinging()
-                    var data = args as JSONObject
-                    Log.e("callResponse", data.toString())
-                    val gson = GsonBuilder().create()
-                    val callData = gson.fromJson(
-                        data.toString(),
-                        CallTerminateResponse::class.java
-                    )
-                    if (callData.requestId.toString() == requestId) {
-                        finish()
-                    }
-                }
-            }
-            SocketManager.call_termination_listener -> {
-                stopRinging()
-                var data = args as JSONObject
-                Log.e("callResponse", data.toString())
-                val gson = GsonBuilder().create()
-                val callData = gson.fromJson(
-                    data.toString(),
-                    CallTerminateResponse::class.java
-                )
-                if (callData.requestId.toString() == requestId) {
-                    finish()
-                }
-            }
+//            SocketManager.call_request_action_response_listener -> {
+//                stopRinging()
+//                var data = args as JSONObject
+//                Log.e("callResponse", data.toString())
+//                val gson = GsonBuilder().create()
+//                val callData = gson.fromJson(
+//                    data.toString(),
+//                    CallActionResponseListener::class.java
+//                )
+//                if (callData.status == 2) {
+//                    finish()
+//                } else {
+//                    if (callData.type == "1") {
+//                        val intent = Intent(this@CallConnectActivity, VoiceChatViewActivity::class.java)
+//                        intent.flags = Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
+//                        intent.putExtra("requestId", requestId)
+//                        intent.putExtra("channelName", channelName)
+//                        intent.putExtra("agoraToken", agoraToken)
+//                        startActivity(intent)
+//                        finish()
+//                    } else {
+//                        val intent = Intent(this@CallConnectActivity, VideoCallActivity::class.java)
+//                        intent.flags = Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
+//                        intent.putExtra("requestId", requestId.toString())
+//                        intent.putExtra("channelName", channelName)
+//                        intent.putExtra("agoraToken", agoraToken)
+//                        startActivity(intent)
+//                        finish()
+//                    }
+//                }
+//            }
+//            SocketManager.call_request_action_listener -> {
+//                stopRinging()
+//                var data = args as JSONObject
+//                Log.e("callResponse", data.toString())
+//                val gson = GsonBuilder().create()
+//                val callData = gson.fromJson(
+//                    data.toString(),
+//                    CallActionResponseListener::class.java
+//                )
+//
+//                if (callData.status == 2) {
+//                    finish()
+//                } else if (callData.type == "1") {
+//                    val intent = Intent(this@CallConnectActivity, VoiceChatViewActivity::class.java)
+//                    intent.flags = Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
+//                    intent.putExtra("requestId", requestId.toString())
+//                    intent.putExtra("channelName", channelName)
+//                    intent.putExtra("agoraToken", agoraToken)
+//                    startActivity(intent)
+//                    finish()
+//                } else {
+//                    val intent = Intent(this@CallConnectActivity, VideoCallActivity::class.java)
+//                    intent.flags = Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
+//                    intent.putExtra("requestId", requestId.toString())
+//                    intent.putExtra("channelName", channelName)
+//                    intent.putExtra("agoraToken", agoraToken)
+//                    startActivity(intent)
+//                    finish()
+//                }
+//
+//            }
+//
+//            SocketManager.call_termination_event -> {
+//                activityScope.launch {
+//                    stopRinging()
+//                    var data = args as JSONObject
+//                    Log.e("callResponse", data.toString())
+//                    val gson = GsonBuilder().create()
+//                    val callData = gson.fromJson(
+//                        data.toString(),
+//                        CallTerminateResponse::class.java
+//                    )
+//                    if (callData.requestId.toString() == requestId) {
+//                        finish()
+//                    }
+//                }
+//            }
+//            SocketManager.call_termination_listener -> {
+//                stopRinging()
+//                var data = args as JSONObject
+//                Log.e("callResponse", data.toString())
+//                val gson = GsonBuilder().create()
+//                val callData = gson.fromJson(
+//                    data.toString(),
+//                    CallTerminateResponse::class.java
+//                )
+//                if (callData.requestId.toString() == requestId) {
+//                    finish()
+//                }
+//            }
         }
     }
 
@@ -206,21 +206,25 @@ class CallConnectActivity : BaseActivity(), SocketManager.Observer, View.OnClick
     }
 
     override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.ivRejectCall -> {
 
-                stopRinging()
-                socketManager.unRegister(this)
-                socketManager.onRegister(this)
-                val jsonObject = JSONObject()
-                if(!requestId.isNullOrEmpty()){
-                    jsonObject.put("requestId", requestId.toInt())
-                    socketManager.callTermination(jsonObject)
-                }else{
-                    finish()
-                }
-
-            }
-        }
     }
+
+//    override fun onClick(v: View?) {
+//        when (v?.id) {
+//            R.id.ivRejectCall -> {
+//
+//                stopRinging()
+//                socketManager.unRegister(this)
+//                socketManager.onRegister(this)
+//                val jsonObject = JSONObject()
+//                if(!requestId.isNullOrEmpty()){
+//                    jsonObject.put("requestId", requestId.toInt())
+//                    socketManager.callTermination(jsonObject)
+//                }else{
+//                    finish()
+//                }
+//
+//            }
+//        }
+//    }
 }

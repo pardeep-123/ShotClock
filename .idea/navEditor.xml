@@ -115,6 +115,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="incomingCallActivity">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="867" />
+                            <option name="y" value="-900" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="messageFragment">
                     <value>
                       <LayoutPositions>
@@ -153,6 +165,11 @@
                               </value>
                             </entry>
                             <entry key="action_myRequestsFragment_to_speedDateSessionFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_myRequestsFragment_to_videoCallFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -240,6 +257,11 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_speedDateSessionFragment_to_homeFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_speedDateSessionFragment_to_videoCallFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

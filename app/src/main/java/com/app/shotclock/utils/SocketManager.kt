@@ -331,6 +331,48 @@ class SocketManager {
         }
     }
 
+
+    fun callToUserActivate() {
+        try {
+            if (!mSocket!!.connected()) {
+                mSocket!!.connect()
+                mSocket!!.off(call_to_user_listener)
+                mSocket!!.on(call_to_user_listener, onCallStatusListener)
+
+            } else {
+                mSocket!!.off(call_to_user_listener)
+                mSocket!!.on(call_to_user_listener, onCallStatusListener)
+
+
+            }
+        } catch (ex: Exception) {
+            ex.localizedMessage
+        }
+
+    }
+
+
+    fun callStatusActivate() {
+        try {
+            if (!mSocket!!.connected()) {
+                mSocket!!.connect()
+                mSocket!!.off(call_status_listener)
+                mSocket!!.on(call_status_listener, onReceiverCallStatusListener)
+
+            } else {
+                mSocket!!.off(call_status_listener)
+                mSocket!!.on(call_status_listener, onReceiverCallStatusListener)
+
+
+            }
+        } catch (ex: Exception) {
+            ex.localizedMessage
+        }
+
+    }
+
+
+
     private val chatListListener = Emitter.Listener { args ->
         try {
             val data = args[0] as JSONArray
@@ -440,6 +482,35 @@ class SocketManager {
         }
 
     }
+
+
+    private val onCallStatusListener = Emitter.Listener { args ->
+        try {
+            val data = args[0] as JSONObject
+            Log.d("SocketListener", "CallStatusList :::$data")
+            for (observer in observerList!!) {
+                observer.onResponse(call_to_user_listener, data)
+            }
+        } catch (ex: Exception) {
+            ex.localizedMessage
+        }
+
+    }
+
+
+    private val onReceiverCallStatusListener = Emitter.Listener { args ->
+        try {
+            val data = args[0] as JSONObject
+            Log.d("SocketListener", "CallStatusList :::$data")
+            for (observer in observerList!!) {
+                observer.onResponse(call_status_listener, data)
+            }
+        } catch (ex: Exception) {
+            ex.localizedMessage
+        }
+
+    }
+
 
     fun socketDisconnect(jsonObject: JSONObject?) {
         if (jsonObject != null) {

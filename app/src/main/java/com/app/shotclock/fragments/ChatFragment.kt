@@ -144,6 +144,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
         jsonObject.put("callType", "0")     // (0=>for single call,1=>for group call)
         jsonObject.put("groupName", "singleCall")
         socketManager.callToUser(jsonObject)
+        Log.e("========",jsonObject.toString())
 
     }
 
@@ -210,7 +211,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
 
             SocketManager.call_to_user_emitter -> {
                 try {
-                    activityScope.launch {
+                        activityScope.launch {
                         val mObject = args as JSONObject
                         val gson = GsonBuilder().create()
 
@@ -218,7 +219,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
                         val bundle = Bundle()
                         bundle.putString("channel_name", userToCallList.channelName)
                         bundle.putString("video_token", userToCallList.videoToken)
-                        findNavController().navigate(R.id.action_chatFragment_to_videoCallFragment, bundle)
+                        findNavController().navigate(R.id.videoCallFragment, bundle)
                     }
                 } catch (e: Exception) {
 

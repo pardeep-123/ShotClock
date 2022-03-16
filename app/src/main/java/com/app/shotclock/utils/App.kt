@@ -106,4 +106,5 @@ class App : Application(), HasAndroidInjector, LifecycleObserver,
         registerComponentCallbacks(lifeCycleHandler)
     }
 
+
 }

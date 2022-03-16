@@ -3,6 +3,8 @@ package com.app.shotclock.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Build
 import android.util.Log
 import android.view.Gravity
@@ -188,7 +190,7 @@ fun convertTimeToStampToTime(timestamp: Long): String? {
     return outputFormat.format(cal.time)
 }
 
-// to set Date to Rating Date in custom format
+// timeStamp to date
 fun convertDateToRatingTime(timestamp: Long): String? {
     val cal: Calendar = Calendar.getInstance(Locale.ENGLISH)
     cal.timeInMillis = timestamp * 1000
@@ -295,11 +297,11 @@ fun getUTCDateTimeAsString(): String? {
     return sdf.format(Date())
 }
 
-// convert date and time book appointment fragment
-fun time_to_timestamp(str_date: String?, pattren: String?): Long {
+// convert date to timestamp format
+fun time_to_timestamp(str_date: String?, pattern: String?): Long {
     var time_stamp: Long = 0
     try {
-        val formatter = SimpleDateFormat(pattren)
+        val formatter = SimpleDateFormat(pattern)
         //SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
         formatter.timeZone = TimeZone.getTimeZone("GMT")
         val date = formatter.parse(str_date) as Date
@@ -471,3 +473,10 @@ fun getBase64FromPath(path: String): String {
     return base64
 }
 
+fun isNetworkConnected(): Boolean {
+    val cm = App.getInstance().applicationContext
+        ?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    var activeNetwork: NetworkInfo? = null
+    if (cm != null) activeNetwork = cm.activeNetworkInfo
+    return activeNetwork != null && activeNetwork.isConnectedOrConnecting
+}
