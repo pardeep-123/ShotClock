@@ -9,11 +9,9 @@ import android.os.CountDownTimer
 import android.util.Log
 import android.view.SurfaceView
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.app.shotclock.R
@@ -22,7 +20,6 @@ import com.app.shotclock.databinding.ActivityVideoChatViewBinding
 import com.app.shotclock.utils.App
 import com.app.shotclock.utils.SocketManager
 import com.app.shotclock.utils.isNetworkConnected
-import com.google.gson.GsonBuilder
 import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcEngine
 import io.agora.rtc.video.VideoCanvas
@@ -116,8 +113,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         }
     }
 
-    private fun timeCounter()
-    {
+    private fun timeCounter() {
         mCounter = object : CountDownTimer(45000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
 
@@ -140,17 +136,18 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
             mPlayer = null
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityVideoChatViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initialiseSocket()
-        channelName = intent?.getStringExtra("channelName").toString()
-        agoraToken = intent?.getStringExtra("agoraToken").toString()
-        requestId = intent?.getStringExtra("requestId").toString()
-        Log.i("=====",channelName)
-      //  tvUserName.text = name
+        channelName = intent?.getStringExtra("channel_name").toString()
+        agoraToken = intent?.getStringExtra("video_token").toString()
+//        requestId = intent?.getStringExtra("requestId").toString()
+        Log.i("=====", channelName)
+        //  tvUserName.text = name
 
         activateReceiverListenerSocket()
 
@@ -164,8 +161,9 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     }
 
     fun activateReceiverListenerSocket() {
+
         val jsonObject = JSONObject()
-        jsonObject.put("status", "3")
+        jsonObject.put("status", "1")
         socketManager.getCallStatus(jsonObject)
     }
 
@@ -258,7 +256,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         // Stops/Resumes sending the local video stream.
         mRtcEngine!!.muteLocalVideoStream(iv.isSelected)
 
-        val container = findViewById<FrameLayout>(R.id.local_video_view_container)
+        val container = binding.localVideoViewContainer
         val surfaceView = container.getChildAt(0) as SurfaceView
         surfaceView.setZOrderMediaOverlay(!iv.isSelected)
         surfaceView.visibility = if (iv.isSelected) {
@@ -344,7 +342,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         // Our server will assign one and return the uid via the event
         // handler callback function (onJoinChannelSuccess) after
         // joining the channel successfully.
-        val container = findViewById<FrameLayout>(R.id.local_video_view_container)
+        val container = binding.localVideoViewContainer
         val surfaceView = RtcEngine.CreateRendererView(baseContext)
         surfaceView.setZOrderMediaOverlay(true)
         container.addView(surfaceView)
@@ -387,7 +385,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
     private fun startRinging(resource: Int): MediaPlayer {
         val player = MediaPlayer.create(this, resource)
-        player.isLooping = true
+        player.isLooping = false
         player.start()
         return player
     }
@@ -401,7 +399,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         // Only one remote video view is available for this
         // tutorial. Here we check if there exists a surface
         // view tagged as this uid.
-        val container = findViewById<FrameLayout>(R.id.remote_video_view_container)
+        val container = binding.remoteVideoViewContainer
 
         if (container.childCount >= 1) {
             return
@@ -427,14 +425,14 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     }
 
     private fun onRemoteUserLeft() {
-        val container = findViewById<FrameLayout>(R.id.remote_video_view_container)
+        val container = binding.remoteVideoViewContainer
         container.removeAllViews()
-        this.finish()
+        finish()
 
     }
 
     private fun onRemoteUserVideoMuted(uid: Int, muted: Boolean) {
-        val container = findViewById<FrameLayout>(R.id.remote_video_view_container)
+        val container = binding.remoteVideoViewContainer
 
         val surfaceView = container.getChildAt(0) as SurfaceView
 
@@ -467,6 +465,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     }
 
     override fun onBackPressed() {
+        finish()
      //   callDialog()
     }
 
@@ -500,7 +499,11 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
     override fun onResponse(event: String, args: JSONObject) {
         when (event) {
+            SocketManager.call_status_listener -> {
+                activityScope.launch {
 
+                }
+            }
 //            SocketManager.call_termination_event -> {
 //                activityScope.launch {
 //                    var data = args as JSONObject

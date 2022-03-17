@@ -66,6 +66,7 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
             }
 
             bundle.putString("username",getChatList[pos].userName)
+            bundle.putString("receiverImage",getChatList[pos].userImage)
             findNavController().navigate(R.id.action_messageFragment_to_chatFragment,bundle)
         }
 

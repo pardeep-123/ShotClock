@@ -176,6 +176,12 @@ class HomeActivity : BaseActivity() , SocketManager.Observer {
         socketManager.onRegister(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        socketManager.unRegister(this)
+        socketManager.onRegister(this)
+    }
+
     private fun activateReceiverListenerSocket() {
         socketManager.callToUserActivate()
     }
@@ -197,14 +203,6 @@ class HomeActivity : BaseActivity() , SocketManager.Observer {
                 val options = NavOptions.Builder().setPopUpTo(R.id.chatFragment, true).build()
                 findNavController(R.id.fragment).navigate(R.id.chatFragment,bundle,options)
 
-//                   val options = NavOptions.Builder()
-//                       .setPopUpTo(androidx.navigation.R.id.detail_message_fragment, true)
-//                       .build()
-//                   findNavController(androidx.navigation.R.id.fragment).navigate(
-//                       androidx.navigation.R.id.detail_message_fragment,
-//                       bundle,
-//                       options
-//                   )
             } else {
                 val options = NavOptions.Builder().setPopUpTo(R.id.notificationFragment,true).build()
                 findNavController(R.id.fragment).navigate(R.id.notificationFragment,null,options)
@@ -224,14 +222,14 @@ class HomeActivity : BaseActivity() , SocketManager.Observer {
                     val gson = GsonBuilder().create()
                     val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
 
-                    val options = NavOptions.Builder().setPopUpTo(R.id.incomingCallActivity,true).build()
+      /*              val options = NavOptions.Builder().setPopUpTo(R.id.incomingCallActivity,true).build()
                     val bundle = Bundle()
                     bundle.putString("channelName",userToCallList.channelName)
-                    findNavController(R.id.fragment).navigate(R.id.incomingCallActivity,bundle,options)
+                    findNavController(R.id.fragment).navigate(R.id.incomingCallActivity,bundle,options)*/
 
-                    /* val intent = Intent(this@HomeActivity,IncomingCallActivity::class.java)
+                     val intent = Intent(this@HomeActivity,IncomingCallActivity::class.java)
                     intent.putExtra("channelName",userToCallList.channelName)
-                    startActivity(intent)*/
+                    startActivity(intent)
 
                 }
             }

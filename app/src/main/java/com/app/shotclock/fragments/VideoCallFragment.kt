@@ -45,20 +45,20 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
     private var activityScope = CoroutineScope(Dispatchers.Main)
     private lateinit var socketManager: SocketManager
     private var channelName = ""
-    private var videoToken = ""
+    private  var agoraToken=""
     private var status = "" // 0=calling, 1=callConnected, 2=call Declined, 3=Call Disconnected, 4=Missed call
     private var isCallEnd = "" // 0=callEnded by receiver or auto cut or skip by admin, 1=call cut by admin
     private var duration = ""
 
     private var mRtcEngine: RtcEngine? = null
     var builder: AlertDialog.Builder? = null
-    var agoraToken=""
     private var isReceiver = false
     var requestId=""
 
     private var mPlayer: MediaPlayer? = null
 
     private var mCounter : CountDownTimer? = null
+
     private val mRtcEventHandler = object : IRtcEngineEventHandler() {
         /**
          * Occurs when a remote user (Communication)/ host (Live Broadcast) joins the channel.
@@ -388,6 +388,7 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
 
     private fun activateCallStatusListener() {
         socketManager.callStatusActivate()
+
     }
 
     private fun handleClicks() {
@@ -426,6 +427,12 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
         }
 
 
+//        (TimeUnit.MILLISECONDS.toMinutes(millis) -
+//                TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis))),
+//        (TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(
+//            TimeUnit.MILLISECONDS.toMinutes(millis)
+
+
     }
 
     private fun getCallStatus() {
@@ -437,7 +444,6 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
         socketManager.getCallStatus(jsonObject)
 
     }
-
 
 
     override fun onResponseArray(event: String, args: JSONArray) {
@@ -462,7 +468,6 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
     }
 
     private fun videoTimingDialog() {
-        val count = 0
         val dialog = Dialog(requireContext(),android.R.style.Theme_Translucent_NoTitleBar)
         with(dialog) {
             setCancelable(false)
@@ -484,8 +489,6 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
             }
             timer.start()
 
-//                if (tvTimer.text.length >5)
-//                tvTimer.text = count.toString()
             show()
         }
     }

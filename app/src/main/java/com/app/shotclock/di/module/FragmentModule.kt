@@ -83,7 +83,7 @@ abstract class FragmentModule {
     @ContributesAndroidInjector
     internal abstract fun speedDateSession(): SpeedDateSessionFragment
 
-    @ContributesAndroidInjector
-    internal abstract fun incomingCallActivity(): IncomingCallActivity
+//    @ContributesAndroidInjector
+//    internal abstract fun incomingCallActivity(): IncomingCallActivity
 
 }

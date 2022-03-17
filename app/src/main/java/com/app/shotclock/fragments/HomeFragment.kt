@@ -28,12 +28,14 @@ import com.app.shotclock.models.FilterRequestModel
 import com.app.shotclock.models.HomeResponseModel
 import com.app.shotclock.models.SelectionDoneRequestModel
 import com.app.shotclock.models.SelectionDoneResponse
+import com.app.shotclock.models.sockets.VideoCallResponse
 import com.app.shotclock.utils.*
 import com.app.shotclock.videocallingactivity.IncomingCallActivity
 import com.app.shotclock.viewmodels.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.RangeSlider
+import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,7 +44,7 @@ import org.json.JSONObject
 import javax.inject.Inject
 
 open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
-    Observer<Resource<HomeResponseModel>>{
+    Observer<Resource<HomeResponseModel>>, SocketManager.Observer {
 
     lateinit var homeViewModel: HomeViewModel
 
@@ -80,6 +82,9 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     private var idList = ArrayList<SelectionDoneRequestModel.SelectionDoneUser>()
     private var homeList = ArrayList<HomeResponseModel.HomeBody>()
 
+    private lateinit var socketManager: SocketManager
+    private val activityScope = CoroutineScope(Dispatchers.Main)
+
     override fun getViewBinding(): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(layoutInflater)
     }
@@ -88,6 +93,8 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         super.onViewCreated(view, savedInstanceState)
         CacheConstants.Current = "home"
 
+//        initializeSocket()
+//        activateReceiverListenerSocket()
 
         configureViewModel()
         handleClickListeners()
@@ -97,6 +104,19 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         rangeSliders()
         setAdapter()
         getLiveLocation(requireActivity())
+    }
+
+    private fun initializeSocket() {
+        socketManager = App.mInstance.getSocketManager()!!
+        if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
+            socketManager.init()
+        }
+        socketManager.unRegister(this)
+        socketManager.onRegister(this)
+    }
+
+    private fun activateReceiverListenerSocket() {
+        socketManager.callToUserActivate()
     }
 
 
@@ -186,6 +206,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         }
 
         // add list education adapter
+        educationList.clear()
         educationList.add("High School")
         educationList.add("Bachelor's Degree")
         educationList.add("Master's Degree")
@@ -196,12 +217,14 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
 
         // add list astrologicalSign adapter
         val astrologicalSignList = resources.getStringArray(R.array.astrologicalSign)
+        astrologicalList.clear()
         astrologicalList.addAll(astrologicalSignList)
         val astrologicalAdapter = SexualOrientationAdapter(requireContext(), astrologicalList,"astro")
         rvAstrologicalSign.adapter = astrologicalAdapter
 
         // add list sexualOrientation adapter
         val orientation = resources.getStringArray(R.array.sexualOrientation)
+        orientationList.clear()
         orientationList.addAll(orientation)
         val orientationAdapter = SexualOrientationAdapter(requireContext(), orientationList,"sexual")
         rvSexualOrientation.adapter = orientationAdapter
@@ -482,6 +505,35 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         })
     }
 
+    override fun onResponseArray(event: String, args: JSONArray) {
+
+    }
+
+    override fun onResponse(event: String, args: JSONObject) {
+        when (event) {
+            SocketManager.call_to_user_listener -> {
+                activityScope.launch {
+                    val mObject = args as JSONObject
+                    val gson = GsonBuilder().create()
+                    val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
+
+                    /*              val options = NavOptions.Builder().setPopUpTo(R.id.incomingCallActivity,true).build()
+                                  val bundle = Bundle()
+                                  bundle.putString("channelName",userToCallList.channelName)
+                                  findNavController(R.id.fragment).navigate(R.id.incomingCallActivity,bundle,options)*/
+
+                    val intent = Intent(requireContext(),IncomingCallActivity::class.java)
+                    intent.putExtra("channelName",userToCallList.channelName)
+                    startActivity(intent)
+
+                }
+            }
+        }
+    }
+
+    override fun onError(event: String, vararg args: Array<*>) {
+
+    }
 
 
 }

@@ -1,7 +1,9 @@
 package com.app.shotclock.fragments
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
@@ -14,6 +16,7 @@ import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.adapters.AllRequestAdapter
 import com.app.shotclock.adapters.MyRequestsAdapter
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.cache.getUser
 import com.app.shotclock.databinding.FragmentMyRequestsBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
@@ -26,6 +29,7 @@ import com.app.shotclock.utils.App
 import com.app.shotclock.utils.SocketManager
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
+import com.app.shotclock.videocallingactivity.VideoCallActivity
 import com.app.shotclock.viewmodels.HomeViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.gson.GsonBuilder
@@ -50,6 +54,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
     private var allRequestList = ArrayList<ArrayList<AllRequestResponseModel.AllRequestBody>>()
     private var activityScope = CoroutineScope(Dispatchers.Main)
     private lateinit var socketManager: SocketManager
+    private var mChannelName = ""
 
     override fun getViewBinding(): FragmentMyRequestsBinding {
         return FragmentMyRequestsBinding.inflate(layoutInflater)
@@ -131,6 +136,14 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
                 show()
             }
         }
+
+        binding.tvStart.setOnClickListener {
+            callToUser()
+//            val jsonObject = JSONObject()
+//            jsonObject.put("channelName", mChannelName)
+//            jsonObject.put("status", "1")
+//            socketManager.getCallStatus(jsonObject)
+        }
     }
 
     //        for back press in fragment
@@ -168,7 +181,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
                         binding.tvStart.isGone()
                     } else {
                         binding.tvStart.isVisible()
-                        callToUser()
+
                     }
 
                 } else {
@@ -264,15 +277,18 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
     // video calling socket
     private fun callToUser() {
         val jsonObject = JSONObject()
-        jsonObject.put("senderName", requestList[0].username)
-        jsonObject.put("senderImage", requestList[0].profileImage)
-        jsonObject.put("senderId", requestList[0].id)
-        jsonObject.put("receiverId", requestList[0].id)
-        jsonObject.put("requestId", requestList[0].requestTo)
+        jsonObject.put("senderName", getUser(requireContext())?.username)
+        jsonObject.put("senderImage",getUser(requireContext())?.profileImage)
+        jsonObject.put("senderId",getUser(requireContext())?.id)
+        jsonObject.put("receiverId", requestList[0].requestTo)
+        jsonObject.put("requestId", requestList[0].id)
         jsonObject.put("receiverName", requestList[0].username)
-        jsonObject.put("callType", "1")
+        jsonObject.put("receiverImage", requestList[0].profileImage)
+        jsonObject.put("callType", "1") // callType(0=>for single call,1=>for group call)
         jsonObject.put("groupName", requestList[0].groupName)
         socketManager.callToUser(jsonObject)
+
+        Log.e("========List",jsonObject.toString())
 
     }
 
@@ -289,10 +305,17 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
                         val gson = GsonBuilder().create()
 
                         val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
-                        val bundle = Bundle()
-                        bundle.putString("channel_name", userToCallList.channelName)
-                        bundle.putString("video_token", userToCallList.videoToken)
-                        findNavController().navigate(R.id.action_myRequestsFragment_to_videoCallFragment, bundle)
+
+//                        val bundle = Bundle()
+//                        bundle.putString("channel_name", userToCallList.channelName)
+//                        bundle.putString("video_token", userToCallList.videoToken)
+//                        findNavController().navigate(R.id.action_myRequestsFragment_to_videoCallFragment, bundle)
+
+                        val intent = Intent(requireContext(), VideoCallActivity::class.java)
+                        intent.putExtra("channel_name", userToCallList.channelName)
+                        intent.putExtra("video_token", userToCallList.videoToken)
+                        startActivity(intent)
+
                     }
                 } catch (e: Exception) {
 

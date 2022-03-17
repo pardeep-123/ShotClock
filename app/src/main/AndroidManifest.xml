@@ -39,6 +39,11 @@
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".videocallingactivity.IncomingCallActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".activities.InitialActivity"
             android:exported="true"
             android:screenOrientation="portrait">

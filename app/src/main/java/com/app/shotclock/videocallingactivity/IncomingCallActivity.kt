@@ -2,6 +2,7 @@ package com.app.shotclock.videocallingactivity
 
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -15,6 +16,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
+import com.app.shotclock.base.BaseActivity
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.ItemsNotificationVideoCallingBinding
 import com.app.shotclock.models.sockets.VideoCallStatusResponse
@@ -28,7 +30,10 @@ import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 
-class IncomingCallActivity : BaseFragment<ItemsNotificationVideoCallingBinding>(), SocketManager.Observer {
+
+//BaseFragment<ItemsNotificationVideoCallingBinding>()
+class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
+    lateinit var binding : ItemsNotificationVideoCallingBinding
     var mCallerId = 0
     var mReceiverID = 0
     var mSenderImage = ""
@@ -44,17 +49,25 @@ class IncomingCallActivity : BaseFragment<ItemsNotificationVideoCallingBinding>(
     private val activityScope = CoroutineScope(Dispatchers.Main)
 
 
-    override fun getViewBinding(): ItemsNotificationVideoCallingBinding {
-        return ItemsNotificationVideoCallingBinding.inflate(layoutInflater)
-    }
+//    override fun getViewBinding(): ItemsNotificationVideoCallingBinding {
+//        return ItemsNotificationVideoCallingBinding.inflate(layoutInflater)
+//    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding  = ItemsNotificationVideoCallingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         initializeSocket()
         activateReceiverListenerSocket()
 
-        val bundle = arguments
-       mChannelName = bundle?.getString("channelName")!!
+
+        mChannelName = intent.extras?.get("channelName").toString()
+
+//        val bundle = arguments
+//       mChannelName = bundle?.getString("channelName")!!
+
  //agoraToken = intent.getStringExtra("agoraToken").toString()
         /*  requestId = intent.getStringExtra("requestId").toString()
    callerName = intent.getStringExtra("callerName").toString()
@@ -105,7 +118,7 @@ class IncomingCallActivity : BaseFragment<ItemsNotificationVideoCallingBinding>(
                 socketManager.getCallStatus(jsonObject)
 
                 val notifManager: NotificationManager =
-                    requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                 notifManager.cancelAll()
             } else {
             }
@@ -150,7 +163,7 @@ class IncomingCallActivity : BaseFragment<ItemsNotificationVideoCallingBinding>(
 
 
     private fun startRinging(resource: Int): MediaPlayer {
-        val player = MediaPlayer.create(requireContext(), resource)
+        val player = MediaPlayer.create(this, resource)
         player.isLooping = true
         player.start()
         return player
@@ -186,7 +199,7 @@ class IncomingCallActivity : BaseFragment<ItemsNotificationVideoCallingBinding>(
 
             override fun onFinish() {
                 //showToast(resources.getString(R.string.no_answer))
-                activity?.finish()
+                finish()
             }
         }.start()
     }
@@ -285,10 +298,15 @@ class IncomingCallActivity : BaseFragment<ItemsNotificationVideoCallingBinding>(
                     val gson = GsonBuilder().create()
                     val userToCallList = gson.fromJson(data.toString(), VideoCallStatusResponse::class.java)
 
-                    val bundle = Bundle()
-                    bundle.putString("channel_name", userToCallList.channelName)
-                    bundle.putString("video_token", userToCallList.videoToken)
-                    findNavController().navigate(R.id.videoCallFragment,bundle)
+                    val intent = Intent(this@IncomingCallActivity,VideoCallActivity::class.java)
+                    intent.putExtra("channel_name", userToCallList.channelName)
+                    intent.putExtra("video_token", userToCallList.videoToken)
+                    startActivity(intent)
+
+//                    val bundle = Bundle()
+//                    bundle.putString("channel_name", userToCallList.channelName)
+//                    bundle.putString("video_token", userToCallList.videoToken)
+//                    this.findNavController().navigate(R.id.videoCallFragment,bundle)
 
                 }
             }

@@ -123,7 +123,7 @@
             android:textSize="@dimen/_10ssp"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/tvCancel"
-            app:layout_constraintEnd_toEndOf="@id/rvMyRequests" />
+            app:layout_constraintEnd_toEndOf="@id/tvCancel" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

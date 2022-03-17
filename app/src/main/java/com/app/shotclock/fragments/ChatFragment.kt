@@ -1,17 +1,17 @@
 package com.app.shotclock.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.app.shotclock.R
 import com.app.shotclock.adapters.ChatAdapter
 import com.app.shotclock.cache.getUser
 import com.app.shotclock.databinding.FragmentChatBinding
 import com.app.shotclock.models.sockets.ChatHistoryResponse
 import com.app.shotclock.models.sockets.VideoCallResponse
 import com.app.shotclock.utils.*
+import com.app.shotclock.videocallingactivity.VideoCallActivity
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,6 +32,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
     private var chatList = ArrayList<ChatHistoryResponse.ChatHistoryResponseItem>()
     private var imageFilePath = ""
     private var extension = ""
+    private var receiverImage = ""
 
 
     override fun getViewBinding(): FragmentChatBinding {
@@ -48,6 +49,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
         val bundle = arguments
         user2Id = bundle?.getInt("user2Id")!!
         userName = bundle.getString("username")!!
+        receiverImage = bundle.getString("receiverImage")!!
         Constants.user2Id = user2Id.toString()
 
         clickHandle()
@@ -105,7 +107,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
                     binding.etSendMsg.text.clear()
                 }
             }
-            }
+        }
     }
 
     private fun getChatHistory() {
@@ -141,10 +143,11 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
         jsonObject.put("receiverId", user2Id)
         jsonObject.put("requestId", "0")
         jsonObject.put("receiverName", userName)
+        jsonObject.put("receiverImage", receiverImage)
         jsonObject.put("callType", "0")     // (0=>for single call,1=>for group call)
         jsonObject.put("groupName", "singleCall")
         socketManager.callToUser(jsonObject)
-        Log.e("========",jsonObject.toString())
+        Log.e("========", jsonObject.toString())
 
     }
 
@@ -212,14 +215,19 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
             SocketManager.call_to_user_emitter -> {
                 try {
                         activityScope.launch {
-                        val mObject = args as JSONObject
-                        val gson = GsonBuilder().create()
+                            val mObject = args as JSONObject
+                            val gson = GsonBuilder().create()
 
-                        val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
-                        val bundle = Bundle()
-                        bundle.putString("channel_name", userToCallList.channelName)
-                        bundle.putString("video_token", userToCallList.videoToken)
-                        findNavController().navigate(R.id.videoCallFragment, bundle)
+                            val userToCallList =
+                                gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
+//                        val bundle = Bundle()
+//                        bundle.putString("channel_name", userToCallList.channelName)
+//                        bundle.putString("video_token", userToCallList.videoToken)
+//                        findNavController().navigate(R.id.videoCallFragment, bundle)
+                            val intent = Intent(requireContext(), VideoCallActivity::class.java)
+                            intent.putExtra("channel_name", userToCallList.channelName)
+                            intent.putExtra("video_token", userToCallList.videoToken)
+                            startActivity(intent)
                     }
                 } catch (e: Exception) {
 
