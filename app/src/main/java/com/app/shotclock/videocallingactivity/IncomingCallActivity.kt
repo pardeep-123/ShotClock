@@ -62,7 +62,6 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
         initializeSocket()
         activateReceiverListenerSocket()
 
-
         mChannelName = intent.extras?.get("channelName").toString()
 
 //        val bundle = arguments

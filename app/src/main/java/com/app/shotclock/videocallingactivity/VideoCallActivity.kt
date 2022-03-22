@@ -9,6 +9,7 @@ import android.os.CountDownTimer
 import android.util.Log
 import android.view.SurfaceView
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -38,7 +39,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     private var mRtcEngine: RtcEngine? = null
     var builder: AlertDialog.Builder? = null
     var agoraToken=""
-    private var isReceiver = false
+    private var isReciever = false
     var requestId=""
     private val activityScope = CoroutineScope(Dispatchers.Main)
 
@@ -59,7 +60,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
          * @param elapsed Time elapsed (ms) from the local user calling the joinChannel method until this callback is triggered.
          */
         override fun onUserJoined(uid: Int, elapsed: Int) {
-            runOnUiThread { setupRemoteVideo(uid) }
+                setupRemoteVideo(uid)
         }
 
         /**
@@ -146,7 +147,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         channelName = intent?.getStringExtra("channel_name").toString()
         agoraToken = intent?.getStringExtra("video_token").toString()
 //        requestId = intent?.getStringExtra("requestId").toString()
-        Log.i("=====", channelName)
+        Log.e("videocall", channelName+ "===="+ agoraToken)
         //  tvUserName.text = name
 
         activateReceiverListenerSocket()
@@ -169,10 +170,10 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
     private fun initAgoraEngineAndJoinChannel() {
         initializeAgoraEngine()
-
-        setupVideoProfile()
-        setupLocalVideo()
         joinChannel()
+        setupLocalVideo()
+        setupVideoProfile()
+
     }
 
     private fun checkSelfPermission(permission: String, requestCode: Int): Boolean {
@@ -256,7 +257,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         // Stops/Resumes sending the local video stream.
         mRtcEngine!!.muteLocalVideoStream(iv.isSelected)
 
-        val container = binding.localVideoViewContainer
+        val container = findViewById<View>(R.id.local_video_view_container) as FrameLayout
         val surfaceView = container.getChildAt(0) as SurfaceView
         surfaceView.setZOrderMediaOverlay(!iv.isSelected)
         surfaceView.visibility = if (iv.isSelected) {
@@ -300,6 +301,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
     }
 
+
     private fun initializeAgoraEngine() {
         try {
             mRtcEngine =
@@ -342,7 +344,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         // Our server will assign one and return the uid via the event
         // handler callback function (onJoinChannelSuccess) after
         // joining the channel successfully.
-        val container = binding.localVideoViewContainer
+        val container = findViewById<FrameLayout>(R.id.local_video_view_container)
         val surfaceView = RtcEngine.CreateRendererView(baseContext)
         surfaceView.setZOrderMediaOverlay(true)
         container.addView(surfaceView)
@@ -362,7 +364,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         if (agoraToken.isEmpty()) {
             token = null
         }
-        if (!isReceiver) {
+        if (!isReciever) {
             startRinging()
             timeCounter()
         }
@@ -399,7 +401,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         // Only one remote video view is available for this
         // tutorial. Here we check if there exists a surface
         // view tagged as this uid.
-        val container = binding.remoteVideoViewContainer
+        val container = findViewById<View>(R.id.remote_video_view_container) as FrameLayout
 
         if (container.childCount >= 1) {
             return
@@ -412,7 +414,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
           The video display view must be created using this method instead of directly
           calling SurfaceView.
          */
-        val surfaceView = RtcEngine.CreateRendererView(baseContext)
+        val surfaceView = RtcEngine.CreateRendererView(this)
         container.addView(surfaceView)
         // Initializes the video view of a remote user.
         mRtcEngine!!.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_FIT, uid))
@@ -425,14 +427,14 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     }
 
     private fun onRemoteUserLeft() {
-        val container = binding.remoteVideoViewContainer
+        val container = findViewById<View>(R.id.remote_video_view_container) as FrameLayout
         container.removeAllViews()
         finish()
 
     }
 
     private fun onRemoteUserVideoMuted(uid: Int, muted: Boolean) {
-        val container = binding.remoteVideoViewContainer
+        val container = findViewById<View>(R.id.remote_video_view_container) as FrameLayout
 
         val surfaceView = container.getChildAt(0) as SurfaceView
 
@@ -466,7 +468,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
     override fun onBackPressed() {
         finish()
-     //   callDialog()
+     //  callDialog()
     }
 
 
@@ -501,7 +503,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         when (event) {
             SocketManager.call_status_listener -> {
                 activityScope.launch {
-
+                    finish()
                 }
             }
 //            SocketManager.call_termination_event -> {

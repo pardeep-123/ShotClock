@@ -2,6 +2,7 @@ package com.app.shotclock.utils
 
 import android.app.Activity
 import android.util.Patterns
+import android.widget.CheckBox
 import android.widget.Toast
 
 class Validation {
@@ -74,7 +75,8 @@ class Validation {
         email: String,
         phone: String,
         password: String,
-        confirmPassword: String
+        confirmPassword: String,
+        rememberMe: Boolean
     ): Boolean {
         var check = false
         if (image == "" || image.isEmpty()){
@@ -93,7 +95,10 @@ class Validation {
             Toast.makeText(context, "Please enter confirm password", Toast.LENGTH_SHORT).show()
         } else if (password != confirmPassword) {
             Toast.makeText(context, "Password must be same", Toast.LENGTH_SHORT).show()
-        } else {
+        }else if (!rememberMe){
+            Toast.makeText(context, "Please accept the terms and conditions", Toast.LENGTH_SHORT).show()
+        }
+        else {
             check = true
         }
         return check

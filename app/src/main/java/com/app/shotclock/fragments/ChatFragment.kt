@@ -49,6 +49,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
         val bundle = arguments
         user2Id = bundle?.getInt("user2Id")!!
         userName = bundle.getString("username")!!
+        if (bundle.getString("receiverImage") != null)
         receiverImage = bundle.getString("receiverImage")!!
         Constants.user2Id = user2Id.toString()
 
@@ -161,6 +162,8 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
         }
         getChatHistory()
         readUnreadMessage()
+
+
     }
 
     override fun onResponseArray(event: String, args: JSONArray) {
@@ -227,6 +230,8 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
                             val intent = Intent(requireContext(), VideoCallActivity::class.java)
                             intent.putExtra("channel_name", userToCallList.channelName)
                             intent.putExtra("video_token", userToCallList.videoToken)
+
+                            Log.e("=====chat",userToCallList.channelName+"====="+userToCallList.videoToken)
                             startActivity(intent)
                     }
                 } catch (e: Exception) {

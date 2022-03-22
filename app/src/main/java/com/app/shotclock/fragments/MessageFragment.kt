@@ -1,8 +1,10 @@
 package com.app.shotclock.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
@@ -13,7 +15,9 @@ import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.cache.getUser
 import com.app.shotclock.databinding.FragmentMessageBinding
 import com.app.shotclock.models.sockets.GetChatListModel
+import com.app.shotclock.models.sockets.VideoCallResponse
 import com.app.shotclock.utils.*
+import com.app.shotclock.videocallingactivity.VideoCallActivity
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -102,6 +106,7 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
             socketManager.init()
         }
 
+        socketManager.callToUserActivate()
         messageAdapter?.arrayList = getChatList
         //messageAdapter?.notifyDataSetChanged()
         if (getChatList.isNotEmpty()) {
@@ -136,6 +141,32 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
 
     override fun onResponse(event: String, args: JSONObject) {
 
+        when(event){
+            SocketManager.call_to_user_listener -> {
+                try {
+                    activityScope.launch {
+                        val mObject = args as JSONObject
+                        val gson = GsonBuilder().create()
+
+                        val userToCallList =
+                            gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
+//                        val bundle = Bundle()
+//                        bundle.putString("channel_name", userToCallList.channelName)
+//                        bundle.putString("video_token", userToCallList.videoToken)
+//                        findNavController().navigate(R.id.videoCallFragment, bundle)
+                        val intent = Intent(requireContext(), VideoCallActivity::class.java)
+                        intent.putExtra("channel_name", userToCallList.channelName)
+                        intent.putExtra("video_token", userToCallList.videoToken)
+                        Log.e("=====message",userToCallList.channelName+"====="+userToCallList.videoToken)
+
+                        startActivity(intent)
+                    }
+                } catch (e: Exception) {
+
+                }
+            }
+
+        }
 
     }
 

@@ -60,7 +60,7 @@
             android:id="@+id/tvTimeReceiver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tvReceiver"
+            app:layout_constraintTop_toBottomOf="@id/ivReceivePic"
             app:layout_constraintStart_toStartOf="@id/tvReceiver"
             android:textColor="@color/white"
             android:textSize="@dimen/_8ssp"

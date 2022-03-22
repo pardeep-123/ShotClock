@@ -27,13 +27,13 @@ abstract class ActivityModule {
     @get:ContributesAndroidInjector(modules = [FragmentModule::class])
     internal abstract val homeActivity: HomeActivity
 
-    @get:ContributesAndroidInjector(modules = [FragmentModule::class])
+    @get:ContributesAndroidInjector
     internal abstract val incomingCallActivity: IncomingCallActivity
 
-    @get:ContributesAndroidInjector(modules = [FragmentModule::class])
+    @get:ContributesAndroidInjector
     internal abstract val videoCallActivity: VideoCallActivity
 
-    @get:ContributesAndroidInjector(modules = [FragmentModule::class])
+    @get:ContributesAndroidInjector
     internal abstract val callConnectActivity: CallConnectActivity
 
 }

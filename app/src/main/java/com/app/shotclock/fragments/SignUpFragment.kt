@@ -83,9 +83,10 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
                     binding.etEmail.text.toString().trim(),
                     binding.etMobile.text.toString().trim(),
                     binding.etPassword.text.toString().trim(),
-                    binding.etConfirmPassword.text.toString().trim()
+                    binding.etConfirmPassword.text.toString().trim(),
+                    binding.cbTermsConditions.isChecked
                 )
-            ) {
+            ){
                 getSigUpData()
             }
         }
