@@ -47,6 +47,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:button="@null"
+        android:checked="true"
+        android:clickable="false"
         android:foreground="@drawable/checkbox_tick_home"
         android:foregroundGravity="center"
         android:visibility="gone"

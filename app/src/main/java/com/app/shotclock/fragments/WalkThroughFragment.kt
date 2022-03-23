@@ -1,9 +1,11 @@
 package com.app.shotclock.fragments
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -21,21 +23,31 @@ import com.app.shotclock.models.SocialLoginRequestModel
 import com.app.shotclock.models.WalkThroughModel
 import com.app.shotclock.utils.*
 import com.app.shotclock.viewmodels.LoginSignUpViewModel
-import com.facebook.FacebookException
+import com.facebook.*
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import org.json.JSONObject
+import java.net.URL
 import javax.inject.Inject
 
 
 class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
-    Observer<Resource<BaseResponseModel>>, FacebookHelper.FacebookHelperCallback,
-    GoogleHelper.GoogleHelperCallback {
+    Observer<Resource<BaseResponseModel>> {
 
     lateinit var loginSignUpViewModel: LoginSignUpViewModel
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private var walkList: ArrayList<WalkThroughModel>? = ArrayList()
-
+    private var mCallbackManager: CallbackManager? = null
+    private var googleSignInClient:GoogleSignInClient?=null
     private lateinit var googleHelper: GoogleHelper
     private var facebookHelper: FacebookHelper? = null
 
@@ -47,41 +59,80 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
     var socialImage = ""
     var socialtype = ""
 
-
+    private val googleLoginActivityResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            handleSignInResult(task)
+        }
+    }
     override fun getViewBinding(): FragmentWalkThroughBinding {
         return FragmentWalkThroughBinding.inflate(layoutInflater)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mCallbackManager = CallbackManager.Factory.create()
+
         setAdapter()
         configureViewModel()
         handleClicks()
 
-        facebookHelper = FacebookHelper(requireContext(), this)
+    }
+    // for google
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account = completedTask.getResult(ApiException::class.java)
 
-        googleHelper = GoogleHelper(requireActivity(), this)
+// Signed in successfully, show authenticated UI.
+            updateUI(account)
+        } catch (e: ApiException) {
+// The ApiException status code indicates the detailed failure reason.
+// Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w("GoogleLogin", "signInResult:failed code=" + e.statusCode)
+        }
     }
 
+    // for google
+    private fun updateUI(account: GoogleSignInAccount?) {
+
+        showToast("success")
+        if (account != null) {
+
+            val personName = account.displayName
+            val email = account.email
+            val familyName = account.familyName
+            val idToken = account.idToken
+            val id = account.id
+            val givenName = account.givenName
+
+            googleSignInClient?.signOut()
+
+            if (personName != null && email != null) {
+               // socialLoginApiHit("1", id.toString(), personName, email)
+            } else {
+               showToast("Google error")
+            }
+
+        } else {
+            showToast("Google error")
+        }
+    }
     private fun configureViewModel() {
         loginSignUpViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginSignUpViewModel::class.java)
     }
 
     private fun handleClicks() {
-        /*       binding.ivPhone.setOnClickListener {
-           this.findNavController().navigate(R.id.action_walkThroughFragment_to_loginPhoneFragment)
-       }*/
 
         binding.ivEmail.setOnClickListener {
+
             this.findNavController().navigate(R.id.action_walkThroughFragment_to_loginFragment)
         }
 
         binding.ivFacebook.setOnClickListener {
-//            if (socialtype == "1") {
-                socialLoginType = "Fb"
-                facebookHelper!!.login(requireContext())
-//                setSocialLoginData()
-//            }
+            socialLoginType = "Fb"
+            fbLogin()
 
         }
 
@@ -150,62 +201,89 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
 
     private fun signIn() {
         socialLoginType = "Google"
-        googleHelper.signIn()
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+        val intentGoogle = googleSignInClient?.signInIntent
+        googleLoginActivityResult.launch(intentGoogle)
+       // googleHelper.signIn()
 
     }
 
-    override fun onSuccessFacebook(bundle: Bundle?) {
 
-        firstName = bundle!!.getString(FacebookHelper.FIRST_NAME)!!
-        lastName = bundle.getString(FacebookHelper.LAST_NAME)!!
+    // for facebook
+    private fun fbLogin() {
+        val loginButton = LoginButton(requireContext())
+        loginButton.setPermissions(listOf("public_profile, email"))
+        loginButton.performClick()
+        LoginManager.getInstance()
+            .registerCallback(mCallbackManager, object : FacebookCallback<LoginResult?>,
+                GraphRequest.GraphJSONObjectCallback {
+                override fun onCancel() {
+                    Log.e("FacebookLogin", "Cancel Facebook Login")
+                }
 
-        socialEmail = if (bundle.getString(FacebookHelper.EMAIL) != null) {
+                override fun onError(error: FacebookException) {
+                    Log.e("FacebookLogin", error.message.toString())
+                }
 
-            bundle.getString(FacebookHelper.EMAIL)!!
-        } else {
-            ""
-        }
-        socialId = bundle.getString(FacebookHelper.FACEBOOK_ID)!!
-        socialImage = bundle.getString(FacebookHelper.PROFILE_PIC)!!
-        socialtype = "1"
-        val data = SocialLoginRequestModel("",Prefs.with(requireContext()).getString("token",""), 2,socialEmail, firstName + lastName, "",
-            socialImage,socialId,2)
+                override fun onSuccess(result: LoginResult?) {
+                    val request = GraphRequest.newMeRequest(
+                        result!!.accessToken,
+                        this
+                    )
+                    val parameters = Bundle()
+                    parameters.putString("fields", "id, first_name, last_name, email")
+                    request.parameters = parameters
+                    request.executeAsync()
+                }
 
-        loginSignUpViewModel.socialLogin(data).observe(viewLifecycleOwner,this)
+                override fun onCompleted(obj: JSONObject?, response: GraphResponse?) {
+                    showToast("Success")
+                    Log.e("FacebookLogin", response.toString())
+
+// Application code
+                    if (obj != null) {
+                        var email = ""
+                        var name = ""
+
+                        val id: String = obj.getString("id")
+
+                        val profilePic = URL("https://graph.facebook.com/$id/picture?width=200&height=150")
+                        Log.i("profilePic", profilePic.toString() + "")
+
+                        if (obj.has("email")) {
+                            email = obj.getString("email")
+                        }
+
+                        if (obj.has("birthday")) {
+                            val birthday: String = obj.getString("birthday") // 01/31/1980 format
+                        }
+
+                        if (obj.has("first_name")) {
+                            name = obj.getString("first_name")
+                        }
+
+                        if (obj.has("last_name")) {
+                            val lastName = obj.getString("last_name")
+                        }
+
+                      //  socialLoginApiHit("2", id, name, email)
 
 
-    }
-
-    override fun onCancelFacebook() {
-
-    }
-
-    override fun onErrorFacebook(ex: FacebookException?) {
-
-    }
-
-    override fun onSuccessGoogle(account: GoogleSignInAccount?) {
-
-        try {
-            var photo = ""
-            if (account?.photoUrl != null) {
-                photo = account.photoUrl.toString()
-            }
-
-            googleHelper.signOut()
-            val fatchName = account?.displayName!!.split(" ")
-
-            try {
-                var firstNames = ""
-                for (i in 0 until fatchName.size - 1) {
-                    firstNames = if (firstNames.isEmpty()) {
-                        fatchName[i]
-                    } else {
-                        firstNames + " " + fatchName[i]
                     }
                 }
 
-                socialtype = "1"
+
+            })
+    }
+
+
+
+/*
+  socialtype = "1"
                 firstName = firstNames
                 lastName = fatchName[fatchName.size - 1]
                 socialEmail = account.email!!
@@ -219,26 +297,11 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
 
                 loginSignUpViewModel.socialLogin(data).observe(viewLifecycleOwner,this)
 
+ */
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    mCallbackManager!!.onActivityResult(requestCode, resultCode, data)
 
-            } catch (e: Exception) {
-            }
-        } catch (ex: Exception) {
-            ex.localizedMessage
-        }
-
-    }
-
-    override fun onErrorGoogle() {
-        Log.d("===jdj","dkshf")
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-//      If signIn with google
-        if (socialLoginType == "Fb")
-            facebookHelper!!.onResult(requestCode, resultCode, data)
-        else if (socialLoginType == "Google")
-            googleHelper.onResult(requestCode, resultCode, data)
-    }
+}
 
 }

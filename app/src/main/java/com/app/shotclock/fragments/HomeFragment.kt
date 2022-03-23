@@ -3,7 +3,6 @@ package com.app.shotclock.fragments
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.RadioGroup
@@ -66,6 +65,8 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     private var rgSmoke: RadioGroup? = null
     private var rgDrink: RadioGroup? = null
     private var rgPets: RadioGroup? = null
+    private var rgGender: RadioGroup? = null
+    private var rvHeightBottomSheet: RecyclerView? = null
     private var latitude = ""
     private var longitude = ""
     private var education = ""
@@ -79,6 +80,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     private var smoke = ""
     private var pets = ""
     private var drink = ""
+    val list = ArrayList<String>()
     private var idList = ArrayList<SelectionDoneRequestModel.SelectionDoneUser>()
     private var homeList = ArrayList<HomeResponseModel.HomeBody>()
 
@@ -92,7 +94,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         CacheConstants.Current = "home"
-
+        rvHeightBottomSheet = view.findViewById(R.id.rvHeightBottomSheet)
 //        initializeSocket()
 //        activateReceiverListenerSocket()
 
@@ -132,12 +134,12 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     private fun itemHeightBottomSheet(view: View) {
         val heightBottomSheetLayout: ConstraintLayout = view.findViewById(R.id.heightBottomSheet)
         bottomSheetBehavior2 = BottomSheetBehavior.from(heightBottomSheetLayout)
-        val rvHeightBottomSheet: RecyclerView = view.findViewById(R.id.rvHeightBottomSheet)
-        val list = ArrayList<String>()
+
+
         val heightList = resources.getStringArray(R.array.heights)
         list.addAll(heightList)
         itemHeightBottomAdapter = HeightBottomSheetAdapter(list)
-        rvHeightBottomSheet.adapter = itemHeightBottomAdapter
+        rvHeightBottomSheet?.adapter = itemHeightBottomAdapter
         itemHeightBottomAdapter?.itemClickListener = { pos ->
             bottomOpen(bottomSheetBehavior2)
             tvHeightSelect?.text = list[pos]
@@ -155,7 +157,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         val rvEducation: RecyclerView = view.findViewById(R.id.rvEducation)
         val rvSexualOrientation: RecyclerView = view.findViewById(R.id.rvSexualOrientation)
         val rvAstrologicalSign: RecyclerView = view.findViewById(R.id.rvAstrologicalSign)
-        val rgGender: RadioGroup = view.findViewById(R.id.rgGender)
+        rgGender = view.findViewById(R.id.rgGender)
         rgSmoke  = view.findViewById(R.id.rgSmoke)
         tvClear  = view.findViewById(R.id.tvClear)
         rgDrink = view.findViewById(R.id.rgDrink)
@@ -163,26 +165,13 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         rsAge = view.findViewById(R.id.rsAge)
         rsDistance = view.findViewById(R.id.rsDistance)
 
-        tvClear?.setOnClickListener {
-            homeList.clear()
-            rgSmoke?.clearCheck()
-            rgPets?.clearCheck()
-            rgDrink?.clearCheck()
-            rgGender.clearCheck()
-            educationList.clear()
-            astrologicalList.clear()
-            orientationList.clear()
-            tvHeightSelect?.clearFocus()
-            bottomOpen(bottomSheetBehavior)
-            homeViewModel.homeApi(latitude, longitude).observe(viewLifecycleOwner, this)
-            adapter?.notifyDataSetChanged()
-        }
+
 
         tvHeightSelect = view.findViewById(R.id.tvHeightSelect)
         // add list education adapter
 
         // radio group gender
-        rgGender.setOnCheckedChangeListener { _, checkedId ->
+        rgGender?.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.rbMale)
                 gender = 1
             else if (checkedId == R.id.rbFemale)
@@ -264,6 +253,29 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
             bottomOpen(bottomSheetBehavior2)
         }
 
+        tvClear?.setOnClickListener {
+            Constants.isPlus = false
+            homeList.clear()
+            rgSmoke?.clearCheck()
+            rgPets?.clearCheck()
+            rgDrink?.clearCheck()
+            rgGender?.clearCheck()
+            rsAge?.values= mutableListOf(0F,100F)
+            rsDistance?.values=mutableListOf(0F,100F)
+            val educationAdapter = SexualOrientationAdapter(requireContext(), educationList,"education")
+            rvEducation.adapter = educationAdapter
+            val orientationAdapter = SexualOrientationAdapter(requireContext(), orientationList,"sexual")
+            rvSexualOrientation.adapter = orientationAdapter
+            val astrologicalAdapter = SexualOrientationAdapter(requireContext(), astrologicalList,"astro")
+            rvAstrologicalSign.adapter = astrologicalAdapter
+        //    astrologicalList.clear()
+          //  orientationList.clear()
+            tvHeightSelect?.text = "Select"
+            bottomOpen(bottomSheetBehavior)
+            homeViewModel.homeApi(latitude, longitude).observe(viewLifecycleOwner, this)
+            adapter?.notifyDataSetChanged()
+        }
+
     }
 
     // for Age range set
@@ -319,9 +331,15 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
 
         binding.ivPlus.setOnClickListener {
             Constants.isPlus = true
-            binding.ivPlus.isGone()
-            binding.clBottomBtn.isVisible()
-            adapter?.notifyDataSetChanged()
+            if (homeList.size == 0){
+
+                showToast("Please select maximum 5 users")
+            }else {
+
+                binding.ivPlus.isGone()
+                binding.clBottomBtn.isVisible()
+                adapter?.notifyDataSetChanged()
+            }
         }
 
         binding.btCancel.setOnClickListener {

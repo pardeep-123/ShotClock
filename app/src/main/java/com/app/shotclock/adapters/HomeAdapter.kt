@@ -57,4 +57,5 @@ class HomeAdapter(
         return homeList.size
     }
 
+
 }
