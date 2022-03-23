@@ -491,6 +491,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_splashFragment_to_loginFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_splashFragment_to_walkThroughFragment">
                               <value>
                                 <LayoutPositions />
@@ -518,8 +523,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="204" />
-                            <option name="y" value="13" />
+                            <option name="x" value="168" />
+                            <option name="y" value="19" />
                           </Point>
                         </option>
                         <option name="myPositions">

@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_walkThroughFragment_to_loginPhoneFragment"
             app:destination="@id/loginPhoneFragment" />
+        <action
+            android:id="@+id/action_walkThroughFragment_to_homeActivity"
+            app:destination="@id/homeActivity" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"

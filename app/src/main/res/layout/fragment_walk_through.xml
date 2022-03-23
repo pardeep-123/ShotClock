@@ -63,33 +63,33 @@
 
     <ImageView
         android:id="@+id/ivFacebook"
-        android:layout_width="@dimen/_205sdp"
+        android:layout_width="@dimen/_190sdp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_20sdp"
         android:src="@drawable/btn_facebook"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSignInWith" />
 
     <ImageView
         android:id="@+id/ivGoogle"
-        android:layout_width="@dimen/_200sdp"
+        android:layout_width="@dimen/_185sdp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_6sdp"
         android:src="@drawable/btn_google"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivFacebook" />
 
     <ImageView
         android:id="@+id/ivEmail"
-        android:layout_width="@dimen/_200sdp"
+        android:layout_width="@dimen/_185sdp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_6sdp"
         android:src="@drawable/btn_email"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivGoogle" />

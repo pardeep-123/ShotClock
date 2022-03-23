@@ -67,7 +67,7 @@ public class Prefs {
     }
 
 
-    // to save object in prefrence
+    // to save object in preference
     public void save(String key, Object object) {
         if (object == null) {
             throw new IllegalArgumentException("object is null");
@@ -79,7 +79,7 @@ public class Prefs {
         editor.putString(key, GSON.toJson(object)).apply();
     }
 
-    // To get object from prefrences
+    // To get object from preferences
 
     public <T> T getObject(String key, Class<T> a) {
 
@@ -90,7 +90,7 @@ public class Prefs {
             try {
                 return GSON.fromJson(gson, a);
             } catch (Exception e) {
-                throw new IllegalArgumentException("Object storaged with key "
+                throw new IllegalArgumentException("Object storage with key "
                         + key + " is instanceof other class");
             }
         }
@@ -105,7 +105,7 @@ public class Prefs {
             try {
                 return GSON.fromJson(gson,type);
             } catch (Exception e) {
-                throw new IllegalArgumentException("Object storaged with key "
+                throw new IllegalArgumentException("Object storage with key "
                         + key + " is instanceof other class");
             }
         }

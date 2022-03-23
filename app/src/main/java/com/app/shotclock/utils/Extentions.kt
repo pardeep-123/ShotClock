@@ -456,6 +456,28 @@ fun setPopUpWindow(
     })
 }
 
+fun setPopUpWindowTwo(
+    textView: TextView,
+    ctx: Context,
+    list: ArrayList<String>
+) {
+    val inflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    val view: View = inflater.inflate(R.layout.custom_spinner_two, null)
+
+    val myPopupWindow = PopupWindow(view, 932, ConstraintLayout.LayoutParams.WRAP_CONTENT, true)
+//     myPopupWindow.showAtLocation(text, Gravity.CENTER, 0, 20)
+    myPopupWindow.showAsDropDown(textView)
+
+    val rvTextList: RecyclerView = view.findViewById(R.id.rvTextListTwo)
+    rvTextList.adapter = HeightPopupAdapter(list, object : HeightPopupAdapter.TextClick {
+        override fun clickText(pos: Int) {
+            textView.text = list[pos]
+            myPopupWindow.dismiss()
+        }
+
+    })
+}
+
 fun getBase64FromPath(path: String): String {
     var base64 = ""
     try {

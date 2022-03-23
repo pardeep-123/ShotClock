@@ -163,29 +163,28 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
         }
 
         binding.tvGenderSelect.setOnClickListener {
-
             val list = ArrayList<String>()
             list.add("Male")
             list.add("Female")
-            setPopUpWindow(binding.tvGenderSelect, requireContext(), list)
+            setPopUpWindowTwo(binding.tvGenderSelect, requireContext(), list)
         }
         binding.tvSmokingSelect.setOnClickListener {
             val list = ArrayList<String>()
             val yesNoList = resources.getStringArray(R.array.yesNoList)
             list.addAll(yesNoList)
-            setPopUpWindow(binding.tvSmokingSelect, requireContext(), list)
+            setPopUpWindowTwo(binding.tvSmokingSelect, requireContext(), list)
         }
         binding.tvDrinkingSelect.setOnClickListener {
             val list = ArrayList<String>()
             val yesNoList =resources.getStringArray(R.array.yesNoList)
             list.addAll(yesNoList)
-            setPopUpWindow(binding.tvDrinkingSelect, requireContext(), list)
+            setPopUpWindowTwo(binding.tvDrinkingSelect, requireContext(), list)
         }
         binding.tvPetsSelect.setOnClickListener {
             val list = ArrayList<String>()
             val yesNoList =resources.getStringArray(R.array.yesNoList)
             list.addAll(yesNoList)
-            setPopUpWindow(binding.tvPetsSelect, requireContext(), list)
+            setPopUpWindowTwo(binding.tvPetsSelect, requireContext(), list)
         }
         binding.tvHeightSelect.setOnClickListener {
             val list = ArrayList<String>()
@@ -208,7 +207,7 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
             val list = ArrayList<String>()
             val interests = resources.getStringArray(R.array.interests)
             list.addAll(interests)
-            setPopUpWindow(binding.tvInterestSelect, requireContext(), list)
+            setPopUpWindowTwo(binding.tvInterestSelect, requireContext(), list)
         }
 
         binding.tvSexualOrientationSelect.setOnClickListener {

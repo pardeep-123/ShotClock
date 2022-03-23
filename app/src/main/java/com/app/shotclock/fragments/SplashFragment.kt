@@ -3,7 +3,6 @@ package com.app.shotclock.fragments
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -14,12 +13,19 @@ import com.app.shotclock.databinding.FragmentSplashBinding
 import com.app.shotclock.utils.Prefs
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import android.content.pm.PackageManager
+import android.util.Base64
+import android.util.Log
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 
 class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        printKeyHash()
 
         try {
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -49,6 +55,23 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
             }
         }, 3000)
 
+    }
+
+    private fun printKeyHash() {
+        try {
+            val info = context!!.packageManager.getPackageInfo(
+                "com.app.shotclock",
+                PackageManager.GET_SIGNATURES)
+            for (signature in info.signatures) {
+                val md = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT))
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+
+        } catch (e: NoSuchAlgorithmException) {
+
+        }
     }
 
     override fun getViewBinding(): FragmentSplashBinding {

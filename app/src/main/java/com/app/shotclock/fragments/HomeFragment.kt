@@ -119,8 +119,6 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         socketManager.callToUserActivate()
     }
 
-
-
     private fun setAdapter() {
         adapter = HomeAdapter(requireContext(), homeList)
         binding.rvHome.adapter = adapter
@@ -167,6 +165,14 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
 
         tvClear?.setOnClickListener {
             homeList.clear()
+            rgSmoke?.clearCheck()
+            rgPets?.clearCheck()
+            rgDrink?.clearCheck()
+            rgGender.clearCheck()
+            educationList.clear()
+            astrologicalList.clear()
+            orientationList.clear()
+            tvHeightSelect?.clearFocus()
             bottomOpen(bottomSheetBehavior)
             homeViewModel.homeApi(latitude, longitude).observe(viewLifecycleOwner, this)
             adapter?.notifyDataSetChanged()
@@ -337,6 +343,9 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
             }
 
             when {
+                idList.size == 0->{
+                    showToast("Please select any users")
+                }
                 idList.size < 5 -> {
                     showToast("Please select maximum 5 users")
                 }
