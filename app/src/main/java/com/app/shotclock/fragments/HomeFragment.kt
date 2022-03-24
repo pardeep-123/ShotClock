@@ -80,7 +80,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     private var smoke = ""
     private var pets = ""
     private var drink = ""
-    val list = ArrayList<String>()
+    private val list = ArrayList<String>()
     private var idList = ArrayList<SelectionDoneRequestModel.SelectionDoneUser>()
     private var homeList = ArrayList<HomeResponseModel.HomeBody>()
 
@@ -106,6 +106,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         rangeSliders()
         setAdapter()
         getLiveLocation(requireActivity())
+        Constants.isPlus = false
     }
 
     private fun initializeSocket() {

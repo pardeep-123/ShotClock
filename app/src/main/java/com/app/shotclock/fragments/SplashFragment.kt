@@ -1,26 +1,30 @@
 package com.app.shotclock.fragments
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Base64
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.cache.getMyString
 import com.app.shotclock.cache.getUser
 import com.app.shotclock.databinding.FragmentSplashBinding
 import com.app.shotclock.utils.Prefs
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
-import android.content.pm.PackageManager
-import android.util.Base64
-import android.util.Log
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
 class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
+    override fun getViewBinding(): FragmentSplashBinding {
+        return FragmentSplashBinding.inflate(layoutInflater)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,7 +52,9 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             lifecycleScope.launchWhenResumed {
-                if (getUser(requireContext())?.authKey.isNullOrEmpty())
+
+//                if (getUser(requireContext())?.authKey.isNullOrEmpty())
+                if (getMyString(requireContext()).isNullOrEmpty())
                 view.findNavController().navigate(R.id.action_splashFragment_to_walkThroughFragment)
                 else
                     view.findNavController().navigate(R.id.action_splashFragment_to_homeActivity)
@@ -74,8 +80,5 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
         }
     }
 
-    override fun getViewBinding(): FragmentSplashBinding {
-     return FragmentSplashBinding.inflate(layoutInflater)
-    }
 
 }

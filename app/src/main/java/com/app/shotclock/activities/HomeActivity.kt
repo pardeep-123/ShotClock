@@ -55,7 +55,6 @@ class HomeActivity : BaseActivity() , SocketManager.Observer {
     lateinit var loginSignUpViewModel: LoginSignUpViewModel
     @Inject
     lateinit var viewModelProvider : ViewModelProvider.Factory
-
     private var headerView : View? =null
     private var civUser : CircleImageView?= null
     private var tvUserName : TextView? = null
@@ -138,7 +137,6 @@ class HomeActivity : BaseActivity() , SocketManager.Observer {
     private fun clickLogout() {
         loginSignUpViewModel.userLogout().observe(this,userLogoutObserver)
     }
-
 
 
     fun openClose() {

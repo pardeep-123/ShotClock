@@ -100,9 +100,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), Observer<Resource<Lo
                 binding.pb.clLoading.isVisible()
                 saveUser(requireContext(), t.data?.body!!)
                 saveToken(requireContext(), t.data.body.authKey)
-                saveString(requireContext(), "token", t.data.body.authKey)
-                this.findNavController().navigate(R.id.action_loginFragment_to_homeActivity)
 
+                if (t.data.body.isComplete == 1) {
+                    this.findNavController().navigate(R.id.action_loginFragment_to_homeActivity)
+                    saveString(requireContext(), t.data.body.authKey)
+                } else
+                    this.findNavController().navigate(R.id.action_loginFragment_to_completeProfileFragment)
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()

@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_walkThroughFragment_to_homeActivity"
             app:destination="@id/homeActivity" />
+        <action
+            android:id="@+id/action_walkThroughFragment_to_completeProfileFragment"
+            app:destination="@id/completeProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -52,6 +55,9 @@
         <action
             android:id="@+id/action_loginFragment_to_homeActivity"
             app:destination="@id/homeActivity" />
+        <action
+            android:id="@+id/action_loginFragment_to_completeProfileFragment"
+            app:destination="@id/completeProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginPhoneFragment"

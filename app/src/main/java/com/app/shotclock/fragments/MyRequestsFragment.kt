@@ -252,6 +252,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
                 binding.pb.clLoading.isGone()
                if (requestList.size > 0) {
                    this.findNavController().navigate(R.id.action_myRequestsFragment_to_homeFragment)
+
                }
             }
             Status.ERROR -> {

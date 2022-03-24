@@ -42,7 +42,7 @@ constructor(private val apiService: ApiService, private val responseHandler: Res
     }
 
     // social login
-    suspend fun socialLogin(data: SocialLoginRequestModel):Resource<BaseResponseModel>{
+    suspend fun socialLogin(data: SocialLoginRequestModel):Resource<LoginResponseModel>{
         return try {
             responseHandler.handleResponse(apiService.socialLogin(data))
         }catch (e:Exception){

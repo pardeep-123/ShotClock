@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.adapters.CompleteProfileImagesAdapter
+import com.app.shotclock.cache.saveString
 import com.app.shotclock.databinding.FragmentCompleteProfileBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
@@ -268,6 +269,7 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
         loginSignUpViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginSignUpViewModel::class.java)
     }
 
+    // complete profile api hit
     override fun onChanged(t: Resource<CompleteProfileResponse>) {
         when (t.status) {
             Status.SUCCESS -> {
@@ -278,6 +280,7 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
                     setContentView(R.layout.alert_dialog_submitted)
                     val btDone: MaterialButton = findViewById(R.id.btDone)
                     btDone.setOnClickListener {
+                        saveString(requireContext(),t.data?.body?.authKey!!)
                         findNavController().navigate(R.id.action_completeProfileFragment_to_homeActivity)
                         dismiss()
                     }

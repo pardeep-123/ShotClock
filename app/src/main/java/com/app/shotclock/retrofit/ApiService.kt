@@ -23,7 +23,7 @@ interface ApiService {
     suspend fun userSignUp(@PartMap partMap: Map<String, @JvmSuppressWildcards RequestBody>): SignUpResponseModel
 
     @POST(ApiConstants.SOCIAL_LOGIN)
-    suspend fun socialLogin(@Body data: SocialLoginRequestModel):BaseResponseModel
+    suspend fun socialLogin(@Body data: SocialLoginRequestModel):LoginResponseModel
 
     //change password
     @POST(ApiConstants.CHANGE_PASSWORD)

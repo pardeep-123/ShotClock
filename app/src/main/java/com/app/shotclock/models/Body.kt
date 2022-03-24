@@ -66,7 +66,8 @@ data class Body(
     val username: String,
     val wallet: Int,
     val whyLoveThis: String,
-    val whychooseme: String
+    val whychooseme: String,
+    val isComplete : Int
 )
 
 data class UserImage(

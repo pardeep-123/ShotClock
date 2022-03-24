@@ -3,6 +3,7 @@ package com.app.shotclock.constants
 object CacheConstants {
 
     const val USER_TOKEN = "user_token"
+    const val USER_AUTH = "user_auth"
 
     const val USER_DATA = "user_data"
 

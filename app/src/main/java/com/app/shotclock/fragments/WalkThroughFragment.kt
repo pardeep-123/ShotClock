@@ -1,6 +1,7 @@
 package com.app.shotclock.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,13 +13,16 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.app.shotclock.R
+import com.app.shotclock.activities.InitialActivity
 import com.app.shotclock.adapters.WalkThroughAdapter
 import com.app.shotclock.base.BaseFragment
-import com.app.shotclock.cache.getUser
+import com.app.shotclock.cache.saveString
+import com.app.shotclock.cache.saveToken
+import com.app.shotclock.cache.saveUser
 import com.app.shotclock.databinding.FragmentWalkThroughBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
-import com.app.shotclock.models.BaseResponseModel
+import com.app.shotclock.models.LoginResponseModel
 import com.app.shotclock.models.SocialLoginRequestModel
 import com.app.shotclock.models.WalkThroughModel
 import com.app.shotclock.utils.*
@@ -39,7 +43,7 @@ import javax.inject.Inject
 
 
 class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
-    Observer<Resource<BaseResponseModel>> {
+    Observer<Resource<LoginResponseModel>>, GraphRequest.GraphJSONObjectCallback {
 
     lateinit var loginSignUpViewModel: LoginSignUpViewModel
 
@@ -47,17 +51,25 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private var walkList: ArrayList<WalkThroughModel>? = ArrayList()
     private var mCallbackManager: CallbackManager? = null
-    private var googleSignInClient:GoogleSignInClient?=null
-    private lateinit var googleHelper: GoogleHelper
-    private var facebookHelper: FacebookHelper? = null
+    private var googleSignInClient: GoogleSignInClient? = null
 
     private var socialLoginType = ""
     var firstName = ""
     var lastName = ""
     var socialEmail = ""
     var socialId = ""
-    var socialImage = ""
-    var socialtype = ""
+    private var socialImage = ""
+    var ctx: Context? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        this.ctx = context
+        (ctx as InitialActivity).setData(this)
+    }
+
+    override fun getViewBinding(): FragmentWalkThroughBinding {
+        return FragmentWalkThroughBinding.inflate(layoutInflater)
+    }
 
     private val googleLoginActivityResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -67,9 +79,7 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
             handleSignInResult(task)
         }
     }
-    override fun getViewBinding(): FragmentWalkThroughBinding {
-        return FragmentWalkThroughBinding.inflate(layoutInflater)
-    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -80,48 +90,6 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
         handleClicks()
 
     }
-    // for google
-    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-        try {
-            val account = completedTask.getResult(ApiException::class.java)
-
-// Signed in successfully, show authenticated UI.
-            updateUI(account)
-        } catch (e: ApiException) {
-// The ApiException status code indicates the detailed failure reason.
-// Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w("GoogleLogin", "signInResult:failed code=" + e.statusCode)
-        }
-    }
-
-    // for google
-    private fun updateUI(account: GoogleSignInAccount?) {
-
-        showToast("success")
-        if (account != null) {
-
-            val personName = account.displayName
-            val email = account.email
-            val familyName = account.familyName
-            val idToken = account.idToken
-            val id = account.id
-            val givenName = account.givenName
-
-            googleSignInClient?.signOut()
-
-            if (personName != null && email != null) {
-               // socialLoginApiHit("1", id.toString(), personName, email)
-            } else {
-               showToast("Google error")
-            }
-
-        } else {
-            showToast("Google error")
-        }
-    }
-    private fun configureViewModel() {
-        loginSignUpViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginSignUpViewModel::class.java)
-    }
 
     private fun handleClicks() {
 
@@ -131,14 +99,12 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
         }
 
         binding.ivFacebook.setOnClickListener {
-            socialLoginType = "Fb"
+            LoginManager.getInstance().logOut()
             fbLogin()
-
         }
 
         binding.ivGoogle.setOnClickListener {
-//            if (socialtype == "2")
-                signIn()
+            signIn()
         }
 
     }
@@ -156,9 +122,6 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
         binding.rvWalkThrough.setAlpha(false)
         binding.rvWalkThrough.setFlat(false)
         binding.rvWalkThrough.setIntervalRatio(0.6F)
-//        binding.rvWalkThrough.scrollToPosition(selectedPos!!)
-//        val carouselLayoutManager = binding.rvWalkThrough.getCarouselLayoutManager()
-//        val currentlyCenterPosition = binding.rvWalkThrough.getSelectedPosition()
 
         val pagerSnapHelper = PagerSnapHelper()
 
@@ -167,27 +130,21 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
 
     }
 
-    private fun setSocialLoginData() {
-        val body = SocialLoginRequestModel(
-            getUser(requireContext())?.countryCode!!,
-            Prefs.with(view?.context).getString("token", "0"),
-            socialtype.toInt(),
-            socialEmail,
-            firstName + lastName,
-            getUser(requireContext())?.phone!!,
-            socialImage,
-            socialId,
-            socialtype.toInt()
-        )
-
-        loginSignUpViewModel.socialLogin(body).observe(viewLifecycleOwner, this)
-    }
-
-    override fun onChanged(t: Resource<BaseResponseModel>) {
+    override fun onChanged(t: Resource<LoginResponseModel>) {
         when (t.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
-                 findNavController().navigate(R.id.action_walkThroughFragment_to_homeActivity)
+                binding.pb.clLoading.isVisible()
+                saveUser(requireContext(), t.data?.body!!)
+                saveString(requireContext(), t.data.body.authKey)
+                if (t.data.body.isComplete == 1) {
+                    this.findNavController()
+                        .navigate(R.id.action_walkThroughFragment_to_homeActivity)
+                    saveToken(requireContext(), t.data.body.authKey)
+                } else
+                    this.findNavController()
+                        .navigate(R.id.action_walkThroughFragment_to_completeProfileFragment)
+
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
@@ -197,6 +154,61 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
                 binding.pb.clLoading.isVisible()
             }
         }
+    }
+
+    // for google
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account = completedTask.getResult(ApiException::class.java)
+
+// Signed in successfully, show authenticated UI.
+            updateUI(account)
+        } catch (e: ApiException) {
+// The ApiException status code indicates the detailed failure reason.
+// Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w("GoogleLogin", "signInResult:failed code=" + e.statusCode)
+        }
+    }
+
+    // for google
+    private fun updateUI(account: GoogleSignInAccount?) {
+        if (account != null) {
+
+            firstName = account.displayName.toString()
+            socialEmail = account.email.toString()
+            val familyName = account.familyName
+            val idToken = account.idToken
+            socialId = account.id.toString()
+            socialImage = account.photoUrl.toString()
+            val givenName = account.givenName
+
+            googleSignInClient?.signOut()
+
+            // api hit
+            if (firstName != null && socialEmail != null) {
+                val data = SocialLoginRequestModel(
+                    "",
+                    Prefs.with(requireContext()).getString("token", ""),
+                    2,
+                    socialEmail,
+                    firstName,
+                    "",
+                    socialImage,
+                    socialId,
+                    1
+                )
+                loginSignUpViewModel.socialLogin(data).observe(viewLifecycleOwner, this)
+
+            } else {
+                showToast("Google error")
+            }
+
+        } else {
+            showToast("Google error")
+        }
+    }
+    private fun configureViewModel() {
+        loginSignUpViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginSignUpViewModel::class.java)
     }
 
     private fun signIn() {
@@ -212,15 +224,13 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
 
     }
 
-
     // for facebook
     private fun fbLogin() {
         val loginButton = LoginButton(requireContext())
         loginButton.setPermissions(listOf("public_profile, email"))
         loginButton.performClick()
         LoginManager.getInstance()
-            .registerCallback(mCallbackManager, object : FacebookCallback<LoginResult?>,
-                GraphRequest.GraphJSONObjectCallback {
+            .registerCallback(mCallbackManager, object : FacebookCallback<LoginResult?> {
                 override fun onCancel() {
                     Log.e("FacebookLogin", "Cancel Facebook Login")
                 }
@@ -232,55 +242,18 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
                 override fun onSuccess(result: LoginResult?) {
                     val request = GraphRequest.newMeRequest(
                         result!!.accessToken,
-                        this
+                        this@WalkThroughFragment
                     )
                     val parameters = Bundle()
                     parameters.putString("fields", "id, first_name, last_name, email")
                     request.parameters = parameters
                     request.executeAsync()
-                }
 
-                override fun onCompleted(obj: JSONObject?, response: GraphResponse?) {
-                    showToast("Success")
-                    Log.e("FacebookLogin", response.toString())
-
-// Application code
-                    if (obj != null) {
-                        var email = ""
-                        var name = ""
-
-                        val id: String = obj.getString("id")
-
-                        val profilePic = URL("https://graph.facebook.com/$id/picture?width=200&height=150")
-                        Log.i("profilePic", profilePic.toString() + "")
-
-                        if (obj.has("email")) {
-                            email = obj.getString("email")
-                        }
-
-                        if (obj.has("birthday")) {
-                            val birthday: String = obj.getString("birthday") // 01/31/1980 format
-                        }
-
-                        if (obj.has("first_name")) {
-                            name = obj.getString("first_name")
-                        }
-
-                        if (obj.has("last_name")) {
-                            val lastName = obj.getString("last_name")
-                        }
-
-                      //  socialLoginApiHit("2", id, name, email)
-
-
-                    }
                 }
 
 
             })
     }
-
-
 
 /*
   socialtype = "1"
@@ -298,10 +271,55 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
                 loginSignUpViewModel.socialLogin(data).observe(viewLifecycleOwner,this)
 
  */
-override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
-    mCallbackManager!!.onActivityResult(requestCode, resultCode, data)
 
-}
+    fun setDataFb(requestCode: Int, resultCode: Int, data: Intent?) {
+        mCallbackManager?.onActivityResult(requestCode, resultCode, data)
+    }
+
+    // facebook completion
+    override fun onCompleted(obj: JSONObject?, response: GraphResponse?) {
+        Log.e("FacebookLogin", response.toString())
+
+// Application code
+        if (obj != null) {
+            showToast("Fb Success")
+            socialId = obj.getString("id")
+
+            socialImage =
+                URL("https://graph.facebook.com/$id/picture?width=200&height=150").toString()
+            Log.i("profile_pic", socialImage.toString() + "")
+
+            if (obj.has("email")) {
+                socialEmail = obj.getString("email")
+            }
+
+            if (obj.has("birthday")) {
+                val birthday: String = obj.getString("birthday") // 01/31/1980 format
+            }
+
+            if (obj.has("first_name")) {
+                firstName = obj.getString("first_name")
+            }
+
+            if (obj.has("last_name")) {
+                lastName = obj.getString("last_name")
+            }
+
+            // api hit
+            val data = SocialLoginRequestModel(
+                "",
+                Prefs.with(requireContext()).getString("token", ""),
+                2,
+                socialEmail,
+                firstName + lastName,
+                "",
+                socialImage,
+                socialId,
+                2
+            )
+            loginSignUpViewModel.socialLogin(data).observe(viewLifecycleOwner, this)
+
+        }
+    }
 
 }

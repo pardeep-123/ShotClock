@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/ic_downpopup"
     android:maxHeight="@dimen/_170sdp"
+    android:paddingBottom="@dimen/_10sdp"
     android:layout_marginStart="@dimen/_20sdp"
     android:layout_marginEnd="@dimen/_22sdp">
 
@@ -13,8 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_160sdp"
         android:orientation="vertical"
-        android:paddingTop="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

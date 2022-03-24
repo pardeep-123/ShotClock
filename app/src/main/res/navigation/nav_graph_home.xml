@@ -43,7 +43,9 @@
             app:destination="@id/speedDateSessionFragment" />
         <action
             android:id="@+id/action_myRequestsFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_myRequestsFragment_to_videoCallFragment"
             app:destination="@id/videoCallFragment" />

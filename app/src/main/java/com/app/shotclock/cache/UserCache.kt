@@ -2,6 +2,7 @@ package com.app.shotclock.cache
 
 import android.content.Context
 import com.app.shotclock.constants.CacheConstants
+import com.app.shotclock.constants.CacheConstants.USER_AUTH
 import com.app.shotclock.models.Body
 import com.app.shotclock.utils.Prefs
 
@@ -22,12 +23,12 @@ fun saveToken(context: Context, token: String) {
 }
 
 
-fun saveString(context: Context, key: String, value: String) {
-    Prefs.with(context).save(key, value)
+fun saveString(context: Context, value: String) {
+    Prefs.with(context).save(USER_AUTH, value)
 }
 
-fun getMyString(context: Context, key: String): String? {
-    return Prefs.with(context).getString(key, "")
+fun getMyString(context: Context): String? {
+    return Prefs.with(context).getString(USER_AUTH, "")
 }
 
 fun clearData(context: Context, key: String) {
