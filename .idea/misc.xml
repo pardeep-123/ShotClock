@@ -51,7 +51,7 @@
         <entry key="app/src/main/res/layout/fragment_complete_profile.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_cookie_policy.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_copyright_policy.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.1648148148148148" />
         <entry key="app/src/main/res/layout/fragment_forgot_password.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_icebraker_questions.xml" value="0.18" />
@@ -69,7 +69,7 @@
         <entry key="app/src/main/res/layout/fragment_subscription.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_terms_conditions.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_video_call.xml" value="0.18" />
-        <entry key="app/src/main/res/layout/fragment_walk_through.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_walk_through.xml" value="0.24619640387275243" />
         <entry key="app/src/main/res/layout/items__notification_video_calling.xml" value="0.16" />
         <entry key="app/src/main/res/layout/items_base.xml" value="0.16" />
         <entry key="app/src/main/res/layout/items_cancel_requests.xml" value="0.18489583333333334" />

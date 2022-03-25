@@ -63,11 +63,12 @@
 
     <ImageView
         android:id="@+id/ivFacebook"
-        android:layout_width="@dimen/_190sdp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_191sdp"
+        android:layout_height="@dimen/_28sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:src="@drawable/btn_facebook"
         android:scaleType="centerCrop"
+        android:paddingEnd="@dimen/_1sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSignInWith" />

@@ -2,7 +2,6 @@ package com.app.shotclock.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
@@ -138,7 +137,6 @@ class HomeActivity : BaseActivity() , SocketManager.Observer {
         loginSignUpViewModel.userLogout().observe(this,userLogoutObserver)
     }
 
-
     fun openClose() {
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             binding.drawerLayout.closeDrawer(Gravity.LEFT)
@@ -163,7 +161,6 @@ class HomeActivity : BaseActivity() , SocketManager.Observer {
             }
         }
     }
-
 
     private fun initializeSocket() {
         socketManager = App.mInstance.getSocketManager()!!
@@ -220,7 +217,7 @@ class HomeActivity : BaseActivity() , SocketManager.Observer {
                     val gson = GsonBuilder().create()
                     val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
 
-      /*              val options = NavOptions.Builder().setPopUpTo(R.id.incomingCallActivity,true).build()
+      /*            val options = NavOptions.Builder().setPopUpTo(R.id.incomingCallActivity,true).build()
                     val bundle = Bundle()
                     bundle.putString("channelName",userToCallList.channelName)
                     findNavController(R.id.fragment).navigate(R.id.incomingCallActivity,bundle,options)*/

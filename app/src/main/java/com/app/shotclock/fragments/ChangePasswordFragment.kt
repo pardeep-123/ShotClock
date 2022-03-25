@@ -49,6 +49,9 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding>(),
         binding.tb.ivMenu.setOnClickListener {
             (activity as HomeActivity).openClose()
             hideKeyboard(it, requireActivity())
+            binding.etOldPassword.text.clear()
+            binding.etNewPassword.text.clear()
+            binding.etConfirmPassword.text.clear()
         }
 
         binding.btUpdate.setOnClickListener {

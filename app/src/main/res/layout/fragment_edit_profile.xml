@@ -25,8 +25,7 @@
                 android:id="@+id/rivUser"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_250sdp"
-                android:scaleType="fitXY"
-                android:src="@drawable/img_profile"
+                android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:riv_corner_radius="@dimen/_5sdp" />
@@ -42,6 +41,7 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginBottom="-20dp"
                 android:padding="@dimen/_5sdp"
+                android:contentDescription="@null"
                 app:layout_constraintEnd_toEndOf="@id/rivUser"
                 app:layout_constraintBottom_toBottomOf="@id/rivUser"/>
 
@@ -74,7 +74,9 @@
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:textSize="@dimen/_12ssp"
-                app:layout_constraintTop_toBottomOf="@id/tvName" />
+                app:layout_constraintTop_toBottomOf="@id/tvName"
+                android:autofillHints=""
+                tools:ignore="LabelFor" />
 
             <TextView
                 android:id="@+id/tvEmail"
@@ -105,7 +107,9 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="@id/etName"
                 app:layout_constraintStart_toStartOf="@id/etName"
-                app:layout_constraintTop_toBottomOf="@id/tvEmail" />
+                app:layout_constraintTop_toBottomOf="@id/tvEmail"
+                android:autofillHints=""
+                tools:ignore="LabelFor" />
 
             <TextView
                 android:id="@+id/tvPhone"
@@ -136,7 +140,8 @@
                     android:src="@drawable/ic_call"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"/>
+                    android:layout_alignParentStart="true"
+                    android:contentDescription="@null" />
 
                 <com.hbb20.CountryCodePicker
                     android:id="@+id/ccp"
@@ -170,7 +175,9 @@
                     android:paddingEnd="@dimen/_5sdp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_12ssp"
+                    tools:ignore="LabelFor,RtlSymmetry"
+                    android:autofillHints="" />
 
             </RelativeLayout>
 
@@ -241,7 +248,7 @@
                     app:layout_constraintEnd_toEndOf="@id/tvDOBSelect"
                     android:background="@drawable/bg_whiteline_round_corners"
                     app:layout_constraintTop_toBottomOf="@+id/tvGender"
-                    android:drawableEnd="@drawable/ic_arrowdown" />
+                    app:drawableEndCompat="@drawable/ic_arrowdown" />
 
             <TextView
                 android:id="@+id/tvHeight"
@@ -262,7 +269,6 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/bg_whiteline_round_corners"
                 android:contextClickable="true"
-                android:drawableEnd="@drawable/ic_arrowdown"
                 android:fontFamily="@font/proxima_regular"
                 android:gravity="center_vertical"
                 android:hint="@string/select"
@@ -273,6 +279,7 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="@id/tvGenderSelect"
                 app:layout_constraintStart_toStartOf="@id/tvGenderSelect"
+                app:drawableEndCompat="@drawable/ic_arrowdown"
                 app:layout_constraintTop_toBottomOf="@id/tvHeight" />
 
             <TextView
@@ -298,7 +305,6 @@
                 android:fontFamily="@font/proxima_regular"
                 android:hint="@string/select"
                 android:maxLines="1"
-                android:drawableEnd="@drawable/ic_arrowdown"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/_15sdp"
                 android:paddingEnd="@dimen/_8sdp"
@@ -307,7 +313,8 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="@id/tvHeightSelect"
                 app:layout_constraintStart_toStartOf="@id/tvHeightSelect"
-                app:layout_constraintTop_toBottomOf="@id/tvQualification" />
+                app:layout_constraintTop_toBottomOf="@id/tvQualification"
+                app:drawableEndCompat="@drawable/ic_arrowdown" />
 
             <TextView
                 android:id="@+id/tvLocation"
@@ -342,7 +349,8 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="@id/tvQualificatSelect"
                 app:layout_constraintStart_toStartOf="@id/tvQualificatSelect"
-                app:layout_constraintTop_toBottomOf="@id/tvLocation" />
+                app:layout_constraintTop_toBottomOf="@id/tvLocation"
+                android:autofillHints="" />
 
             <TextView
                 android:id="@+id/tvInterestedIn"
@@ -372,12 +380,12 @@
                     android:hint="@string/select"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
-                    android:drawableEnd="@drawable/ic_arrowdown"
                     android:layout_marginTop="@dimen/_10sdp"
                     app:layout_constraintStart_toStartOf="@id/etLocation"
                     app:layout_constraintEnd_toEndOf="@id/etLocation"
                     android:background="@drawable/bg_whiteline_round_corners"
-                    app:layout_constraintTop_toBottomOf="@+id/tvInterestedIn"/>
+                    app:drawableEndCompat="@drawable/ic_arrowdown"
+                    app:layout_constraintTop_toBottomOf="@+id/tvInterestedIn" />
 
             <TextView
                 android:id="@+id/tvSexualOrientation"
@@ -402,7 +410,6 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:textColorHint="@color/white"
                     android:gravity="center_vertical"
-                    android:drawableEnd="@drawable/ic_arrowdown"
                     android:paddingStart="@dimen/_10sdp"
                     android:textSize="@dimen/_12ssp"
                     android:textColor="@color/white"
@@ -410,7 +417,8 @@
                     app:layout_constraintStart_toStartOf="@id/etLocation"
                     app:layout_constraintEnd_toEndOf="@id/etLocation"
                     android:background="@drawable/bg_whiteline_round_corners"
-                    app:layout_constraintTop_toBottomOf="@+id/tvSexualOrientation"/>
+                    app:drawableEndCompat="@drawable/ic_arrowdown"
+                    app:layout_constraintTop_toBottomOf="@+id/tvSexualOrientation" />
 
             <TextView
                 android:id="@+id/tvAstrologicalSign"
@@ -432,7 +440,6 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/bg_whiteline_round_corners"
                 android:contextClickable="true"
-                android:drawableEnd="@drawable/ic_arrowdown"
                 android:fontFamily="@font/proxima_regular"
                 android:gravity="center_vertical"
                 android:hint="@string/select"
@@ -443,6 +450,7 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="@id/etLocation"
                 app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:drawableEndCompat="@drawable/ic_arrowdown"
                 app:layout_constraintTop_toBottomOf="@+id/tvAstrologicalSign" />
 
             <TextView
@@ -468,7 +476,6 @@
                 android:hint="@string/select"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:drawableEnd="@drawable/ic_arrowdown"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
@@ -476,6 +483,7 @@
                 android:fontFamily="@font/proxima_regular"
                 app:layout_constraintEnd_toEndOf="@id/etLocation"
                 app:layout_constraintStart_toStartOf="@id/etLocation"
+                app:drawableEndCompat="@drawable/ic_arrowdown"
                 app:layout_constraintTop_toBottomOf="@+id/tvSmoking" />
 
             <TextView
@@ -498,7 +506,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/bg_whiteline_round_corners"
                 android:contextClickable="true"
-                android:drawableEnd="@drawable/ic_arrowdown"
+                app:drawableEndCompat="@drawable/ic_arrowdown"
                 android:fontFamily="@font/proxima_regular"
                 android:gravity="center_vertical"
                 android:hint="@string/select"
@@ -531,7 +539,6 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/bg_whiteline_round_corners"
                 android:contextClickable="true"
-                android:drawableEnd="@drawable/ic_arrowdown"
                 android:elevation="10dp"
                 android:fontFamily="@font/proxima_regular"
                 android:gravity="center_vertical"
@@ -543,7 +550,8 @@
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="@id/etLocation"
                 app:layout_constraintStart_toStartOf="@id/etLocation"
-                app:layout_constraintTop_toBottomOf="@+id/tvPets"/>
+                app:drawableEndCompat="@drawable/ic_arrowdown"
+                app:layout_constraintTop_toBottomOf="@+id/tvPets" />
             <TextView
                 android:id="@+id/tvAddBio"
                 android:layout_width="wrap_content"
@@ -577,7 +585,8 @@
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvAddBio"/>
+                android:autofillHints=""
+                app:layout_constraintTop_toBottomOf="@id/tvAddBio" />
 
             <TextView
                 android:id="@+id/tvAddPhoto"

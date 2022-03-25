@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.R
@@ -55,7 +56,6 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     private var rsAge: RangeSlider? = null
     private var rsDistance: RangeSlider? = null
     private var adapter: HomeAdapter? = null
-    private var sexualOrientationAdapter: SexualOrientationAdapter? = null
     private var itemHeightBottomAdapter: HeightBottomSheetAdapter? = null
     private var orientationList = ArrayList<String>()
     private var astrologicalList = ArrayList<String>()
@@ -136,7 +136,6 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         val heightBottomSheetLayout: ConstraintLayout = view.findViewById(R.id.heightBottomSheet)
         bottomSheetBehavior2 = BottomSheetBehavior.from(heightBottomSheetLayout)
 
-
         val heightList = resources.getStringArray(R.array.heights)
         list.addAll(heightList)
         itemHeightBottomAdapter = HeightBottomSheetAdapter(list)
@@ -165,9 +164,6 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         rgPets = view.findViewById(R.id.rgPets)
         rsAge = view.findViewById(R.id.rsAge)
         rsDistance = view.findViewById(R.id.rsDistance)
-
-
-
         tvHeightSelect = view.findViewById(R.id.tvHeightSelect)
         // add list education adapter
 
@@ -333,10 +329,8 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         binding.ivPlus.setOnClickListener {
             Constants.isPlus = true
             if (homeList.size == 0){
-
                 showToast("Please select maximum 5 users")
             }else {
-
                 binding.ivPlus.isGone()
                 binding.clBottomBtn.isVisible()
                 adapter?.notifyDataSetChanged()
@@ -385,6 +379,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         when (t.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
+                homeList.clear()
                 homeList.addAll(t.data?.body!!)
                 adapter?.notifyDataSetChanged()
             }
@@ -452,7 +447,8 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
                     setContentView(R.layout.alert_dialog_home)
                     val btDone: MaterialButton = findViewById(R.id.btDone)
                     btDone.setOnClickListener {
-                        findNavController().navigate(R.id.action_homeFragment_to_myRequestsFragment)
+                        val options = NavOptions.Builder().setPopUpTo(R.id.fragment,true).build()
+                        findNavController().navigate(R.id.action_homeFragment_to_myRequestsFragment,null,options)
                         dismiss()
                     }
                     show()

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/clMain"
-    android:background="@drawable/ic_app_background">
+    android:background="@drawable/bg_app_color_gradient_rectangle">
 
     <TextView
         android:id="@+id/tvSenderName"

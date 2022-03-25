@@ -79,8 +79,7 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
             handleSignInResult(task)
         }
     }
-
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mCallbackManager = CallbackManager.Factory.create()
@@ -250,27 +249,8 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
                     request.executeAsync()
 
                 }
-
-
             })
     }
-
-/*
-  socialtype = "1"
-                firstName = firstNames
-                lastName = fatchName[fatchName.size - 1]
-                socialEmail = account.email!!
-                socialId = account.id!!
-                socialImage = photo
-
-// hit api here
-
-                val data = SocialLoginRequestModel("",Prefs.with(requireContext()).getString("token",""), 2,socialEmail, firstName + lastName, "",
-                    socialImage,socialId,1)
-
-                loginSignUpViewModel.socialLogin(data).observe(viewLifecycleOwner,this)
-
- */
 
     fun setDataFb(requestCode: Int, resultCode: Int, data: Intent?) {
         mCallbackManager?.onActivityResult(requestCode, resultCode, data)
