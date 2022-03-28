@@ -288,7 +288,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:fontFamily="@font/proxima_regular"
-                android:text="@string/qualification"
+                android:text="@string/education"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="@id/tvHeight"

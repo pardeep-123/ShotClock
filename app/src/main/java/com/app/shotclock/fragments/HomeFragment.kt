@@ -83,6 +83,9 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     private val list = ArrayList<String>()
     private var idList = ArrayList<SelectionDoneRequestModel.SelectionDoneUser>()
     private var homeList = ArrayList<HomeResponseModel.HomeBody>()
+    private var fromNotification = ""
+    private var user2Id = 0
+    private var senderName = ""
 
     private lateinit var socketManager: SocketManager
     private val activityScope = CoroutineScope(Dispatchers.Main)
@@ -94,6 +97,27 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         CacheConstants.Current = "home"
+
+ /*       val bundle = arguments
+        if (bundle?.getString("notification") != null) {
+            fromNotification = bundle.getString("notification")!!
+            if (fromNotification == "notification") {
+                val options = NavOptions.Builder().setPopUpTo(R.id.fragment, true).build()
+                findNavController().navigate(R.id.action_homeFragment_to_notificationFragment,null,options)
+            } else {
+                val bundle = Bundle()
+                bundle.putInt("user2Id", user2Id)
+                bundle.putString("username", senderName)
+                val options = NavOptions.Builder().setPopUpTo(R.id.fragment, true).build()
+                findNavController().navigate(R.id.action_homeFragment_to_chatFragment, bundle,options)
+            }
+        }
+
+        if (bundle?.getInt("user2Id") != null && bundle.getString("username") != null) {
+            user2Id = bundle.getInt("user2Id")
+            senderName = bundle.getString("username")!!
+        }*/
+
         rvHeightBottomSheet = view.findViewById(R.id.rvHeightBottomSheet)
 //        initializeSocket()
 //        activateReceiverListenerSocket()
@@ -356,8 +380,8 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
             }
 
             when {
-                idList.size == 0->{
-                    showToast("Please select any users")
+                idList.size == 0 -> {
+                    showToast("Please select 5 users")
                 }
                 idList.size < 5 -> {
                     showToast("Please select maximum 5 users")
@@ -368,10 +392,13 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
                 else -> {
                     Constants.isPlus = false
                     val data = SelectionDoneRequestModel(idList)
-                    homeViewModel.selectionDone(data).observe(viewLifecycleOwner, selectionDoneObserver)
+                    homeViewModel.selectionDone(data)
+                        .observe(viewLifecycleOwner, selectionDoneObserver)
                 }
             }
         }
+
+
     }
 
     // home api
@@ -447,7 +474,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
                     setContentView(R.layout.alert_dialog_home)
                     val btDone: MaterialButton = findViewById(R.id.btDone)
                     btDone.setOnClickListener {
-                        val options = NavOptions.Builder().setPopUpTo(R.id.fragment,true).build()
+                        val options = NavOptions.Builder().setPopUpTo(R.id.fragment, true).build()
                         findNavController().navigate(R.id.action_homeFragment_to_myRequestsFragment,null,options)
                         dismiss()
                     }

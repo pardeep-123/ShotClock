@@ -139,10 +139,6 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
 
         binding.tvStart.setOnClickListener {
             callToUser()
-//            val jsonObject = JSONObject()
-//            jsonObject.put("channelName", mChannelName)
-//            jsonObject.put("status", "1")
-//            socketManager.getCallStatus(jsonObject)
         }
     }
 

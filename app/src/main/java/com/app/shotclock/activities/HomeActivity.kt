@@ -3,7 +3,10 @@ package com.app.shotclock.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
@@ -30,6 +33,7 @@ import com.app.shotclock.utils.*
 import com.app.shotclock.videocallingactivity.IncomingCallActivity
 import com.app.shotclock.viewmodels.LoginSignUpViewModel
 import com.bumptech.glide.Glide
+import com.google.android.material.navigation.NavigationView
 import com.google.gson.GsonBuilder
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
@@ -40,7 +44,7 @@ import org.json.JSONObject
 import javax.inject.Inject
 
 
-class HomeActivity : BaseActivity() , SocketManager.Observer {
+class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var navController: NavController
@@ -57,6 +61,7 @@ class HomeActivity : BaseActivity() , SocketManager.Observer {
     private var headerView : View? =null
     private var civUser : CircleImageView?= null
     private var tvUserName : TextView? = null
+    private var ivMenu: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,12 +72,12 @@ class HomeActivity : BaseActivity() , SocketManager.Observer {
 
         configureViewModel()
         manageHeaderView()
-
+        ivMenu = findViewById(R.id.ivMenu)
         navController = findNavController(R.id.fragment)
         drawableLayout = findViewById(R.id.drawerLayout)
         binding.navigationView.setupWithNavController(navController)
 
-        // logout click
+//         logout click
         binding.navigationView.menu.findItem(R.id.logout).setOnMenuItemClickListener {
             //write your implementation here
             //to close the navigation drawer
@@ -195,12 +200,14 @@ class HomeActivity : BaseActivity() , SocketManager.Observer {
                 val bundle = Bundle()
                 bundle.putInt("user2Id", senderId.toInt())
                 bundle.putString("username", senderName)
-                val options = NavOptions.Builder().setPopUpTo(R.id.chatFragment, true).build()
-                findNavController(R.id.fragment).navigate(R.id.chatFragment,bundle,options)
+                val options = NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
+                findNavController(R.id.fragment).navigate(R.id.homeFragment,bundle,options)
 
             } else {
+                val bundle = Bundle()
+                bundle.putString("notification","notification")
                 val options = NavOptions.Builder().setPopUpTo(R.id.notificationFragment,true).build()
-                findNavController(R.id.fragment).navigate(R.id.notificationFragment,null,options)
+                findNavController(R.id.fragment).navigate(R.id.notificationFragment,bundle,options)
 
             }
         }
@@ -232,6 +239,65 @@ class HomeActivity : BaseActivity() , SocketManager.Observer {
     }
 
     override fun onError(event: String, vararg args: Array<*>) {
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.navigation_menu, menu)
+        return true
+    }
+
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.homeFragment ->{
+                val options = NavOptions.Builder()
+                    .setPopUpTo(R.id.homeFragment, true)
+                    .build()
+                findNavController(R.id.fragment).navigate(
+                    R.id.homeFragment,
+                    null,
+                    options
+                )
+                openClose()
+            }
+            R.id.profileFragment->{
+                findNavController(R.id.fragment).navigate(R.id.profileFragment)
+                openClose()
+            }
+            R.id.myRequestsFragment->{
+                findNavController(R.id.fragment).navigate(R.id.myRequestsFragment)
+                openClose()
+            }
+            R.id.notificationFragment->{
+                findNavController(R.id.fragment).navigate(R.id.notificationFragment)
+                openClose()
+            }
+            R.id.messageFragment->{
+                findNavController(R.id.fragment).navigate(R.id.messageFragment)
+                openClose()
+            }
+            R.id.changePasswordFragment->{
+                findNavController(R.id.fragment).navigate(R.id.changePasswordFragment)
+                openClose()
+            }
+            R.id.cookiePolicyFragment->{
+                findNavController(R.id.fragment).navigate(R.id.cookiePolicyFragment)
+                openClose()
+            }
+            R.id.privacyPolicyFragment->{
+                findNavController(R.id.fragment).navigate(R.id.privacyPolicyFragment)
+                openClose()
+            }
+            R.id.safeDatingPolicyFragment->{
+                findNavController(R.id.fragment).navigate(R.id.safeDatingPolicyFragment)
+                openClose()
+            }
+            R.id.termsConditionsFragment->{
+                findNavController(R.id.fragment).navigate(R.id.termsConditionsFragment)
+                openClose()
+            }
+        }
+        return true
     }
 
 
