@@ -1,47 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/homeFragment"
+            android:id="@+id/home_Fragment"
             android:title="@string/home" />
 
         <item
-            android:id="@+id/profileFragment"
+            android:id="@+id/profile_Fragment"
             android:title="@string/profile" />
 
         <item
-            android:id="@+id/myRequestsFragment"
+            android:id="@+id/myRequests_Fragment"
             android:title="@string/my_requests" />
         <item
-            android:id="@+id/notificationFragment"
+            android:id="@+id/notification_Fragment"
             android:title="@string/notification" />
 
         <item
-            android:id="@+id/messageFragment"
+            android:id="@+id/message_Fragment"
             android:title="@string/messages" />
 
         <item
-            android:id="@+id/changePasswordFragment"
+            android:id="@+id/changePassword_Fragment"
             android:title="@string/change_password" />
 
         <item
-            android:id="@+id/cookiePolicyFragment"
+            android:id="@+id/cookiePolicy_Fragment"
             android:title="@string/cookie_policy" />
 
         <item
-            android:id="@+id/copyrightPolicyFragment"
+            android:id="@+id/copyrightPolicy_Fragment"
             android:title="@string/copyrights_notice" />
 
         <item
-            android:id="@+id/privacyPolicyFragment"
+            android:id="@+id/privacyPolicy_Fragment"
             android:title="@string/privacy_policy" />
 
         <item
-            android:id="@+id/safeDatingPolicyFragment"
+            android:id="@+id/safeDatingPolicy_Fragment"
             android:title="@string/safe_dating_policy" />
 
         <item
-            android:id="@+id/termsConditionsFragment"
+            android:id="@+id/termsConditions_Fragment"
             android:title="@string/terms_conditions" />
 
         <item

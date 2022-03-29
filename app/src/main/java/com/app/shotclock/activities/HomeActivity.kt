@@ -6,18 +6,15 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseActivity
 import com.app.shotclock.cache.clearAllData
@@ -48,8 +45,6 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
 
     private lateinit var binding: ActivityHomeBinding
     private lateinit var navController: NavController
-    private lateinit var drawableLayout: DrawerLayout
-    private lateinit var listener: NavController.OnDestinationChangedListener
     private var senderId = ""
     private var senderName = ""
     private lateinit var socketManager: SocketManager
@@ -61,38 +56,40 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
     private var headerView : View? =null
     private var civUser : CircleImageView?= null
     private var tvUserName : TextView? = null
-    private var ivMenu: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
         initializeSocket()
         activateReceiverListenerSocket()
-
         configureViewModel()
         manageHeaderView()
-        ivMenu = findViewById(R.id.ivMenu)
+
         navController = findNavController(R.id.fragment)
-        drawableLayout = findViewById(R.id.drawerLayout)
-        binding.navigationView.setupWithNavController(navController)
+
+        binding.navigationView.setNavigationItemSelectedListener(this)
+
+        /*    binding.navigationView.setupWithNavController(navController)     */
 
 //         logout click
         binding.navigationView.menu.findItem(R.id.logout).setOnMenuItemClickListener {
             //write your implementation here
             //to close the navigation drawer
-            myAlert(this, getString(R.string.are_you_sure_you_want_to_log_out), { clickLogout() }, "Cancel", "Log Out")
+            myAlert(
+                this,
+                getString(R.string.are_you_sure_you_want_to_log_out),
+                { clickLogout() },
+                "Cancel",
+                "Log Out"
+            )
 
             binding.navigationView.setCheckedItem(R.id.homeFragment)
             true
         }
 
         loadData(intent)
-
-//        listener = NavController.OnDestinationChangedListener { controller, destination, arguments ->
-//                if (destination.id == R.id.logout) {
-//                }
-//            }
 
     }
 
@@ -186,6 +183,64 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
         socketManager.callToUserActivate()
     }
 
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.navigation_menu, menu)
+        return true
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.home_Fragment -> {
+                val options = NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
+                findNavController(R.id.fragment).navigate(R.id.homeFragment, null, options)
+                openClose()
+            }
+            R.id.profile_Fragment -> {
+                findNavController(R.id.fragment).navigate(R.id.profileFragment)
+                openClose()
+            }
+            R.id.myRequests_Fragment -> {
+                findNavController(R.id.fragment).navigate(R.id.myRequestsFragment)
+                openClose()
+            }
+            R.id.notification_Fragment -> {
+                findNavController(R.id.fragment).navigate(R.id.notificationFragment)
+                openClose()
+            }
+            R.id.message_Fragment -> {
+                findNavController(R.id.fragment).navigate(R.id.messageFragment)
+                openClose()
+            }
+            R.id.changePassword_Fragment -> {
+                findNavController(R.id.fragment).navigate(R.id.changePasswordFragment)
+                openClose()
+            }
+            R.id.cookiePolicy_Fragment -> {
+                findNavController(R.id.fragment).navigate(R.id.cookiePolicyFragment)
+                openClose()
+            }
+            R.id.privacyPolicy_Fragment -> {
+                findNavController(R.id.fragment).navigate(R.id.privacyPolicyFragment)
+                openClose()
+            }
+            R.id.copyrightPolicy_Fragment -> {
+                findNavController(R.id.fragment).navigate(R.id.copyrightPolicyFragment)
+                openClose()
+            }
+            R.id.safeDatingPolicy_Fragment -> {
+                findNavController(R.id.fragment).navigate(R.id.safeDatingPolicyFragment)
+                openClose()
+            }
+            R.id.termsConditions_Fragment -> {
+                findNavController(R.id.fragment).navigate(R.id.termsConditionsFragment)
+                openClose()
+            }
+        }
+        return true
+    }
+
+
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         loadData(intent)
@@ -240,65 +295,5 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
 
     override fun onError(event: String, vararg args: Array<*>) {
     }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.navigation_menu, menu)
-        return true
-    }
-
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.homeFragment ->{
-                val options = NavOptions.Builder()
-                    .setPopUpTo(R.id.homeFragment, true)
-                    .build()
-                findNavController(R.id.fragment).navigate(
-                    R.id.homeFragment,
-                    null,
-                    options
-                )
-                openClose()
-            }
-            R.id.profileFragment->{
-                findNavController(R.id.fragment).navigate(R.id.profileFragment)
-                openClose()
-            }
-            R.id.myRequestsFragment->{
-                findNavController(R.id.fragment).navigate(R.id.myRequestsFragment)
-                openClose()
-            }
-            R.id.notificationFragment->{
-                findNavController(R.id.fragment).navigate(R.id.notificationFragment)
-                openClose()
-            }
-            R.id.messageFragment->{
-                findNavController(R.id.fragment).navigate(R.id.messageFragment)
-                openClose()
-            }
-            R.id.changePasswordFragment->{
-                findNavController(R.id.fragment).navigate(R.id.changePasswordFragment)
-                openClose()
-            }
-            R.id.cookiePolicyFragment->{
-                findNavController(R.id.fragment).navigate(R.id.cookiePolicyFragment)
-                openClose()
-            }
-            R.id.privacyPolicyFragment->{
-                findNavController(R.id.fragment).navigate(R.id.privacyPolicyFragment)
-                openClose()
-            }
-            R.id.safeDatingPolicyFragment->{
-                findNavController(R.id.fragment).navigate(R.id.safeDatingPolicyFragment)
-                openClose()
-            }
-            R.id.termsConditionsFragment->{
-                findNavController(R.id.fragment).navigate(R.id.termsConditionsFragment)
-                openClose()
-            }
-        }
-        return true
-    }
-
 
 }

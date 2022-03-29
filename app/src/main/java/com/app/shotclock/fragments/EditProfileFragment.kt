@@ -359,8 +359,7 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
             hasMap["type"] = createRequestBody("image")
             hasMap["folder"] = createRequestBody("user_images")
 
-            profileViewModels.fileUpload(imagesList, hasMap)
-                .observe(viewLifecycleOwner, imageUploadObserver)
+            profileViewModels.fileUpload(imagesList, hasMap).observe(viewLifecycleOwner, imageUploadObserver)
         }
         else{
             updateProfile()

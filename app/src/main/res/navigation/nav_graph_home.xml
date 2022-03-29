@@ -24,6 +24,33 @@
             app:destination="@id/notificationFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_cookiePolicyFragment"
+            app:destination="@id/cookiePolicyFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_copyrightPolicyFragment"
+            app:destination="@id/copyrightPolicyFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_messageFragment"
+            app:destination="@id/messageFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_safeDatingPolicyFragment"
+            app:destination="@id/safeDatingPolicyFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_termsConditionsFragment"
+            app:destination="@id/termsConditionsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_cookiePolicyFragment2"
+            app:destination="@id/cookiePolicyFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"

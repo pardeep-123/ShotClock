@@ -206,6 +206,7 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
             showToast("Google error")
         }
     }
+
     private fun configureViewModel() {
         loginSignUpViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginSignUpViewModel::class.java)
     }
