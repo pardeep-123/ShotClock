@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#80000000"
-    android:clickable="false"
+    android:clickable="true"
     android:visibility="gone"
     android:elevation="@dimen/_5sdp"
     app:layout_constraintTop_toBottomOf="@+id/toolBarGeneric"
-    android:focusable="false">
+    android:focusable="true">
 
 <!--    <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/progressBar"

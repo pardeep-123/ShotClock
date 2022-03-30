@@ -106,7 +106,7 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
                 myCalendar.set(Calendar.MONTH, month)
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                binding.tvDOBSelect.text = longToDate(myCalendar.timeInMillis, "dd/MM/yy")
+                binding.tvDOBSelect.text = longToDate(myCalendar.timeInMillis, "yyyy-MM-dd")
 //                    edtIssuedOnDate.setText(AppUtils.longToDate(myCalendar.timeInMillis))
             }
             datePicker(requireContext())

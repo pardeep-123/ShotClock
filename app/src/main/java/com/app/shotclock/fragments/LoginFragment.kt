@@ -1,6 +1,5 @@
 package com.app.shotclock.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -24,6 +23,7 @@ import javax.inject.Inject
 class LoginFragment : BaseFragment<FragmentLoginBinding>(), Observer<Resource<LoginResponseModel>> {
 
     lateinit var loginSignUpViewModel: LoginSignUpViewModel
+    private var isMyChecked = false
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -42,6 +42,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), Observer<Resource<Lo
     }
 
     private fun clickHandles() {
+
+        binding.etEmail.setText(RememberShared(requireContext()).getString("email"))
+        binding.etPassword.setText(RememberShared(requireContext()).getString("password"))
+
         binding.tvForgotPassword.setOnClickListener {
             this.findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
         }
@@ -61,26 +65,40 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), Observer<Resource<Lo
 
         }
 
+/*
+        if ( binding.cbRememberMe.isChecked){
+            RememberShared(requireContext()).setString(
+                "email",
+                binding.etEmail.text.toString().trim()
+            )
+            RememberShared(requireContext()).setString(
+                "password",
+                binding.etPassword.text.toString().trim()
+            )
+        }else{
+            RememberShared(requireContext()).clearShared()
+        }
+*/
+
+
         binding.cbRememberMe.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                RememberShared(requireContext()).setString(
-                    "email",
-                    binding.etEmail.text.toString().trim()
-                )
-                RememberShared(requireContext()).setString(
-                    "password",
-                    binding.etPassword.text.toString().trim()
-                )
+                isMyChecked = true
+                RememberShared(requireContext()).setString("email", binding.etEmail.text.toString().trim())
+                RememberShared(requireContext()).setString("password", binding.etPassword.text.toString().trim())
             } else {
+                isMyChecked = false
                 RememberShared(requireContext()).clearShared()
             }
         }
-        binding.etEmail.setText(RememberShared(requireContext()).getString("email"))
-            binding.etPassword.setText(RememberShared(requireContext()).getString("password"))
+
 
     }
 
     private fun userLogin() {
+
+        if (!isMyChecked)   RememberShared(requireContext()).clearShared()
+
         val body = LoginRequestModel()
         body.email = binding.etEmail.text.trim().toString()
         body.password = binding.etPassword.text.trim().toString()
@@ -116,6 +134,5 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), Observer<Resource<Lo
             }
         }
     }
-
 
 }

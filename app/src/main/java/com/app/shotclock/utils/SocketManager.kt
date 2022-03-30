@@ -372,6 +372,26 @@ class SocketManager {
     }
 
 
+    fun receiveMsgListener() {
+        try {
+            if (!mSocket!!.connected()) {
+                mSocket!!.connect()
+                mSocket!!.off(send_message_listener)
+                mSocket!!.on(send_message_listener, onReceiverMsgListener)
+
+            } else {
+                mSocket!!.off(send_message_listener)
+                mSocket!!.on(send_message_listener, onReceiverMsgListener)
+
+
+            }
+        } catch (ex: Exception) {
+            ex.localizedMessage
+        }
+
+    }
+
+
 
     private val chatListListener = Emitter.Listener { args ->
         try {
@@ -504,6 +524,19 @@ class SocketManager {
             Log.d("SocketListener", "CallStatusList :::$data")
             for (observer in observerList!!) {
                 observer.onResponse(call_status_listener, data)
+            }
+        } catch (ex: Exception) {
+            ex.localizedMessage
+        }
+
+    }
+
+    private val onReceiverMsgListener = Emitter.Listener { args ->
+        try {
+            val data = args[0] as JSONObject
+            Log.d("SocketListener", "CallStatusList :::$data")
+            for (observer in observerList!!) {
+                observer.onResponse(send_message_listener, data)
             }
         } catch (ex: Exception) {
             ex.localizedMessage

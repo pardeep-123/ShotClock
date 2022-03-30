@@ -138,7 +138,7 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
                 myCalendar.set(Calendar.MONTH, month)
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                binding.tvDOBSelect.text = longToDate(myCalendar.timeInMillis, "dd/MM/yy")
+                binding.tvDOBSelect.text = longToDate(myCalendar.timeInMillis, "yyyy-MM-dd")
 //                    edtIssuedOnDate.setText(AppUtils.longToDate(myCalendar.timeInMillis))
             }
             datePicker(requireContext())
@@ -309,8 +309,7 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
                     hasMap["folder"] = createRequestBody("profile")
 
                     imageArrayList.add(prepareMultiPart("image", File(imageResultPath)))
-                    profileViewModels.fileUpload(imageArrayList, hasMap)
-                        .observe(viewLifecycleOwner, imageUploadObserver)
+                    profileViewModels.fileUpload(imageArrayList, hasMap).observe(viewLifecycleOwner, imageUploadObserver)
 
                 }
             }
@@ -359,7 +358,7 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
             hasMap["type"] = createRequestBody("image")
             hasMap["folder"] = createRequestBody("user_images")
 
-            profileViewModels.fileUpload(imagesList, hasMap).observe(viewLifecycleOwner, imageUploadObserver)
+           profileViewModels.fileUpload(imagesList, hasMap).observe(viewLifecycleOwner, imageUploadObserver)
         }
         else{
             updateProfile()

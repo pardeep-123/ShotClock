@@ -177,6 +177,7 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
         super.onResume()
         socketManager.unRegister(this)
         socketManager.onRegister(this)
+
     }
 
     private fun activateReceiverListenerSocket() {
@@ -255,14 +256,11 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
                 val bundle = Bundle()
                 bundle.putInt("user2Id", senderId.toInt())
                 bundle.putString("username", senderName)
-                val options = NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
-                findNavController(R.id.fragment).navigate(R.id.homeFragment,bundle,options)
-
+                val options = NavOptions.Builder().setPopUpTo(R.id.chatFragment, true).build()
+                findNavController(R.id.fragment).navigate(R.id.chatFragment, bundle, options)
             } else {
-                val bundle = Bundle()
-                bundle.putString("notification","notification")
                 val options = NavOptions.Builder().setPopUpTo(R.id.notificationFragment,true).build()
-                findNavController(R.id.fragment).navigate(R.id.notificationFragment,bundle,options)
+                findNavController(R.id.fragment).navigate(R.id.notificationFragment, null, options)
 
             }
         }

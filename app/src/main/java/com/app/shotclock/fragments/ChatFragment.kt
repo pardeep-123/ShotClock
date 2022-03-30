@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.shotclock.adapters.ChatAdapter
 import com.app.shotclock.cache.getUser
@@ -42,6 +43,8 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Constants.OnMessageScreen = true
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
         socketManager = App.mInstance.getSocketManager()!!
         if (!socketManager.isConnected() || socketManager.getmSocket() == null)
             socketManager.init()
@@ -160,9 +163,9 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
         if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
             socketManager.init()
         }
+        socketManager.receiveMsgListener()
         getChatHistory()
         readUnreadMessage()
-
 
     }
 

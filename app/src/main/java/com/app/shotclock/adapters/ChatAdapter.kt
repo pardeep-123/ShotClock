@@ -31,6 +31,8 @@ class ChatAdapter(
             if (getUser(ctx)?.id == list[position].senderID) {
                 holder.itemsBinding.constraintLayoutSender.isVisible()
                 holder.itemsBinding.constraintLayoutReceiver.isGone()
+                holder.itemsBinding.tvTimeReceiver.isGone()
+                holder.itemsBinding.tvTimeSender.isVisible()
 
                 Glide.with(ctx).load(ApiConstants.SOCKET_URL + list[position].senderImage).into(holder.itemsBinding.civSender)
                  holder.itemsBinding.tvTimeSender.text = convertDateStampToTime(list[position].created.toLong())
@@ -53,7 +55,9 @@ class ChatAdapter(
 
             } else {
                 holder.itemsBinding.constraintLayoutSender.isGone()
+                holder.itemsBinding.tvTimeSender.isGone()
                 holder.itemsBinding.constraintLayoutReceiver.isVisible()
+                holder.itemsBinding.tvTimeReceiver.isVisible()
                 Glide.with(ctx).load(ApiConstants.SOCKET_URL + list[position].senderImage).into(holder.itemsBinding.civReceiver)
                 holder.itemsBinding.tvTimeReceiver.text = convertDateStampToTime(list[position].created.toLong())
 

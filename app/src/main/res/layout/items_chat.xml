@@ -19,6 +19,7 @@
             android:id="@+id/civReceiver"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/img_two"
             android:layout_marginStart="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -29,7 +30,9 @@
             android:layout_height="@dimen/_100sdp"
             android:scaleType="centerCrop"
             android:visibility="gone"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:layout_marginStart="@dimen/_6sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/civReceiver"
             app:layout_constraintTop_toTopOf="parent"
             app:riv_corner_radius="@dimen/_5sdp" />
@@ -48,6 +51,7 @@
             android:paddingVertical="@dimen/_5sdp"
             android:paddingStart="@dimen/_5sdp"
             android:paddingEnd="5dp"
+            android:text="@string/accept"
             android:singleLine="false"
             android:textColor="@color/black"
             android:textSize="@dimen/_11ssp"
@@ -56,18 +60,21 @@
             app:layout_constraintStart_toEndOf="@id/civReceiver"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvTimeReceiver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/ivReceivePic"
-            app:layout_constraintStart_toStartOf="@id/tvReceiver"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_8ssp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:fontFamily="@font/proxima_regular"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tvTimeReceiver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:fontFamily="@font/proxima_regular"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_8ssp"
+        android:layout_marginStart="@dimen/_45sdp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/constraintLayoutReceiver"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayoutReceiver" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutSender"
@@ -93,7 +100,9 @@
             android:layout_height="@dimen/_100sdp"
             android:scaleType="centerCrop"
             android:visibility="gone"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_6sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/civSender"
             app:layout_constraintTop_toTopOf="parent"
             app:riv_corner_radius="@dimen/_5sdp" />
@@ -120,16 +129,19 @@
             app:layout_constraintEnd_toStartOf="@id/civSender"
             app:layout_constraintTop_toTopOf="@id/civSender" />
 
-        <TextView
-            android:id="@+id/tvTimeSender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tvSender"
-            app:layout_constraintEnd_toEndOf="@id/tvSender"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_8ssp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:fontFamily="@font/proxima_regular"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tvTimeSender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayoutSender"
+        app:layout_constraintEnd_toEndOf="@id/constraintLayoutSender"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_8ssp"
+        android:visibility="gone"
+        android:layout_marginEnd="@dimen/_45sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:fontFamily="@font/proxima_regular"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -75,7 +75,7 @@
         <entry key="app/src/main/res/layout/items__notification_video_calling.xml" value="0.16" />
         <entry key="app/src/main/res/layout/items_base.xml" value="0.16" />
         <entry key="app/src/main/res/layout/items_cancel_requests.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/items_chat.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/items_chat.xml" value="0.2" />
         <entry key="app/src/main/res/layout/items_complete_profile_images.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/items_filters.xml" value="0.2" />
         <entry key="app/src/main/res/layout/items_height_bottomsheet.xml" value="0.18489583333333334" />
