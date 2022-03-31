@@ -63,6 +63,7 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
         activateReceiverListenerSocket()
 
         mChannelName = intent.extras?.get("channelName").toString()
+        callerName = intent.extras?.get("receiverName").toString()
 
 //        val bundle = arguments
 //       mChannelName = bundle?.getString("channelName")!!
@@ -123,6 +124,9 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
             }
             //   showAlertWithOk(resources.getString(R.string.internet_connection))
         }
+
+        binding.tvSenderName.text = callerName
+
     }
 
     private fun initializeSocket() {
@@ -301,6 +305,7 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
                     intent.putExtra("channel_name", userToCallList.channelName)
                     intent.putExtra("video_token", userToCallList.videoToken)
                     startActivity(intent)
+                    finish()
 
 //                    val bundle = Bundle()
 //                    bundle.putString("channel_name", userToCallList.channelName)

@@ -98,7 +98,8 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
 
         binding.tvStart.setOnClickListener {
             if (speedList[0].requestCount == 0) {
-                showToast("You can't this calling because no user has accept your request yet")
+//                You can't this calling because no user has accept your request yet
+                showToast("You can start your speed date once your matches accept your request. Hang tight!")
             } else {
                 callToUser()
             }

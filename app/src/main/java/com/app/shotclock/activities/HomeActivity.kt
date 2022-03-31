@@ -284,6 +284,7 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
 
                      val intent = Intent(this@HomeActivity,IncomingCallActivity::class.java)
                     intent.putExtra("channelName",userToCallList.channelName)
+                    intent.putExtra("receiverName",userToCallList.senderName)
                     startActivity(intent)
 
                 }

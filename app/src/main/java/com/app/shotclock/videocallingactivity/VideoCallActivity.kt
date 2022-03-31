@@ -1,6 +1,7 @@
 package com.app.shotclock.videocallingactivity
 
 import android.Manifest
+import android.app.Dialog
 import android.content.pm.PackageManager
 import android.graphics.PorterDuff
 import android.media.MediaPlayer
@@ -11,6 +12,7 @@ import android.view.SurfaceView
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -30,6 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.concurrent.TimeUnit
 
 class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     private lateinit var binding: ActivityVideoChatViewBinding
@@ -142,7 +145,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         super.onCreate(savedInstanceState)
         binding = ActivityVideoChatViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        videoTimingDialog()
         initialiseSocket()
         channelName = intent?.getStringExtra("channel_name").toString()
         agoraToken = intent?.getStringExtra("video_token").toString()
@@ -229,9 +232,10 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
     override fun onDestroy() {
         super.onDestroy()
-//        val jsonObject = JSONObject()
-//        jsonObject.put("requestId", requestId)
-//        socketManager.callTermination(jsonObject)
+        val jsonObject = JSONObject()
+        jsonObject.put("status","3")
+        socketManager.getCallStatus(jsonObject)
+
         socketManager.unRegister(this)
         leaveChannel()
         /*
@@ -296,7 +300,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
             val jsonObject = JSONObject()
             jsonObject.put("status", "2")
             socketManager.getCallStatus(jsonObject)
-
+            finish()
         }
 
     }
@@ -368,8 +372,10 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
             startRinging()
             timeCounter()
         }
+        Log.e("channelData",agoraToken)
+        Log.e("channelData",channelName)
         mRtcEngine?.joinChannel(
-            agoraToken,
+            null,
             channelName,
             "Extra Optional Data",
             0
@@ -392,6 +398,31 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         return player
     }
 
+    private fun videoTimingDialog() {
+        val dialog = Dialog(this,android.R.style.Theme_Translucent_NoTitleBar)
+        with(dialog) {
+            setCancelable(false)
+            setContentView(R.layout.items_video_calling_timer)
+            val tvTimer: TextView = findViewById(R.id.tvTimer)
+
+//            =new Dialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen)Dialog dialog
+
+            val timer = object : CountDownTimer(5000, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+
+                    tvTimer.text = String.format("%d", TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished))
+
+                }
+
+                override fun onFinish() {
+                    dismiss()
+                }
+            }
+            timer.start()
+
+            show()
+        }
+    }
 
     private fun setupRemoteVideo(uid: Int) {
 
@@ -407,13 +438,13 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
             return
         }
 
-        /*
+/*
           Creates the video renderer view.
           CreateRendererView returns the SurfaceView type. The operation and layout of the view
           are managed by the app, and the Agora SDK renders the view provided by the app.
           The video display view must be created using this method instead of directly
           calling SurfaceView.
-         */
+*/
         val surfaceView = RtcEngine.CreateRendererView(this)
         container.addView(surfaceView)
         // Initializes the video view of a remote user.

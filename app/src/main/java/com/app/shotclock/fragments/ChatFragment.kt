@@ -29,7 +29,6 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
     private var user2Id = 0
     private var userName = ""
     private var messageType = 0  // 0-text, 1-image
-    private var message = ""
     private var chatList = ArrayList<ChatHistoryResponse.ChatHistoryResponseItem>()
     private var imageFilePath = ""
     private var extension = ""
@@ -218,14 +217,34 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
                 }
             }
 
+            SocketManager.send_message_listener->{
+                try {
+                    activityScope.launch {
+                        val mObject = args as JSONObject
+
+                        val gson = GsonBuilder().create()
+                        val listChatHistory = gson.fromJson(
+                            mObject.toString(),
+                            ChatHistoryResponse.ChatHistoryResponseItem::class.java
+                        )
+                        chatList.add(listChatHistory)
+                        chatAdapter?.notifyDataSetChanged()
+                        binding.rvChat.smoothScrollToPosition(chatList.size - 1)
+                        binding.tvUserName.text = userName
+
+                    }
+                } catch (e: Exception) {
+
+                }
+            }
+
             SocketManager.call_to_user_emitter -> {
                 try {
                         activityScope.launch {
                             val mObject = args as JSONObject
                             val gson = GsonBuilder().create()
 
-                            val userToCallList =
-                                gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
+                            val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
 //                        val bundle = Bundle()
 //                        bundle.putString("channel_name", userToCallList.channelName)
 //                        bundle.putString("video_token", userToCallList.videoToken)

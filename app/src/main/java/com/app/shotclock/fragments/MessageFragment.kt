@@ -148,17 +148,16 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
                         val mObject = args as JSONObject
                         val gson = GsonBuilder().create()
 
-                        val userToCallList =
-                            gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
+                        val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
 //                        val bundle = Bundle()
 //                        bundle.putString("channel_name", userToCallList.channelName)
 //                        bundle.putString("video_token", userToCallList.videoToken)
 //                        findNavController().navigate(R.id.videoCallFragment, bundle)
+
                         val intent = Intent(requireContext(), VideoCallActivity::class.java)
                         intent.putExtra("channel_name", userToCallList.channelName)
                         intent.putExtra("video_token", userToCallList.videoToken)
-                        Log.e("=====message",userToCallList.channelName+"====="+userToCallList.videoToken)
-
+//                        Log.e("=====message",userToCallList.channelName+"====="+userToCallList.videoToken)
                         startActivity(intent)
                     }
                 } catch (e: Exception) {

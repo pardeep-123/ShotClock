@@ -273,14 +273,20 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
 
     // video calling socket
     private fun callToUser() {
+
         val jsonObject = JSONObject()
+        for(i in 0 until requestList.size){
+            if(requestList[i].status==2){
+                jsonObject.put("receiverId", requestList[i].requestTo)
+                jsonObject.put("requestId", requestList[i].id)
+                jsonObject.put("receiverName", requestList[i].username)
+                jsonObject.put("receiverImage", requestList[i].profileImage)
+            }
+        }
         jsonObject.put("senderName", getUser(requireContext())?.username)
         jsonObject.put("senderImage",getUser(requireContext())?.profileImage)
         jsonObject.put("senderId",getUser(requireContext())?.id)
-        jsonObject.put("receiverId", requestList[0].requestTo)
-        jsonObject.put("requestId", requestList[0].id)
-        jsonObject.put("receiverName", requestList[0].username)
-        jsonObject.put("receiverImage", requestList[0].profileImage)
+
         jsonObject.put("callType", "1") // callType(0=>for single call,1=>for group call)
         jsonObject.put("groupName", requestList[0].groupName)
         socketManager.callToUser(jsonObject)

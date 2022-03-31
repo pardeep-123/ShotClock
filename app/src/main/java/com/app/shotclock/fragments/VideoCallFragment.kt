@@ -148,6 +148,7 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
         channelName = bundle?.getString("channel_name")!!
         agoraToken = bundle.getString("video_token")!!
 
+        activateReceiverListenerSocket()
         handleClicks()
        // videoTimingDialog()
 
@@ -166,10 +167,10 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
 
     private fun initAgoraEngineAndJoinChannel() {
         initializeAgoraEngine()
-
+        joinChannel()
         setupVideoProfile()
         setupLocalVideo()
-        joinChannel()
+
     }
 
     private fun initializeAgoraEngine() {
@@ -238,7 +239,7 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
             timeCounter()
         }
         mRtcEngine?.joinChannel(
-            agoraToken,
+            null,
             channelName,
             "Extra Optional Data",
             0
@@ -308,6 +309,12 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
         }
     }
 
+    fun activateReceiverListenerSocket() {
+
+        val jsonObject = JSONObject()
+        jsonObject.put("status", "1")
+        socketManager.getCallStatus(jsonObject)
+    }
 
     private fun checkSelfPermission(permission: String, requestCode: Int): Boolean {
         if (ContextCompat.checkSelfPermission(
