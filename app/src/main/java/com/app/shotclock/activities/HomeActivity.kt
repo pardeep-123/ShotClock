@@ -21,6 +21,7 @@ import com.app.shotclock.cache.clearAllData
 import com.app.shotclock.cache.clearData
 import com.app.shotclock.cache.getUser
 import com.app.shotclock.constants.ApiConstants
+import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.ActivityHomeBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
@@ -148,22 +149,31 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
     }
 
     override fun onBackPressed() {
+
         when {
-            binding.drawerLayout.isDrawerOpen(GravityCompat.START) -> binding.drawerLayout.closeDrawer(Gravity.LEFT)
+            binding.drawerLayout.isDrawerOpen(GravityCompat.START) -> binding.drawerLayout.closeDrawer(
+                Gravity.LEFT
+            )
+
             else -> {
-                super.onBackPressed()
-//                when (CacheConstants.Current) {
-//                    "home" -> {
-//                        finishAffinity()
-//                    }
-//                    else -> {
-//                        super.onBackPressed()
-//                    }
-//                }
+                when (CacheConstants.Current) {
+                    "home" -> {
+                        finishAffinity()
+                    }
+                    "profile", "myRequest", "notification", "message", "changePassword", "cookie",
+                    "copyRight", "privacy", "safeDating", "terms" -> {
+                        val options = NavOptions.Builder().setPopUpTo(R.id.fragment, false).build()
+                        findNavController(R.id.fragment).navigate(R.id.homeFragment, null, options)
+                    }
+                    else -> {
+                        super.onBackPressed()
+                    }
+
+                }
+
             }
         }
     }
-
     private fun initializeSocket() {
         socketManager = App.mInstance.getSocketManager()!!
         if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
@@ -284,7 +294,7 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
 
                      val intent = Intent(this@HomeActivity,IncomingCallActivity::class.java)
                     intent.putExtra("channelName",userToCallList.channelName)
-                    intent.putExtra("receiverName",userToCallList.senderName)
+                    intent.putExtra("receiverName", userToCallList.senderName)
                     startActivity(intent)
 
                 }
@@ -294,5 +304,9 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
 
     override fun onError(event: String, vararg args: Array<*>) {
     }
+
+//home, profile, myRequest, notification, message, changePassword, cookie,
+// copyRight, privacy, safeDating, terms
+
 
 }

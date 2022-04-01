@@ -300,12 +300,16 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
                     Log.e("callStatus",data.toString())
                     val gson = GsonBuilder().create()
                     val userToCallList = gson.fromJson(data.toString(), VideoCallStatusResponse::class.java)
-
-                    val intent = Intent(this@IncomingCallActivity,VideoCallActivity::class.java)
-                    intent.putExtra("channel_name", userToCallList.channelName)
-                    intent.putExtra("video_token", userToCallList.videoToken)
-                    startActivity(intent)
-                    finish()
+                     if (userToCallList.status == 1) {
+                         val intent =
+                             Intent(this@IncomingCallActivity, VideoCallActivity::class.java)
+                         intent.putExtra("channel_name", userToCallList.channelName)
+                         intent.putExtra("video_token", userToCallList.videoToken)
+                         startActivity(intent)
+                         finish()
+                     }else{
+                         finish()
+                     }
 
 //                    val bundle = Bundle()
 //                    bundle.putString("channel_name", userToCallList.channelName)

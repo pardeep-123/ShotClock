@@ -8,12 +8,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentCopyrightPolicyBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
 import com.app.shotclock.models.CopyRightNoticeResponse
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
+import com.app.shotclock.utils.showErrorAlert
 import com.app.shotclock.viewmodels.LoginSignUpViewModel
 import javax.inject.Inject
 
@@ -31,7 +33,7 @@ class CopyrightPolicyFragment : BaseFragment<FragmentCopyrightPolicyBinding>(),O
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        CacheConstants.Current = "copyRight"
         configureViewModel()
         clickHandle()
     }
@@ -57,7 +59,7 @@ class CopyrightPolicyFragment : BaseFragment<FragmentCopyrightPolicyBinding>(),O
             }
             Status.ERROR->{
                 binding.pb.clLoading.isGone()
-                showError(t.message!!)
+                showErrorAlert(requireActivity(),t.message!!)
             }
             Status.LOADING->{
                 binding.pb.clLoading.isVisible()

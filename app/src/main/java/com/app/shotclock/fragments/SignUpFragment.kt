@@ -129,7 +129,7 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
             }
             Status.ERROR->{
                 binding.pb.clLoading.isGone()
-                showToast(t.message!!)
+                showErrorAlert(requireActivity(),t.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()
@@ -167,7 +167,7 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showToast(it.message!!)
+                showErrorAlert(requireActivity(),it.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()

@@ -7,12 +7,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.app.shotclock.adapters.IcebreakerAdapter
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentIcebrakerQuestionsBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
 import com.app.shotclock.models.IceBreakerQuestionResponse
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
+import com.app.shotclock.utils.showErrorAlert
 import com.app.shotclock.viewmodels.HomeViewModel
 import javax.inject.Inject
 
@@ -33,6 +35,7 @@ class IcebreakerQuestionsFragment : BaseFragment<FragmentIcebrakerQuestionsBindi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        CacheConstants.Current = "iceBreaker"
         configureViewModel()
         handleClicks()
 
@@ -69,7 +72,7 @@ class IcebreakerQuestionsFragment : BaseFragment<FragmentIcebrakerQuestionsBindi
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showError(t.message!!)
+                showErrorAlert(requireActivity(),t.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()

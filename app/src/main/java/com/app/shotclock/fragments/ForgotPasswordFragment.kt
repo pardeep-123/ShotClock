@@ -14,6 +14,7 @@ import com.app.shotclock.models.ForgotPasswordRequest
 import com.app.shotclock.utils.Validation
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
+import com.app.shotclock.utils.showErrorAlert
 import com.app.shotclock.viewmodels.LoginSignUpViewModel
 import javax.inject.Inject
 
@@ -74,7 +75,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(),
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showError(t.message!!)
+                showErrorAlert(requireActivity(),t.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()

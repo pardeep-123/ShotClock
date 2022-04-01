@@ -16,6 +16,7 @@ import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.adapters.EditProfileImagesAdapter
 import com.app.shotclock.cache.saveUser
 import com.app.shotclock.constants.ApiConstants
+import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentEditProfileBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
@@ -66,6 +67,7 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        CacheConstants.Current = "edit"
         Places.initialize(requireContext(), getString(R.string.api_key_map))
         val bundle = arguments
         profileData = (bundle?.getSerializable("data") as ProfileBody?)!!
@@ -241,7 +243,7 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
 
         binding.btUpdate.setOnClickListener {
             val imagearray = ArrayList<String>()
-            for(i in 0 until imageList.size){
+            for (i in 0 until imageList.size) {
                 imagearray.add(imageList[i].image)
             }
             if (Validation().editProfileValidation(
@@ -263,14 +265,15 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
                     binding.etAddBio.text.toString().trim(),
                     imagearray
                 )
-            )
-                if(imageResultPath.isEmpty() && profileImage.isEmpty()){
-                    Toast.makeText(context, "Please select profile image", Toast.LENGTH_SHORT).show()
+            ) {
+                if (imageResultPath.isEmpty() && profileImage.isEmpty()) {
+                    Toast.makeText(context, "Please select profile image", Toast.LENGTH_SHORT)
+                        .show()
                     return@setOnClickListener
                 }
-            getEditProfile()
+                getEditProfile()
 
-
+            }
         }
     }
 
@@ -387,7 +390,7 @@ class EditProfileFragment : ImagePickerUtility1<FragmentEditProfileBinding>(),
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showToast(it.message!!)
+                showErrorAlert(requireActivity(), it.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()

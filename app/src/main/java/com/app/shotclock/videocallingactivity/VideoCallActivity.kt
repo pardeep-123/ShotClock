@@ -94,7 +94,8 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         }
 
         override fun onFirstRemoteVideoDecoded(uid: Int, width: Int, height: Int, elapsed: Int) {
-            runOnUiThread { //                    mLogView.logI("First remote video decoded, uid: " + (uid & 0xFFFFFFFFL));
+            runOnUiThread {
+                //                    mLogView.logI("First remote video decoded, uid: " + (uid & 0xFFFFFFFFL));
                 Log.e("callAccepted",uid.toString())
                 //  isVideoCallPicked = true
                 if (mCounter != null)
@@ -153,15 +154,16 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         Log.e("videocall", channelName+ "===="+ agoraToken)
         //  tvUserName.text = name
 
-        activateReceiverListenerSocket()
+//        activateReceiverListenerSocket()
 
-        if (checkSelfPermission(
-                Manifest.permission.RECORD_AUDIO,
-                PERMISSION_REQ_ID_RECORD_AUDIO
-            ) && checkSelfPermission(Manifest.permission.CAMERA, PERMISSION_REQ_ID_CAMERA)
-        ) {
-            initAgoraEngineAndJoinChannel()
-        }
+//        if (checkSelfPermission(
+//                Manifest.permission.RECORD_AUDIO,
+//                PERMISSION_REQ_ID_RECORD_AUDIO
+//            ) && checkSelfPermission(Manifest.permission.CAMERA, PERMISSION_REQ_ID_CAMERA)
+//        ) {
+//            initAgoraEngineAndJoinChannel()
+//        }
+
     }
 
     fun activateReceiverListenerSocket() {
@@ -305,7 +307,6 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
     }
 
-
     private fun initializeAgoraEngine() {
         try {
             mRtcEngine =
@@ -382,6 +383,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         )
 
     }
+
     private fun startRinging() {
 
         mPlayer = playCalleeRing()
@@ -416,10 +418,14 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
                 override fun onFinish() {
                     dismiss()
+                    activateReceiverListenerSocket()
+                    if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO) && checkSelfPermission(Manifest.permission.CAMERA, PERMISSION_REQ_ID_CAMERA)) {
+                        initAgoraEngineAndJoinChannel()
+                    }
+
                 }
             }
             timer.start()
-
             show()
         }
     }

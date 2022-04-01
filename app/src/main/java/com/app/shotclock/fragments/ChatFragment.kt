@@ -6,8 +6,10 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.app.shotclock.R
 import com.app.shotclock.adapters.ChatAdapter
 import com.app.shotclock.cache.getUser
+import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentChatBinding
 import com.app.shotclock.models.sockets.ChatHistoryResponse
 import com.app.shotclock.models.sockets.VideoCallResponse
@@ -41,6 +43,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        CacheConstants.Current = "chat"
         Constants.OnMessageScreen = true
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
@@ -104,7 +107,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
             // for send text
             if (messageType == 0) {
                 if (binding.etSendMsg.text.toString().trim().isEmpty()) {
-                    showToast("Please enter something")
+                    showErrorAlert(requireActivity(),getString(R.string.please_enter_something))
                 } else {
                     sendMessageChat()
                     binding.etSendMsg.text.clear()

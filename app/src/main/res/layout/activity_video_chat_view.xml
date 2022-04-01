@@ -4,68 +4,11 @@
     android:background="@color/black"
     android:layout_height="match_parent">
 
-
     <RelativeLayout
-        android:id="@+id/rl_calling"
+        android:id="@+id/rlSender"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgUser"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_100sdp"
-            android:src="@drawable/img_four"/>
-
-
-        <TextView
-            android:id="@+id/tvUserName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:layout_below="@id/imgUser"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:textColor="@color/white"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:textSize="26sp"
-            />
-
-
-        <TextView
-            android:id="@+id/tvUserStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:layout_below="@id/tvUserName"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:textSize="@dimen/album_sp_16"
-            android:layout_centerHorizontal="true"
-            android:text="Video Calling..."
-            />
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:onClick="onEncCallClicked"
-            android:scaleType="centerInside"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"
-            android:layout_below="@id/tvUserStatus"
-            android:src="@drawable/ic_end" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/ll_join"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:background="@color/black"
         android:visibility="visible">
 
         <FrameLayout
@@ -98,7 +41,6 @@
 
 
             </RelativeLayout>
-
 
 
             <LinearLayout
@@ -144,7 +86,91 @@
             </LinearLayout>
 
         </RelativeLayout>
-
     </RelativeLayout>
+
+    <!--///////////////-->
+    <RelativeLayout
+        android:id="@+id/rlReceiver"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:visibility="gone">
+
+        <FrameLayout
+            android:id="@+id/remote_video_view_containe2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white" />
+
+        <FrameLayout
+            android:id="@+id/local_video_view_containe2"
+            android:layout_width="120dp"
+            android:layout_height="160dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/darker_gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/bottom2">
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/bottom2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20"
+                    android:onClick="onLocalVideoMuteClicked"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_camera" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20"
+                    android:onClick="onLocalAudioMuteClicked"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_mike" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20"
+                    android:onClick="onSwitchCameraClicked"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_camera" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20"
+                    android:onClick="onEncCallClicked"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_end" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
 
 </RelativeLayout>

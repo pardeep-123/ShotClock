@@ -2,8 +2,6 @@ package com.app.shotclock.utils
 
 import android.app.Activity
 import android.util.Patterns
-import android.widget.CheckBox
-import android.widget.Toast
 
 class Validation {
     fun verifyLoginValidation(
@@ -11,15 +9,11 @@ class Validation {
     ): Boolean {
         var check = false
         if (email.isEmpty()) {
-            Toast.makeText(context, "Please enter email", Toast.LENGTH_SHORT).show()
-
-
+            showErrorAlert(context,"Please enter email")
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(context, "Please enter valid email", Toast.LENGTH_SHORT).show()
-
+            showErrorAlert(context,"Please enter valid email")
         } else if (password.isEmpty()) {
-            Toast.makeText(context, "Please enter Password", Toast.LENGTH_SHORT).show()
-
+            showErrorAlert(context,"Please enter password")
         } else {
             check = true
         }
@@ -29,9 +23,9 @@ class Validation {
     fun verifyForgotPassword(context: Activity, email: String): Boolean {
         var check = false
         if (email.isEmpty()) {
-            Toast.makeText(context, "Please enter email", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please enter email")
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(context, "Please enter valid email", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please enter valid email")
         } else {
             check = true
         }
@@ -47,19 +41,19 @@ class Validation {
         var check = false
         when {
             oldPassword.isEmpty() -> {
-                Toast.makeText(context, "Please enter old password", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Please enter old password")
             }
             newPassword.isEmpty() -> {
-                Toast.makeText(context, "Please enter new password", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Please enter new password")
             }
             confirmPassword.isEmpty() -> {
-                Toast.makeText(context, "Please enter confirm password", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Please enter confirm password")
             }
             newPassword != confirmPassword -> {
-                Toast.makeText(context, "Password must be same", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Password must be same")
             }
             oldPassword == newPassword -> {
-                Toast.makeText(context, "Old and new password should not be same", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Old and new password should not be same")
             }
             else -> {
                 check = true
@@ -80,23 +74,23 @@ class Validation {
     ): Boolean {
         var check = false
         if (image == "" || image.isEmpty()){
-            Toast.makeText(context, "Please select user image", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please select user image")
         }else if (name.isEmpty()) {
-            Toast.makeText(context, "Please enter username", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please enter username")
         } else if (email.isEmpty()) {
-            Toast.makeText(context, "Please enter email", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please enter email")
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(context, "Please enter valid email", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please enter valid email")
         } else if (phone.isEmpty()) {
-            Toast.makeText(context, "Please enter phone number", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please enter phone number")
         } else if (password.isEmpty()) {
-            Toast.makeText(context, "Please enter password", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please enter password")
         } else if (confirmPassword.isEmpty()) {
-            Toast.makeText(context, "Please enter confirm password", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please enter confirm password")
         } else if (password != confirmPassword) {
-            Toast.makeText(context, "Password must be same", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Password must be same")
         }else if (!rememberMe){
-            Toast.makeText(context, "Please accept the terms and conditions", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please accept the terms and conditions")
         }
         else {
             check = true
@@ -122,43 +116,43 @@ class Validation {
         var check = false
         when {
             dob.isEmpty() -> {
-                Toast.makeText(context, "Please enter date of birth", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"PPlease enter date of birth")
             }
             gender.isEmpty() -> {
-                Toast.makeText(context, "Please select gender", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Please select gender")
             }
             height.isEmpty() -> {
-                Toast.makeText(context, "Please select height", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Please select height")
             }
             qualification.isEmpty() -> {
-                Toast.makeText(context, "Please select qualification", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Please select qualification")
             }
             location.isEmpty() -> {
-                Toast.makeText(context, "Please select location", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Please select location")
             }
             interests.isEmpty() -> {
-                Toast.makeText(context, "Please select interests", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Please select interests")
             }
             sexualOrientation.isEmpty() -> {
-                Toast.makeText(context, "Please select sexual orientation", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Please select sexual orientation")
             }
             astrologicalSign.isEmpty() -> {
-                Toast.makeText(context, "Please select astrological sign", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Please select astrological sign")
             }
             smoking.isEmpty() -> {
-                Toast.makeText(context, "Please select smoking", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Please select smoking")
             }
             drinking.isEmpty() -> {
-                Toast.makeText(context, "Please select drinking", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Please select drinking")
             }
             pets.isEmpty() -> {
-                Toast.makeText(context, "Please select pets", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Please select pets")
             }
             bio.isEmpty() -> {
-                Toast.makeText(context, "Please enter bio", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Please enter bio")
             }
             imageList.size == 0 -> {
-                Toast.makeText(context, "Please select at least one picture", Toast.LENGTH_SHORT).show()
+                showErrorAlert(context,"Please select at least one picture")
             }
             else -> {
                 check = true
@@ -187,39 +181,39 @@ class Validation {
     ): Boolean {
         var check = false
         if (name.isEmpty()) {
-            Toast.makeText(context, "Please enter username", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please enter username")
         } else if (email.isEmpty()) {
-            Toast.makeText(context, "Please enter email", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please enter email")
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(context, "Please enter valid email", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please enter valid email")
         } else if (phone.isEmpty()) {
-            Toast.makeText(context, "Please enter phone number", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please enter phone number")
         } else if (dob.isEmpty()) {
-            Toast.makeText(context, "Please enter date of birth", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please enter date of birth")
         } else if (gender.isEmpty()) {
-            Toast.makeText(context, "Please select gender", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please select gender")
         } else if (height.isEmpty()) {
-            Toast.makeText(context, "Please select height", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please select height")
         } else if (qualification.isEmpty()) {
-            Toast.makeText(context, "Please select qualification", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please select qualification")
         } else if (location.isEmpty()) {
-            Toast.makeText(context, "Please select location", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please select location")
         } else if (interests.isEmpty()) {
-            Toast.makeText(context, "Please select interests", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please select interests")
         } else if (sexualOrientation.isEmpty()) {
-            Toast.makeText(context, "Please select sexual orientation", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please select sexual orientation")
         } else if (astrologicalSign.isEmpty()) {
-            Toast.makeText(context, "Please select astrological sign", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please select astrological sign")
         } else if (smoking.isEmpty()) {
-            Toast.makeText(context, "Please select smoking", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please select smoking")
         } else if (drinking.isEmpty()) {
-            Toast.makeText(context, "Please select drinking", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please select drinking")
         } else if (pets.isEmpty()) {
-            Toast.makeText(context, "Please select pets", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please select pets")
         } else if (bio.isEmpty()) {
-            Toast.makeText(context, "Please enter bio", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please select bio")
         }else if (imageList.size == 0) {
-            Toast.makeText(context, "Please select at least one picture", Toast.LENGTH_SHORT).show()
+            showErrorAlert(context,"Please select at least one picture")
         }else {
             check = true
         }

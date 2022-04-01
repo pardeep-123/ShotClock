@@ -27,6 +27,7 @@ import com.app.shotclock.cache.clearData
 import com.app.shotclock.constants.ApiConstants
 import com.bumptech.glide.Glide
 import com.github.chrisbanes.photoview.PhotoView
+import com.tapadoo.alerter.Alerter
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -501,4 +502,17 @@ fun isNetworkConnected(): Boolean {
     var activeNetwork: NetworkInfo? = null
     if (cm != null) activeNetwork = cm.activeNetworkInfo
     return activeNetwork != null && activeNetwork.isConnectedOrConnecting
+}
+
+
+fun showErrorAlert(context: Activity, msg: String) {
+    Alerter.create(context)
+        .setIcon(R.drawable.ic_cross)
+        .setTitle(context.getString(R.string.error_))
+        .setTitleAppearance(R.style.AlertTextAppearanceTitle)
+        .setText(msg)
+        .setTextAppearance(R.style.AlertTextAppearanceText)
+        .setBackgroundColorRes(R.color.red)
+
+        .show()
 }

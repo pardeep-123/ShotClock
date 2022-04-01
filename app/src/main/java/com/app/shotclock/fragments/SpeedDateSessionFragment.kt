@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.adapters.SpeedDateSessionAdapter
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentSpeedDateSessionBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
@@ -49,6 +50,7 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        CacheConstants.Current = "speedDate"
         socketManager = App.mInstance.getSocketManager()!!
         if (!socketManager.isConnected() || socketManager.getmSocket() == null)
             socketManager.init()
@@ -98,8 +100,7 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
 
         binding.tvStart.setOnClickListener {
             if (speedList[0].requestCount == 0) {
-//                You can't this calling because no user has accept your request yet
-                showToast("You can start your speed date once your matches accept your request. Hang tight!")
+              showErrorAlert(requireActivity(),getString(R.string.you_can_start_your_speed_date_once))
             } else {
                 callToUser()
             }
@@ -120,7 +121,7 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showError(t.message!!)
+                showErrorAlert(requireActivity(),t.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()
@@ -148,7 +149,7 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showError(it.message!!)
+                showErrorAlert(requireActivity(),it.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()

@@ -103,7 +103,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         handleClickListeners()
         filterBottomSheet(view)
         itemHeightBottomSheet(view)
-        handleHomeFragmentBackPress()
+//        handleHomeFragmentBackPress()
         rangeSliders()
         setAdapter()
         getLiveLocation(requireActivity())
@@ -330,7 +330,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         binding.ivPlus.setOnClickListener {
             Constants.isPlus = true
             if (homeList.size == 0){
-                showToast("Please select maximum 5 users")
+                showErrorAlert(requireActivity(),getString(R.string.please_select_5_users))
             }else {
                 binding.ivPlus.isGone()
                 binding.clBottomBtn.isVisible()
@@ -358,13 +358,13 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
 
             when {
                 idList.size == 0 -> {
-                    showToast("Please select 5 users")
+                    showErrorAlert(requireActivity(),getString(R.string.please_select_5_users))
                 }
                 idList.size < 5 -> {
-                    showToast("You cannot add less than 5 people")
+                    showErrorAlert(requireActivity(),getString(R.string.please_select_maximum_5_users))
                 }
                 idList.size > 5 -> {
-                    showToast("Please select 5 users")
+                    showErrorAlert(requireActivity(),getString(R.string.please_select_5_users))
                 }
                 else -> {
                     Constants.isPlus = false
@@ -431,7 +431,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showToast(it.message!!)
+                showErrorAlert(requireActivity(),it.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()
@@ -458,7 +458,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showToast(it.message!!)
+                showErrorAlert(requireActivity(),it.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()

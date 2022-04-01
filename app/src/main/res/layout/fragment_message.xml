@@ -60,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fontFamily="@font/proxima_semibold"
-        android:text="@string/no_chat_history_found"
+        android:text="@string/no_result_found"
         android:textColor="@color/white"
         android:textSize="@dimen/_14ssp"
         android:gravity="center"

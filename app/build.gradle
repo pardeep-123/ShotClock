@@ -163,4 +163,7 @@ dependencies {
     // facebook dependency
     implementation 'com.facebook.android:facebook-android-sdk:8.2.0'
 
+    // alerter message
+    implementation 'com.tapadoo.android:alerter:6.1.0'
+
 }

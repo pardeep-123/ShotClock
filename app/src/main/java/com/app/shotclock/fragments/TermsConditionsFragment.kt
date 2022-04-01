@@ -8,12 +8,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentTermsConditionsBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
 import com.app.shotclock.models.TermsAndConditionResponse
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
+import com.app.shotclock.utils.showErrorAlert
 import com.app.shotclock.viewmodels.LoginSignUpViewModel
 import javax.inject.Inject
 
@@ -32,7 +34,7 @@ class TermsConditionsFragment : BaseFragment<FragmentTermsConditionsBinding>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        CacheConstants.Current = "terms"
         clickHandle()
         configureViewModel()
 
@@ -61,7 +63,7 @@ class TermsConditionsFragment : BaseFragment<FragmentTermsConditionsBinding>(),
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showError(t.message!!)
+                showErrorAlert(requireActivity(),t.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()

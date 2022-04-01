@@ -147,7 +147,7 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showError(t.message!!)
+                showErrorAlert(requireActivity(),t.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()
@@ -199,11 +199,11 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
                 loginSignUpViewModel.socialLogin(data).observe(viewLifecycleOwner, this)
 
             } else {
-                showToast("Google error")
+                showErrorAlert(requireActivity(),"Google error")
             }
 
         } else {
-            showToast("Google error")
+            showErrorAlert(requireActivity(),"Google error")
         }
     }
 
@@ -263,7 +263,6 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
 
 // Application code
         if (obj != null) {
-            showToast("Fb Success")
             socialId = obj.getString("id")
 
             socialImage =

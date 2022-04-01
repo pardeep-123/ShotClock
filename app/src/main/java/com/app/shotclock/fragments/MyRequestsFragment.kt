@@ -17,6 +17,7 @@ import com.app.shotclock.adapters.AllRequestAdapter
 import com.app.shotclock.adapters.MyRequestsAdapter
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.cache.getUser
+import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentMyRequestsBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
@@ -25,10 +26,7 @@ import com.app.shotclock.models.BaseResponseModel
 import com.app.shotclock.models.CancelRequestAdminRequest
 import com.app.shotclock.models.RequestListResponseModel
 import com.app.shotclock.models.sockets.VideoCallResponse
-import com.app.shotclock.utils.App
-import com.app.shotclock.utils.SocketManager
-import com.app.shotclock.utils.isGone
-import com.app.shotclock.utils.isVisible
+import com.app.shotclock.utils.*
 import com.app.shotclock.videocallingactivity.VideoCallActivity
 import com.app.shotclock.viewmodels.HomeViewModel
 import com.google.android.material.button.MaterialButton
@@ -62,6 +60,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        CacheConstants.Current = "myRequest"
         socketManager = App.mInstance.getSocketManager()!!
         if (!socketManager.isConnected() || socketManager.getmSocket() == null)
             socketManager.init()
@@ -191,7 +190,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
                 if (t.message!="Invalid Authorization Key" || t.message!= "Invalid authorization key")
-                showError(t.message!!)
+                    showErrorAlert(requireActivity(),t.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()
@@ -226,7 +225,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
                 if (it.message!="Invalid Authorization Key" || it.message!= "Invalid authorization key")
-                showError(it.message!!)
+                    showErrorAlert(requireActivity(),it.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()
@@ -253,7 +252,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showError(it.message!!)
+                showErrorAlert(requireActivity(),it.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()

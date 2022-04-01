@@ -20,6 +20,7 @@ import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentVideoCallBinding
 import com.app.shotclock.models.sockets.VideoCallResponse
 import com.app.shotclock.utils.App
@@ -134,7 +135,7 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        CacheConstants.Current = "video"
         socketManager = App.mInstance.getSocketManager()!!
         if (!socketManager.isConnected() || socketManager.getmSocket() == null)
             socketManager.init()

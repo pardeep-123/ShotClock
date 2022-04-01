@@ -24,7 +24,7 @@
         android:layout_height="@dimen/_20sdp"
         app:ci_height="@dimen/_3sdp"
         app:ci_width="@dimen/_3sdp"
-        app:ci_drawable_unselected="@drawable/viewpager_indicator_color"
+        app:ci_drawable_unselected="@drawable/viewpager_unselected"
         app:ci_drawable="@drawable/viewpager_indicator_color"
         app:layout_constraintBottom_toBottomOf="@id/viewPager"
         app:layout_constraintEnd_toEndOf="parent"

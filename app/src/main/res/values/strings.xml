@@ -84,7 +84,7 @@
     <string name="about_us">About Us</string>
     <string name="logout">Logout</string>
     <string name="discover">Discover!</string>
-    <string name="please_select_5_matches_to_start_your_speed_date_session">Please select 5 matches to \n start your speed date session!</string>
+    <string name="please_select_5_matches_to_start_your_speed_date_session">Please select 5 matches to \n start your speed dating session!</string>
     <string name="kristen_jane">Kristen Jane</string>
     <string name="_31_miles_away">31 miles away</string>
     <string name="finding_online_dating_partner">Finding online dating partner</string>
@@ -192,6 +192,11 @@
     <string name="video_calling">Video Calling…</string>
     <string name="facebook_app_id">644193873538001</string>
     <string name="fb_login_protocol_scheme">fb644193873538001</string>
+    <string name="error_">Error</string>
+    <string name="please_select_5_users">Please select 5 users</string>
+    <string name="please_select_maximum_5_users">Please select maximum 5 users</string>
+    <string name="you_can_start_your_speed_date_once">You can start your speed date once your matches accept your request. Hang tight!</string>
+    <string name="please_enter_something">Please enter something</string>
     <string-array name="selectGender">
         <item>Select</item>
         <item>Female</item>

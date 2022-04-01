@@ -30,5 +30,13 @@
 <!--        <item name="fontFamily">@font/proxima_semibold</item>-->
     </style>
 
+    <style name="AlertTextAppearanceTitle">
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="fontFamily">@font/proxima_regular</item>
+    </style>
+    <style name="AlertTextAppearanceText">
+        <item name="android:textSize">@dimen/_10ssp</item>
+        <item name="fontFamily">@font/proxima_regular</item>
+    </style>
 
 </resources>

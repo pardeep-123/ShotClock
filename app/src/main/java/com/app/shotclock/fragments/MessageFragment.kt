@@ -13,6 +13,7 @@ import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.adapters.MessagesAdapter
 import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.cache.getUser
+import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentMessageBinding
 import com.app.shotclock.models.sockets.GetChatListModel
 import com.app.shotclock.models.sockets.VideoCallResponse
@@ -44,7 +45,7 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        CacheConstants.Current = "message"
         socketManager = App.mInstance.getSocketManager()!!
         if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
             socketManager.init()
@@ -55,7 +56,6 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
 //        getChatList()
 
     }
-
 
     private fun setAdapter() {
         messageAdapter = MessagesAdapter(requireContext(), getChatList)
@@ -95,7 +95,6 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
         jsonObjects.put("userid", userid)
         socketManager.getChatList(jsonObjects)
     }
-
 
     override fun onResume() {
         super.onResume()

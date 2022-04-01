@@ -65,21 +65,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), Observer<Resource<Lo
 
         }
 
-/*
-        if ( binding.cbRememberMe.isChecked){
-            RememberShared(requireContext()).setString(
-                "email",
-                binding.etEmail.text.toString().trim()
-            )
-            RememberShared(requireContext()).setString(
-                "password",
-                binding.etPassword.text.toString().trim()
-            )
-        }else{
-            RememberShared(requireContext()).clearShared()
-        }
-*/
-
 
         binding.cbRememberMe.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -127,7 +112,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), Observer<Resource<Lo
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showError(t.message!!)
+                showErrorAlert(requireActivity(),t.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()

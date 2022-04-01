@@ -12,6 +12,7 @@ import com.app.shotclock.R
 import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.adapters.ProfilePagerAdapter
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentProfileBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
@@ -20,6 +21,7 @@ import com.app.shotclock.models.ProfileUserImage
 import com.app.shotclock.models.ProfileViewModel
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
+import com.app.shotclock.utils.showErrorAlert
 import com.app.shotclock.viewmodels.ProfileViewModels
 import javax.inject.Inject
 
@@ -43,7 +45,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        CacheConstants.Current = "profile"
         configureViewModel()
         clickHandle()
 
@@ -122,7 +124,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(),
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
                 if (t.message != "Invalid Authorization Key" || t.message != "Invalid authorization key")
-                    showError(t.message!!)
+                    showErrorAlert(requireActivity(), t.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()

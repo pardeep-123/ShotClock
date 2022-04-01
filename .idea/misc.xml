@@ -30,6 +30,7 @@
         <entry key="app/src/main/res/drawable/items_profile_images_viewpager.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/remeberme_checkbox.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/viewpager_indicator_color.xml" value="0.20104166666666667" />
+        <entry key="app/src/main/res/drawable/viewpager_unselected.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/layout-v23/items_base.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout-v23/porflioeimage_popup.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout-v23/view_progressbar.xml" value="0.18489583333333334" />

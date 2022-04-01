@@ -10,6 +10,7 @@ import com.app.shotclock.R
 import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.adapters.NotificationsAdapter
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentNotificationBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
@@ -18,6 +19,7 @@ import com.app.shotclock.models.BaseResponseModel
 import com.app.shotclock.models.GetNotificationResponse
 import com.app.shotclock.utils.isGone
 import com.app.shotclock.utils.isVisible
+import com.app.shotclock.utils.showErrorAlert
 import com.app.shotclock.viewmodels.HomeViewModel
 import javax.inject.Inject
 
@@ -37,7 +39,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Observ
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        CacheConstants.Current = "notification"
         configureViewModel()
         handleClicks()
         setAdapter()
@@ -89,7 +91,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Observ
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
                 if (t.message != "Invalid Authorization Key" || t.message != "Invalid authorization key")
-                    showError(t.message!!)
+                    showErrorAlert(requireActivity(),t.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()
@@ -114,7 +116,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(), Observ
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()
-                showError(it.message!!)
+                showErrorAlert(requireActivity(),it.message!!)
             }
             Status.LOADING -> {
                 binding.pb.clLoading.isVisible()
