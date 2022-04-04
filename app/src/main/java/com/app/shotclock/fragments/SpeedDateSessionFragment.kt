@@ -1,6 +1,7 @@
 package com.app.shotclock.fragments
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.adapters.SpeedDateSessionAdapter
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.cache.getUser
 import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentSpeedDateSessionBinding
 import com.app.shotclock.genericdatacontainer.Resource
@@ -19,6 +21,7 @@ import com.app.shotclock.models.CancelRequestAdminRequest
 import com.app.shotclock.models.RequestListResponseModel
 import com.app.shotclock.models.sockets.VideoCallResponse
 import com.app.shotclock.utils.*
+import com.app.shotclock.videocallingactivity.VideoCallActivity
 import com.app.shotclock.viewmodels.HomeViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.gson.GsonBuilder
@@ -169,13 +172,18 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
 
     private fun callToUser() {
         val jsonObject = JSONObject()
-        jsonObject.put("senderName", speedList[0].username)
-        jsonObject.put("senderImage", speedList[0].profileImage)
-        jsonObject.put("senderId", speedList[0].id)
-        jsonObject.put("receiverId", speedList[0].id)
-        jsonObject.put("requestId", speedList[0].requestTo)
-        jsonObject.put("receiverName", speedList[0].username)
-        jsonObject.put("callType", "1")
+        for (i in 0 until speedList.size){
+            if (speedList[i].status == 1){
+                jsonObject.put("receiverId", speedList[i].id)
+                jsonObject.put("requestId", speedList[i].requestTo)
+                jsonObject.put("receiverName", speedList[i].username)
+                jsonObject.put("receiverImage", speedList[i].profileImage)
+            }
+        }
+        jsonObject.put("senderName", getUser(requireContext())?.username)
+        jsonObject.put("senderImage", getUser(requireContext())?.profileImage)
+        jsonObject.put("senderId", getUser(requireContext())?.id)
+        jsonObject.put("callType", "1")// callType(0=>for single call,1=>for group call)
         jsonObject.put("groupName", speedList[0].groupName)
         socketManager.callToUser(jsonObject)
 
@@ -192,16 +200,18 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
                     activityScope.launch {
                         val mObject = args as JSONObject
                         val gson = GsonBuilder().create()
+                        val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
 
-                        val userToCallList =
-                            gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
-                        val bundle = Bundle()
-                        bundle.putString("channel_name", userToCallList.channelName)
-                        bundle.putString("video_token", userToCallList.videoToken)
-                        findNavController().navigate(
-                            R.id.action_speedDateSessionFragment_to_videoCallFragment,
-                            bundle
-                        )
+//                        val bundle = Bundle()
+//                        bundle.putString("channel_name", userToCallList.channelName)
+//                        bundle.putString("video_token", userToCallList.videoToken)
+//                        findNavController().navigate(R.id.action_speedDateSessionFragment_to_videoCallFragment, bundle)
+
+                        val intent = Intent(requireContext(), VideoCallActivity::class.java)
+                        intent.putExtra("channel_name", userToCallList.channelName)
+                        intent.putExtra("video_token", userToCallList.videoToken)
+                        startActivity(intent)
+
                     }
                 } catch (e: Exception) {
 

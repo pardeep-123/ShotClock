@@ -62,6 +62,7 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
         initializeSocket()
         activateReceiverListenerSocket()
 
+
         mChannelName = intent.extras?.get("channelName").toString()
         callerName = intent.extras?.get("receiverName").toString()
 
@@ -90,10 +91,10 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
     }
 
     fun activateReceiverListenerSocket() {
-
        socketManager.callToUserActivate()
 
     }
+
 
     private fun setOnClicks() {
         binding.btAccept.setOnClickListener {
@@ -284,15 +285,12 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
                     var data = args as JSONObject
                     Log.e("callResponse", data.toString())
                     val gson = GsonBuilder().create()
-                    /*  val callData = gson.fromJson(
-                    data.toString(),
-                    C::class.java
-                )
-                if (callData.requestId.toString() == requestId) {
-                    finish()
-                }*/
+                     val userToCAllList = gson.fromJson(data.toString(),VideoCallStatusResponse::class.java)
+                    val intent = Intent(this@IncomingCallActivity,VideoCallActivity::class.java)
+
                 }
             }
+
 
             SocketManager.call_status_emitter->{
                 activityScope.launch {
@@ -301,8 +299,7 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
                     val gson = GsonBuilder().create()
                     val userToCallList = gson.fromJson(data.toString(), VideoCallStatusResponse::class.java)
                      if (userToCallList.status == 1) {
-                         val intent =
-                             Intent(this@IncomingCallActivity, VideoCallActivity::class.java)
+                         val intent = Intent(this@IncomingCallActivity, VideoCallActivity::class.java)
                          intent.putExtra("channel_name", userToCallList.channelName)
                          intent.putExtra("video_token", userToCallList.videoToken)
                          startActivity(intent)
@@ -310,6 +307,8 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
                      }else{
                          finish()
                      }
+
+
 
 //                    val bundle = Bundle()
 //                    bundle.putString("channel_name", userToCallList.channelName)

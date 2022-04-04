@@ -79,7 +79,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
     }
 
    private fun scrollToBottom(){
-        linearLayoutManager?.smoothScrollToPosition(binding.rvChat, null, chatAdapter?.itemCount!!)
+        linearLayoutManager?.scrollToPosition(chatList.size-1)
     }
 
 //    private fun scrollToBottom() {
@@ -255,9 +255,8 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
                             val intent = Intent(requireContext(), VideoCallActivity::class.java)
                             intent.putExtra("channel_name", userToCallList.channelName)
                             intent.putExtra("video_token", userToCallList.videoToken)
-
-                            Log.e("=====chat",userToCallList.channelName+"====="+userToCallList.videoToken)
                             startActivity(intent)
+                            Log.e("=====chat",userToCallList.channelName+"====="+userToCallList.videoToken)
                     }
                 } catch (e: Exception) {
 

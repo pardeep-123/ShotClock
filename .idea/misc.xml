@@ -65,14 +65,14 @@
         <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_otp.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_privcay_policy.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.75" />
         <entry key="app/src/main/res/layout/fragment_safe_dating_policy.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_speed_date_session.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_subscription.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_terms_conditions.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_video_call.xml" value="0.18" />
-        <entry key="app/src/main/res/layout/fragment_walk_through.xml" value="0.24619640387275243" />
+        <entry key="app/src/main/res/layout/fragment_walk_through.xml" value="0.19" />
         <entry key="app/src/main/res/layout/items__notification_video_calling.xml" value="0.16" />
         <entry key="app/src/main/res/layout/items_base.xml" value="0.16" />
         <entry key="app/src/main/res/layout/items_cancel_requests.xml" value="0.18489583333333334" />

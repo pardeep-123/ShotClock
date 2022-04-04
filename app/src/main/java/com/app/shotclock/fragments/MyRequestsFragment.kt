@@ -1,11 +1,13 @@
 package com.app.shotclock.fragments
 
+import android.Manifest
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
-import androidx.activity.OnBackPressedCallback
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -36,6 +38,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<Resource<RequestListResponseModel>>, SocketManager.Observer {
@@ -68,7 +71,6 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
         configureViewModel()
         handleClicks()
         setAdapter()
-//        handleHomeFragmentBackPress()
 
     }
 
@@ -80,6 +82,44 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
             this.findNavController().navigate(R.id.action_myRequestsFragment_to_speedDateSessionFragment)
         }
     }
+
+    private fun videoTimingDialog() {
+        val dialog = Dialog(requireContext(),android.R.style.Theme_Translucent_NoTitleBar)
+        with(dialog) {
+            setCancelable(false)
+            setContentView(R.layout.items_video_calling_timer)
+            val tvTimer: TextView = findViewById(R.id.tvTimer)
+
+//            =new Dialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen)Dialog dialog
+
+            val timer = object : CountDownTimer(5000, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+
+                    tvTimer.text = String.format("%d", TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished))
+
+                }
+
+                override fun onFinish() {
+                    dismiss()
+                    callToUser()
+                  //  activateReceiverListenerSocket()
+                    /*if (checkSelfPermission(
+                            Manifest.permission.RECORD_AUDIO,
+                            VideoCallActivity.PERMISSION_REQ_ID_RECORD_AUDIO
+                        ) && checkSelfPermission(
+                            Manifest.permission.CAMERA,
+                            VideoCallActivity.PERMISSION_REQ_ID_CAMERA
+                        )) {
+                        initAgoraEngineAndJoinChannel()
+                    }*/
+
+                }
+            }
+            timer.start()
+            show()
+        }
+    }
+
 
     private fun configureViewModel() {
         homeViewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
@@ -137,19 +177,9 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
         }
 
         binding.tvStart.setOnClickListener {
-            callToUser()
+            videoTimingDialog()
+           // callToUser()
         }
-    }
-
-    //        for back press in fragment
-    private fun handleHomeFragmentBackPress() {
-        requireActivity().onBackPressedDispatcher
-            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    //Handle back event from any fragment
-                    activity?.onBackPressed()
-                }
-            })
     }
 
     // request list api for current
@@ -285,7 +315,6 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
         jsonObject.put("senderName", getUser(requireContext())?.username)
         jsonObject.put("senderImage",getUser(requireContext())?.profileImage)
         jsonObject.put("senderId",getUser(requireContext())?.id)
-
         jsonObject.put("callType", "1") // callType(0=>for single call,1=>for group call)
         jsonObject.put("groupName", requestList[0].groupName)
         socketManager.callToUser(jsonObject)
@@ -305,7 +334,6 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
                     activityScope.launch {
                         val mObject = args as JSONObject
                         val gson = GsonBuilder().create()
-
                         val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
 
 //                        val bundle = Bundle()

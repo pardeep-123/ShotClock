@@ -8,39 +8,44 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.shotclock.R
 import com.app.shotclock.databinding.ItemsSexualorientationBinding
+import com.app.shotclock.models.EduSexualOrientationModel
 
-class SexualOrientationAdapter(private var ctx: Context,private var list : ArrayList<String>, private var from : String): RecyclerView.Adapter<SexualOrientationAdapter.OrientationHolder>() {
-    private var selectedPosition = -1
+class SexualOrientationAdapter(
+    private var ctx: Context,
+    private var list: ArrayList<EduSexualOrientationModel>
+) : RecyclerView.Adapter<SexualOrientationAdapter.OrientationHolder>() {
+    var onItemClickListener: ((pos: String) -> Unit)? = null
 
-   var onItemClickListener : ((pos: String)->Unit)?= null
-
-    class OrientationHolder(itemViews:ItemsSexualorientationBinding): RecyclerView.ViewHolder(itemViews.root){
-        val binding : ItemsSexualorientationBinding = itemViews
+    class OrientationHolder(itemViews: ItemsSexualorientationBinding) :
+        RecyclerView.ViewHolder(itemViews.root) {
+        val binding: ItemsSexualorientationBinding = itemViews
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrientationHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemsSexualorientationBinding.inflate(inflater,parent,false)
+        val binding = ItemsSexualorientationBinding.inflate(inflater, parent, false)
         return OrientationHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: OrientationHolder, @SuppressLint("RecyclerView") position: Int) {
-        holder.binding.tvSexualList.text = list[position]
+    override fun onBindViewHolder(
+        holder: OrientationHolder,
+        @SuppressLint("RecyclerView") position: Int
+    ) {
+        holder.binding.tvSexualList.text = list[position].name
 
-        if (selectedPosition == position){
-//               selectedPosition = position
-
-            holder.binding.tvSexualList.setTextColor(ContextCompat.getColor(ctx,R.color.black))
-            holder.binding.tvSexualList.background = ContextCompat.getDrawable(ctx,R.drawable.bg_white_corners)
-        }else{
-            holder.binding.tvSexualList.setTextColor(ContextCompat.getColor(ctx,R.color.white))
-            holder.binding.tvSexualList.background = ContextCompat.getDrawable(ctx,R.drawable.bg_grey)
+        if (list[position].isSelected!!) {
+            holder.binding.tvSexualList.setTextColor(ContextCompat.getColor(ctx, R.color.black))
+            holder.binding.tvSexualList.background =
+                ContextCompat.getDrawable(ctx, R.drawable.bg_white_corners)
+        } else {
+            holder.binding.tvSexualList.setTextColor(ContextCompat.getColor(ctx, R.color.white))
+            holder.binding.tvSexualList.background =
+                ContextCompat.getDrawable(ctx, R.drawable.bg_grey)
         }
 
         holder.itemView.setOnClickListener {
-                selectedPosition = position
-                onItemClickListener?.invoke(list[position])
-                notifyDataSetChanged()
+            list[position].isSelected = !list[position].isSelected!!
+            notifyDataSetChanged()
 
         }
     }

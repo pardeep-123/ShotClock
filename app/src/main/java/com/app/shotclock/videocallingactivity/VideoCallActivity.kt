@@ -1,6 +1,7 @@
 package com.app.shotclock.videocallingactivity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.pm.PackageManager
 import android.graphics.PorterDuff
@@ -20,9 +21,7 @@ import androidx.core.content.ContextCompat
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseActivity
 import com.app.shotclock.databinding.ActivityVideoChatViewBinding
-import com.app.shotclock.utils.App
-import com.app.shotclock.utils.SocketManager
-import com.app.shotclock.utils.isNetworkConnected
+import com.app.shotclock.utils.*
 import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcEngine
 import io.agora.rtc.video.VideoCanvas
@@ -146,7 +145,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         super.onCreate(savedInstanceState)
         binding = ActivityVideoChatViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        videoTimingDialog()
+       // videoTimingDialog()
         initialiseSocket()
         channelName = intent?.getStringExtra("channel_name").toString()
         agoraToken = intent?.getStringExtra("video_token").toString()
@@ -154,15 +153,33 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         Log.e("videocall", channelName+ "===="+ agoraToken)
         //  tvUserName.text = name
 
+//        binding.rlReceiver.isGone()
+//        binding.tb.ivAppLogo2.isVisible()
+//        binding.rlToolbar.isVisible()
+        binding.tvCancel.isVisible()
+//        binding.tvTimer.isVisible()
+//        binding.tvSkip.isVisible()
+
+        binding.tvSkip.setOnClickListener {
+            val jsonObject = JSONObject()
+            jsonObject.put("isCallEnd", "0")
+            socketManager.getCallStatus(jsonObject)
+        }
+
+        binding.tvCancel.setOnClickListener {
+            callDialog()
+        }
+
+
 //        activateReceiverListenerSocket()
 
-//        if (checkSelfPermission(
-//                Manifest.permission.RECORD_AUDIO,
-//                PERMISSION_REQ_ID_RECORD_AUDIO
-//            ) && checkSelfPermission(Manifest.permission.CAMERA, PERMISSION_REQ_ID_CAMERA)
-//        ) {
-//            initAgoraEngineAndJoinChannel()
-//        }
+        if (checkSelfPermission(
+                Manifest.permission.RECORD_AUDIO,
+                PERMISSION_REQ_ID_RECORD_AUDIO
+            ) && checkSelfPermission(Manifest.permission.CAMERA, PERMISSION_REQ_ID_CAMERA)
+        ) {
+            initAgoraEngineAndJoinChannel()
+        }
 
     }
 
@@ -422,6 +439,39 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
                     if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO) && checkSelfPermission(Manifest.permission.CAMERA, PERMISSION_REQ_ID_CAMERA)) {
                         initAgoraEngineAndJoinChannel()
                     }
+
+                }
+            }
+            timer.start()
+            show()
+        }
+    }
+
+
+    private fun videoTimer() {
+        val dialog = Dialog(this)
+        with(dialog) {
+            setCancelable(false)
+//            setContentView(R.layout.items_video_calling_timer)
+//            val tvTimer: TextView = findViewById(R.id.tvTimer)
+
+//            =new Dialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen)Dialog dialog
+
+            val timer = object : CountDownTimer(5000, 1000) {
+                @SuppressLint("SetTextI18n")
+                override fun onTick(millisUntilFinished: Long) {
+
+                    binding.tvTimer.text = ""+String.format("%d min, %d sec", TimeUnit.MILLISECONDS.toMinutes( millisUntilFinished),
+                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
+
+                }
+
+                override fun onFinish() {
+                    dismiss()
+//                    activateReceiverListenerSocket()
+//                    if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO) && checkSelfPermission(Manifest.permission.CAMERA, PERMISSION_REQ_ID_CAMERA)) {
+//                        initAgoraEngineAndJoinChannel()
+//                    }
 
                 }
             }
