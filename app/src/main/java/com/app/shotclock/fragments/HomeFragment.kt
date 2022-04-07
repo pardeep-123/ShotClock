@@ -37,8 +37,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
-import java.lang.reflect.InvocationTargetException
-import java.lang.reflect.Method
 import javax.inject.Inject
 
 open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
@@ -86,6 +84,10 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
 
     private lateinit var socketManager: SocketManager
     private val activityScope = CoroutineScope(Dispatchers.Main)
+    private var orientationAdapter: SexualOrientationAdapter? = null
+    private var educationAdapter: SexualOrientationAdapter? = null
+    private var astrologicalAdapter: SexualOrientationAdapter? = null
+
 
     override fun getViewBinding(): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(layoutInflater)
@@ -206,7 +208,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         educationList.add(EduSexualOrientationModel("Doctorate Degree", false))
         educationList.add(EduSexualOrientationModel("Other", false))
 
-        val educationAdapter = SexualOrientationAdapter(requireContext(), educationList)
+        educationAdapter = SexualOrientationAdapter(requireContext(), educationList)
         rvEducation.adapter = educationAdapter
 
         // add list astrologicalSign adapter
@@ -224,7 +226,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         astrologicalList.add(EduSexualOrientationModel("Sagittarius", false))
         astrologicalList.add(EduSexualOrientationModel("Capricorn", false))
 
-        val astrologicalAdapter = SexualOrientationAdapter(requireContext(), astrologicalList)
+        astrologicalAdapter = SexualOrientationAdapter(requireContext(), astrologicalList)
         rvAstrologicalSign.adapter = astrologicalAdapter
 
         // add list sexualOrientation adapter
@@ -236,7 +238,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         orientationList.add(EduSexualOrientationModel("Demisexual", false))
         orientationList.add(EduSexualOrientationModel("Pansexual", false))
 
-        val orientationAdapter = SexualOrientationAdapter(requireContext(), orientationList)
+        orientationAdapter = SexualOrientationAdapter(requireContext(), orientationList)
         rvSexualOrientation.adapter = orientationAdapter
 
 //        educationAdapter.onItemClickListener = { pos ->
@@ -270,25 +272,41 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
 
         tvClear?.setOnClickListener {
             Constants.isPlus = false
-            homeList.clear()
             rgSmoke?.clearCheck()
             rgPets?.clearCheck()
             rgDrink?.clearCheck()
             rgGender?.clearCheck()
-            rsAge?.values= mutableListOf(0F,100F)
-            rsDistance?.values=mutableListOf(0F,100F)
-            val educationAdapter = SexualOrientationAdapter(requireContext(), educationList)
+            rsAge?.values = mutableListOf(0F, 100F)
+            rsDistance?.values = mutableListOf(0F, 100F)
+            astrologicalSign = ""
+            education = ""
+            sexualOrientation=""
+
+            educationList.forEach {
+                it.isSelected = false
+            }
+            orientationList.forEach {
+                it.isSelected = false
+            }
+            astrologicalList.forEach {
+                it.isSelected = false
+            }
+
+            educationAdapter?.notifyDataSetChanged()
+            orientationAdapter?.notifyDataSetChanged()
+            astrologicalAdapter?.notifyDataSetChanged()
+
+            /*val educationAdapter = SexualOrientationAdapter(requireContext(), educationList)
             rvEducation.adapter = educationAdapter
             val orientationAdapter = SexualOrientationAdapter(requireContext(), orientationList)
             rvSexualOrientation.adapter = orientationAdapter
             val astrologicalAdapter = SexualOrientationAdapter(requireContext(), astrologicalList)
-            rvAstrologicalSign.adapter = astrologicalAdapter
-        //    astrologicalList.clear()
-          //  orientationList.clear()
+            rvAstrologicalSign.adapter = astrologicalAdapter*/
+            //    astrologicalList.clear()
+            //  orientationList.clear()
             tvHeightSelect?.text = "Select"
             bottomOpen(bottomSheetBehavior)
             homeViewModel.homeApi(latitude, longitude).observe(viewLifecycleOwner, this)
-            adapter?.notifyDataSetChanged()
         }
 
     }
@@ -308,7 +326,6 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
 
             }
         })
-
 
         rsDistance?.addOnChangeListener(RangeSlider.OnChangeListener { _, _, _ ->
             try {
@@ -332,25 +349,6 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
             value.toInt().toString()
         }
 
-    }
-
-
-    open fun setSliderTooltipAlwaysVisible(slider: RangeSlider?) {
-        try {
-            val baseSliderCls: Class<*>? = RangeSlider::class.java.superclass
-            if (baseSliderCls != null) {
-                val ensureLabelsAddedMethod: Method =
-                    baseSliderCls.getDeclaredMethod("ensureLabelsAdded")
-                ensureLabelsAddedMethod.isAccessible = true
-                ensureLabelsAddedMethod.invoke(slider)
-            }
-        } catch (e: IllegalAccessException) {
-            e.printStackTrace()
-        } catch (e: NoSuchMethodException) {
-            e.printStackTrace()
-        } catch (e: InvocationTargetException) {
-            e.printStackTrace()
-        }
     }
 
     private fun handleClickListeners() {
@@ -414,6 +412,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
                 }
             }
         }
+
     }
 
     // home api
@@ -437,6 +436,9 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     }
 
     private fun setFilterData() {
+        var astrologicalSignSelected = ""
+        var sexualOrientationSelected = ""
+        var educationSelected = ""
         astrologicalList.forEach {
             if (it.isSelected == true) {
                 astrologicalSign = astrologicalSign + it.name + ","
@@ -456,8 +458,31 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         }
 
 
+        if (astrologicalSign.isNotEmpty()) {
+            astrologicalSignSelected = astrologicalSign.substring(0, (astrologicalSign.length - 1))
+        } else {
+            astrologicalSignSelected = ""
+        }
+
+
+        if (sexualOrientation.isNotEmpty()) {
+            sexualOrientationSelected =
+                sexualOrientation.substring(0, (sexualOrientation.length - 1))
+        }
+        else {
+            sexualOrientationSelected = ""
+        }
+
+        if (education.isNotEmpty()) {
+            educationSelected =
+                education.substring(0, (education.length - 1))
+        } else {
+            educationSelected = ""
+        }
+
+
         val body = FilterRequestModel(
-            astrologicalSign.substring(0, (astrologicalSign.length - 1)),
+            astrologicalSignSelected,
             drink,
             gender,
             tvHeightSelect?.text.toString().trim(),
@@ -466,8 +491,8 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
             lowerAge,
             lowerDistance,
             pets,
-            education.substring(0, (education.length - 1)),
-            sexualOrientation.substring(0, (sexualOrientation.length - 1)),
+            educationSelected,
+            sexualOrientationSelected,
             smoke,
             upperAge,
             upperDistance

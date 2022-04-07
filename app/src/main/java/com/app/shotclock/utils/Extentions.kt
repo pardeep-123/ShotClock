@@ -513,6 +513,5 @@ fun showErrorAlert(context: Activity, msg: String) {
         .setText(msg)
         .setTextAppearance(R.style.AlertTextAppearanceText)
         .setBackgroundColorRes(R.color.red)
-
         .show()
 }

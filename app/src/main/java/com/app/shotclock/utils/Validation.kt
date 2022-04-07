@@ -4,30 +4,40 @@ import android.app.Activity
 import android.util.Patterns
 
 class Validation {
+
     fun verifyLoginValidation(
         context: Activity, email: String, password: String
     ): Boolean {
         var check = false
-        if (email.isEmpty()) {
-            showErrorAlert(context,"Please enter email")
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            showErrorAlert(context,"Please enter valid email")
-        } else if (password.isEmpty()) {
-            showErrorAlert(context,"Please enter password")
-        } else {
-            check = true
+        when {
+            email.isEmpty() -> {
+                showErrorAlert(context,"Please enter email")
+            }
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                showErrorAlert(context,"Please enter valid email")
+            }
+            password.isEmpty() -> {
+                showErrorAlert(context,"Please enter password")
+            }
+            else -> {
+                check = true
+            }
         }
         return check
     }
 
     fun verifyForgotPassword(context: Activity, email: String): Boolean {
         var check = false
-        if (email.isEmpty()) {
-            showErrorAlert(context,"Please enter email")
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            showErrorAlert(context,"Please enter valid email")
-        } else {
-            check = true
+        when {
+            email.isEmpty() -> {
+                showErrorAlert(context,"Please enter email")
+            }
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                showErrorAlert(context,"Please enter valid email")
+            }
+            else -> {
+                check = true
+            }
         }
         return check
     }
@@ -73,27 +83,37 @@ class Validation {
         rememberMe: Boolean
     ): Boolean {
         var check = false
-        if (image == "" || image.isEmpty()){
-            showErrorAlert(context,"Please select user image")
-        }else if (name.isEmpty()) {
-            showErrorAlert(context,"Please enter username")
-        } else if (email.isEmpty()) {
-            showErrorAlert(context,"Please enter email")
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            showErrorAlert(context,"Please enter valid email")
-        } else if (phone.isEmpty()) {
-            showErrorAlert(context,"Please enter phone number")
-        } else if (password.isEmpty()) {
-            showErrorAlert(context,"Please enter password")
-        } else if (confirmPassword.isEmpty()) {
-            showErrorAlert(context,"Please enter confirm password")
-        } else if (password != confirmPassword) {
-            showErrorAlert(context,"Password must be same")
-        }else if (!rememberMe){
-            showErrorAlert(context,"Please accept the terms and conditions")
-        }
-        else {
-            check = true
+        when {
+            image == "" || image.isEmpty() -> {
+                showErrorAlert(context,"Please select user image")
+            }
+            name.isEmpty() -> {
+                showErrorAlert(context,"Please enter username")
+            }
+            email.isEmpty() -> {
+                showErrorAlert(context,"Please enter email")
+            }
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                showErrorAlert(context,"Please enter valid email")
+            }
+            phone.isEmpty() -> {
+                showErrorAlert(context,"Please enter phone number")
+            }
+            password.isEmpty() -> {
+                showErrorAlert(context,"Please enter password")
+            }
+            confirmPassword.isEmpty() -> {
+                showErrorAlert(context,"Please enter confirm password")
+            }
+            password != confirmPassword -> {
+                showErrorAlert(context,"Password must be same")
+            }
+            !rememberMe -> {
+                showErrorAlert(context,"Please accept the terms and conditions")
+            }
+            else -> {
+                check = true
+            }
         }
         return check
     }
@@ -180,42 +200,61 @@ class Validation {
     imageList: ArrayList<String>
     ): Boolean {
         var check = false
-        if (name.isEmpty()) {
-            showErrorAlert(context,"Please enter username")
-        } else if (email.isEmpty()) {
-            showErrorAlert(context,"Please enter email")
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            showErrorAlert(context,"Please enter valid email")
-        } else if (phone.isEmpty()) {
-            showErrorAlert(context,"Please enter phone number")
-        } else if (dob.isEmpty()) {
-            showErrorAlert(context,"Please enter date of birth")
-        } else if (gender.isEmpty()) {
-            showErrorAlert(context,"Please select gender")
-        } else if (height.isEmpty()) {
-            showErrorAlert(context,"Please select height")
-        } else if (qualification.isEmpty()) {
-            showErrorAlert(context,"Please select qualification")
-        } else if (location.isEmpty()) {
-            showErrorAlert(context,"Please select location")
-        } else if (interests.isEmpty()) {
-            showErrorAlert(context,"Please select interests")
-        } else if (sexualOrientation.isEmpty()) {
-            showErrorAlert(context,"Please select sexual orientation")
-        } else if (astrologicalSign.isEmpty()) {
-            showErrorAlert(context,"Please select astrological sign")
-        } else if (smoking.isEmpty()) {
-            showErrorAlert(context,"Please select smoking")
-        } else if (drinking.isEmpty()) {
-            showErrorAlert(context,"Please select drinking")
-        } else if (pets.isEmpty()) {
-            showErrorAlert(context,"Please select pets")
-        } else if (bio.isEmpty()) {
-            showErrorAlert(context,"Please select bio")
-        }else if (imageList.size == 0) {
-            showErrorAlert(context,"Please select at least one picture")
-        }else {
-            check = true
+        when {
+            name.isEmpty() -> {
+                showErrorAlert(context,"Please enter username")
+            }
+            email.isEmpty() -> {
+                showErrorAlert(context,"Please enter email")
+            }
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                showErrorAlert(context,"Please enter valid email")
+            }
+            phone.isEmpty() -> {
+                showErrorAlert(context,"Please enter phone number")
+            }
+            dob.isEmpty() -> {
+                showErrorAlert(context,"Please enter date of birth")
+            }
+            gender.isEmpty() -> {
+                showErrorAlert(context,"Please select gender")
+            }
+            height.isEmpty() -> {
+                showErrorAlert(context,"Please select height")
+            }
+            qualification.isEmpty() -> {
+                showErrorAlert(context,"Please select qualification")
+            }
+            location.isEmpty() -> {
+                showErrorAlert(context,"Please select location")
+            }
+            interests.isEmpty() -> {
+                showErrorAlert(context,"Please select interests")
+            }
+            sexualOrientation.isEmpty() -> {
+                showErrorAlert(context,"Please select sexual orientation")
+            }
+            astrologicalSign.isEmpty() -> {
+                showErrorAlert(context,"Please select astrological sign")
+            }
+            smoking.isEmpty() -> {
+                showErrorAlert(context,"Please select smoking")
+            }
+            drinking.isEmpty() -> {
+                showErrorAlert(context,"Please select drinking")
+            }
+            pets.isEmpty() -> {
+                showErrorAlert(context,"Please select pets")
+            }
+            bio.isEmpty() -> {
+                showErrorAlert(context,"Please select bio")
+            }
+            imageList.size == 0 -> {
+                showErrorAlert(context,"Please select at least one picture")
+            }
+            else -> {
+                check = true
+            }
         }
         return check
     }
