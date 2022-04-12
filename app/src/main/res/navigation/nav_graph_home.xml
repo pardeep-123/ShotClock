@@ -180,4 +180,9 @@
             app:destination="@id/videoCallFragment" />
     </fragment>
 
+    <activity
+        android:id="@+id/videoCallActivity"
+        android:name="com.app.shotclock.videocallingactivity.VideoCallActivity"
+        android:label="VideoCallActivity" />
+
 </navigation>

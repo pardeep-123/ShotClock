@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
@@ -50,6 +49,7 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
         if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
             socketManager.init()
         }
+
         txtMessage = view.findViewById(R.id.tvNoChatHistory)
         setAdapter()
         handleClicks()
@@ -153,7 +153,7 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
 //                        bundle.putString("video_token", userToCallList.videoToken)
 //                        findNavController().navigate(R.id.videoCallFragment, bundle)
 
-                        val intent = Intent(requireContext(), VideoCallActivity::class.java)
+                        val intent = Intent(requireActivity(), VideoCallActivity::class.java)
                         intent.putExtra("channel_name", userToCallList.channelName)
                         intent.putExtra("video_token", userToCallList.videoToken)
 //                        Log.e("=====message",userToCallList.channelName+"====="+userToCallList.videoToken)

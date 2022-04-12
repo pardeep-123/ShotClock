@@ -99,12 +99,6 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
             getImage(requireActivity(), 0, false)
         }
 
-        // set checkbox terms and conditions
-        binding.cbTermsConditions.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked){
-
-            }
-        }
     }
 
     override fun selectedImage(imagePath: String?, code: Int) {

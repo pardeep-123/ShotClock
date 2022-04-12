@@ -30,6 +30,7 @@ import com.app.shotclock.models.RequestListResponseModel
 import com.app.shotclock.models.sockets.VideoCallResponse
 import com.app.shotclock.utils.*
 import com.app.shotclock.videocallingactivity.VideoCallActivity
+import com.app.shotclock.videocallingactivity.VideoGroupCallActivity
 import com.app.shotclock.viewmodels.HomeViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.gson.GsonBuilder
@@ -83,7 +84,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
         }
     }
 
-    private fun videoTimingDialog() {
+/*    private fun videoTimingDialog() {
         val dialog = Dialog(requireContext(),android.R.style.Theme_Translucent_NoTitleBar)
         with(dialog) {
             setCancelable(false)
@@ -103,7 +104,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
                     dismiss()
                     callToUser()
                   //  activateReceiverListenerSocket()
-                    /*if (checkSelfPermission(
+                    *//*if (checkSelfPermission(
                             Manifest.permission.RECORD_AUDIO,
                             VideoCallActivity.PERMISSION_REQ_ID_RECORD_AUDIO
                         ) && checkSelfPermission(
@@ -111,14 +112,14 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
                             VideoCallActivity.PERMISSION_REQ_ID_CAMERA
                         )) {
                         initAgoraEngineAndJoinChannel()
-                    }*/
+                    }*//*
 
                 }
             }
             timer.start()
             show()
         }
-    }
+    }*/
 
 
     private fun configureViewModel() {
@@ -177,8 +178,8 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
         }
 
         binding.tvStart.setOnClickListener {
-            videoTimingDialog()
-           // callToUser()
+//            videoTimingDialog()
+            callToUser()
         }
     }
 
@@ -341,9 +342,15 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
 //                        bundle.putString("video_token", userToCallList.videoToken)
 //                        findNavController().navigate(R.id.action_myRequestsFragment_to_videoCallFragment, bundle)
 
+                      /*  val intent = Intent(requireContext(), VideoGroupCallActivity::class.java)
+                        intent.putExtra("channel_name", userToCallList.channelName)
+                        intent.putExtra("video_token", userToCallList.videoToken)
+                        startActivity(intent)*/
+
                         val intent = Intent(requireContext(), VideoCallActivity::class.java)
                         intent.putExtra("channel_name", userToCallList.channelName)
                         intent.putExtra("video_token", userToCallList.videoToken)
+                        intent.putExtra("type","fromRequest")
                         startActivity(intent)
 
                     }

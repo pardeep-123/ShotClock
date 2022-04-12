@@ -1,7 +1,6 @@
 package com.app.shotclock.utils
 
 import android.content.Context
-import android.preference.PreferenceManager
 import com.app.shotclock.R
 
 class RememberShared(val context: Context) {

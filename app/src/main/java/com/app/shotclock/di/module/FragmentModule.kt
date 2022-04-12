@@ -75,9 +75,6 @@ abstract class FragmentModule {
     internal abstract fun subscriptionFragment(): SubscriptionFragment
 
     @ContributesAndroidInjector
-    internal abstract fun videoCallFragment(): VideoCallFragment
-
-    @ContributesAndroidInjector
     internal abstract fun iceBreakerQuestionsFragment() : IcebreakerQuestionsFragment
 
     @ContributesAndroidInjector

@@ -400,18 +400,18 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
     }
 
     private fun handleClicks() {
-        binding.tb.ivBack.isVisible()
-        binding.tb.ivAppLogo.isVisible()
-
-        binding.tb.ivBack.setOnClickListener {
-            activity?.onBackPressed()
-        }
+//        binding.tb.ivBack.isVisible()
+//        binding.tb.ivAppLogo.isVisible()
+//
+//        binding.tb.ivBack.setOnClickListener {
+//            activity?.onBackPressed()
+//        }
 
         binding.tvIcebreaker.setOnClickListener {
             this.findNavController().navigate(R.id.action_videoCallFragment_to_icebreakerQuestionsFragment)
         }
 
-        binding.tvCancel.setOnClickListener {
+     /*   binding.tvCancel.setOnClickListener {
             val dialog = Dialog(requireContext())
             with(dialog) {
                 setCancelable(false)
@@ -432,7 +432,7 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
 
         binding.tvSkip.setOnClickListener {
             isCallEnd = "0"
-        }
+        }*/
 
 
 //        (TimeUnit.MILLISECONDS.toMinutes(millis) -
