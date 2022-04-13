@@ -1,7 +1,6 @@
 package com.app.shotclock.di.module
 
 import com.app.shotclock.fragments.*
-import com.app.shotclock.videocallingactivity.IncomingCallActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

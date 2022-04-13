@@ -12,35 +12,46 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.ScaleAnimation
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseActivity
-import com.app.shotclock.base.BaseFragment
 import com.app.shotclock.databinding.ItemsNotificationVideoCallingBinding
+import com.app.shotclock.genericdatacontainer.Resource
+import com.app.shotclock.genericdatacontainer.Status
+import com.app.shotclock.models.AcceptDeclineRequestModel
+import com.app.shotclock.models.BaseResponseModel
 import com.app.shotclock.models.sockets.VideoCallStatusResponse
 import com.app.shotclock.utils.App
 import com.app.shotclock.utils.SocketManager
 import com.app.shotclock.utils.isNetworkConnected
+import com.app.shotclock.utils.showErrorAlert
+import com.app.shotclock.viewmodels.HomeViewModel
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
+import javax.inject.Inject
 
 
 //BaseFragment<ItemsNotificationVideoCallingBinding>()
 class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
     lateinit var binding : ItemsNotificationVideoCallingBinding
+    lateinit var homeViewModel: HomeViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     var mCallerId = 0
     var mReceiverID = 0
     var mSenderImage = ""
     private var callerName = ""
     var mChannelName = ""
     var agoraToken = ""
-    var requestId = ""
+    var requestId = 0
+    var status = 0
+    private var callType = "" // 0= singleCall , 1= groupCall
     private var callerImage = ""
     private var mAnimator: PortraitAnimator? = null
     private var mPlayer: MediaPlayer? = null
@@ -59,33 +70,25 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
         binding  = ItemsNotificationVideoCallingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        configureViewModel()
         initializeSocket()
         activateReceiverListenerSocket()
 
 
-        mChannelName = intent.extras?.get("channelName").toString()
-        callerName = intent.extras?.get("receiverName").toString()
+//        mChannelName = intent.extras?.get("channelName").toString()
+//        callerName = intent.extras?.get("receiverName").toString()
+//        callType = intent.extras?.get("callType").toString()
 
-//        val bundle = arguments
-//       mChannelName = bundle?.getString("channelName")!!
+        requestId = intent.extras?.get("request_id") as Int
+//        status= intent.extras?.get("status").toString()
 
- //agoraToken = intent.getStringExtra("agoraToken").toString()
-        /*  requestId = intent.getStringExtra("requestId").toString()
-   callerName = intent.getStringExtra("callerName").toString()
-   callerImage = intent.getStringExtra("callerImage").toString()*/
-//        binding.tv_name.text = "$callerName is calling..."
-//        Glide.with(this).load(ApiConstants.BASE_URL+callerImage).into(ivImage)
+
 
         Log.e("channelName", mChannelName)
         //videoToken = intent.getStringExtra("videoToken")!!
 
         setOnClicks()
 
-//        mAnimator = PortraitAnimator(
-//            findViewById(R.id.anim_layer_1),
-//            findViewById(R.id.anim_layer_2),
-//            findViewById(R.id.anim_layer_3)
-//        )
         timeCounter()
         startRinging()
     }
@@ -99,24 +102,27 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
     private fun setOnClicks() {
         binding.btAccept.setOnClickListener {
             stopRinging()
-            if (isNetworkConnected()) {
-                //0=>calling,1=> callConnected,2=>call Declined,3=>Call Disconnected,4=>Missed call
+/*                //0=>calling,1=> callConnected,2=>call Declined,3=>Call Disconnected,4=>Missed call
                 val jsonObject = JSONObject()
                 jsonObject.put("channelName", mChannelName)
                 jsonObject.put("status", "1")
-                socketManager.getCallStatus(jsonObject)
+                socketManager.getCallStatus(jsonObject)*/
 
-            }
+                setAcceptRejectData(requestId,2)
 
         }
 
         binding.btDecline.setOnClickListener {
             stopRinging()
             if (isNetworkConnected()) {
-                val jsonObject = JSONObject()
+            /*    val jsonObject = JSONObject()
                 jsonObject.put("channelName", mChannelName)
                 jsonObject.put("status", "2")
-                socketManager.getCallStatus(jsonObject)
+                socketManager.getCallStatus(jsonObject)*/
+
+                    if (status ==3)
+               setAcceptRejectData(requestId,3)
+
 
                 val notifManager: NotificationManager =
                     getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -272,6 +278,41 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
         }
     }
 
+    private fun configureViewModel(){
+      homeViewModel = ViewModelProviders.of(this,viewModelFactory)[HomeViewModel::class.java]
+    }
+
+    private fun setAcceptRejectData(request_id:Int,status:Int){
+        val data = AcceptDeclineRequestModel()
+        data.request_id = request_id
+            data.status =  status
+            homeViewModel.acceptDeclineRequest(data).observe(this,acceptRejectObserver)
+    }
+
+    private val acceptRejectObserver = Observer<Resource<BaseResponseModel>>{
+         when(it.status){
+             Status.SUCCESS->{
+
+//                 val data = args as JSONObject
+//                 Log.e("callStatus",data.toString())
+//                 val gson = GsonBuilder().create()
+//                 val userToCallList = gson.fromJson(data.toString(), VideoCallStatusResponse::class.java)
+//                 if (userToCallList.status == 1) {
+//                     val intent = Intent(this@IncomingCallActivity, VideoCallActivity::class.java)
+//                     intent.putExtra("channel_name", userToCallList.channelName)
+//                     intent.putExtra("video_token", userToCallList.videoToken)
+//                     intent.putExtra("type","chat")
+//                     startActivity(intent)
+//                     finish()
+             }
+             Status.ERROR->{
+                 showErrorAlert(this,it.message!!)
+             }
+             Status.LOADING->{
+
+             }
+         }
+    }
 
     override fun onResponseArray(event: String, args: JSONArray) {
 
@@ -282,7 +323,7 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
         when (event) {
             SocketManager.call_to_user_emitter -> {
                 activityScope.launch {
-                    var data = args as JSONObject
+                    val data = args as JSONObject
                     Log.e("callResponse", data.toString())
                     val gson = GsonBuilder().create()
                      val userToCAllList = gson.fromJson(data.toString(),VideoCallStatusResponse::class.java)
@@ -302,6 +343,7 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
                          val intent = Intent(this@IncomingCallActivity, VideoCallActivity::class.java)
                          intent.putExtra("channel_name", userToCallList.channelName)
                          intent.putExtra("video_token", userToCallList.videoToken)
+                         intent.putExtra("type","chat")
                          startActivity(intent)
                          finish()
                      }else{

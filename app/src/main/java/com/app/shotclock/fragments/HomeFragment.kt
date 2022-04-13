@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.RadioGroup
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -105,7 +104,6 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         handleClickListeners()
         filterBottomSheet(view)
         itemHeightBottomSheet(view)
-//        handleHomeFragmentBackPress()
         rangeSliders()
         setAdapter()
         getLiveLocation(requireActivity())
@@ -564,17 +562,6 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         stopLocationUpdates()
     }
 
-    // for back press in fragment
-    private fun handleHomeFragmentBackPress() {
-        requireActivity().onBackPressedDispatcher
-            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    //Handle back event from any fragment
-                    activity?.finishAffinity()
-                }
-            })
-    }
-
     private fun bottomOpen(bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>) {
         if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
             isBottom = true
@@ -630,9 +617,11 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
                                   bundle.putString("channelName",userToCallList.channelName)
                                   findNavController(R.id.fragment).navigate(R.id.incomingCallActivity,bundle,options)*/
 
-                    val intent = Intent(requireContext(),IncomingCallActivity::class.java)
-                    intent.putExtra("channelName",userToCallList.channelName)
-                    startActivity(intent)
+
+                    //// latest
+//                    val intent = Intent(requireContext(),IncomingCallActivity::class.java)
+//                    intent.putExtra("channelName",userToCallList.channelName)
+//                    startActivity(intent)
 
                 }
             }
@@ -642,6 +631,5 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     override fun onError(event: String, vararg args: Array<*>) {
 
     }
-
 
 }

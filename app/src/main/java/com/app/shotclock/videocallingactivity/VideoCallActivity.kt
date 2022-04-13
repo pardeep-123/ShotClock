@@ -1,6 +1,7 @@
 package com.app.shotclock.videocallingactivity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.pm.PackageManager
 import android.graphics.PorterDuff
@@ -17,12 +18,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseActivity
 import com.app.shotclock.databinding.ActivityVideoChatViewBinding
-import com.app.shotclock.databinding.ActivityVideoGroupBinding
 import com.app.shotclock.utils.*
 import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcEngine
@@ -148,17 +146,17 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         super.onCreate(savedInstanceState)
         binding = ActivityVideoChatViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // videoTimingDialog()
         initialiseSocket()
         channelName = intent?.getStringExtra("channel_name").toString()
         agoraToken = intent?.getStringExtra("video_token").toString()
         type = intent?.getStringExtra("type").toString()
 
-        if (type == "chat"){
-           binding.rlToolbar.isGone()
-        }else{
-          binding.rlToolbar.isVisible()
-        }
+//        if (type == "chat"){
+//           binding.rlToolbar.isGone()
+//        }else{
+//            videoTimingDialog()
+//          binding.rlToolbar.isVisible()
+//        }
 
 //        requestId = intent?.getStringExtra("requestId").toString()
         Log.e("videocall", channelName + "====" + agoraToken)
@@ -476,6 +474,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         mRtcEngine!!.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_FIT, uid))
 
         surfaceView.tag = uid // for mark purpose
+//        timerCountDown()
     }
 
     private fun leaveChannel() {
@@ -526,6 +525,39 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         finish()
     }
 
+   /* private fun timerCountDown() {
+        val dialog = Dialog(this)
+        with(dialog) {
+            setCancelable(false)
+
+            val timer = object : CountDownTimer(500000, 1000) {
+                @SuppressLint("SetTextI18n")
+                override fun onTick(millisUntilFinished: Long) {
+
+                    binding.tvTimer.text = "" + String.format(
+                        "%d:%d ",
+                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
+                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
+                        )
+                    )
+
+                }
+
+                override fun onFinish() {
+                    dismiss()
+
+//                    activateReceiverListenerSocket()
+//                    if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO) && checkSelfPermission(Manifest.permission.CAMERA, PERMISSION_REQ_ID_CAMERA)) {
+//                        initAgoraEngineAndJoinChannel()
+//                    }
+
+                }
+            }
+            timer.start()
+            show()
+        }
+    }*/
 
     override fun onResponseArray(event: String, args: JSONArray) {
 

@@ -292,9 +292,16 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
                     bundle.putString("channelName",userToCallList.channelName)
                     findNavController(R.id.fragment).navigate(R.id.incomingCallActivity,bundle,options)*/
 
+
+                    // latest
+//                     val intent = Intent(this@HomeActivity,IncomingCallActivity::class.java)
+//                    intent.putExtra("channelName",userToCallList.channelName)
+//                    intent.putExtra("receiverName", userToCallList.senderName)
+//                    startActivity(intent)
+
                      val intent = Intent(this@HomeActivity,IncomingCallActivity::class.java)
-                    intent.putExtra("channelName",userToCallList.channelName)
-                    intent.putExtra("receiverName", userToCallList.senderName)
+                    intent.putExtra("request_id",userToCallList.requestId)
+//                    intent.putExtra("status",userToCallList.status)
                     startActivity(intent)
 
                 }

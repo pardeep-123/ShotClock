@@ -1,13 +1,10 @@
 package com.app.shotclock.fragments
 
-import android.Manifest
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -30,7 +27,6 @@ import com.app.shotclock.models.RequestListResponseModel
 import com.app.shotclock.models.sockets.VideoCallResponse
 import com.app.shotclock.utils.*
 import com.app.shotclock.videocallingactivity.VideoCallActivity
-import com.app.shotclock.videocallingactivity.VideoGroupCallActivity
 import com.app.shotclock.viewmodels.HomeViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.gson.GsonBuilder
@@ -39,7 +35,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<Resource<RequestListResponseModel>>, SocketManager.Observer {
@@ -336,16 +331,6 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
                         val mObject = args as JSONObject
                         val gson = GsonBuilder().create()
                         val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
-
-//                        val bundle = Bundle()
-//                        bundle.putString("channel_name", userToCallList.channelName)
-//                        bundle.putString("video_token", userToCallList.videoToken)
-//                        findNavController().navigate(R.id.action_myRequestsFragment_to_videoCallFragment, bundle)
-
-                      /*  val intent = Intent(requireContext(), VideoGroupCallActivity::class.java)
-                        intent.putExtra("channel_name", userToCallList.channelName)
-                        intent.putExtra("video_token", userToCallList.videoToken)
-                        startActivity(intent)*/
 
                         val intent = Intent(requireContext(), VideoCallActivity::class.java)
                         intent.putExtra("channel_name", userToCallList.channelName)
