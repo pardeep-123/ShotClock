@@ -287,21 +287,10 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
                     val gson = GsonBuilder().create()
                     val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
 
-      /*            val options = NavOptions.Builder().setPopUpTo(R.id.incomingCallActivity,true).build()
-                    val bundle = Bundle()
-                    bundle.putString("channelName",userToCallList.channelName)
-                    findNavController(R.id.fragment).navigate(R.id.incomingCallActivity,bundle,options)*/
-
-
                     // latest
-//                     val intent = Intent(this@HomeActivity,IncomingCallActivity::class.java)
-//                    intent.putExtra("channelName",userToCallList.channelName)
-//                    intent.putExtra("receiverName", userToCallList.senderName)
-//                    startActivity(intent)
-
                      val intent = Intent(this@HomeActivity,IncomingCallActivity::class.java)
-                    intent.putExtra("request_id",userToCallList.requestId)
-//                    intent.putExtra("status",userToCallList.status)
+                    intent.putExtra("channelName",userToCallList.channelName)
+                    intent.putExtra("receiverName", userToCallList.senderName)
                     startActivity(intent)
 
                 }
@@ -311,9 +300,6 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
 
     override fun onError(event: String, vararg args: Array<*>) {
     }
-
-//home, profile, myRequest, notification, message, changePassword, cookie,
-// copyRight, privacy, safeDating, terms
 
 
 }

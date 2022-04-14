@@ -9,14 +9,11 @@ import android.os.CountDownTimer
 import android.util.Log
 import android.view.SurfaceView
 import android.view.View
-import android.view.WindowManager
-import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseFragment
@@ -25,9 +22,6 @@ import com.app.shotclock.databinding.FragmentVideoCallBinding
 import com.app.shotclock.models.sockets.VideoCallResponse
 import com.app.shotclock.utils.App
 import com.app.shotclock.utils.SocketManager
-import com.app.shotclock.utils.isVisible
-import com.app.shotclock.videocallingactivity.VideoCallActivity
-import com.google.android.material.button.MaterialButton
 import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcEngine
 import io.agora.rtc.video.VideoCanvas

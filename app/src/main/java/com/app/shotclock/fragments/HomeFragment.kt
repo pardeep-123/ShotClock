@@ -1,7 +1,6 @@
 package com.app.shotclock.fragments
 
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -25,7 +24,6 @@ import com.app.shotclock.genericdatacontainer.Status
 import com.app.shotclock.models.*
 import com.app.shotclock.models.sockets.VideoCallResponse
 import com.app.shotclock.utils.*
-import com.app.shotclock.videocallingactivity.IncomingCallActivity
 import com.app.shotclock.viewmodels.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
@@ -119,9 +117,9 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
         socketManager.onRegister(this)
     }
 
-    private fun activateReceiverListenerSocket() {
-        socketManager.callToUserActivate()
-    }
+//    private fun activateReceiverListenerSocket() {
+//        socketManager.callToUserActivate()
+//    }
 
     private fun setAdapter() {
         adapter = HomeAdapter(requireContext(), homeList)

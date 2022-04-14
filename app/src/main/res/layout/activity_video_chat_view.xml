@@ -6,71 +6,76 @@
     android:background="@color/black"
     android:layout_height="match_parent">
 
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/rlToolbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/_100sdp"-->
-<!--        android:visibility="visible"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        android:background="@color/dark_grey">-->
+    <RelativeLayout
+        android:id="@+id/rlToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/dark_grey">
 
-<!--        <include-->
-<!--            android:id="@+id/tb"-->
-<!--            layout="@layout/app_toolbar" />-->
+        <include
+            android:id="@+id/tb"
+            layout="@layout/app_toolbar" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/tvCancel"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/tb"-->
-<!--            android:layout_marginStart="@dimen/_15sdp"-->
-<!--            android:layout_marginTop="@dimen/_15sdp"-->
-<!--            android:layout_marginEnd="@dimen/_15sdp"-->
-<!--            android:layout_marginBottom="@dimen/_15sdp"-->
-<!--            android:fontFamily="@font/proxima_regular"-->
-<!--            android:padding="@dimen/_5sdp"-->
-<!--            android:text="@string/cancel"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="@dimen/_10ssp" />-->
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tb"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:fontFamily="@font/proxima_regular"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/tvTimer"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/tb"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:layout_marginTop="@dimen/_10sdp"-->
-<!--            android:fontFamily="@font/proxima_semibold"-->
-<!--            android:padding="@dimen/_5sdp"-->
-<!--            android:text="@string/_5_00"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="@dimen/_18ssp" />-->
+        <TextView
+            android:id="@+id/tvTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tb"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/proxima_semibold"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/_5_00"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18ssp" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/tvSkip"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/tb"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_marginStart="@dimen/_15sdp"-->
-<!--            android:layout_marginTop="@dimen/_15sdp"-->
-<!--            android:layout_marginEnd="@dimen/_15sdp"-->
-<!--            android:layout_marginBottom="@dimen/_15sdp"-->
-<!--            android:fontFamily="@font/proxima_regular"-->
-<!--            android:padding="@dimen/_5sdp"-->
-<!--            android:text="@string/skip"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="@dimen/_10ssp" />-->
+        <TextView
+            android:id="@+id/tvSkip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tb"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:fontFamily="@font/proxima_regular"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/skip"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp" />
 
-<!--    </RelativeLayout>-->
+    </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/remote_video_view_container"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@android:color/white"
+        android:background="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/bottom"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/rlToolbar">
+
+        <FrameLayout
+            android:id="@+id/remote_video_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white" />
 
         <FrameLayout
             android:id="@+id/local_video_view_container"
@@ -101,6 +106,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_10ssp" />
 
+    </RelativeLayout>
             <LinearLayout
                 android:id="@+id/bottom"
                 android:layout_width="match_parent"

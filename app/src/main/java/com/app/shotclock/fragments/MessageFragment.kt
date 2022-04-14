@@ -105,7 +105,6 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
             socketManager.init()
         }
 
-        socketManager.callToUserActivate()
         messageAdapter?.arrayList = getChatList
         //messageAdapter?.notifyDataSetChanged()
         if (getChatList.isNotEmpty()) {
@@ -148,10 +147,6 @@ class MessageFragment : BaseFragment<FragmentMessageBinding>(), SocketManager.Ob
                         val gson = GsonBuilder().create()
 
                         val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
-//                        val bundle = Bundle()
-//                        bundle.putString("channel_name", userToCallList.channelName)
-//                        bundle.putString("video_token", userToCallList.videoToken)
-//                        findNavController().navigate(R.id.videoCallFragment, bundle)
 
                         val intent = Intent(requireActivity(), VideoCallActivity::class.java)
                         intent.putExtra("channel_name", userToCallList.channelName)

@@ -22,6 +22,7 @@ import com.app.shotclock.R
 import com.app.shotclock.base.BaseActivity
 import com.app.shotclock.databinding.ActivityVideoChatViewBinding
 import com.app.shotclock.utils.*
+import com.google.android.material.button.MaterialButton
 import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcEngine
 import io.agora.rtc.video.VideoCanvas
@@ -35,12 +36,12 @@ import java.util.concurrent.TimeUnit
 
 class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     private lateinit var binding: ActivityVideoChatViewBinding
-    var channelName = ""
+    var channelName = "shotclock"
     var name = ""
     private lateinit var socketManager: SocketManager
     private var mRtcEngine: RtcEngine? = null
     var builder: AlertDialog.Builder? = null
-    var agoraToken=""
+    var agoraToken="006b3021aff36e7492b9b721e5d924f6c9fIADZjOKHIzvQ6l+A+cplSvKLPfgxa+Ql2cAyGeJpofdTwORqPbkAAAAAEAA7zd8L5VVZYgEAAQDlVVli"
     private var isReciever = false
     var requestId = ""
     private var type = ""
@@ -147,30 +148,43 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         binding = ActivityVideoChatViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initialiseSocket()
-        channelName = intent?.getStringExtra("channel_name").toString()
-        agoraToken = intent?.getStringExtra("video_token").toString()
+        //channelName = intent?.getStringExtra("channel_name").toString()
+       // agoraToken = intent?.getStringExtra("video_token").toString()
         type = intent?.getStringExtra("type").toString()
 
-//        if (type == "chat"){
-//           binding.rlToolbar.isGone()
-//        }else{
-//            videoTimingDialog()
-//          binding.rlToolbar.isVisible()
-//        }
+        videoTimingDialog()
+        binding.rlToolbar.isVisible()
+        binding.tb.ivAppLogo2.isVisible()
+
+
+/*        if (type == "chat"){
+           binding.rlToolbar.isGone()
+        binding.tb.ivAppLogo2.isGone()
+        }else{
+            videoTimingDialog()
+          binding.rlToolbar.isVisible()
+        binding.tb.ivAppLogo2.isVisible()
+        }*/
+
+        binding.tvCancel.setOnClickListener {
+            cancelCallDialog()
+        }
+
+        binding.tvSkip.setOnClickListener {
+            val jsonObject = JSONObject()
+            jsonObject.put("isCallEnd", 0)
+            socketManager.getCallStatus(jsonObject)
+
+        }
 
 //        requestId = intent?.getStringExtra("requestId").toString()
         Log.e("videocall", channelName + "====" + agoraToken)
 
-/*        binding.tvIcebreaker.setOnClickListener {
-            val options =
-                NavOptions.Builder().setPopUpTo(R.id.icebreakerQuestionsFragment, true).build()
-            findNavController(R.id.fragment).navigate(
-                R.id.icebreakerQuestionsFragment,
-                null,
-                options
-            )
+        binding.tvIcebreaker.setOnClickListener {
+//            val options = NavOptions.Builder().setPopUpTo(R.id.icebreakerQuestionsFragment, true).build()
+//            findNavController(R.id.fragment).navigate(R.id.icebreakerQuestionsFragment, null, options)
 
-        }*/
+        }
 //        activateReceiverListenerSocket()
 
         if (checkSelfPermission(
@@ -393,7 +407,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         Log.e("channelData",agoraToken)
         Log.e("channelData",channelName)
         mRtcEngine?.joinChannel(
-            null,
+            agoraToken,
             channelName,
             "Extra Optional Data",
             0
@@ -447,6 +461,30 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         }
     }
 
+
+    private fun cancelCallDialog() {
+            val dialog = Dialog(this)
+            with(dialog) {
+                setCancelable(false)
+                setContentView(R.layout.alert_dialog_cancel_call)
+
+                val btOk: MaterialButton = findViewById(R.id.btYes)
+                val btNo: MaterialButton = findViewById(R.id.btNo)
+
+                btOk.setOnClickListener {
+                    val jsonObject = JSONObject()
+                    jsonObject.put("status", 3)
+                    socketManager.getCallStatus(jsonObject)
+
+                    dismiss()
+                }
+                btNo.setOnClickListener {
+                    dismiss()
+                }
+                show()
+            }
+    }
+
     private fun setupRemoteVideo(uid: Int) {
 
 //        ll_join.visibility = View.VISIBLE
@@ -474,7 +512,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         mRtcEngine!!.setupRemoteVideo(VideoCanvas(surfaceView, VideoCanvas.RENDER_MODE_FIT, uid))
 
         surfaceView.tag = uid // for mark purpose
-//        timerCountDown()
+        timerCountDown()
     }
 
     private fun leaveChannel() {
@@ -525,12 +563,12 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         finish()
     }
 
-   /* private fun timerCountDown() {
+    private fun timerCountDown() {
         val dialog = Dialog(this)
         with(dialog) {
             setCancelable(false)
 
-            val timer = object : CountDownTimer(500000, 1000) {
+            val timer = object : CountDownTimer(300000, 1000) {
                 @SuppressLint("SetTextI18n")
                 override fun onTick(millisUntilFinished: Long) {
 
@@ -557,7 +595,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
             timer.start()
             show()
         }
-    }*/
+    }
 
     override fun onResponseArray(event: String, args: JSONArray) {
 
