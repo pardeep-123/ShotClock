@@ -401,9 +401,9 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
 //            activity?.onBackPressed()
 //        }
 
-        binding.tvIcebreaker.setOnClickListener {
-            this.findNavController().navigate(R.id.action_videoCallFragment_to_icebreakerQuestionsFragment)
-        }
+//        binding.tvIcebreaker.setOnClickListener {
+//            this.findNavController().navigate(R.id.action_videoCallFragment_to_icebreakerQuestionsFragment)
+//        }
 
      /*   binding.tvCancel.setOnClickListener {
             val dialog = Dialog(requireContext())

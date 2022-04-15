@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_homeFragment_to_cookiePolicyFragment2"
             app:destination="@id/cookiePolicyFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_icebreakerQuestionsFragment"
+            app:destination="@id/icebreakerQuestionsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -150,9 +153,6 @@
         android:name="com.app.shotclock.fragments.VideoCallFragment"
         android:label="fragment_video_call"
         tools:layout="@layout/fragment_video_call" >
-        <action
-            android:id="@+id/action_videoCallFragment_to_icebreakerQuestionsFragment"
-            app:destination="@id/icebreakerQuestionsFragment" />
     </fragment>
     <fragment
         android:id="@+id/icebreakerQuestionsFragment"

@@ -102,11 +102,16 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
         }
 
         binding.tvStart.setOnClickListener {
-            if (speedList[0].requestCount == 0) {
-              showErrorAlert(requireActivity(),getString(R.string.you_can_start_your_speed_date_once))
-            } else {
-                callToUser()
+            if (speedList!=null){
+                if (speedList.isNotEmpty()){
+                    if (speedList[0].requestCount == 0) {
+                        showErrorAlert(requireActivity(),getString(R.string.you_can_start_your_speed_date_once))
+                    } else {
+                        callToUser()
+                    }
+                }
             }
+
         }
     }
 
@@ -115,11 +120,11 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
         when (t.status) {
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
-                for (i in 0 until t.data?.body!!.size){
+                speedList.addAll(t.data?.body!!)
+                for (i in 0 until t.data.body.size){
                     groupName = t.data.body[i].groupName
                     status= t.data.body[i].status
                 }
-                speedList.addAll(t.data.body)
                 speedAdapter?.notifyDataSetChanged()
             }
             Status.ERROR -> {
@@ -173,7 +178,7 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
     private fun callToUser() {
         val jsonObject = JSONObject()
         for (i in 0 until speedList.size){
-            if (speedList[i].status == 1){
+            if (speedList[i].status == 2){
                 jsonObject.put("receiverId", speedList[i].id)
                 jsonObject.put("requestId", speedList[i].requestTo)
                 jsonObject.put("receiverName", speedList[i].username)
@@ -202,14 +207,10 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
                         val gson = GsonBuilder().create()
                         val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
 
-//                        val bundle = Bundle()
-//                        bundle.putString("channel_name", userToCallList.channelName)
-//                        bundle.putString("video_token", userToCallList.videoToken)
-//                        findNavController().navigate(R.id.action_speedDateSessionFragment_to_videoCallFragment, bundle)
-
                         val intent = Intent(requireContext(), VideoCallActivity::class.java)
                         intent.putExtra("channel_name", userToCallList.channelName)
                         intent.putExtra("video_token", userToCallList.videoToken)
+                        intent.putExtra("type","fromRequest")
                         startActivity(intent)
 
                     }

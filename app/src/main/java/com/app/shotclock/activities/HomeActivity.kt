@@ -57,10 +57,13 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
     private var headerView : View? =null
     private var civUser : CircleImageView?= null
     private var tvUserName : TextView? = null
+    private var fromVideo =""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
+
+        fromVideo = intent.getStringExtra("fromVideo").toString()
 
         setContentView(binding.root)
         initializeSocket()
@@ -88,6 +91,11 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
 
             binding.navigationView.setCheckedItem(R.id.homeFragment)
             true
+        }
+
+        if (fromVideo == "fromVideo"){
+            val options = NavOptions.Builder().setPopUpTo(R.id.icebreakerQuestionsFragment,false).build()
+            findNavController(R.id.fragment).navigate(R.id.icebreakerQuestionsFragment,null,options)
         }
 
         loadData(intent)

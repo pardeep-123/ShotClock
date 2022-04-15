@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -65,8 +65,10 @@
     </RelativeLayout>
 
     <RelativeLayout
+
+        android:layout_below="@+id/rlToolbar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:background="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/bottom"
         app:layout_constraintTop_toBottomOf="@+id/rlToolbar">
@@ -100,14 +102,15 @@
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:padding="@dimen/_4sdp"
-            app:layout_constraintTop_toBottomOf="@id/local_video_view_container"
-            app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/icebreaker_questions"
             android:textColor="@color/white"
-            android:textSize="@dimen/_10ssp" />
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/local_video_view_container" />
 
     </RelativeLayout>
-            <LinearLayout
+    <LinearLayout
+
                 android:id="@+id/bottom"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -152,4 +155,4 @@
             </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

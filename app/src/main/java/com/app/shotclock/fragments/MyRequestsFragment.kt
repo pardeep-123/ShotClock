@@ -79,46 +79,8 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
         }
     }
 
-/*    private fun videoTimingDialog() {
-        val dialog = Dialog(requireContext(),android.R.style.Theme_Translucent_NoTitleBar)
-        with(dialog) {
-            setCancelable(false)
-            setContentView(R.layout.items_video_calling_timer)
-            val tvTimer: TextView = findViewById(R.id.tvTimer)
-
-//            =new Dialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen)Dialog dialog
-
-            val timer = object : CountDownTimer(5000, 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-
-                    tvTimer.text = String.format("%d", TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished))
-
-                }
-
-                override fun onFinish() {
-                    dismiss()
-                    callToUser()
-                  //  activateReceiverListenerSocket()
-                    *//*if (checkSelfPermission(
-                            Manifest.permission.RECORD_AUDIO,
-                            VideoCallActivity.PERMISSION_REQ_ID_RECORD_AUDIO
-                        ) && checkSelfPermission(
-                            Manifest.permission.CAMERA,
-                            VideoCallActivity.PERMISSION_REQ_ID_CAMERA
-                        )) {
-                        initAgoraEngineAndJoinChannel()
-                    }*//*
-
-                }
-            }
-            timer.start()
-            show()
-        }
-    }*/
-
-
     private fun configureViewModel() {
-        homeViewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
+        homeViewModel = ViewModelProviders.of(this, viewModelFactory)[HomeViewModel::class.java]
         homeViewModel.requestList().observe(viewLifecycleOwner, this)
     }
 
@@ -298,7 +260,6 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
 
     // video calling socket
     private fun callToUser() {
-
         val jsonObject = JSONObject()
         for(i in 0 until requestList.size){
             if(requestList[i].status==2){

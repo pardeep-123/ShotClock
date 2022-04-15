@@ -40,20 +40,44 @@ class NotificationHandlingService : FirebaseMessagingService() {
 
         Log.e(TAG, "Notification: ${remoteMessage.data}")
 
-        message = remoteMessage.data["message"]
-        notificationCode = remoteMessage.data["notification_code"]!!
-        title = remoteMessage.data["title"]!!
-        senderId = remoteMessage.data["sender_id"]!!
-        senderName = remoteMessage.data["sender_name"]!!
+        try {
+            message = remoteMessage.data["message"]
+            notificationCode = remoteMessage.data["notification_code"]!!
+            title = remoteMessage.data["title"]!!
+
+            if (notificationCode =="20"){
+
+//                var body=JSONObject(remoteMessage.data["body"])
+//                senderId =body.getString("senderId")
+//                senderName = body.getString("senderName")
+//
+//                var callType=body.getString("senderId")
+//                if ()
+//                val intent = Intent(applicationContext, HomeActivity::class.java)
+//                intent.putExtra("notification_code", notificationCode)
+//                intent.putExtra("sender_id", senderId)
+//                intent.putExtra("sender_name", senderName)
+//
+//                if (Constants.user2Id != senderId || !Constants.OnMessageScreen)
+//                    makePush(intent)
+
+            }else{
+                title = remoteMessage.data["title"]!!
+                senderId = remoteMessage.data["sender_id"]!!
+                senderName = remoteMessage.data["sender_name"]!!
+                val intent = Intent(applicationContext, HomeActivity::class.java)
+                intent.putExtra("notification_code", notificationCode)
+                intent.putExtra("sender_id", senderId)
+                intent.putExtra("sender_name", senderName)
+
+//                if (Constants.user2Id != senderId || !Constants.OnMessageScreen)
+                    makePush(intent)
+            }
 
 
-        val intent = Intent(applicationContext, HomeActivity::class.java)
-        intent.putExtra("notification_code", notificationCode)
-        intent.putExtra("sender_id", senderId)
-        intent.putExtra("sender_name", senderName)
 
-        if (Constants.user2Id != senderId || !Constants.OnMessageScreen)
-            makePush(intent)
+        } catch (e: Exception) {
+        }
     }
 
     private fun makePush(intent: Intent?) {

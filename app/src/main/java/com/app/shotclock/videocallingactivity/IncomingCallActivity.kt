@@ -67,7 +67,6 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
         callType = intent.extras?.get("callType").toString()
 
         Log.e("channelName", mChannelName)
-        //videoToken = intent.getStringExtra("videoToken")!!
 
         setOnClicks()
 
@@ -87,8 +86,8 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
                 val jsonObject = JSONObject()
                 jsonObject.put("channelName", mChannelName)
                 jsonObject.put("status", "1")
-//                jsonObject.put("isCallEnd","2")
-//                jsonObject.put("duration","0")
+                jsonObject.put("isCallEnd","2")
+                jsonObject.put("duration","0")
                 socketManager.getCallStatus(jsonObject)
 
         }
@@ -99,8 +98,8 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
                 val jsonObject = JSONObject()
                 jsonObject.put("channelName", mChannelName)
                 jsonObject.put("status", "2")
-//                jsonObject.put("isCallEnd","2")
-//                jsonObject.put("duration","0")
+                jsonObject.put("isCallEnd","2")
+                jsonObject.put("duration","0")
                 socketManager.getCallStatus(jsonObject)
 
                 val notifManager: NotificationManager =

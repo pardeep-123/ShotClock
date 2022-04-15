@@ -3,6 +3,7 @@ package com.app.shotclock.videocallingactivity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.PorterDuff
 import android.media.MediaPlayer
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.app.shotclock.R
+import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.base.BaseActivity
 import com.app.shotclock.databinding.ActivityVideoChatViewBinding
 import com.app.shotclock.utils.*
@@ -36,12 +38,12 @@ import java.util.concurrent.TimeUnit
 
 class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     private lateinit var binding: ActivityVideoChatViewBinding
-    var channelName = "shotclock"
+    var channelName = ""
     var name = ""
     private lateinit var socketManager: SocketManager
     private var mRtcEngine: RtcEngine? = null
     var builder: AlertDialog.Builder? = null
-    var agoraToken="006b3021aff36e7492b9b721e5d924f6c9fIADZjOKHIzvQ6l+A+cplSvKLPfgxa+Ql2cAyGeJpofdTwORqPbkAAAAAEAA7zd8L5VVZYgEAAQDlVVli"
+    var agoraToken=""
     private var isReciever = false
     var requestId = ""
     private var type = ""
@@ -63,6 +65,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
          * @param uid User ID of the remote user sending the video streams.
          * @param elapsed Time elapsed (ms) from the local user calling the joinChannel method until this callback is triggered.
          */
+
         override fun onUserJoined(uid: Int, elapsed: Int) {
                 setupRemoteVideo(uid)
         }
@@ -148,32 +151,34 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         binding = ActivityVideoChatViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initialiseSocket()
-        //channelName = intent?.getStringExtra("channel_name").toString()
-       // agoraToken = intent?.getStringExtra("video_token").toString()
+        try {
+            channelName = intent?.getStringExtra("channel_name").toString()
+            agoraToken = intent?.getStringExtra("video_token").toString()
+        } catch (e: Exception) {
+        }
+
         type = intent?.getStringExtra("type").toString()
 
-        videoTimingDialog()
-        binding.rlToolbar.isVisible()
-        binding.tb.ivAppLogo2.isVisible()
 
-
-/*        if (type == "chat"){
+        if (type == "chat"){
            binding.rlToolbar.isGone()
         binding.tb.ivAppLogo2.isGone()
         }else{
             videoTimingDialog()
           binding.rlToolbar.isVisible()
         binding.tb.ivAppLogo2.isVisible()
-        }*/
+        }
 
         binding.tvCancel.setOnClickListener {
             cancelCallDialog()
+            finish()
         }
 
         binding.tvSkip.setOnClickListener {
             val jsonObject = JSONObject()
             jsonObject.put("isCallEnd", 0)
             socketManager.getCallStatus(jsonObject)
+            finish()
 
         }
 
@@ -184,8 +189,13 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 //            val options = NavOptions.Builder().setPopUpTo(R.id.icebreakerQuestionsFragment, true).build()
 //            findNavController(R.id.fragment).navigate(R.id.icebreakerQuestionsFragment, null, options)
 
+            val intent = Intent(this,HomeActivity::class.java)
+            intent.putExtra("fromVideo","fromVideo")
+            startActivity(intent)
+            finish()
         }
-//        activateReceiverListenerSocket()
+
+        activateReceiverListenerSocket()
 
         if (checkSelfPermission(
                 Manifest.permission.RECORD_AUDIO,
@@ -333,7 +343,12 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
             val jsonObject = JSONObject()
             jsonObject.put("status", "2")
             socketManager.getCallStatus(jsonObject)
+            val intent=Intent(this,HomeActivity::class.java).also {
+               it.flags= Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            startActivity(intent)
             finish()
+           // finish()
         }
 
     }
@@ -395,7 +410,6 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         // same channel successfully using the same app id.
         // 2. One token is only valid for the channel name that
         // you use to generate this token.
-
         var token: String? = getString(R.string.agora_app_id)
         if (agoraToken.isEmpty()) {
             token = null
@@ -407,8 +421,8 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         Log.e("channelData",agoraToken)
         Log.e("channelData",channelName)
         mRtcEngine?.joinChannel(
-            agoraToken,
-            channelName,
+            "006b3021aff36e7492b9b721e5d924f6c9fIADO4V4YcMQuAl2zrubMCspUgjRq0VjUAa7IMB03un+FjAOldxwAAAAAEAA7zd8L22ZaYgEAAQDbZlpi",
+            "shotclocktest",
             "Extra Optional Data",
             0
         )
@@ -433,22 +447,22 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
     private fun videoTimingDialog() {
         val dialog = Dialog(this,android.R.style.Theme_Translucent_NoTitleBar)
-        with(dialog) {
-            setCancelable(false)
-            setContentView(R.layout.items_video_calling_timer)
-            val tvTimer: TextView = findViewById(R.id.tvTimer)
+        //with(dialog) {
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.items_video_calling_timer)
+            val tvTimerDialog: TextView = dialog.findViewById(R.id.tvTimerDialog)
 
 //            =new Dialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen)Dialog dialog
 
             val timer = object : CountDownTimer(5000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
 
-                    tvTimer.text = String.format("%d", TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished))
+                    tvTimerDialog.text = String.format("%d", TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished))
 
                 }
 
                 override fun onFinish() {
-                    dismiss()
+                    dialog.dismiss()
                     activateReceiverListenerSocket()
                     if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO) && checkSelfPermission(Manifest.permission.CAMERA, PERMISSION_REQ_ID_CAMERA)) {
                         initAgoraEngineAndJoinChannel()
@@ -457,8 +471,8 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
                 }
             }
             timer.start()
-            show()
-        }
+        dialog.show()
+     //   }
     }
 
 
@@ -564,9 +578,6 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     }
 
     private fun timerCountDown() {
-        val dialog = Dialog(this)
-        with(dialog) {
-            setCancelable(false)
 
             val timer = object : CountDownTimer(300000, 1000) {
                 @SuppressLint("SetTextI18n")
@@ -583,7 +594,6 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
                 }
 
                 override fun onFinish() {
-                    dismiss()
 
 //                    activateReceiverListenerSocket()
 //                    if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO) && checkSelfPermission(Manifest.permission.CAMERA, PERMISSION_REQ_ID_CAMERA)) {
@@ -593,8 +603,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
                 }
             }
             timer.start()
-            show()
-        }
+
     }
 
     override fun onResponseArray(event: String, args: JSONArray) {
@@ -605,6 +614,11 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         when (event) {
             SocketManager.call_status_listener -> {
                 activityScope.launch {
+                   // finish()
+                    val intent=Intent(this@VideoCallActivity,HomeActivity::class.java).also {
+                        it.flags= Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+                    startActivity(intent)
                     finish()
                 }
             }

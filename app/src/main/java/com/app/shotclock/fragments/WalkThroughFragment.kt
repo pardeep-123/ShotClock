@@ -140,10 +140,13 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
                     this.findNavController()
                         .navigate(R.id.action_walkThroughFragment_to_homeActivity)
                     saveToken(requireContext(), t.data.body.authKey)
-                } else
+                } else {
+                    saveToken(requireContext(), t.data.body.authKey)
+
+
                     this.findNavController()
                         .navigate(R.id.action_walkThroughFragment_to_completeProfileFragment)
-
+                }
             }
             Status.ERROR -> {
                 binding.pb.clLoading.isGone()

@@ -1,5 +1,6 @@
 package com.app.shotclock.models
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
 data class RequestListResponseModel(
@@ -11,7 +12,7 @@ data class RequestListResponseModel(
     var message: String, // data get successfully
     @SerializedName("success")
     var success: Int // 1
-) {
+):Serializable {
     data class RequestListResponseBody(
         @SerializedName("bio")
         var bio: String, // Gshnskakal
@@ -45,5 +46,5 @@ data class RequestListResponseModel(
         var userId: Int, // 320
         @SerializedName("username")
         var username: String // tom
-    )
+    ):Serializable
 }
