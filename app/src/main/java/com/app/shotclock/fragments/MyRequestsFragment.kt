@@ -296,6 +296,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
                         val intent = Intent(requireContext(), VideoCallActivity::class.java)
                         intent.putExtra("channel_name", userToCallList.channelName)
                         intent.putExtra("video_token", userToCallList.videoToken)
+                        intent.putExtra("groupName",userToCallList.groupName)
                         intent.putExtra("type","fromRequest")
                         startActivity(intent)
 

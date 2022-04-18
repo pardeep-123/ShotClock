@@ -47,6 +47,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     private var isReciever = false
     var requestId = ""
     private var type = ""
+    private var groupName = ""
     private val activityScope = CoroutineScope(Dispatchers.Main)
 
     private var mPlayer: MediaPlayer? = null
@@ -154,11 +155,12 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         try {
             channelName = intent?.getStringExtra("channel_name").toString()
             agoraToken = intent?.getStringExtra("video_token").toString()
+            groupName = intent?.getStringExtra("groupName").toString()
+
         } catch (e: Exception) {
         }
 
         type = intent?.getStringExtra("type").toString()
-
 
         if (type == "chat"){
            binding.rlToolbar.isGone()
@@ -171,14 +173,14 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
         binding.tvCancel.setOnClickListener {
             cancelCallDialog()
-            finish()
         }
 
         binding.tvSkip.setOnClickListener {
             val jsonObject = JSONObject()
+            jsonObject.put("channelName",channelName)
+            jsonObject.put("duration",0)
             jsonObject.put("isCallEnd", 0)
             socketManager.getCallStatus(jsonObject)
-            finish()
 
         }
 
@@ -487,6 +489,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
                 btOk.setOnClickListener {
                     val jsonObject = JSONObject()
+                    jsonObject.put("groupName",groupName)
                     jsonObject.put("status", 3)
                     socketManager.getCallStatus(jsonObject)
 
