@@ -44,27 +44,15 @@ class NotificationHandlingService : FirebaseMessagingService() {
 
         try {
             message = remoteMessage.data["message"]
-            notificationCode = remoteMessage.data["notification_code"]!!
+            notificationCode = remoteMessage.data["notification_code"]!!.toString()
             title = remoteMessage.data["title"]!!
 
             if (notificationCode =="20"){
                 val intent = Intent(this, IncomingCallActivity::class.java)
                 intent.putExtra("channelName", JSONObject(remoteMessage.data["body"]!!).get("channelName").toString())
-                intent.putExtra("receiverName", JSONObject(remoteMessage.data["body"]!!).get("senderName").toString())
+                //intent.putExtra("receiverName", JSONObject(remoteMessage.data["body"]!!).get("senderName").toString())
                 intent.putExtra("token", JSONObject(remoteMessage.data["body"]!!).get("videoToken").toString())
 
-//                var body=JSONObject(remoteMessage.data["body"])
-//                senderId =body.getString("senderId")
-//                senderName = body.getString("senderName")
-//
-//                var callType=body.getString("senderId")
-//                if ()
-//                val intent = Intent(applicationContext, HomeActivity::class.java)
-//                intent.putExtra("notification_code", notificationCode)
-//                intent.putExtra("sender_id", senderId)
-//                intent.putExtra("sender_name", senderName)
-//
-//                if (Constants.user2Id != senderId || !Constants.OnMessageScreen)
                     makePush(intent)
 
             }else{
@@ -79,7 +67,6 @@ class NotificationHandlingService : FirebaseMessagingService() {
 //                if (Constants.user2Id != senderId || !Constants.OnMessageScreen)
                     makePush(intent)
             }
-
 
 
         } catch (e: Exception) {

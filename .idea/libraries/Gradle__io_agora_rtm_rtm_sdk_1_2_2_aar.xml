@@ -1,10 +1,6 @@
 <component name="libraryTable">
   <library name="Gradle: io.agora.rtm:rtm-sdk:1.2.2@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/9cf5bfa65f972f054603d6cb5de3e5e0/transformed/jetified-rtm-sdk-1.2.2/jars/classes.jar!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/9cf5bfa65f972f054603d6cb5de3e5e0/transformed/jetified-rtm-sdk-1.2.2/jars/libs/agora-rtm-sdk.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/9cf5bfa65f972f054603d6cb5de3e5e0/transformed/jetified-rtm-sdk-1.2.2/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/9cf5bfa65f972f054603d6cb5de3e5e0/transformed/jetified-rtm-sdk-1.2.2/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/5205c1ca697e2cd8b2713239f56e844b/transformed/jetified-rtm-sdk-1.2.2/jars/libs/agora-rtm-sdk.jar!/" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/5205c1ca697e2cd8b2713239f56e844b/transformed/jetified-rtm-sdk-1.2.2/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/5205c1ca697e2cd8b2713239f56e844b/transformed/jetified-rtm-sdk-1.2.2/res" />
