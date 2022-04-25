@@ -4,6 +4,9 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/0b17d0e458cb061ae9c60ff796df49fe/transformed/jetified-navigation-testing-2.4.0-alpha02/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/0b17d0e458cb061ae9c60ff796df49fe/transformed/jetified-navigation-testing-2.4.0-alpha02/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/0b17d0e458cb061ae9c60ff796df49fe/transformed/jetified-navigation-testing-2.4.0-alpha02/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/16f4395d8f2f1691f49bb876d35c8181/transformed/jetified-navigation-testing-2.4.0-alpha02/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/16f4395d8f2f1691f49bb876d35c8181/transformed/jetified-navigation-testing-2.4.0-alpha02/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/16f4395d8f2f1691f49bb876d35c8181/transformed/jetified-navigation-testing-2.4.0-alpha02/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

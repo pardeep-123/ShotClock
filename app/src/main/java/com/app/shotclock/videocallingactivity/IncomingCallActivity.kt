@@ -64,6 +64,7 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
 
         mChannelName = intent.extras?.get("channelName").toString()
         callerName = intent.extras?.get("receiverName").toString()
+        agoraToken = intent.extras?.get("token").toString()
         callType = intent.extras?.get("callType").toString()
 
         Log.e("channelName", mChannelName)
@@ -83,13 +84,22 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
         binding.btAccept.setOnClickListener {
             stopRinging()
                 //0=>calling,1=> callConnected,2=>call Declined,3=>Call Disconnected,4=>Missed call
-                val jsonObject = JSONObject()
-                jsonObject.put("channelName", mChannelName)
-                jsonObject.put("status", "1")
-                jsonObject.put("isCallEnd","2")
-                jsonObject.put("duration","0")
-                socketManager.getCallStatus(jsonObject)
+//                val jsonObject = JSONObject()
+//                jsonObject.put("channelName", mChannelName)
+//                jsonObject.put("status", "1")
+//                jsonObject.put("isCallEnd","2")
+//                jsonObject.put("duration","0")
+//                socketManager.getCallStatus(jsonObject)
 
+            /**
+             * send to video call
+             */
+            val intent = Intent(this@IncomingCallActivity, VideoCallActivity::class.java)
+            intent.putExtra("channel_name", mChannelName)
+            intent.putExtra("video_token", agoraToken)
+            intent.putExtra("type","chat")
+            startActivity(intent)
+            finish()
         }
 
         binding.btDecline.setOnClickListener {
@@ -120,8 +130,7 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
         if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
             socketManager.init()
         }
-        socketManager.unRegister(this)
-        socketManager.onRegister(this)
+
 
     }
 
@@ -134,6 +143,7 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
 
     override fun onResume() {
         super.onResume()
+        socketManager.unRegister(this)
         socketManager.onRegister(this)
     }
 
@@ -174,7 +184,7 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
         super.onStop()
         stopRinging()
         mAnimator?.stop()
-        socketManager.unRegister(this)
+
     }
 
 
@@ -263,16 +273,16 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
     override fun onResponse(event: String, args: JSONObject) {
 
         when (event) {
-            SocketManager.call_to_user_emitter -> {
-                activityScope.launch {
-                    val data = args as JSONObject
-                    Log.e("callResponse", data.toString())
-                    val gson = GsonBuilder().create()
-                     val userToCAllList = gson.fromJson(data.toString(),VideoCallStatusResponse::class.java)
-                    val intent = Intent(this@IncomingCallActivity,VideoCallActivity::class.java)
-
-                }
-            }
+//            SocketManager.call_to_user_emitter -> {
+//                activityScope.launch {
+//                    val data = args as JSONObject
+//                    Log.e("callResponse", data.toString())
+//                    val gson = GsonBuilder().create()
+//                     val userToCAllList = gson.fromJson(data.toString(),VideoCallStatusResponse::class.java)
+//                    val intent = Intent(this@IncomingCallActivity,VideoCallActivity::class.java)
+//
+//                }
+//            }
 
 
             SocketManager.call_status_emitter->{

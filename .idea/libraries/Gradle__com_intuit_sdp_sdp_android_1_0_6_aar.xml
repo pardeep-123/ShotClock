@@ -4,6 +4,9 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/e2cb325d12d52eb2f73d7b4c77072fe9/transformed/jetified-sdp-android-1.0.6/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e2cb325d12d52eb2f73d7b4c77072fe9/transformed/jetified-sdp-android-1.0.6/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e2cb325d12d52eb2f73d7b4c77072fe9/transformed/jetified-sdp-android-1.0.6/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/43e14c1a568203018680fcf29fba4f77/transformed/jetified-sdp-android-1.0.6/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/43e14c1a568203018680fcf29fba4f77/transformed/jetified-sdp-android-1.0.6/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/43e14c1a568203018680fcf29fba4f77/transformed/jetified-sdp-android-1.0.6/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

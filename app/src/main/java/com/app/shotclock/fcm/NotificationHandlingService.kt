@@ -16,8 +16,10 @@ import androidx.core.app.NotificationCompat
 import com.app.shotclock.R
 import com.app.shotclock.activities.HomeActivity
 import com.app.shotclock.utils.Constants
+import com.app.shotclock.videocallingactivity.IncomingCallActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import org.json.JSONObject
 
 class NotificationHandlingService : FirebaseMessagingService() {
     private val TAG = "FireBasePush"
@@ -46,6 +48,10 @@ class NotificationHandlingService : FirebaseMessagingService() {
             title = remoteMessage.data["title"]!!
 
             if (notificationCode =="20"){
+                val intent = Intent(this, IncomingCallActivity::class.java)
+                intent.putExtra("channelName", JSONObject(remoteMessage.data["body"]!!).get("channelName").toString())
+                intent.putExtra("receiverName", JSONObject(remoteMessage.data["body"]!!).get("senderName").toString())
+                intent.putExtra("token", JSONObject(remoteMessage.data["body"]!!).get("videoToken").toString())
 
 //                var body=JSONObject(remoteMessage.data["body"])
 //                senderId =body.getString("senderId")
@@ -59,7 +65,7 @@ class NotificationHandlingService : FirebaseMessagingService() {
 //                intent.putExtra("sender_name", senderName)
 //
 //                if (Constants.user2Id != senderId || !Constants.OnMessageScreen)
-//                    makePush(intent)
+                    makePush(intent)
 
             }else{
                 title = remoteMessage.data["title"]!!

@@ -67,7 +67,7 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
 
         setContentView(binding.root)
         initializeSocket()
-        activateReceiverListenerSocket()
+//        activateReceiverListenerSocket()
         configureViewModel()
         manageHeaderView()
 
@@ -289,20 +289,20 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
 
     override fun onResponse(event: String, args: JSONObject) {
         when (event) {
-            SocketManager.call_to_user_listener -> {
-                activityScope.launch {
-                    val mObject = args as JSONObject
-                    val gson = GsonBuilder().create()
-                    val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
-
-                    // latest
-                     val intent = Intent(this@HomeActivity,IncomingCallActivity::class.java)
-                    intent.putExtra("channelName",userToCallList.channelName)
-                    intent.putExtra("receiverName", userToCallList.senderName)
-                    startActivity(intent)
-
-                }
-            }
+//            SocketManager.call_to_user_listener -> {
+//                activityScope.launch {
+//                    val mObject = args as JSONObject
+//                    val gson = GsonBuilder().create()
+//                    val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
+//
+//                    // latest
+//                     val intent = Intent(this@HomeActivity,IncomingCallActivity::class.java)
+//                    intent.putExtra("channelName",userToCallList.channelName)
+//                    intent.putExtra("receiverName", userToCallList.senderName)
+//                    startActivity(intent)
+//
+//                }
+//            }
         }
     }
 

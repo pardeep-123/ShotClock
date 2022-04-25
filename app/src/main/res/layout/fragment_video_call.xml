@@ -8,7 +8,7 @@
     tools:context=".fragments.VideoCallFragment">
 
     <FrameLayout
-        android:id="@+id/remote_video_view_container"
+        android:id="@+id/remote_video_view_container1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@android:color/white"
@@ -37,8 +37,8 @@
         android:text="@string/icebreaker_questions"
         android:textColor="@color/black"
         android:textSize="@dimen/_10ssp"
-        app:layout_constraintEnd_toEndOf="@id/remote_video_view_container"
-        app:layout_constraintTop_toTopOf="@id/remote_video_view_container" />
+        app:layout_constraintEnd_toEndOf="@id/remote_video_view_container1"
+        app:layout_constraintTop_toTopOf="@id/remote_video_view_container1" />
 
     <ImageView
         android:id="@+id/ivMike"

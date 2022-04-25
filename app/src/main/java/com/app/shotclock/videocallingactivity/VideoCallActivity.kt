@@ -423,8 +423,8 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         Log.e("channelData",agoraToken)
         Log.e("channelData",channelName)
         mRtcEngine?.joinChannel(
-            "006b3021aff36e7492b9b721e5d924f6c9fIADO4V4YcMQuAl2zrubMCspUgjRq0VjUAa7IMB03un+FjAOldxwAAAAAEAA7zd8L22ZaYgEAAQDbZlpi",
-            "shotclocktest",
+            agoraToken,
+            channelName,
             "Extra Optional Data",
             0
         )
@@ -564,16 +564,16 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
     override fun onResume() {
         super.onResume()
+        socketManager.unRegister(this)
         socketManager.onRegister(this)
     }
 
-    fun initialiseSocket() {
+    private fun initialiseSocket() {
         socketManager = App.mInstance.getSocketManager()!!
         if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
             socketManager.init()
         }
-        socketManager.unRegister(this)
-        socketManager.onRegister(this)
+
     }
 
     override fun onBackPressed() {

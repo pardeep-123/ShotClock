@@ -261,7 +261,7 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
         // Only one remote video view is available for this
         // tutorial. Here we check if there exists a surface
         // view tagged as this uid.
-        val container = binding.remoteVideoViewContainer
+        val container = binding.remoteVideoViewContainer1
 
         if (container.childCount >= 1) {
             return
@@ -287,14 +287,14 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
     }
 
     private fun onRemoteUserLeft() {
-        val container = binding.remoteVideoViewContainer
+        val container = binding.remoteVideoViewContainer1
         container.removeAllViews()
         activity?.finish()
 
     }
 
     private fun onRemoteUserVideoMuted(uid: Int, muted: Boolean) {
-        val container =binding.remoteVideoViewContainer
+        val container =binding.remoteVideoViewContainer1
 
         val surfaceView = container.getChildAt(0) as SurfaceView
 
