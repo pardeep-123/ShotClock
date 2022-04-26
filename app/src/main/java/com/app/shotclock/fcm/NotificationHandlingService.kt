@@ -50,10 +50,10 @@ class NotificationHandlingService : FirebaseMessagingService() {
             if (notificationCode =="20"){
                 val intent = Intent(this, IncomingCallActivity::class.java)
                 intent.putExtra("channelName", JSONObject(remoteMessage.data["body"]!!).get("channelName").toString())
-                //intent.putExtra("receiverName", JSONObject(remoteMessage.data["body"]!!).get("senderName").toString())
+                intent.putExtra("receiverName", JSONObject(remoteMessage.data["body"]!!).get("senderName").toString())
                 intent.putExtra("token", JSONObject(remoteMessage.data["body"]!!).get("videoToken").toString())
 
-                    makePush(intent)
+                makePush(intent)
 
             }else{
                 title = remoteMessage.data["title"]!!

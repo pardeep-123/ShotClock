@@ -152,6 +152,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         binding = ActivityVideoChatViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initialiseSocket()
+        socketManager.callStatusActivate()
         try {
             channelName = intent?.getStringExtra("channel_name").toString()
             agoraToken = intent?.getStringExtra("video_token").toString()
@@ -197,7 +198,6 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
             finish()
         }
 
-        activateReceiverListenerSocket()
 
         if (checkSelfPermission(
                 Manifest.permission.RECORD_AUDIO,
@@ -207,13 +207,6 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
             initAgoraEngineAndJoinChannel()
         }
 
-    }
-
-    fun activateReceiverListenerSocket() {
-
-        val jsonObject = JSONObject()
-        jsonObject.put("status", "1")
-        socketManager.getCallStatus(jsonObject)
     }
 
     private fun initAgoraEngineAndJoinChannel() {
@@ -343,13 +336,10 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     fun onEncCallClicked(view: View) {
         if (isNetworkConnected()) {
             val jsonObject = JSONObject()
+            jsonObject.put("channelName", channelName)
             jsonObject.put("status", "2")
             socketManager.getCallStatus(jsonObject)
-            val intent=Intent(this,HomeActivity::class.java).also {
-               it.flags= Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            }
-            startActivity(intent)
-            finish()
+
            // finish()
         }
 
@@ -465,7 +455,6 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
                 override fun onFinish() {
                     dialog.dismiss()
-                    activateReceiverListenerSocket()
                     if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO) && checkSelfPermission(Manifest.permission.CAMERA, PERMISSION_REQ_ID_CAMERA)) {
                         initAgoraEngineAndJoinChannel()
                     }
@@ -566,6 +555,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         super.onResume()
         socketManager.unRegister(this)
         socketManager.onRegister(this)
+        socketManager.callStatusActivate()
     }
 
     private fun initialiseSocket() {
@@ -573,6 +563,8 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
             socketManager.init()
         }
+        socketManager.unRegister(this)
+        socketManager.onRegister(this)
 
     }
 
@@ -597,12 +589,6 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
                 }
 
                 override fun onFinish() {
-
-//                    activateReceiverListenerSocket()
-//                    if (checkSelfPermission(Manifest.permission.RECORD_AUDIO, PERMISSION_REQ_ID_RECORD_AUDIO) && checkSelfPermission(Manifest.permission.CAMERA, PERMISSION_REQ_ID_CAMERA)) {
-//                        initAgoraEngineAndJoinChannel()
-//                    }
-
                 }
             }
             timer.start()
@@ -625,39 +611,17 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
                     finish()
                 }
             }
-//            SocketManager.call_termination_event -> {
-//                activityScope.launch {
-//                    var data = args as JSONObject
-//                    Log.e("callResponse", data.toString())
-//                    val gson = GsonBuilder().create()
-//                    val callData = gson.fromJson(
-//                        data.toString(),
-//                        CallTerminateResponse::class.java
-//                    )
-//                    if (callData.requestId.toString() == requestId) {
-//                        Log.e("===five","finish")
-//                        finish()
-//                    }
-//                }
-//
-//            }
-//
-//            SocketManager.call_termination_listener -> {
-//                activityScope.launch {
-//                    var data = args as JSONObject
-//                    Log.e("callResponse", data.toString())
-//                    val gson = GsonBuilder().create()
-//                    val callData = gson.fromJson(
-//                        data.toString(),
-//                        CallTerminateResponse::class.java
-//                    )
-//                    if (callData.requestId.toString() == requestId) {
-//                        Log.e("===one","finish")
-//                        finish()
-//                    }
-//                }
-//            }
 
+            SocketManager.call_status_emitter -> {
+                activityScope.launch {
+                    // finish()
+                    val intent=Intent(this@VideoCallActivity,HomeActivity::class.java).also {
+                        it.flags= Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+                    startActivity(intent)
+                    finish()
+                }
+            }
         }
     }
 
