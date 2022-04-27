@@ -252,6 +252,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
                             val intent = Intent(requireContext(), VideoCallActivity::class.java)
                             intent.putExtra("channel_name", userToCallList.channelName)
                             intent.putExtra("video_token", userToCallList.videoToken)
+                            intent.putExtra("senderId", user2Id.toString())
                             intent.putExtra("type","chat")
 
                             startActivity(intent)

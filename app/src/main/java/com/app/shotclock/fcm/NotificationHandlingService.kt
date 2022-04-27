@@ -51,6 +51,7 @@ class NotificationHandlingService : FirebaseMessagingService() {
                 val intent = Intent(this, IncomingCallActivity::class.java)
                 intent.putExtra("channelName", JSONObject(remoteMessage.data["body"]!!).get("channelName").toString())
                 intent.putExtra("receiverName", JSONObject(remoteMessage.data["body"]!!).get("senderName").toString())
+                intent.putExtra("senderId", JSONObject(remoteMessage.data["body"]!!).get("senderId").toString())
                 intent.putExtra("token", JSONObject(remoteMessage.data["body"]!!).get("videoToken").toString())
 
                 makePush(intent)

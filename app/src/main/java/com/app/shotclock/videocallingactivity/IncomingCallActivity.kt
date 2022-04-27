@@ -31,7 +31,7 @@ import org.json.JSONObject
 
 class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
     lateinit var binding : ItemsNotificationVideoCallingBinding
-    var mCallerId = 0
+    var mCallerId = ""
     var mReceiverID = 0
     var mSenderImage = ""
     private var callerName = ""
@@ -64,6 +64,7 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
 
         mChannelName = intent.extras?.get("channelName").toString()
         callerName = intent.extras?.get("receiverName").toString()
+        mCallerId = intent.extras?.getString("senderId").toString()
         agoraToken = intent.extras?.get("token").toString()
         callType = intent.extras?.get("callType").toString()
 
@@ -98,6 +99,7 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
             val intent = Intent(this@IncomingCallActivity, VideoCallActivity::class.java)
             intent.putExtra("channel_name", mChannelName)
             intent.putExtra("video_token", agoraToken)
+            intent.putExtra("senderId", mCallerId)
             intent.putExtra("type","chat")
             startActivity(intent)
             finish()
@@ -109,6 +111,7 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
                 val jsonObject = JSONObject()
                 jsonObject.put("channelName", mChannelName)
                 jsonObject.put("status", "2")
+                jsonObject.put("receiverId", mCallerId)
 //                jsonObject.put("isCallEnd","2")
 //                jsonObject.put("duration","0")
                 socketManager.getCallStatus(jsonObject)

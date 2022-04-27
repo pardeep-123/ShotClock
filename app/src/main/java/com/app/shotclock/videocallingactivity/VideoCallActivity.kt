@@ -45,6 +45,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
     var builder: AlertDialog.Builder? = null
     var agoraToken=""
     private var isReciever = false
+    private var senderId = ""
     var requestId = ""
     private var type = ""
     private var groupName = ""
@@ -151,17 +152,18 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         super.onCreate(savedInstanceState)
         binding = ActivityVideoChatViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initialiseSocket()
-        socketManager.callStatusActivate()
+
         try {
             channelName = intent?.getStringExtra("channel_name").toString()
             agoraToken = intent?.getStringExtra("video_token").toString()
             groupName = intent?.getStringExtra("groupName").toString()
+            senderId = intent?.getStringExtra("senderId").toString()
 
         } catch (e: Exception) {
         }
 
         type = intent?.getStringExtra("type").toString()
+
 
         if (type == "chat"){
            binding.rlToolbar.isGone()
@@ -338,9 +340,9 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
             val jsonObject = JSONObject()
             jsonObject.put("channelName", channelName)
             jsonObject.put("status", "2")
+            jsonObject.put("receiverId", senderId)
             socketManager.getCallStatus(jsonObject)
 
-           // finish()
         }
 
     }
@@ -553,8 +555,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
 
     override fun onResume() {
         super.onResume()
-        socketManager.unRegister(this)
-        socketManager.onRegister(this)
+        initialiseSocket()
         socketManager.callStatusActivate()
     }
 
