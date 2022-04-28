@@ -48,6 +48,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
     private var requestList = ArrayList<RequestListResponseModel.RequestListResponseBody>()
     private var groupName = ""
     private var status = 0
+    private var senderId = ""
     private var allRequestList = ArrayList<ArrayList<AllRequestResponseModel.AllRequestBody>>()
     private var activityScope = CoroutineScope(Dispatchers.Main)
     private lateinit var socketManager: SocketManager
@@ -75,7 +76,9 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
         binding.rvMyRequests.adapter = requestAdapter
 
         requestAdapter?.onItemClickListener = { pos ->
-            this.findNavController().navigate(R.id.action_myRequestsFragment_to_speedDateSessionFragment)
+            val bundle = Bundle()
+            bundle.putString("senderId",requestList[pos].id.toString())
+            this.findNavController().navigate(R.id.action_myRequestsFragment_to_speedDateSessionFragment,bundle)
         }
     }
 
@@ -263,6 +266,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
         val jsonObject = JSONObject()
         for(i in 0 until requestList.size){
             if(requestList[i].status==2){
+                senderId=requestList[i].requestTo
                 jsonObject.put("receiverId", requestList[i].requestTo)
                 jsonObject.put("requestId", requestList[i].id)
                 jsonObject.put("receiverName", requestList[i].username)
@@ -297,6 +301,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
                         intent.putExtra("channel_name", userToCallList.channelName)
                         intent.putExtra("video_token", userToCallList.videoToken)
                         intent.putExtra("groupName",userToCallList.groupName)
+                        intent.putExtra("senderId", senderId)
                         intent.putExtra("type","fromRequest")
                         startActivity(intent)
 

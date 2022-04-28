@@ -36,7 +36,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
+import com.google.firebase.messaging.FirebaseMessaging
 import org.json.JSONObject
 import java.net.URL
 import javax.inject.Inject
@@ -83,6 +85,25 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mCallbackManager = CallbackManager.Factory.create()
+
+        try {
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(
+                        "gg",
+                        "Fetching FCM registration token failed",
+                        task.exception
+                    )
+                    return@OnCompleteListener
+                }
+                val token = task.result
+                Log.d("token",token)
+                Prefs.with(view.context).save("token",token.toString())
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+        }
 
         setAdapter()
         configureViewModel()

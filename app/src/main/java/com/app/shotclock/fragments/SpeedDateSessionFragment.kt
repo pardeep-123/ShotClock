@@ -3,6 +3,7 @@ package com.app.shotclock.fragments
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -46,6 +47,7 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
     private var status = 0
     private var activityScope = CoroutineScope(Dispatchers.Main)
     private lateinit var socketManager: SocketManager
+    private var senderId =""
 
     override fun getViewBinding(): FragmentSpeedDateSessionBinding {
         return FragmentSpeedDateSessionBinding.inflate(layoutInflater)
@@ -57,6 +59,9 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
         socketManager = App.mInstance.getSocketManager()!!
         if (!socketManager.isConnected() || socketManager.getmSocket() == null)
             socketManager.init()
+
+         val bundle = arguments
+        senderId= bundle?.getString("senderId").toString()
 
         configureViewModel()
         handleClicks()
@@ -102,7 +107,7 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
         }
 
         binding.tvStart.setOnClickListener {
-            if (speedList!=null){
+
                 if (speedList.isNotEmpty()){
                     if (speedList[0].requestCount == 0) {
                         showErrorAlert(requireActivity(),getString(R.string.you_can_start_your_speed_date_once))
@@ -110,7 +115,6 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
                         callToUser()
                     }
                 }
-            }
 
         }
     }
@@ -176,11 +180,12 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
     }
 
     private fun callToUser() {
+
         val jsonObject = JSONObject()
         for (i in 0 until speedList.size){
             if (speedList[i].status == 2){
-                jsonObject.put("receiverId", speedList[i].id)
-                jsonObject.put("requestId", speedList[i].requestTo)
+                jsonObject.put("receiverId", speedList[i].requestTo)
+                jsonObject.put("requestId", speedList[i].id)
                 jsonObject.put("receiverName", speedList[i].username)
                 jsonObject.put("receiverImage", speedList[i].profileImage)
             }
@@ -210,6 +215,8 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
                         val intent = Intent(requireContext(), VideoCallActivity::class.java)
                         intent.putExtra("channel_name", userToCallList.channelName)
                         intent.putExtra("video_token", userToCallList.videoToken)
+                        intent.putExtra("groupName",userToCallList.groupName)
+                        intent.putExtra("senderId", senderId)
                         intent.putExtra("type","fromRequest")
                         startActivity(intent)
 
@@ -218,8 +225,9 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
 
                 }
             }
+            }
         }
-    }
+
 
     override fun onError(event: String, vararg args: Array<*>) {
 

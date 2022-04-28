@@ -12,7 +12,6 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.ScaleAnimation
-import androidx.lifecycle.ViewModelProviders
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseActivity
 import com.app.shotclock.databinding.ItemsNotificationVideoCallingBinding
@@ -20,7 +19,6 @@ import com.app.shotclock.models.sockets.VideoCallStatusResponse
 import com.app.shotclock.utils.App
 import com.app.shotclock.utils.SocketManager
 import com.app.shotclock.utils.isNetworkConnected
-import com.app.shotclock.viewmodels.HomeViewModel
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

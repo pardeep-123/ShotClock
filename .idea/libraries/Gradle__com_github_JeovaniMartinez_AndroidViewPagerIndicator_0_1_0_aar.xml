@@ -1,15 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.JeovaniMartinez:AndroidViewPagerIndicator:0.1.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/8afad9cb7b83c50d7c662c526e57be82/transformed/jetified-AndroidViewPagerIndicator-0.1.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/8afad9cb7b83c50d7c662c526e57be82/transformed/jetified-AndroidViewPagerIndicator-0.1.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/8afad9cb7b83c50d7c662c526e57be82/transformed/jetified-AndroidViewPagerIndicator-0.1.0/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4569a6c1fd2586cddfafb544060e05c0/transformed/jetified-AndroidViewPagerIndicator-0.1.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4569a6c1fd2586cddfafb544060e05c0/transformed/jetified-AndroidViewPagerIndicator-0.1.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/4569a6c1fd2586cddfafb544060e05c0/transformed/jetified-AndroidViewPagerIndicator-0.1.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bc215b54f1d513941ca3b755757baf23/transformed/jetified-AndroidViewPagerIndicator-0.1.0/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/bc215b54f1d513941ca3b755757baf23/transformed/jetified-AndroidViewPagerIndicator-0.1.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bc215b54f1d513941ca3b755757baf23/transformed/jetified-AndroidViewPagerIndicator-0.1.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bc215b54f1d513941ca3b755757baf23/transformed/jetified-AndroidViewPagerIndicator-0.1.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

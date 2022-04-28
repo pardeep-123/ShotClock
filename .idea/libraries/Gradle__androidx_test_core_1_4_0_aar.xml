@@ -1,8 +1,6 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.test:core:1.4.0@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4e986eb7c5f61549657a10595af0a611/transformed/jetified-core-1.4.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/627b8ba80d9888dc8e3df19fd8e8c0b7/transformed/jetified-core-1.4.0/res" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/9bacaac2a2ff11a4e5e183e74c8b0b42/transformed/jetified-core-1.4.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/9bacaac2a2ff11a4e5e183e74c8b0b42/transformed/jetified-core-1.4.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/9bacaac2a2ff11a4e5e183e74c8b0b42/transformed/jetified-core-1.4.0/AndroidManifest.xml" />

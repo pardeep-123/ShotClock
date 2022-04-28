@@ -342,9 +342,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
             jsonObject.put("status", "2")
             jsonObject.put("receiverId", senderId)
             socketManager.getCallStatus(jsonObject)
-
         }
-
     }
 
     private fun initializeAgoraEngine() {
@@ -482,6 +480,8 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
                     val jsonObject = JSONObject()
                     jsonObject.put("groupName",groupName)
                     jsonObject.put("status", 3)
+                    jsonObject.put("receiverId", senderId)
+                    jsonObject.put("channelName", channelName)
                     socketManager.getCallStatus(jsonObject)
 
                     dismiss()
