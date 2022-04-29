@@ -108,6 +108,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
                     mCounter!!.cancel()
                 stopRinging()
                 setupRemoteVideo(uid)
+                socketManager.callStatusActivate()
             }
         }
 
@@ -200,6 +201,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
             finish()
         }
 
+        initialiseSocket()
 
         if (checkSelfPermission(
                 Manifest.permission.RECORD_AUDIO,
@@ -340,7 +342,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
             val jsonObject = JSONObject()
             jsonObject.put("channelName", channelName)
             jsonObject.put("status", "2")
-            jsonObject.put("receiverId", senderId)
+           // jsonObject.put("receiverId", senderId)
             socketManager.getCallStatus(jsonObject)
         }
     }
@@ -566,6 +568,7 @@ class VideoCallActivity:BaseActivity(), SocketManager.Observer {
         }
         socketManager.unRegister(this)
         socketManager.onRegister(this)
+        socketManager.callStatusActivate()
 
     }
 

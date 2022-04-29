@@ -105,11 +105,10 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
 
         binding.btDecline.setOnClickListener {
             stopRinging()
-            if (isNetworkConnected()) {
                 val jsonObject = JSONObject()
                 jsonObject.put("channelName", mChannelName)
                 jsonObject.put("status", "2")
-                jsonObject.put("receiverId", mCallerId)
+              //  jsonObject.put("receiverId", mCallerId)
 //                jsonObject.put("isCallEnd","2")
 //                jsonObject.put("duration","0")
                 socketManager.getCallStatus(jsonObject)
@@ -117,10 +116,7 @@ class IncomingCallActivity :BaseActivity() , SocketManager.Observer {
                 val notifManager: NotificationManager =
                     getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                 notifManager.cancelAll()
-            } else {
             }
-            //   showAlertWithOk(resources.getString(R.string.internet_connection))
-        }
 
         binding.tvSenderName.text = callerName
 

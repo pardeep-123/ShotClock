@@ -5,14 +5,14 @@
 <!--    ios Agora id-->
   <!--  <string name="agora_app_id">2e3700ef5e0648be8fc20e03324c5651</string>-->
 
-<!--    <string name="agora_app_id">2e3700ef5e0648be8fc20e03324c5651</string>-->
+    <string name="agora_app_id">2e3700ef5e0648be8fc20e03324c5651</string>
+<!--
     <string name="agora_app_id">b3021aff36e7492b9b721e5d924f6c9f</string>
+-->
 
     <!--  android Agora id-->
 <!--    <string name="agora_app_id">b3021aff36e7492b9b721e5d924f6c9f</string>-->
 
-    <!--android agora key-->
-<!--    b3021aff36e7492b9b721e5d924f6c9f-->
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="alert">Alert</string>
