@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseFragment
+import com.app.shotclock.cache.getIsLoginString
 import com.app.shotclock.cache.getMyString
 import com.app.shotclock.cache.getUser
 import com.app.shotclock.databinding.FragmentSplashBinding
@@ -54,7 +55,8 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
             lifecycleScope.launchWhenResumed {
 
 //                if (getUser(requireContext())?.authKey.isNullOrEmpty())
-                if (getMyString(requireContext()).isNullOrEmpty())
+                //if (getMyString(requireContext()).isNullOrEmpty())
+                if (getIsLoginString(requireContext()).isNullOrEmpty())
                 view.findNavController().navigate(R.id.action_splashFragment_to_walkThroughFragment)
                 else
                     view.findNavController().navigate(R.id.action_splashFragment_to_homeActivity)

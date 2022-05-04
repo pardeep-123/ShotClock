@@ -31,6 +31,24 @@ fun getMyString(context: Context): String? {
     return Prefs.with(context).getString(USER_AUTH, "")
 }
 
+
+fun saveIsLoginString(context: Context, value: String) {
+    Prefs.with(context).save("isLogin", value)
+}
+
+fun getIsLoginString(context: Context): String? {
+    return Prefs.with(context).getString("isLogin", "")
+}
+
+fun saveIsSocialLoginString(context: Context, value: String) {
+    Prefs.with(context).save("isSocialLogin", value)
+}
+
+fun getIsSocialLoginString(context: Context): String? {
+    return Prefs.with(context).getString("isSocialLogin", "")
+}
+
+
 fun clearData(context: Context, key: String) {
     Prefs.with(context).remove(key)
 }

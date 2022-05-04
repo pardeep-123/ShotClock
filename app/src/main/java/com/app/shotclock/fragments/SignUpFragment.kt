@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
+import com.app.shotclock.cache.saveIsSocialLoginString
 import com.app.shotclock.cache.saveToken
 import com.app.shotclock.cache.saveUser
 import com.app.shotclock.databinding.FragmentSignUpBinding
@@ -117,6 +118,8 @@ class SignUpFragment : ImagePickerUtility1<FragmentSignUpBinding>(),Observer<Res
             Status.SUCCESS-> {
                 saveUser(requireContext(), t.data?.body!!)
                 saveToken(requireContext(), t.data.body.authKey)
+                saveIsSocialLoginString(requireActivity(),"false")
+
                 binding.pb.clLoading.isGone()
                 this.findNavController()
                     .navigate(R.id.action_signUpFragment_to_completeProfileFragment)

@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.adapters.CompleteProfileImagesAdapter
+import com.app.shotclock.cache.saveIsLoginString
 import com.app.shotclock.cache.saveString
 import com.app.shotclock.databinding.FragmentCompleteProfileBinding
 import com.app.shotclock.genericdatacontainer.Resource
@@ -273,6 +274,7 @@ class CompleteProfileFragment : ImagePickerUtility1<FragmentCompleteProfileBindi
     override fun onChanged(t: Resource<CompleteProfileResponse>) {
         when (t.status) {
             Status.SUCCESS -> {
+                saveIsLoginString(requireActivity(),"true")
                 binding.pb.clLoading.isGone()
                 val dialog = Dialog(requireContext())
                 with(dialog) {

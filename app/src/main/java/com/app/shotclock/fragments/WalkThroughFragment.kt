@@ -16,9 +16,7 @@ import com.app.shotclock.R
 import com.app.shotclock.activities.InitialActivity
 import com.app.shotclock.adapters.WalkThroughAdapter
 import com.app.shotclock.base.BaseFragment
-import com.app.shotclock.cache.saveString
-import com.app.shotclock.cache.saveToken
-import com.app.shotclock.cache.saveUser
+import com.app.shotclock.cache.*
 import com.app.shotclock.databinding.FragmentWalkThroughBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
@@ -155,15 +153,18 @@ class WalkThroughFragment : BaseFragment<FragmentWalkThroughBinding>(),
             Status.SUCCESS -> {
                 binding.pb.clLoading.isGone()
                 binding.pb.clLoading.isVisible()
+                saveIsSocialLoginString(requireActivity(),"true")
+
                 saveUser(requireContext(), t.data?.body!!)
                 saveString(requireContext(), t.data.body.authKey)
                 if (t.data.body.isComplete == 1) {
                     this.findNavController()
                         .navigate(R.id.action_walkThroughFragment_to_homeActivity)
                     saveToken(requireContext(), t.data.body.authKey)
+                    saveIsLoginString(requireActivity(),"true")
+
                 } else {
                     saveToken(requireContext(), t.data.body.authKey)
-
 
                     this.findNavController()
                         .navigate(R.id.action_walkThroughFragment_to_completeProfileFragment)

@@ -8,9 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.app.shotclock.R
 import com.app.shotclock.base.BaseFragment
-import com.app.shotclock.cache.saveString
-import com.app.shotclock.cache.saveToken
-import com.app.shotclock.cache.saveUser
+import com.app.shotclock.cache.*
 import com.app.shotclock.databinding.FragmentLoginBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
@@ -103,7 +101,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), Observer<Resource<Lo
                 binding.pb.clLoading.isVisible()
                 saveUser(requireContext(), t.data?.body!!)
                 saveToken(requireContext(), t.data.body.authKey)
+                saveIsLoginString(requireActivity(),"true")
 
+                saveIsSocialLoginString(requireActivity(),"false")
                 if (t.data.body.isComplete == 1) {
                     this.findNavController().navigate(R.id.action_loginFragment_to_homeActivity)
                     saveString(requireContext(), t.data.body.authKey)

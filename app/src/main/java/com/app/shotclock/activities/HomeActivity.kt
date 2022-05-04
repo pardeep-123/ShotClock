@@ -19,6 +19,7 @@ import com.app.shotclock.R
 import com.app.shotclock.base.BaseActivity
 import com.app.shotclock.cache.clearAllData
 import com.app.shotclock.cache.clearData
+import com.app.shotclock.cache.getIsSocialLoginString
 import com.app.shotclock.cache.getUser
 import com.app.shotclock.constants.ApiConstants
 import com.app.shotclock.constants.CacheConstants
@@ -26,17 +27,13 @@ import com.app.shotclock.databinding.ActivityHomeBinding
 import com.app.shotclock.genericdatacontainer.Resource
 import com.app.shotclock.genericdatacontainer.Status
 import com.app.shotclock.models.BaseResponseModel
-import com.app.shotclock.models.sockets.VideoCallResponse
 import com.app.shotclock.utils.*
-import com.app.shotclock.videocallingactivity.IncomingCallActivity
 import com.app.shotclock.viewmodels.LoginSignUpViewModel
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
-import com.google.gson.GsonBuilder
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 import javax.inject.Inject
@@ -100,6 +97,16 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
 
         loadData(intent)
 
+        if (getIsSocialLoginString(this)=="true"){
+
+
+            try {
+                binding.navigationView.getMenu().getItem(5).setVisible(false)
+            } catch (e: Exception) {
+            }
+
+
+        }
     }
 
     // manage home side header view
