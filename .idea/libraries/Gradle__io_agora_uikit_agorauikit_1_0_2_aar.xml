@@ -1,15 +1,15 @@
 <component name="libraryTable">
   <library name="Gradle: io.agora.uikit:agorauikit:1.0.2@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/415dc4492d48361993f11649e7460b75/transformed/jetified-agorauikit-1.0.2/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/415dc4492d48361993f11649e7460b75/transformed/jetified-agorauikit-1.0.2/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/415dc4492d48361993f11649e7460b75/transformed/jetified-agorauikit-1.0.2/AndroidManifest.xml" />
+      <root url="jar://$APPLICATION_HOME_DIR$/jre/caches/transforms-3/415dc4492d48361993f11649e7460b75/transformed/jetified-agorauikit-1.0.2/jars/classes.jar!/" />
+      <root url="file://$APPLICATION_HOME_DIR$/jre/caches/transforms-3/415dc4492d48361993f11649e7460b75/transformed/jetified-agorauikit-1.0.2/res" />
+      <root url="file://$APPLICATION_HOME_DIR$/jre/caches/transforms-3/415dc4492d48361993f11649e7460b75/transformed/jetified-agorauikit-1.0.2/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.agora.uikit/agorauikit/1.0.2/8705edb5e2dfba2071cb9c23b57e16045488179c/agorauikit-1.0.2-javadoc.jar!/" />
+      <root url="jar://$APPLICATION_HOME_DIR$/jre/caches/modules-2/files-2.1/io.agora.uikit/agorauikit/1.0.2/8705edb5e2dfba2071cb9c23b57e16045488179c/agorauikit-1.0.2-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.agora.uikit/agorauikit/1.0.2/9be7710e317ff1013f1b619b0d6999cfa2ad770d/agorauikit-1.0.2-sources.jar!/" />
+      <root url="jar://$APPLICATION_HOME_DIR$/jre/caches/modules-2/files-2.1/io.agora.uikit/agorauikit/1.0.2/9be7710e317ff1013f1b619b0d6999cfa2ad770d/agorauikit-1.0.2-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

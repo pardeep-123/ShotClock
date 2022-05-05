@@ -1,15 +1,16 @@
 <component name="libraryTable">
   <library name="Gradle: com.yanzhenjie:mediascanner:1.0.3@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/c2dd00104ee40dd34072666c57b1c63a/transformed/jetified-mediascanner-1.0.3/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c2dd00104ee40dd34072666c57b1c63a/transformed/jetified-mediascanner-1.0.3/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c2dd00104ee40dd34072666c57b1c63a/transformed/jetified-mediascanner-1.0.3/AndroidManifest.xml" />
+      <root url="file://$APPLICATION_HOME_DIR$/jre/caches/transforms-3/c2dd00104ee40dd34072666c57b1c63a/transformed/jetified-mediascanner-1.0.3/AndroidManifest.xml" />
+      <root url="jar://$APPLICATION_HOME_DIR$/jre/caches/transforms-3/c2dd00104ee40dd34072666c57b1c63a/transformed/jetified-mediascanner-1.0.3/jars/classes.jar!/" />
+      <root url="file://$APPLICATION_HOME_DIR$/jre/caches/transforms-3/c2dd00104ee40dd34072666c57b1c63a/transformed/jetified-mediascanner-1.0.3/res" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.yanzhenjie/mediascanner/1.0.3/7a57e8c4e91957f758176c0f1ddaf603ed953474/mediascanner-1.0.3-javadoc.jar!/" />
+      <root url="jar://$APPLICATION_HOME_DIR$/jre/caches/modules-2/files-2.1/com.yanzhenjie/mediascanner/1.0.3/7a57e8c4e91957f758176c0f1ddaf603ed953474/mediascanner-1.0.3-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.yanzhenjie/mediascanner/1.0.3/b73294d3e472294c4d593dbe960fa05426397f34/mediascanner-1.0.3-sources.jar!/" />
+      <root url="jar://$APPLICATION_HOME_DIR$/jre/caches/modules-2/files-2.1/com.yanzhenjie/mediascanner/1.0.3/b73294d3e472294c4d593dbe960fa05426397f34/mediascanner-1.0.3-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

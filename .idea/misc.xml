@@ -67,7 +67,7 @@
         <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_otp.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_privcay_policy.xml" value="0.18489583333333334" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.75" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_safe_dating_policy.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.18489583333333334" />
         <entry key="app/src/main/res/layout/fragment_speed_date_session.xml" value="0.18" />

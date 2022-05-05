@@ -139,7 +139,17 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
 
         binding.tvStart.setOnClickListener {
 //            videoTimingDialog()
-            callToUser()
+
+//             val list = ArrayList<RequestListResponseModel.RequestListResponseBody>()
+//
+//            list.addAll(requestList.filter { it.status==2 })
+
+            val intent=Intent(requireActivity(),VideoCallActivity::class.java)
+            intent.putExtra("model",requestList)
+            intent.putExtra("type","fromRequest")
+            startActivity(intent)
+
+          //  callToUser()
         }
     }
 
