@@ -112,7 +112,11 @@ class SpeedDateSessionFragment : BaseFragment<FragmentSpeedDateSessionBinding>()
                     if (speedList[0].requestCount == 0) {
                         showErrorAlert(requireActivity(),getString(R.string.you_can_start_your_speed_date_once))
                     } else {
-                        callToUser()
+                        val intent=Intent(requireActivity(),VideoCallActivity::class.java)
+                        intent.putExtra("model",speedList)
+                        intent.putExtra("type","fromRequest")
+                        startActivity(intent)
+                       // callToUser()
                     }
                 }
 

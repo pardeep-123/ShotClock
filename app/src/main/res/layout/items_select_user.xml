@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:background="@drawable/bg_white_round_corners"
+    android:padding="@dimen/_5sdp">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/rivUser"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_user_placeholder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_corner_radius="@dimen/_5sdp" />
+
+    <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_toEndOf="@+id/rivUser"
+        android:fontFamily="@font/proxima_semibold"
+        android:text="sdgfd"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_13ssp" />
+
+    <ImageView
+        android:id="@+id/ivGreenDot"
+        android:layout_toEndOf="@+id/tvUserName"
+
+        android:layout_width="wrap_content"
+        android:layout_alignTop="@+id/tvUserName"
+        android:layout_alignBottom="@+id/tvUserName"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:src="@drawable/ic_green_dot"
+        android:visibility="gone" />
+
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/ivTick"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@null"
+        android:checked="false"
+        android:clickable="false"
+         android:foreground="@drawable/checkbox_tick_home"
+        android:foregroundGravity="center"
+        android:visibility="visible" />
+
+
+    <TextView
+        android:id="@+id/tvDetails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:ellipsize="end"
+        android:fontFamily="@font/proxima_regular"
+        android:maxLines="2"
+        android:textColor="@color/hintcolor"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvUserName"
+        app:layout_constraintTop_toBottomOf="@id/ivTick" />
+
+</RelativeLayout>

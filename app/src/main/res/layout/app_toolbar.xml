@@ -5,60 +5,95 @@
     android:layout_height="?android:attr/actionBarSize"
     android:background="@android:color/transparent">
 
-    <ImageView
-        android:id="@+id/ivBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:padding="@dimen/_5sdp"
-        android:visibility="gone"
-        android:src="@drawable/ic_back" />
 
-    <ImageView
-        android:id="@+id/ivMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:padding="@dimen/_5sdp"
-        android:visibility="gone"
-        android:src="@drawable/ic_menu" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/_5sdp"
+            android:visibility="gone"
+            android:src="@drawable/ic_back" />
 
-    <ImageView
-        android:id="@+id/ivAppLogo"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_gravity="center"
-        android:padding="@dimen/_3sdp"
-        android:visibility="gone"
-        android:src="@drawable/ic_app_logo" />
+        <ImageView
+            android:id="@+id/ivMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:padding="@dimen/_5sdp"
+            android:layout_centerVertical="true"
 
-    <ImageView
-        android:id="@+id/ivAppLogo2"
-        android:layout_width="@dimen/_120sdp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:padding="@dimen/_3sdp"
-        android:visibility="gone"
-        android:src="@drawable/ic_app_logo2" />
+            android:visibility="gone"
+            android:src="@drawable/ic_menu" />
+        <ImageView
+            android:id="@+id/ivFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
 
-    <ImageView
-        android:id="@+id/ivFilter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:visibility="gone"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:padding="@dimen/_5sdp"
-        android:src="@drawable/ic_filter" />
+            android:visibility="gone"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:padding="@dimen/_5sdp"
+            android:src="@drawable/ic_filter" />
 
-    <ImageView
-        android:id="@+id/ivVideoCall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:padding="@dimen/_5sdp"
-        android:visibility="gone"
-        android:src="@drawable/ic_videocall" />
+        <ImageView
+            android:id="@+id/ivAppLogo"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_gravity="center"
+            android:padding="@dimen/_3sdp"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:src="@drawable/ic_app_logo" />
+
+        <ImageView
+            android:id="@+id/ivAppLogo2"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:padding="@dimen/_3sdp"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_app_logo2" />
+
+        <ImageView
+            android:id="@+id/iv_insta"
+            android:layout_toLeftOf="@+id/iv_fb"
+            android:layout_width="42dp"
+            android:paddingTop="3dp"
+            android:layout_centerVertical="true"
+            android:layout_height="42dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_insta" />
+        <ImageView
+            android:id="@+id/iv_fb"
+            android:layout_toLeftOf="@+id/ivVideoCall"
+            android:layout_width="42dp"
+            android:paddingTop="3dp"
+            android:layout_marginEnd="5dp"
+            android:layout_centerVertical="true"
+            android:layout_height="42dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_fb" />
+
+
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:id="@+id/ivVideoCall"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_centerVertical="true"
+
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:visibility="gone"
+            android:src="@drawable/ic_videocall" />
+
+    </RelativeLayout>
 
 </androidx.appcompat.widget.Toolbar>

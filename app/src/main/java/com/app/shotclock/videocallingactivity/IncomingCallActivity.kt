@@ -90,7 +90,6 @@ class IncomingCallActivity : BaseActivity(), SocketManager.Observer {
             jsonObject.put("isCallEnd", "2")
             jsonObject.put("receiverId", mCallerId)
             jsonObject.put("duration", "0")
-            jsonObject.put("duration", "0")
             socketManager.getCallStatus(jsonObject)
 
             /**
@@ -293,13 +292,24 @@ class IncomingCallActivity : BaseActivity(), SocketManager.Observer {
                         val userToCallList =
                             gson.fromJson(data.toString(), VideoCallStatusResponse::class.java)
                         if (userToCallList.status == 1) {
-                            val intent =
-                                Intent(this@IncomingCallActivity, VideoCallActivity::class.java)
-                            intent.putExtra("channel_name", userToCallList.channelName)
-                            intent.putExtra("video_token", userToCallList.videoToken)
-                            intent.putExtra("type", "chat")
-                            startActivity(intent)
-                            finish()
+
+                            if (userToCallList.groupName=="singleCall"){
+                                val intent = Intent(this@IncomingCallActivity, SingleVideoCallActivity::class.java)
+                                intent.putExtra("channel_name", userToCallList.channelName)
+                                intent.putExtra("video_token", userToCallList.videoToken)
+                                intent.putExtra("groupName", userToCallList.groupName)
+                                intent.putExtra("type", "chat")
+                                startActivity(intent)
+                                finish()
+                            }else{
+                                val intent = Intent(this@IncomingCallActivity, VideoCallActivity::class.java)
+                                intent.putExtra("channel_name", userToCallList.channelName)
+                                intent.putExtra("video_token", userToCallList.videoToken)
+                                intent.putExtra("type", "chat")
+                                startActivity(intent)
+                                finish()
+                            }
+
                         } else {
                             finish()
                         }
@@ -318,13 +328,23 @@ class IncomingCallActivity : BaseActivity(), SocketManager.Observer {
                         val userToCallList =
                             gson.fromJson(data.toString(), VideoCallStatusResponse::class.java)
                         if (userToCallList.status == 1) {
-                            val intent =
-                                Intent(this@IncomingCallActivity, VideoCallActivity::class.java)
-                            intent.putExtra("channel_name", userToCallList.channelName)
-                            intent.putExtra("video_token", userToCallList.videoToken)
-                            intent.putExtra("type", "chat")
-                            startActivity(intent)
-                            finish()
+                            if (userToCallList.groupName=="singleCall"){
+                                val intent = Intent(this@IncomingCallActivity, SingleVideoCallActivity::class.java)
+                                intent.putExtra("channel_name", userToCallList.channelName)
+                                intent.putExtra("video_token", userToCallList.videoToken)
+                                intent.putExtra("groupName", userToCallList.groupName)
+                                 intent.putExtra("type", "chat")
+                                startActivity(intent)
+                                finish()
+                            }else{
+                                val intent = Intent(this@IncomingCallActivity, VideoCallActivity::class.java)
+                                intent.putExtra("channel_name", userToCallList.channelName)
+                                intent.putExtra("video_token", userToCallList.videoToken)
+                                intent.putExtra("type", "chat")
+                                startActivity(intent)
+                                finish()
+                            }
+
                         } else {
                             finish()
                         }

@@ -32,6 +32,14 @@ fun getMyString(context: Context): String? {
 }
 
 
+fun saveChatString(context: Context, value: String) {
+    Prefs.with(context).save("statusChat", value)
+}
+
+fun getChatString(context: Context): String? {
+    return Prefs.with(context).getString("statusChat", "")
+}
+
 fun saveIsLoginString(context: Context, value: String) {
     Prefs.with(context).save("isLogin", value)
 }

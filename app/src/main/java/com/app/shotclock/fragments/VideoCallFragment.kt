@@ -437,7 +437,7 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
 
     }
 
-    private fun getCallStatus() {
+   /* private fun getCallStatus() {
         val jsonObject = JSONObject()
         jsonObject.put("status", status)
         jsonObject.put("channelName", channelName)
@@ -445,7 +445,7 @@ class VideoCallFragment : BaseFragment<FragmentVideoCallBinding>(), SocketManage
         jsonObject.put("duration", duration)
         socketManager.getCallStatus(jsonObject)
 
-    }
+    }*/
 
 
     override fun onResponseArray(event: String, args: JSONArray) {

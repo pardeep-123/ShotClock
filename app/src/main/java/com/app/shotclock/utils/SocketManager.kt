@@ -406,6 +406,7 @@ class SocketManager {
     }
 
     fun callToUser(jsonObject: JSONObject?) {
+        Log.e("callToUser","callToUser")
         if (jsonObject != null) {
             try {
                 if ((!mSocket!!.connected())) {

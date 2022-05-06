@@ -1,6 +1,10 @@
 package com.app.shotclock.fragments
 
+import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,11 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.shotclock.R
 import com.app.shotclock.adapters.ChatAdapter
 import com.app.shotclock.cache.getUser
+import com.app.shotclock.cache.saveChatString
+import com.app.shotclock.cache.saveString
 import com.app.shotclock.constants.CacheConstants
 import com.app.shotclock.databinding.FragmentChatBinding
 import com.app.shotclock.models.sockets.ChatHistoryResponse
 import com.app.shotclock.models.sockets.VideoCallResponse
 import com.app.shotclock.utils.*
+import com.app.shotclock.videocallingactivity.SingleVideoCallActivity
 import com.app.shotclock.videocallingactivity.VideoCallActivity
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
@@ -21,6 +28,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
+
 
 class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.Observer {
 
@@ -61,6 +69,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
         clickHandle()
         setAdapter()
 
+
     }
 
     private fun setAdapter() {
@@ -86,10 +95,44 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
 //        linearLayoutManager?.smoothScrollToPosition(binding.rvChat, null, chatAdapter?.itemCount!!)
 //    }
 
+    var FACEBOOK_URL = "https://www.facebook.com/Shot-Clock-Dating-118006690891734"
+    var FACEBOOK_PAGE_ID = "Shot-Clock-Dating-118006690891734"
+
+    //method to get the right URL to use in the intent
+    fun getFacebookPageURL(context: Context){
+        val packageManager = context.packageManager
+         try {
+            val versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode
+            if (versionCode >= 3002850) { //newer versions of fb app
+                "fb://facewebmodal/f?href=$FACEBOOK_URL"
+            } else { //older versions of fb app
+                "fb://page/$FACEBOOK_PAGE_ID"
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://www.facebook.com/Shot-Clock-Dating-118006690891734")
+                )
+            )
+        }
+    }
+
     private fun clickHandle() {
         binding.tb.ivBack.isVisible()
         binding.tb.ivAppLogo.isVisible()
         binding.tb.ivVideoCall.isVisible()
+        binding.tb.ivFb.isVisible()
+        binding.tb.ivInsta.isVisible()
+
+        binding.tb.ivFb.setOnClickListener {
+            getFacebookPageURL(requireActivity())
+        }
+
+        binding.tb.ivInsta.setOnClickListener {
+            getOpenInstaIntent(requireActivity())
+        }
+
         binding.tb.ivBack.setOnClickListener {
             activity?.onBackPressed()
         }
@@ -114,6 +157,28 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
                 }
             }
         }
+    }
+
+    private fun getOpenInstaIntent(requireActivity: Context) {
+
+        val uri = Uri.parse("http://instagram.com/_u/shotclockdating")
+
+
+        val i = Intent(Intent.ACTION_VIEW, uri)
+
+        i.setPackage("com.instagram.android")
+
+        try {
+            startActivity(i)
+        } catch (e: ActivityNotFoundException) {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("http://instagram.com/shotclockdating")
+                )
+            )
+        }
+
     }
 
     private fun getChatHistory() {
@@ -159,7 +224,7 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
 
     override fun onResume() {
         super.onResume()
-
+        saveChatString(requireActivity(), "true" + user2Id.toString())
         socketManager.unRegister(this)
         socketManager.onRegister(this)
         if (!socketManager.isConnected() || socketManager.getmSocket() == null) {
@@ -171,6 +236,21 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
 
     }
 
+    override fun onDestroy() {
+        saveChatString(requireActivity(), "false")
+        super.onDestroy()
+
+    }
+
+    override fun onPause() {
+        saveChatString(requireActivity(), "false")
+
+        super.onPause()
+    }
+    override fun onDestroyView() {
+        saveChatString(requireActivity(), "false")
+        super.onDestroyView()
+    }
     override fun onResponseArray(event: String, args: JSONArray) {
         when(event){
             SocketManager.get_chat-> {
@@ -249,10 +329,11 @@ class ChatFragment : ImagePickerUtility1<FragmentChatBinding>(), SocketManager.O
 
                             val userToCallList = gson.fromJson(mObject.toString(), VideoCallResponse::class.java)
 
-                            val intent = Intent(requireContext(), VideoCallActivity::class.java)
+                            val intent = Intent(requireContext(), SingleVideoCallActivity::class.java)
                             intent.putExtra("channel_name", userToCallList.channelName)
                             intent.putExtra("video_token", userToCallList.videoToken)
                             intent.putExtra("senderId", user2Id.toString())
+                            intent.putExtra("groupName",userToCallList.groupName)
                             intent.putExtra("type","chat")
 
                             startActivity(intent)

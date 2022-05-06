@@ -14,6 +14,7 @@ data class RequestListResponseModel(
     var success: Int // 1
 ):Serializable {
     data class RequestListResponseBody(
+        var isSelected:Boolean=false,
         @SerializedName("bio")
         var bio: String, // Gshnskakal
         @SerializedName("callStart")

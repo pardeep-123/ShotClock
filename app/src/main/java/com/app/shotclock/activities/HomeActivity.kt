@@ -269,6 +269,7 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
+        setIntent(intent)
         loadData(intent)
     }
 

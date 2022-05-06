@@ -15,6 +15,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.app.shotclock.R
 import com.app.shotclock.activities.HomeActivity
+import com.app.shotclock.cache.getChatString
 import com.app.shotclock.utils.Constants
 import com.app.shotclock.videocallingactivity.IncomingCallActivity
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -66,13 +67,19 @@ class NotificationHandlingService : FirebaseMessagingService() {
                 intent.putExtra("sender_name", senderName)
 
 //                if (Constants.user2Id != senderId || !Constants.OnMessageScreen)
+                if (getChatString(this).equals("true$senderId")) {
+
+
+                } else {
                     makePush(intent)
+                }
             }
 
 
         } catch (e: Exception) {
         }
     }
+
 
     private fun makePush(intent: Intent?) {
 
