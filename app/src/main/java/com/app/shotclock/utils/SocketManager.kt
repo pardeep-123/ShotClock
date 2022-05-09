@@ -152,6 +152,7 @@ class SocketManager {
                         mSocket!!.emit(connectUser, jsonObject)
 
                     }
+                    Log.e("useridTest",userid.toString())
                 }
 
             } catch (e: JSONException) {

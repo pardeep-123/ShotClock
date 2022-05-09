@@ -1,11 +1,16 @@
 package com.app.shotclock.activities
 
+import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
@@ -104,9 +109,9 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
                 binding.navigationView.getMenu().getItem(5).setVisible(false)
             } catch (e: Exception) {
             }
-
-
         }
+
+
     }
 
     // manage home side header view
@@ -124,7 +129,65 @@ class HomeActivity : BaseActivity() , SocketManager.Observer,NavigationView.OnNa
         Glide.with(this).load(ApiConstants.IMAGE_URL+ getUser(this)?.profileImage).into(civUser!!)
         tvUserName?.text = getUser(this)?.username
 
+
+       var insta= headerView!!.findViewById<ImageView>(R.id.iv_insta)
+       var fb= headerView!!.findViewById<ImageView>(R.id.iv_fb)
+        insta.setOnClickListener {
+            getOpenInstaIntent(this)
+        }
+        fb.setOnClickListener {
+            getFacebookPageURL(this)
+        }
+
     }
+
+
+    private fun getOpenInstaIntent(requireActivity: Context) {
+
+        val uri = Uri.parse("http://instagram.com/_u/shotclockdating")
+
+
+        val i = Intent(Intent.ACTION_VIEW, uri)
+
+        i.setPackage("com.instagram.android")
+
+        try {
+            startActivity(i)
+        } catch (e: ActivityNotFoundException) {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("http://instagram.com/shotclockdating")
+                )
+            )
+        }
+
+    }
+
+
+    var FACEBOOK_URL = "https://www.facebook.com/Shot-Clock-Dating-118006690891734"
+    var FACEBOOK_PAGE_ID = "Shot-Clock-Dating-118006690891734"
+
+    //method to get the right URL to use in the intent
+    fun getFacebookPageURL(context: Context){
+        val packageManager = context.packageManager
+        try {
+            val versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode
+            if (versionCode >= 3002850) { //newer versions of fb app
+                "fb://facewebmodal/f?href=$FACEBOOK_URL"
+            } else { //older versions of fb app
+                "fb://page/$FACEBOOK_PAGE_ID"
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://www.facebook.com/Shot-Clock-Dating-118006690891734")
+                )
+            )
+        }
+    }
+
 
     private fun configureViewModel() {
         loginSignUpViewModel = ViewModelProviders.of(this,viewModelProvider).get(LoginSignUpViewModel::class.java)

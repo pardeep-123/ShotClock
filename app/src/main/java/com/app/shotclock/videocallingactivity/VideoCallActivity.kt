@@ -224,7 +224,7 @@ class VideoCallActivity : BaseActivity(), SocketManager.Observer {
             jsonObject.put("isCallEnd", 0)
             socketManager.getCallStatus(jsonObject)*/
             callStatus("3","0")
-
+           // leaveCallFunction()
         }
 
 //        requestId = intent?.getStringExtra("requestId").toString()
@@ -871,6 +871,7 @@ class VideoCallActivity : BaseActivity(), SocketManager.Observer {
         jsonObject.put("receiverId", senderId)
         jsonObject.put("isCallEnd", isCallEnd)
         jsonObject.put("duration", "0")
+        Log.e("jsonObjectPrint",jsonObject.toString())
         socketManager.getCallStatus(jsonObject)
 
     }

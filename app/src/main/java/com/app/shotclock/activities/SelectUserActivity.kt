@@ -70,7 +70,7 @@ class SelectUserActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
        /* super.onBackPressed()*/
-        val intent = Intent(this@SelectUserActivity, SelectUserActivity::class.java).also {
+        val intent = Intent(this@SelectUserActivity, HomeActivity::class.java).also {
             it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         }
         startActivity(intent)
