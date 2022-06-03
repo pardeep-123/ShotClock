@@ -6,6 +6,7 @@ import com.app.shotclock.constants.ApiConstants
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
+import io.socket.engineio.client.transports.WebSocket
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -54,6 +55,8 @@ class SocketManager {
     private fun getSocket(): Socket? {
         run {
             try {
+
+
                 mSocket = IO.socket(ApiConstants.SOCKET_URL)
             } catch (e: URISyntaxException) {
                 throw RuntimeException(e)
@@ -100,7 +103,7 @@ class SocketManager {
         disconnect()
         mSocket!!.connect()
         mSocket!!.on(Socket.EVENT_CONNECT, onConnect)
-        // mSocket!!.on(Socket.EVENT_DISCONNECT, onDisconnect)
+         mSocket!!.on(Socket.EVENT_DISCONNECT, onDisconnect)
         mSocket!!.on(Socket.EVENT_CONNECT_ERROR, onConnectError)
         // mSocket!!.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError)
         mSocket!!.on(errorMessage, onErrorMessage)

@@ -127,7 +127,7 @@ open class HomeFragment : LocationUpdateUtility<FragmentHomeBinding>(),
     }
 
     private fun configureViewModel() {
-        homeViewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
+        homeViewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
 
     }
 

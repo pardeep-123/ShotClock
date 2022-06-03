@@ -85,8 +85,9 @@ class NotificationHandlingService : FirebaseMessagingService() {
 
         val pendingIntent = PendingIntent.getActivity(this, i, intent, PendingIntent.FLAG_ONE_SHOT)
 
-        intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-
+//        intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent?.flags =
+            Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         val channelId = CHANNEL_ID
         soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
