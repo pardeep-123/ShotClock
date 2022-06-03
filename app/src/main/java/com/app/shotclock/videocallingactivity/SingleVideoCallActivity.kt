@@ -42,6 +42,10 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.util.concurrent.TimeUnit
 
+import android.R.attr.name
+import android.view.WindowManager
+
+
 class SingleVideoCallActivity : BaseActivity(), SocketManager.Observer {
     private lateinit var binding: ActivitySingleVideoCallBinding
     var channelName = "test"
@@ -73,7 +77,10 @@ class SingleVideoCallActivity : BaseActivity(), SocketManager.Observer {
          * @param uid User ID of the remote user sending the video streams.
          * @param elapsed Time elapsed (ms) from the local user calling the joinChannel method until this callback is triggered.
          */
-
+        override fun onError(err: Int) {
+            super.onError(err)
+            Log.e("onErrorAgora",err.toString())
+        }
 
         override fun onUserJoined(uid: Int, elapsed: Int) {
             Log.e("statusGet","onUserJoined")
@@ -164,7 +171,7 @@ class SingleVideoCallActivity : BaseActivity(), SocketManager.Observer {
         super.onCreate(savedInstanceState)
         binding = ActivitySingleVideoCallBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         try {
             channelName = intent?.getStringExtra("channel_name").toString()
             agoraToken = intent?.getStringExtra("video_token").toString()
@@ -397,7 +404,7 @@ class SingleVideoCallActivity : BaseActivity(), SocketManager.Observer {
         Log.e("channelData", agoraToken)
         Log.e("channelData", channelName)
         mRtcEngine?.joinChannel(
-            agoraToken,
+            "",
             channelName,
             "Extra Optional Data",
             0

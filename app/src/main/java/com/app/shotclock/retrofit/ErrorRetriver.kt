@@ -15,7 +15,21 @@ fun getErrorMessage(responseBody: ResponseBody): BaseError {
     try {
         val jsonObject = JSONObject(responseBody.string())
 
-        return BaseError(jsonObject.getInt("statusCode"), jsonObject.getString("message"))
+        var value=""
+        when {
+            jsonObject.has("message") ->{
+                value=jsonObject.getString("message")
+            }
+            jsonObject.has("msg") -> {
+                value= jsonObject.getString("msg")
+            }
+            else ->{
+                value= "Something wrong happened"
+            }
+        }
+
+        return BaseError(jsonObject.getInt("statusCode"), value)
+//        return BaseError(jsonObject.getInt("statusCode"), jsonObject.getString("message"))
 
     } catch (e: Exception) {
         return BaseError(101, e.message!!)

@@ -25,6 +25,8 @@
         <entry key="app/src/main/res/drawable/bg_white_corners.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_white_round_corners.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/bg_whiteline_round_corners.xml" value="0.20104166666666667" />
+        <entry key="app/src/main/res/drawable/btn_mute.xml" value="0.1495" />
+        <entry key="app/src/main/res/drawable/btn_unmute.xml" value="0.1495" />
         <entry key="app/src/main/res/drawable/checkbox_tick_home.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/custome_spinner_dialog.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/drawable/ic_border.xml" value="0.1335" />

@@ -12,6 +12,7 @@ import android.os.CountDownTimer
 import android.util.Log
 import android.view.SurfaceView
 import android.view.View
+import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
@@ -40,6 +41,7 @@ import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.concurrent.TimeUnit
+
 
 class VideoCallActivity : BaseActivity(), SocketManager.Observer {
     private lateinit var binding: ActivityVideoChatViewBinding
@@ -79,6 +81,10 @@ class VideoCallActivity : BaseActivity(), SocketManager.Observer {
             setupRemoteVideo(uid)
         }
 
+        override fun onError(err: Int) {
+            super.onError(err)
+            Log.e("onErrorAgora",err.toString())
+        }
         /**
          * Occurs when a remote user (Communication)/host (Live Broadcast) leaves the channel.
          *
@@ -164,6 +170,7 @@ class VideoCallActivity : BaseActivity(), SocketManager.Observer {
         super.onCreate(savedInstanceState)
         binding = ActivityVideoChatViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         try {
             channelName = intent?.getStringExtra("channel_name").toString()
@@ -368,8 +375,9 @@ class VideoCallActivity : BaseActivity(), SocketManager.Observer {
         }
 
     }
-
+     var  mMuted = false
     fun onLocalAudioMuteClicked(view: View) {
+//        this.mMuted = !mMuted
         val iv = view as ImageView
         if (iv.isSelected) {
             iv.isSelected = false
@@ -381,6 +389,7 @@ class VideoCallActivity : BaseActivity(), SocketManager.Observer {
 
         // Stops/Resumes sending the local audio stream.
         mRtcEngine?.muteLocalAudioStream(iv.isSelected)
+//        mRtcEngine?.muteLocalAudioStream(mMuted)
     }
 
     fun onSwitchCameraClicked(view: View) {
@@ -476,7 +485,7 @@ class VideoCallActivity : BaseActivity(), SocketManager.Observer {
         Log.e("channelData", agoraToken)
         Log.e("channelData", channelName)
         mRtcEngine?.joinChannel(
-            agoraToken,
+            "",
             channelName,
             "Extra Optional Data",
             0

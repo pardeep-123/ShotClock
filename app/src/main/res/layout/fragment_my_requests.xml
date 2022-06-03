@@ -124,6 +124,20 @@
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/tvCancel"
             app:layout_constraintEnd_toEndOf="@id/tvCancel" />
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@drawable/bg_black_rectangle"
+            android:fontFamily="@font/proxima_regular"
+            android:paddingHorizontal="@dimen/_18sdp"
+            android:paddingVertical="@dimen/_4sdp"
+            android:text="Status"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintBottom_toTopOf="@id/tvStart"
+            app:layout_constraintEnd_toEndOf="@id/tvStart" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

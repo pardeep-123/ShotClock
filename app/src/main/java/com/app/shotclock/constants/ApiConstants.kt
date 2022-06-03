@@ -5,10 +5,14 @@ object ApiConstants {
 /*local url
     http://192.168.1.67:3020*/
 
-    const val BASE_URL = "http://202.164.42.227:3020/api/"
-    const val IMAGE_URL = "http://202.164.42.227:3020/"
-    const val SOCKET_URL =  "http://202.164.42.227:3020"
+    const val BASE_URL = "https://app.shotclockdating.com/api/"
+    const val IMAGE_URL = "https://app.shotclockdating.com/"
+    const val SOCKET_URL =  "https://app.shotclockdating.com"
 
+//    const val BASE_URL = "http://202.164.42.227:3020/api/"
+//    const val IMAGE_URL = "http://202.164.42.227:3020/"
+//    const val SOCKET_URL =  "http://202.164.42.227:3020"
+//
     const val CONNECT_TIMEOUT: Long = 50000
     const val READ_TIMEOUT: Long = 50000
     const val WRITE_TIMEOUT: Long = 50000

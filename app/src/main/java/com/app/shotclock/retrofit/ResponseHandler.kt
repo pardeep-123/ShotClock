@@ -46,7 +46,21 @@ constructor() {
         return try {
             val jsonObject = JSONObject(responseBody.string())
 
-            BaseError(400,jsonObject.getString("message"))
+            var value=""
+            when {
+                jsonObject.has("message") ->{
+                    value=jsonObject.getString("message")
+                }
+                jsonObject.has("msg") -> {
+                    value= jsonObject.getString("msg")
+                }
+                else ->{
+                    value= "Something wrong happened"
+                }
+            }
+
+            BaseError(400,value)
+           // BaseError(400,jsonObject.getString("message"))
 
 
         } catch (e: Exception) {

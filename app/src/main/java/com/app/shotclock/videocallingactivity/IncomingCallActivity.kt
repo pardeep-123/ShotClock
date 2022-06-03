@@ -1,6 +1,7 @@
 package com.app.shotclock.videocallingactivity
 
 import android.app.NotificationManager
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
@@ -18,7 +19,6 @@ import com.app.shotclock.databinding.ItemsNotificationVideoCallingBinding
 import com.app.shotclock.models.sockets.VideoCallStatusResponse
 import com.app.shotclock.utils.App
 import com.app.shotclock.utils.SocketManager
-import com.app.shotclock.utils.isNetworkConnected
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -72,8 +72,14 @@ class IncomingCallActivity : BaseActivity(), SocketManager.Observer {
 
         timeCounter()
         startRinging()
-    }
 
+        pd= ProgressDialog(this@IncomingCallActivity)
+        pd.setMessage("Please wait ")
+        pd.setCancelable(false)
+        pd.setCanceledOnTouchOutside(false)
+
+    }
+    lateinit var pd:ProgressDialog
     private fun activateReceiverListenerSocket() {
         socketManager.callToUserActivate()
         socketManager.callStatusActivate()
@@ -82,6 +88,10 @@ class IncomingCallActivity : BaseActivity(), SocketManager.Observer {
 
     private fun setOnClicks() {
         binding.btAccept.setOnClickListener {
+            try {
+                pd.show()
+            } catch (e: Exception) {
+            }
             stopRinging()
             //0=>calling,1=> callConnected,2=>call Declined,3=>Call Disconnected,4=>Missed call
             val jsonObject = JSONObject()
@@ -105,6 +115,12 @@ class IncomingCallActivity : BaseActivity(), SocketManager.Observer {
         }
 
         binding.btDecline.setOnClickListener {
+            try {
+                pd.show()
+            } catch (e: Exception) {
+            }
+
+
             stopRinging()
             val jsonObject = JSONObject()
             jsonObject.put("channelName", mChannelName)
@@ -282,7 +298,10 @@ class IncomingCallActivity : BaseActivity(), SocketManager.Observer {
 
         when (event) {
             SocketManager.call_status_emitter -> {
-
+                try {
+                    pd.dismiss();
+                } catch (e: Exception) {
+                }
                 if (isReponseGet.isEmpty()){
                     isReponseGet="fd"
                     activityScope.launch {
@@ -319,6 +338,10 @@ class IncomingCallActivity : BaseActivity(), SocketManager.Observer {
             }
 
             SocketManager.call_status_listener -> {
+                try {
+                    pd.dismiss();
+                } catch (e: Exception) {
+                }
                 if (isReponseGet.isEmpty()){
                     isReponseGet="sdgdf"
                     activityScope.launch {

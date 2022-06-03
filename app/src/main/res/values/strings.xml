@@ -5,7 +5,13 @@
     <!--    ios Agora id-->
     <!--  <string name="agora_app_id">2e3700ef5e0648be8fc20e03324c5651</string>-->
 
+<!--
     <string name="agora_app_id">fd6547be222a4a7f88ad72c90df6e761</string>
+-->
+    <string name="agora_app_id">b9e2deaeb87f42b194f492ce36aa4bc2</string>
+<!--
+    <string name="agora_app_id">b0d00fdff8d447929994f0fcdd355e8d</string>
+-->
     <!--
     <string name="agora_app_id">2e3700ef5e0648be8fc20e03324c5651</string>
 -->

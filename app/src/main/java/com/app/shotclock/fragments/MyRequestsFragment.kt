@@ -76,9 +76,9 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
         binding.rvMyRequests.adapter = requestAdapter
 
         requestAdapter?.onItemClickListener = { pos ->
-            val bundle = Bundle()
+           /* val bundle = Bundle()
             bundle.putString("senderId",requestList[pos].id.toString())
-            this.findNavController().navigate(R.id.action_myRequestsFragment_to_speedDateSessionFragment,bundle)
+            this.findNavController().navigate(R.id.action_myRequestsFragment_to_speedDateSessionFragment,bundle)*/
         }
     }
 
@@ -108,6 +108,7 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
 
         binding.tvPast.setOnClickListener {
             binding.tvStart.isGone()
+//            binding.tvStatus.isGone()
             binding.tvCancel.isGone()
             binding.tvPast.background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_white_round_corners)
             binding.tvPast.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
@@ -116,6 +117,18 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
             // api hit
             homeViewModel.allRequestList().observe(viewLifecycleOwner, allRequestListObserver)
         }
+
+        binding.tvStatus.setOnClickListener {
+
+            if (requestList!=null){
+                if (requestList.isNotEmpty()){
+                    val bundle = Bundle()
+                    bundle.putString("senderId",requestList[0].id.toString())
+                    this.findNavController().navigate(R.id.action_myRequestsFragment_to_speedDateSessionFragment,bundle)
+
+                }
+            }
+          }
 
         binding.tvCancel.setOnClickListener {
             val dialog = Dialog(requireContext())
@@ -175,8 +188,10 @@ class MyRequestsFragment : BaseFragment<FragmentMyRequestsBinding>(), Observer<R
                     // for video calling start
                     if (t.data.body[0].requestCount == 0) {
                         binding.tvStart.isGone()
+                     //   binding.tvStatus.isGone()
                     } else {
                         binding.tvStart.isVisible()
+                       // binding.tvStatus.isVisible()
 
                     }
 
